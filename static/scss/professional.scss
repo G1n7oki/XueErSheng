@@ -1,0 +1,88 @@
+.contaier {
+	padding-top: 75upx;
+	box-sizing: border-box;
+}
+
+.tips {
+	padding-left: 40upx;
+	
+	.title {
+		font-size: 36upx;
+		font-weight: bold;
+		color: #303133;
+		margin-bottom: 23upx;
+		line-height: 36upx;
+	}
+	
+	.explain {
+		font-size: 28upx;
+		font-weight: 500;
+		color: #909399;
+		line-height: 36upx;
+	}
+}
+
+.choose {
+	display: flex;
+	height: calc(100% - 150upx);
+	margin-top: 43upx;
+	border-top: 1px solid #DEDEDE;
+	
+	.category-1 {
+		width: 224upx;
+		height: 100%;
+		background-color: #F5F5F5;
+		
+		.item {
+			height: 96upx;
+			font-size: 28upx;
+			font-weight: bold;
+			color: #303133;
+			text-align: center;
+			line-height: 96upx;
+			
+			&.active {
+				background-color: #fff;
+				color: #1283FF;
+			}
+		}
+	}
+	
+	.category-2 {
+		width: 526upx;
+		box-sizing: border-box;
+		padding: 38upx 0 0 40upx;
+		
+		.item {
+			margin-bottom: 64upx;
+			
+			.title {
+				font-size: 24upx;
+				font-weight: bold;
+				color: #303133;
+				text-align: center;
+			}
+			
+			.list {
+				display: flex;
+				flex-wrap: wrap;
+				margin-top: 36upx;
+				
+				.cell {
+					padding: 23upx 26upx;
+					background-color: #F4F7F9;
+					border-radius: 10upx;
+					font-size: 28upx;
+					font-weight: 500;
+					color: #303133;
+					margin-right: 24upx;
+					margin-bottom: 36upx;
+					
+					&:nth-child(2) {
+						margin-right: 0;
+					}
+				}
+			}
+		}
+	}
+}

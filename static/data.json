@@ -1,0 +1,177 @@
+{
+	"home": {
+		"treeList": ["自学考试", "金融类", "金融管理本科"],
+		"liveList": [{
+			"id": 1,
+			"icon": "/static/image/home/main-icon.png",
+			"name": "讲师：李军",
+			"type": "英语（本）第 1 课",
+			"date": "2020.08.20",
+			"time": "18:00-20:00",
+			"status": 1
+		}, {
+			"id": 2,
+			"icon": "/static/image/home/main-icon.png",
+			"name": "讲师：马正涛",
+			"type": "金融管理本科专业解读全金融管理本科专业解读全",
+			"date": "2020.08.20",
+			"time": "18:00-20:00",
+			"status": 2
+		}, {
+			"id": 3,
+			"icon": "/static/image/home/main-icon.png",
+			"name": "张正宁",
+			"date": "2020.08.20",
+			"time": "18:00-20:00",
+			"type": "政治（本）第 3 课",
+			"status": 3
+		}, {
+			"id": 4,
+			"icon": "/static/image/home/main-icon.png",
+			"name": "管栎",
+			"type": "数学（本）第 3 课",
+			"date": "2020.08.20",
+			"time": "18:00-20:00",
+			"status": 4
+		}],
+		"courseList": [{
+			"id": 1,
+			"name": "特许金融分析师",
+			"hour": "40课时",
+			"price": "680",
+			"image": "/static/image/home/banner.png"
+		}, {
+			"id": 2,
+			"name": "特许金融分析师",
+			"hour": "40课时",
+			"price": "680",
+			"image": "/static/image/home/banner.png"
+		}, {
+			"id": 3,
+			"name": "特许金融分析师",
+			"hour": "40课时",
+			"price": "680",
+			"image": "/static/image/home/banner.png"
+		}, {
+			"id": 4,
+			"name": "特许金融分析师特许金融分析师",
+			"hour": "40课时",
+			"price": "680",
+			"image": "/static/image/home/banner.png"
+		}],
+		"filterList": [{
+			"id": 1,
+			"name": "优惠/折扣",
+			"item": [{
+				"id": 1,
+				"name": "限时特惠",
+				"active": false
+			}, {
+				"id": 2,
+				"name": "优惠券",
+				"active": false
+			}]
+		}, {
+			"id": 2,
+			"name": "上架时间",
+			"item": [{
+				"id": 1,
+				"name": "2020年",
+				"active": false
+			}, {
+				"id": 2,
+				"name": "2019年",
+				"active": false
+			}, {
+				"id": 3,
+				"name": "2018年",
+				"active": false
+			}]
+		}]
+	},
+	"professional": [{
+		"id": 1,
+		"name": "自学考试",
+		"children": [{
+			"id": 1,
+			"name": "金融类",
+			"item": [{
+				"id": 1,
+				"name": "金融管理专科"
+			}, {
+				"id": 2,
+				"name": "金融学本科"
+			}, {
+				"id": 3,
+				"name": "金融管理本科"
+			}]
+		}, {
+			"id": 2,
+			"name": "经管类",
+			"item": [{
+				"id": 1,
+				"name": "商务管理本科"
+			}, {
+				"id": 2,
+				"name": "电子商务本科"
+			}, {
+				"id": 3,
+				"name": "会展经济与管理本科"
+			}, {
+				"id": 4,
+				"name": "现代企业管理专科"
+			}]
+		}]
+	}, {
+		"id": 2,
+		"name": "成人考试",
+		"children": [{
+			"id": 1,
+			"name": "金融类",
+			"item": [{
+				"id": 1,
+				"name": "金融管理专科"
+			}, {
+				"id": 2,
+				"name": "金融学本科"
+			}, {
+				"id": 3,
+				"name": "金融管理本科"
+			}]
+		}]
+	}, {
+		"id": 3,
+		"name": "研究生考试",
+		"children": [{
+			"id": 1,
+			"name": "金融类",
+			"item": [{
+				"id": 1,
+				"name": "金融管理专科"
+			}, {
+				"id": 2,
+				"name": "金融学本科"
+			}, {
+				"id": 3,
+				"name": "金融管理本科"
+			}]
+		}]
+	}, {
+		"id": 4,
+		"name": "职业资格",
+		"children": [{
+			"id": 1,
+			"name": "金融类",
+			"item": [{
+				"id": 1,
+				"name": "金融管理专科"
+			}, {
+				"id": 2,
+				"name": "金融学本科"
+			}, {
+				"id": 3,
+				"name": "金融管理本科"
+			}]
+		}]
+	}]
+}
