@@ -58,7 +58,9 @@
 							</view>
 						</view>
 					</view>
-					<view-more text="切换" />
+					<view @click="handleSwitch">
+						<view-more text="切换" />
+					</view>
 				</view>
 				<view class="icon-list">
 					<view class="icon-cell">
@@ -265,10 +267,19 @@
 			}
 		},
 		onLoad() {
-			this.treeList = json.home.treeList
 			this.liveList = json.home.liveList
 			this.courseList = json.home.courseList
 			this.filterList = json.home.filterList
+		},
+		onShow() {
+			const crumbs = uni.getStorageSync('crumbs')
+			if (!crumbs) {
+				uni.navigateTo({
+					url: '/pages/professional/professional'
+				})
+			} else {
+				this.treeList = crumbs
+			}
 		},
 		methods: {
 			handleFilter () {
@@ -289,6 +300,11 @@
 							return
 						}
 					})
+				})
+			},
+			handleSwitch () {
+				uni.navigateTo({
+					url: '/pages/professional/professional'
 				})
 			}
 		},

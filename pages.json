@@ -13,7 +13,13 @@
 				"onReachBottomDistance": 50
 			}
 		}, {
-			"path":"pages/professional/professional",
+			"path": "pages/professional/professional",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "pages/study/study",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
@@ -30,5 +36,32 @@
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"color": "#777777",
+		"selectedColor": "#1283FF",
+		"borderStyle": "black",
+		"backgroundColor": "#FFFFFF",
+		"list": [{
+        "pagePath": "pages/index/index",
+        "iconPath": "static/image/tabBarIco/course.png",
+        "selectedIconPath": "static/image/tabBarIco/course-hover.png",
+        "text": "课程"
+    }, {
+        "pagePath": "pages/study/study",
+        "iconPath": "static/image/tabBarIco/study.png",
+        "selectedIconPath": "static/image/tabBarIco/study-hover.png",
+        "text": "学习"
+    }, {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/image/tabBarIco/discover.png",
+        "selectedIconPath": "static/image/tabBarIco/discover-hover.png",
+        "text": "发现"
+    }, {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/image/tabBarIco/me.png",
+        "selectedIconPath": "static/image/tabBarIco/me-hover.png",
+        "text": "我的"
+    }]
 	}
 }
