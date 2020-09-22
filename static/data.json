@@ -1,6 +1,5 @@
 {
 	"home": {
-		"treeList": ["自学考试", "金融类", "金融管理本科"],
 		"liveList": [{
 			"id": 1,
 			"icon": "/static/image/home/main-icon.png",
