@@ -172,5 +172,74 @@
 				"name": "金融管理本科"
 			}]
 		}]
-	}]
+	}],
+	"study": {
+		"courseList": [{
+			"id": 1,
+			"image": "/static/image/study/exercise.png",
+			"name": "特许金融分析师(CFA三级)",
+			"validity": 360,
+			"progress": 60
+		}, {
+			"id": 2,
+			"image": "/static/image/study/exercise.png",
+			"name": "特许金融分析师(CFA一级)",
+			"validity": 10,
+			"progress": 90
+		}, {
+			"id": 3,
+			"image": "/static/image/study/exercise.png",
+			"name": "金融风险管理师(FRM二级)",
+			"validity": 360,
+			"progress": 18
+		}, {
+			"id": 4,
+			"image": "/static/image/study/exercise.png",
+			"name": "童哲校长-新手股民必备技能童哲校长-新手股民必备技能",
+			"validity": 220,
+			"progress": 50
+		}, {
+			"id": 5,
+			"image": "/static/image/study/exercise.png",
+			"name": "CFA二级 权益类投资",
+			"validity": 180,
+			"progress": 100
+		}],
+		"liveList": [{
+			"id": 1,
+			"avatar": "/static/image/study/exercise.png",
+			"type": "英语",
+			"name": "权威直播:2019年汉语言文学-本科导学直播课",
+			"user": "杨明波",
+			"title": "江西省高级教师",
+			"status": 1,
+			"time": "08/24 17:30~19:30"
+		}, {
+			"id": 2,
+			"avatar": "/static/image/study/exercise.png",
+			"type": "历史",
+			"name": "2020级历史本科导学直播课",
+			"user": "杨明波",
+			"title": "江西省高级教师",
+			"status": 2,
+			"time": "08/24 17:30~19:30"
+		}],
+		"historyList": [{
+			"id": 1,
+			"avatar": "/static/image/study/exercise.png",
+			"type": "英语",
+			"name": "权威直播:2019年汉语言文学-本科导学直播课",
+			"user": "杨明波",
+			"title": "江西省高级教师",
+			"time": "共30课时"
+		}, {
+			"id": 2,
+			"avatar": "/static/image/study/exercise.png",
+			"type": "历史",
+			"name": "2020级历史本科导学直播课",
+			"user": "杨明波",
+			"title": "江西省高级教师",
+			"time": "共30课时"
+		}]
+	}
 }

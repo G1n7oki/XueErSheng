@@ -5,13 +5,16 @@
 			:style="{paddingTop: statusBarHeight + 'px', backgroundColor: backgroundColor}"
 		>
 			<view class="navbar-content">
-				<view class="navbar-arrow" v-if="isArrow"></view>
+				<view class="navbar-arrow-image" v-if="isArrow && isArrowType === 'image'" @click="handleArrow">
+					<image src="/static/image/study/return.png" mode=""></image>
+				</view>
+				<view class="navbar-arrow-line" v-if="isArrow && isArrowType === 'line'"></view>
 				<view class="navbar-title" :style="{textAlign: textAlign}">
 					{{ title }}
 				</view>
 			</view>
 		</view>
-		<view class="navbar-empty" :style="{height: statusBarHeight + 42 + 'px'}"></view>
+		<view v-if="isEmpty" class="navbar-empty" :style="{height: statusBarHeight + 42 + 'px'}"></view>
 	</view>
 </template>
 
@@ -38,6 +41,16 @@
 			textAlign: {
 				type: String,
 				default: 'left'
+			},
+			// 箭头类型 image, line
+			isArrowType: {
+				type: String,
+				default: 'line'
+			},
+			// 是否需要空元素占位
+			isEmpty: {
+				type: Boolean,
+				default: true
 			}
 		},
 		data() {
@@ -49,6 +62,14 @@
 		created() {
 			//获取手机状态栏高度
 			this.statusBarHeight = uni.getSystemInfoSync()['statusBarHeight']
+		},
+		methods: {
+			// 点击返回回到上一页
+			handleArrow() {
+				uni.navigateBack({
+					delta: 1
+				})
+			}
 		}
 	}
 </script>
@@ -63,6 +84,7 @@
 			left: 0;
 			box-sizing: border-box;
 			padding-left: 32upx;
+			z-index: 999;
 			
 			.navbar-content {
 				display: flex;
@@ -72,7 +94,19 @@
 				position: relative;
 			}
 			
-			.navbar-arrow {
+			.navbar-arrow-image {
+				position: absolute;
+				top: 50%;
+				left: 0;
+				transform: translateY(-50%);
+				
+				image {
+					width: 54upx;
+					height: 54upx;
+				}
+			}
+			
+			.navbar-arrow-line {
 				width: 20upx;
 				height: 20upx;
 				position: absolute;
