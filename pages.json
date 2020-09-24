@@ -10,7 +10,13 @@
 			"path": "pages/login/index",
 			"style": {
 				"navigationBarTitleText": "",
-				"onReachBottomDistance": 50
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "pages/login/seccode",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
 			}
 		}, {
 			"path": "pages/professional/professional",

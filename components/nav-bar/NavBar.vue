@@ -8,7 +8,7 @@
 				<view class="navbar-arrow-image" v-if="isArrow && isArrowType === 'image'" @click="handleArrow">
 					<image src="/static/image/study/return.png" mode=""></image>
 				</view>
-				<view class="navbar-arrow-line" v-if="isArrow && isArrowType === 'line'"></view>
+				<view class="navbar-arrow-line" v-if="isArrow && isArrowType === 'line'" @click="handleArrow"></view>
 				<view class="navbar-title" :style="{textAlign: textAlign}">
 					{{ title }}
 				</view>
@@ -30,7 +30,7 @@
 			// 导航栏背景颜色
 			backgroundColor: {
 				type: String,
-				default: '#000000'
+				default: '#fff'
 			},
 			// 是否显示返回箭头
 			isArrow: {
@@ -83,7 +83,6 @@
 			top: 0;
 			left: 0;
 			box-sizing: border-box;
-			padding-left: 32upx;
 			z-index: 999;
 			
 			.navbar-content {
@@ -97,7 +96,7 @@
 			.navbar-arrow-image {
 				position: absolute;
 				top: 50%;
-				left: 0;
+				left: 32upx;
 				transform: translateY(-50%);
 				
 				image {
@@ -110,11 +109,11 @@
 				width: 20upx;
 				height: 20upx;
 				position: absolute;
-				bottom: 20upx;
-				left: 10upx;
+				top: 50%;
+				left: 32upx;
 				border-bottom: 2px solid #000;
 				border-left: 2px solid #000;
-				transform: rotate(45deg);
+				transform: translateY(-50%) rotate(45deg);
 			}
 			
 			.navbar-title {

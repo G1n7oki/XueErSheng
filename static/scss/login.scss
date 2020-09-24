@@ -1,5 +1,4 @@
 .inner {
-	height: 100%;
 	box-sizing: border-box;
 	position: relative;
 	padding: 109upx 69upx 0;
@@ -64,5 +63,19 @@
 		position: absolute;
 		left: 0;
 		bottom: 80upx;
+		
+		.text {
+			font-size: 28upx;
+			font-weight: 500;
+			color: #C0C4CC;
+		}
+		
+		.weixin {
+			width: 80upx;
+			height: 80upx;
+			background: url('https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2866668980,2667750146&fm=26&gp=0.jpg') 0 0 no-repeat;
+			background-size: 100% 100%;
+			margin: 67upx auto 0;
+		}
 	}
 }
