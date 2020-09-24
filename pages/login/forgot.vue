@@ -1,29 +1,29 @@
 <template>
 	<view class="contaier">
 		<NavBar
-			title="密码登陆"
+			title="忘记密码"
 			:is-arrow="true"
 			text-align="center"
 		/>
 		<view class="inner">
 			<view class="title">
-				密码登陆
-			</view>
-			<view class="tips">
-				用户可在我的中修改登录密码
+				忘记密码
 			</view>
 			<view class="input-area">
 				<input v-model="mobile" type="text" value="" placeholder="请输入手机号" />
-				<image class="close" src="/static/image/login/close.png" mode="" @click="clearInput"></image>
+				<!-- <image class="close" src="/static/image/login/close.png" mode="" @click="clearInput"></image> -->
+			</view>
+			<view class="input-area">
+				<input v-model="mobile" type="text" value="" placeholder="请输入验证码" />
+				<view class="text">
+					获取验证码
+				</view>
 			</view>
 			<view class="input-area">
 				<input v-model="password" :type="type" value="" placeholder="请输入密码" />
 				<image class="eye" :src="src" mode="" @click="chooseType"></image>
 			</view>
 			<uButton text="登录" />
-			<navigator class="forgot">
-				忘记密码？
-			</navigator>
 		</view>
 	</view>
 </template>
@@ -32,17 +32,17 @@
 	import NavBar from '@/components/nav-bar/NavBar.vue'
 	import uButton from '@/components/u-button/uButton.vue'
 	export default {
-		name: 'Password',
-		components: {
+		name: 'Forgot',
+		components: { 
 			NavBar,
 			uButton
 		},
 		data() {
 			return {
+				src: '/static/image/login/eyeclose.png',
 				mobile: '',
 				password: '',
-				type: 'password',
-				src: '/static/image/login/eyeclose.png'
+				type: 'password'
 			}
 		},
 		methods: {
@@ -60,5 +60,5 @@
 </script>
 
 <style lang="scss">
-	@import '../../static/scss/password.scss'
+	@import '../../static/scss/forgot.scss'
 </style>

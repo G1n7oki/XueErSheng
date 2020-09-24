@@ -25,6 +25,18 @@
 				"navigationStyle": "custom"
 			}
 		}, {
+			"path": "pages/login/forgot",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "pages/login/modify",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, {
 			"path": "pages/professional/professional",
 			"style": {
 				"navigationBarTitleText": "",

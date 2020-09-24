@@ -18,7 +18,7 @@
 			<view class="resend">
 				还没收到验证码？<text>重新发送</text>
 			</view>
-			<button type="default">登陆</button>
+			<uButton text="登录" />
 		</view>
 	</view>
 </template>
@@ -26,11 +26,13 @@
 <script>
 	import NavBar from '@/components/nav-bar/NavBar.vue'
 	import Seccode from '@/components/seccode/seccode.vue'
+	import uButton from '@/components/u-button/uButton.vue'
 	export default {
 		name: 'Seccode',
 		components: {
 			NavBar,
-			Seccode
+			Seccode,
+			uButton
 		},
 		data() {
 			return {

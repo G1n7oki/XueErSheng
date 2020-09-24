@@ -16,16 +16,24 @@
 		margin-bottom: 105upx;
 	}
 	
-	.button {
-		width: 612upx;
-		height: 80upx;
-		margin: 0;
-		padding: 0;
-		font-size: 32upx;
-		color: #FFFFFF;
-		line-height: 80upx;
-		background-color: #1283FF;
-		margin-top: 120upx;
+	.input-area {
+		position: relative;
+		
+		input {
+			height: 92upx;
+			border-bottom: 1px solid #F5F5F5;
+			font-size: 28upx;
+		}
+		
+		.close {
+			width: 29upx;
+			height: 29upx;
+			position: absolute;
+			top: 50%;
+			right: 0;
+			transform: translateY(-50%);
+			z-index: 10;
+		}
 	}
 	
 	.password-login {
