@@ -13,27 +13,7 @@
 		font-size: 28upx;
 		color: #606266;
 		margin-top: 32upx;
-	}
-	
-	.input-area {
-		position: relative;
-		margin-top: 105upx;
-		
-		input {
-			height: 92upx;
-			border-bottom: 1px solid #F5F5F5;
-			font-size: 28upx;
-		}
-		
-		.close {
-			width: 29upx;
-			height: 29upx;
-			position: absolute;
-			top: 50%;
-			right: 0;
-			transform: translateY(-50%);
-			z-index: 10;
-		}
+		margin-bottom: 105upx;
 	}
 	
 	.button {

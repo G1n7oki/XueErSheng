@@ -6,7 +6,7 @@
 		>
 			<view class="navbar-content">
 				<view class="navbar-arrow-image" v-if="isArrow && isArrowType === 'image'" @click="handleArrow">
-					<image src="/static/image/study/return.png" mode=""></image>
+					<image class="image" src="/static/image/study/return.png" mode=""></image>
 				</view>
 				<view class="navbar-arrow-line" v-if="isArrow && isArrowType === 'line'" @click="handleArrow"></view>
 				<view class="navbar-title" :style="{textAlign: textAlign}">
@@ -99,7 +99,7 @@
 				left: 32upx;
 				transform: translateY(-50%);
 				
-				image {
+				.image {
 					width: 54upx;
 					height: 54upx;
 				}

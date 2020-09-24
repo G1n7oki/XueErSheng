@@ -12,10 +12,7 @@
 			<view class="explain">
 				新用户登陆之后自动生成账号
 			</view>
-			<view class="input-area">
-				<input v-model="mobile" type="text" value="" placeholder="请输入手机号" />
-				<image class="close" src="/static/image/login/close.png" mode="" @click="clearInput"></image>
-			</view>
+			<uInput placeholder="请输入手机号" />
 			<button class="button" type="default">
 				获取验证码
 			</button>
@@ -38,10 +35,14 @@
 </template>
 
 <script>
+	import uInput from '@/components/uInput/uInput.vue'
 	import NavBar from '@/components/nav-bar/NavBar.vue'
 	export default {
 		name: 'Login',
-		components: { NavBar },
+		components: { 
+			NavBar,
+			uInput
+		},
 		data() {
 			return {
 				mobile: '',
@@ -54,14 +55,26 @@
 			this.statusBarHeight = uni.getSystemInfoSync()['statusBarHeight']
 		},
 		methods: {
-			clearInput () {
-				this.mobile = ''
-			},
 			// encryptedData iv code 发给服务器
 			toPhoneLogin (mobile) {
 				uni.login({
 					provider: 'weixin',
 					success(event) {
+						uni.request({
+							url: 'http://xes.test/api/mini',
+							data: {
+								code: event.code,
+								encryptedData: mobile.detail.encryptedData,
+								iv: mobile.detail.iv
+							},
+							method: 'GET',
+							success() {
+								uni.showToast({
+									title: '登录成功',
+									icon: 'none'
+								})
+							}
+						})
 						console.log(event.code)
 						console.log(mobile.detail.encryptedData)
 						console.log(mobile.detail.iv)
