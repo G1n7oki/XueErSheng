@@ -8,6 +8,85 @@
 	}
 }
 
+.discount {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 104upx;
+	background-color: #F69450;
+	padding: 0 32upx;
+	
+	.left {
+		display: flex;
+		align-items: center;
+		
+		.sale {
+			width: 72upx;
+			height: 72upx;
+		}
+		
+		.price-time {
+			margin-left: 18upx;
+			
+			.price {
+				display: flex;
+				align-items: flex-end;
+				
+				.current {
+					display: flex;
+					align-items: center;
+					font-size: 30upx;
+					font-family: DIN;
+					font-weight: bold;
+					color: #fff;
+					line-height: normal;
+					
+					text {
+						font-size: 20upx;
+						margin-left: 8upx;
+					}
+				}
+				
+				.old {
+					display: flex;
+					align-items: center;
+					font-size: 24upx;
+					font-family: DIN;
+					font-weight: 500;
+					text-decoration: line-through;
+					color: #DEDEDE;
+					margin-left: 12upx;
+					
+					text {
+						font-size: 18upx;
+						text-decoration: none;
+						margin-left: 8upx;
+					}
+				}
+			}
+			
+			.time {
+				font-size: 20upx;
+				font-weight: 500;
+				color: #fff;
+			}
+		}
+	}
+	
+	.countdown {
+		display: flex;
+		align-items: center;
+		
+		.text {
+			height: 28upx;
+			line-height: 28upx;
+			font-size: 24upx;
+			font-weight: 500;
+			color: #000000;
+		}
+	}
+}
+
 .tab-bar {
 	display: flex;
 	width: 100%;
@@ -154,12 +233,14 @@
 		.prominent {
 			padding: 41upx 0;
 			
-			.title {
+			.title-area {
 				padding-left: 42upx;
 			}
 			
 			.item {
 				display: flex;
+				align-items: center;
+				margin-bottom: 20upx;
 				
 				image {
 					width: 115upx;
@@ -167,6 +248,7 @@
 				}
 				
 				.con {
+					width: 560upx;
 					
 					.con-title {
 						font-size: 28upx;
@@ -179,6 +261,316 @@
 					}
 				}
 			}
+		}
+	}
+	
+	.catalog {
+		height: 100%;
+		
+		.chapter {
+			padding: 0 32upx 0 84upx;
+			
+			.item {
+				display: flex;
+				justify-content: space-between;
+				margin-bottom: 38upx;
+				
+				.info {
+					width: 463upx;
+					
+					.name {
+						font-size: 28upx;
+						font-weight: 500;
+						color: #303234;
+						
+						&.active {
+							color: #1384FF;
+						}
+						// 播放终止后的颜色
+						&.hover {
+							color: #888;
+						}
+					}
+					
+					.time {
+						font-size: 24upx;
+						font-weight: 500;
+						color: #90949A;
+						margin-top: 10upx;
+						
+						&.active {
+							color: #1384FF;
+						}
+					}
+				}
+				
+				.status-1 {
+					width: 32upx;
+					height: 32upx;
+				}
+				
+				.status-2 {
+					width: 96upx;
+					height: 48upx;
+					background-color: rgba(250, 122, 54, .2);
+					border-radius: 24upx;
+					font-size: 24upx;
+					font-weight: 500;
+					color: #FA7A36;
+					line-height: 48upx;
+					text-align: center;
+					margin-right: -26upx;
+				}
+				
+				.status-3 {
+					width: 32upx;
+					height: 32upx;
+				}
+				
+				.status-4 {
+					width: 32upx;
+					height: 32upx;
+				}
+			}
+		}
+	}
+	
+	.evaluate {
+		height: 100%;
+		
+		.exhibition {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 50upx 32upx;
+			
+			.left {
+				display: flex;
+				align-items: center;
+				
+				.line-point {
+					display: flex;
+					align-items: center;
+					margin-left: 26upx;
+					
+					.line {
+						width: 4upx;
+						height: 66upx;
+						background-color: #F4F7F9;
+						margin-right: 20upx;
+					}
+					
+					.point {
+						text-align: center;
+						
+						.number {
+							font-size: 44upx;
+							font-family: DIN;
+							font-weight: bold;
+							color: #FA7A36;
+						}
+						
+						.unit {
+							font-size: 24upx;
+							font-weight: bold;
+							color: #303234;
+						}
+					}
+				}
+			}
+			
+			button {
+				width: 168upx;
+				height: 64upx;
+				background-color: #1284FF;
+				border-radius: 32upx;
+				line-height: 64upx;
+				font-size: 28upx;
+				font-weight: 500;
+				color: #FFFFFF;
+			}
+		}
+		
+		.split-line {
+			height: 20upx;
+			background-color: #F4F7F9;
+		}
+		
+		.list {
+			padding: 40upx 32upx 0;
+			
+			.top {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				
+				.text {
+					font-size: 24upx;
+					font-family: PingFang SC;
+					font-weight: 500;
+					color: #606266;
+				}
+			}
+			
+			.item {
+				margin-bottom: 52upx;
+				
+				.info {
+					display: flex;
+					justify-content: space-between;
+					padding-top: 40upx;
+					
+					.avatar-name {
+						display: flex;
+						
+						.avatar {
+							width: 80upx;
+							height: 80upx;
+						}
+						
+						.name-tips {
+							margin-left: 24upx;
+							
+							.name {
+								font-size: 28upx;
+								font-weight: bold;
+								color: #303234;
+							}
+							
+							.tips {
+								font-size: 24upx;
+								font-weight: 500;
+								color: #90949A;
+							}
+						}
+					}
+					
+					.date {
+						font-size: 24upx;
+						font-weight: 500;
+						color: #90949A;
+					}
+				}
+				
+				.content {
+					padding-left: 105upx;
+					font-size: 28upx;
+					font-weight: 500;
+					color: #303234;
+					margin-top: 33upx;
+				}
+				
+				.rate {
+					display: flex;
+					justify-content: flex-end;
+					margin-top: 15upx;
+				}
+			}
+		}
+	}
+}
+
+.fiexd {
+	display: flex;
+	width: 100%;
+	height: 110upx;
+	background-color: #fff;
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	
+	.left {
+		display: flex;
+		width: 510upx;
+		padding: 18upx 32upx;
+		box-sizing: border-box;
+		
+		.price-time {
+			
+			.price {
+				display: flex;
+				align-items: flex-end;
+				
+				.current {
+					display: flex;
+					align-items: center;
+					font-size: 38upx;
+					font-family: DIN;
+					font-weight: bold;
+					color: #FA7A36;
+					line-height: normal;
+					
+					text {
+						font-size: 20upx;
+						margin-left: 8upx;
+					}
+				}
+				
+				.old {
+					display: flex;
+					align-items: center;
+					font-size: 28upx;
+					font-family: DIN;
+					font-weight: 500;
+					text-decoration: line-through;
+					color: #C0C4CC;
+					margin-left: 12upx;
+					
+					text {
+						font-size: 18upx;
+						text-decoration: none;
+						margin-left: 8upx;
+					}
+				}
+			}
+			
+			.time {
+				font-size: 20upx;
+				font-weight: 500;
+				color: #90949A;
+			}
+		}
+		
+		.icons {
+			display: flex;
+			
+			.icons-cell {
+				margin-left: 45upx;
+				text-align: center;
+				
+				.icon {
+					width: 40upx;
+					height: 40upx;
+				}
+				
+				.text {
+					font-size: 24upx;
+					font-weight: 500;
+					color: #606266;
+				}
+			}
+		}
+	}
+	
+	.button {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 240upx;
+		height: 110upx;
+		background-color: #4284FF;
+		
+		.icon {
+			font-size: 50upx;
+			font-weight: 400;
+			color: #FEFEFE;
+			margin-right: 12upx;
+		}
+		
+		.text {
+			font-size: 32upx;
+			font-weight: 500;
+			color: #FEFEFE;
 		}
 	}
 }
