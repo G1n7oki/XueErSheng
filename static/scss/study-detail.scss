@@ -1,11 +1,18 @@
-.video {
-	width: 100%;
-	height: 422upx;
+.video-area {
+	overflow: hidden;
+	
+	.video {
+		width: 100%;
+		height: 422upx;
+		float: left;
+	}
 }
 
 .tab-bar {
 	display: flex;
-	padding: 34upx 0 40upx;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 30upx 0 35upx;
 	background-color: #fff;
 	border-bottom: 1px solid #DEDEDE;
 	position: relative;
@@ -22,14 +29,156 @@
 		}
 	}
 	
-	.line {
-		width: 34upx;
-		height: 6upx;
-		background-color: #FA7935;
-		border-radius: 3upx;
+	.line-area {
+		width: 33.333%;
 		position: absolute;
+		bottom: 0;
 		left: 0;
-		bottom: 26upx;
-		transform: translateX(-50%);
+		transition: left .3s ease-in;
+		
+		.line {
+			width: 34upx;
+			height: 6upx;
+			background-color: #FA7935;
+			border-radius: 3upx;
+			position: absolute;
+			left: 50%;
+			bottom: 26upx;
+			transform: translateX(-50%);
+		}
+	}
+}
+
+.swiper {
+	
+	.detail {
+		height: 100%;
+		
+		.info {
+			padding: 44upx 33upx 48upx 33upx;
+			border-bottom: 1px solid #DEDEDE;
+			
+			.top {
+				display: flex;
+				align-items: center;
+				
+				.left {
+					width: 484upx;
+					
+					.name {
+						font-size: 32upx;
+						font-weight: bold;
+						color: #303133;
+						line-height: 48upx;
+					}
+					
+					.date {
+						display: flex;
+						align-items: center;
+						margin-top: 10upx;
+						
+						text {
+							font-size: 24upx;
+							font-weight: 500;
+							color: #606266;
+						}
+					}
+				}
+				
+				.score {
+					text-align: center;
+					margin-left: 109upx;
+					
+					.num {
+						font-size: 44upx;
+						font-family: DIN;
+						font-weight: bold;
+						color: #FA7935;
+					}
+					
+					.text {
+						font-size: 24upx;
+						font-weight: bold;
+						color: #303133;
+					}
+				}
+			}
+			
+			.control {
+				display: flex;
+				justify-content: space-around;
+				margin-top: 50upx;
+				
+				.item {
+					text-align: center;
+					
+					image {
+						width: 40upx;
+						height: 40upx;
+					}
+					
+					.text {
+						font-size: 24upx;
+						font-weight: 500;
+						color: #606266;
+					}
+				}
+			}
+		}
+		
+		.coupon {
+			display: flex;
+			justify-content: space-between;
+			padding: 22upx 32upx;
+			
+			.text {
+				font-size: 28upx;
+				font-weight: 500;
+				color: #303133;
+			}
+		}
+		
+		.split-line {
+			height: 20upx;
+			background-color: #F4F7F9;
+		}
+		
+		.recommend {
+			padding: 41upx 52upx;
+			
+			.text {
+				margin-top: 42upx;
+			}
+		}
+		
+		.prominent {
+			padding: 41upx 0;
+			
+			.title {
+				padding-left: 42upx;
+			}
+			
+			.item {
+				display: flex;
+				
+				image {
+					width: 115upx;
+					height: 110upx;
+				}
+				
+				.con {
+					
+					.con-title {
+						font-size: 28upx;
+						color: #646566;
+					}
+					
+					.con-content {
+						font-size: 24upx;
+						color: #969899;
+					}
+				}
+			}
+		}
 	}
 }

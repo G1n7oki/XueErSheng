@@ -57,4 +57,15 @@
 		font-weight: 500;
 		color: #FFFFFF !important;
 	}
+	
+	.small {
+		width: 108upx;
+		height: 56upx;
+		background-color: #1283FF;
+		border-radius: 28upx;
+		font-size: 28upx;
+		font-weight: 500;
+		line-height: 56upx;
+		color: #FFFFFF !important;
+	}
 </style>

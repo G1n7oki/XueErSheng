@@ -1,6 +1,6 @@
 <template>
 	<view class="beautiful-title">
-		<view class="name">
+		<view class="name" :style="{color: color}">
 			{{ name }}
 		</view>
 		<view class="line"></view>
@@ -14,6 +14,10 @@
 			name: {
 				type: String,
 				default: ''
+			},
+			color: {
+				type: String,
+				default: '#303133'
 			}
 		}
 	}
@@ -21,11 +25,11 @@
 
 <style lang="scss">
 	.beautiful-title {
+		display: inline-block;
 		position: relative;
 		
 		.name {
 			font-size: 32upx;
-			color: #303133;
 			font-weight: bold;
 		}
 		
