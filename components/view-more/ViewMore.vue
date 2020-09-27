@@ -3,9 +3,7 @@
 		<view class="view-text">
 			{{ text }}
 		</view>
-		<view class="view-arrow">
-			
-		</view>
+		<view class="view-arrow"></view>
 	</view>
 </template>
 

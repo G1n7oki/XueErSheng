@@ -55,9 +55,10 @@
 				"navigationStyle": "custom"
 			}
 		}, {
-			"path": "pages/course/review",
+			"path": "pages/topics/index",
 			"style": {
-				"navigationBarTitleText": "直播回顾"
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
 			}
 		}
 	],

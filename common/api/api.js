@@ -29,18 +29,15 @@ export const test = (data) => {
     })
 }
 
-// 轮播图
-export const banner = (data) => {
+export const toLogin = (data) => {
     return http.request({
-        url: '/banner/36kr',
-        method: 'GET', 
-        data,
-		// handle:true
+        url: 'mini',
+        method: 'POST', 
+        data
     })
 }
 
 // 默认全部导出  import api from '@/common/vmeitime-http/'
-export default {
-	test,
-    banner
-}
+// export default {
+// 	login
+// }

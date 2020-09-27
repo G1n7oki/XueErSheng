@@ -1,0 +1,386 @@
+.contaier {
+	height: auto;
+	background-color: #F4F7F9;
+	padding: 0 32upx 32upx;
+	box-sizing: border-box;
+}
+
+.courseList {
+	position: absolute;
+	left: 0;
+	width: 100%;
+	background-color: #fff;
+	z-index: 10;
+	
+	.item {
+		text-align: center;
+		padding: 20upx 0;
+		font-size: 32upx;
+		font-weight: bold;
+	}
+}
+
+.stat {
+	margin: 32upx 0;
+	padding: 34upx 32upx 64upx;
+	background-color: #fff;
+	border-radius: 20upx;
+	
+	.top {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		
+		.left {
+			display: flex;
+			align-items: center;
+			
+			.icon {
+				width: 22upx;
+				height: 26upx;
+				margin-right: 16upx;
+			}
+			
+			.crumbs {
+				display: flex;
+				
+				.crumbs-cell {
+					display: flex;
+					align-items: center;
+					
+					.text {
+						font-size: 24upx;
+						color: #303133;
+					}
+					
+					.symbol {
+						margin: 0 10upx;
+						width: 10upx;
+						height: 10upx;
+						border-right: 1px solid #303133;
+						border-top: 1px solid #303133;
+						transform: rotate(45deg);
+					}
+				}
+			}
+		}
+	}
+	
+	.bot {
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
+		margin-top: 65upx;
+		
+		.number-text {
+			text-align: center;
+			
+			.number {
+				font-size: 44upx;
+				font-family: DIN;
+				font-weight: 400;
+				color: #303133;
+				
+				text {
+					font-size: 24upx;
+					font-weight: 500;
+					color: #C0C4CC;
+					margin-left: 8upx;
+				}
+			}
+			
+			.text {
+				font-size: 24upx;
+				font-weight: 500;
+				color: #606266;
+			}
+			
+			.line {
+				width: 3upx;
+				height: 40upx;
+				background-color: #F4F7F9;
+			}
+		}
+	}
+}
+
+.links {
+	background-color: #fff;
+	border-radius: 20upx;
+	
+	.top {
+		display: flex;
+		justify-content: space-around;
+		padding: 32upx 0;
+		border-bottom: 1px solid #DEDEDE;
+		
+		.item {
+			display: flex;
+			align-items: center;
+			
+			.icon {
+				display: flex;
+				align-items: center;
+				width: 43upx;
+				height: 46upx;
+				margin-right: 28upx;
+			}
+			
+			.text {
+				font-size: 32upx;
+				font-weight: 500;
+				color: #303133;
+			}
+		}
+		
+		.line {
+			width: 1px;
+			height: 120upx;
+			background-color: #DEDEDE;
+		}
+	}
+	
+	.bot {
+		display: flex;
+		justify-content: space-between;
+		padding: 40upx 30upx 48upx;
+		background-color: #fff;
+		border-radius: 20upx;
+		
+		.item {
+			text-align: center;
+			
+			.icon {
+				width: 40upx;
+				height: 40upx;
+			}
+			
+			.text {
+				display: block;
+				font-size: 28upx;
+				font-weight: 500;
+				color: #606266;
+			}
+		}
+	}
+}
+
+.practice {
+	margin-top: 48upx;
+	
+	.practice-title {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		
+		.icon {
+			width: 32upx;
+			height: 32upx;
+		}
+	}
+	
+	.unfinished {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 40upx 32upx;
+		background-color: #fff;
+		margin-top: 33upx;
+		border-radius: 20upx;
+		
+		.info {
+			width: 400upx;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box; 
+			-webkit-box-orient: vertical;
+			-webkit-line-clamp: 2;
+			font-size: 28upx;
+			font-weight: bold;
+			color: #303133;
+		}
+		
+		
+		button {
+			width: 168upx;
+			height: 64upx;
+			background: #007AFF;
+			box-shadow: 0px 3upx 5upx 0px rgba(0, 255, 122, 0.35);
+			border-radius: 32upx;
+			font-size: 28upx;
+			font-weight: 500;
+			color: #FFFFFF;
+		}
+	}
+	
+	.list {
+		margin-top: 34upx;
+		
+		.list-cell {
+			background-color: #fff;
+			padding: 34upx 32upx 42upx;
+			border-radius: 20upx;
+			margin-bottom: 32upx;
+			
+			.title {
+				
+				.icon-name {
+					display: flex;
+					align-items: center;
+					
+					.icon {
+						width: 32upx;
+						height: 32upx;
+					}
+					
+					.name {
+						width: 570upx;
+						overflow: hidden;
+						white-space: nowrap;
+						text-overflow: ellipsis;
+						margin-left: 16upx;
+						font-size: 28upx;
+						font-weight: bold;
+						color: #303133;
+					}
+				}
+				
+				.progress-result {
+					display: flex;
+					align-items: center;
+					margin-top: 10upx;
+					padding-left: 48upx;
+					
+					.progress {
+						width: 186upx;
+					}
+					
+					.result-1 {
+						font-size: 24upx;
+						font-weight: 500;
+						color: #606266;
+						margin-left: 24upx;
+					}
+					
+					.line {
+						width: 3upx;
+						height: 24upx;
+						background-color: #F4F7F9;
+						margin: 0 25upx;
+					}
+					
+					.result-2 {
+						font-size: 24upx;
+						font-weight: 500;
+						color: #606266;
+					}
+				}
+			}
+			
+			.content {
+				display: flex;
+				// height: 0;
+				// opacity: 0;
+				transition: all .3s ease-in;
+				
+				&.active {
+					margin-top: 56upx;
+					opacity: 1;
+					height: auto;
+				}
+				
+				.contet-info {
+					position: relative;
+					
+					.info {
+						height: 140upx;
+						position: relative;
+						
+						.split-line {
+							width: 1px;
+							height: 100%;
+							position: absolute;
+							top: 40upx;
+							left: 5.5upx;
+							background-color: #EFEFEF;
+						}
+						
+						.top {
+							display: flex;
+							justify-content: space-between;
+							align-items: center;
+							height: 86upx;
+							position: relative;
+							padding-left: 46upx;
+							
+							.dot {
+								width: 12upx;
+								height: 12upx;
+								background-color: #DEDEDE;
+								border-radius: 50%;
+								margin-right: 14upx;
+								position: absolute;
+								top: 50%;
+								left: 0;
+								transform: translateY(-50%);
+							}
+							
+							.name {
+								width: 370upx;
+								font-size: 28upx;
+								font-weight: 500;
+								color: #303133;
+								overflow: hidden;
+								text-overflow: ellipsis;
+								white-space: nowrap;
+							}
+							
+							button {
+								width: 96upx;
+								height: 48upx;
+								background-color: rgba(250, 121, 53, .2);
+								border-radius: 24upx;
+								font-size: 24upx;
+								font-weight: 500;
+								color: #FA7935;
+								line-height: 48upx;
+								margin-left: 86upx;
+							}
+						}
+						
+						.bot {
+							display: flex;
+							align-items: center;
+							margin-top: 14upx;
+							padding-left: 46upx;
+							
+							.progress {
+								width: 186upx;
+							}
+							
+							.result-1 {
+								font-size: 24upx;
+								font-weight: 500;
+								color: #606266;
+								margin-left: 24upx;
+							}
+							
+							.line {
+								width: 3upx;
+								height: 24upx;
+								background-color: #F4F7F9;
+								margin: 0 25upx;
+							}
+							
+							.result-2 {
+								font-size: 24upx;
+								font-weight: 500;
+								color: #606266;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

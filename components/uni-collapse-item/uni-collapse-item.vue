@@ -71,6 +71,11 @@
 				// 是否显示序号
 				type: Boolean,
 				default: true
+			},
+			isArrow: {
+				// 是否显示箭头
+				type: Boolean,
+				default: true
 			}
 		},
 		data() {

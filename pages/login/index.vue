@@ -37,6 +37,7 @@
 <script>
 	import NavBar from '@/components/nav-bar/NavBar.vue'
 	import uButton from '@/components/u-button/uButton.vue'
+	import { toLogin } from '@/common/api/api.js'
 	export default {
 		name: 'Login',
 		components: { 
@@ -63,24 +64,13 @@
 				uni.login({
 					provider: 'weixin',
 					success(event) {
-						uni.request({
-							url: 'http://xes.test/api/mini',
-							data: {
-								code: event.code,
-								encryptedData: mobile.detail.encryptedData,
-								iv: mobile.detail.iv
-							},
-							method: 'GET',
-							success() {
-								uni.showToast({
-									title: '登录成功',
-									icon: 'none'
-								})
-							}
+						toLogin({
+							code: event.code,
+							encryptedData: mobile.detail.encryptedData,
+							iv: mobile.detail.iv
+						}).then(response => {
+							console.log(response)
 						})
-						console.log(event.code)
-						console.log(mobile.detail.encryptedData)
-						console.log(mobile.detail.iv)
 					}
 				})
 			}

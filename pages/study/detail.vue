@@ -35,7 +35,7 @@
 				<view class="text">
 					剩
 				</view>
-				<uni-countdown color="#000" :day="1" :hour="23" :minute="14" :second="24" />
+				<uni-countdown color="#D82A13" :day="1" :hour="23" :minute="14" :second="24" />
 				<view class="text">
 					恢复原价
 				</view>

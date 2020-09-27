@@ -9,8 +9,15 @@
 					<image class="image" src="/static/image/study/return.png" mode=""></image>
 				</view>
 				<view class="navbar-arrow-line" v-if="isArrow && isArrowType === 'line'" @click="handleArrow"></view>
-				<view class="navbar-title" :style="{textAlign: textAlign}">
+				<view class="navbar-title" :style="{'justify-content': textAlign, margin: margin + 'rpx'}">
 					{{ title }}
+					<uni-icons 
+						style="margin-left: 18rpx;"
+						color="#0A0A0A" size="16"
+						type="arrowdown"
+						@click="handleCourseList"
+						v-if="isTitleIcon"
+					/>
 				</view>
 			</view>
 		</view>
@@ -19,8 +26,10 @@
 </template>
 
 <script>
+	import UniIcons from '@/components/uni-icons/uni-icons.vue'
 	export default {
 		name: 'NavBar',
+		components: { UniIcons },
 		props: {
 			// 导航栏标题
 			title: {
@@ -40,7 +49,7 @@
 			// 字体是否居中
 			textAlign: {
 				type: String,
-				default: 'left'
+				default: ''
 			},
 			// 箭头类型 image, line
 			isArrowType: {
@@ -51,12 +60,21 @@
 			isEmpty: {
 				type: Boolean,
 				default: true
+			},
+			margin: {
+				type: Number,
+				default: 0
+			},
+			isTitleIcon: {
+				type: Boolean,
+				default: false
 			}
 		},
 		data() {
 			return {
 				// 手机状态栏高度
-				statusBarHeight: 0
+				statusBarHeight: 0,
+				showCourseList: false
 			}
 		},
 		created() {
@@ -69,6 +87,11 @@
 				uni.navigateBack({
 					delta: 1
 				})
+			},
+			// 控制是否显示课程列表
+			handleCourseList() {
+				this.showCourseList = !this.showCourseList
+				this.$emit('showCourseList', this.showCourseList)
 			}
 		}
 	}
@@ -117,6 +140,8 @@
 			}
 			
 			.navbar-title {
+				display: flex;
+				align-items: center;
 				width: 100%;
 				font-size: 40upx;
 				font-weight: bold;

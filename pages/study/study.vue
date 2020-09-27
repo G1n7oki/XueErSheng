@@ -1,6 +1,6 @@
 <template>
 	<view class="contaier">
-		<NavBar title="学习中心" backgroundColor="#F4F7F9" />
+		<NavBar title="学习中心" backgroundColor="#F4F7F9" :margin="32" />
 		<view class="lineChart">
 			<view class="tips">
 				近7天学习时间
@@ -35,9 +35,9 @@
 		</view>
 		<!-- 练习/问答 start -->
 		<view class="exercise-question">
-			<view class="item">
+			<navigator class="item" url="/pages/topics/index">
 				<image src="/static/image/study/exercise.png" mode=""></image>
-			</view>
+			</navigator>
 			<view class="item">
 				<image src="/static/image/study/question.png" mode=""></image>
 			</view>
