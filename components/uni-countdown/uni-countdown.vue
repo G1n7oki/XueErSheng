@@ -2,8 +2,8 @@
 	<view class="uni-countdown">
 		<text v-if="showDay" :style="{ borderColor: borderColor, color: color, backgroundColor: backgroundColor }" class="uni-countdown__number">{{ d }}</text>
 		<text v-if="showDay" :style="{ color: splitorColor }" class="uni-countdown__splitor">天</text>
-		<text :style="{ borderColor: borderColor, color: color, backgroundColor: backgroundColor }" class="uni-countdown__number">{{ h }}</text>
-		<text :style="{ color: splitorColor }" class="uni-countdown__splitor">{{ showColon ? ':' : '时' }}</text>
+		<text v-if="showHour" :style="{ borderColor: borderColor, color: color, backgroundColor: backgroundColor }" class="uni-countdown__number">{{ h }}</text>
+		<text v-if="showHour" :style="{ color: splitorColor }" class="uni-countdown__splitor">{{ showColon ? ':' : '时' }}</text>
 		<text :style="{ borderColor: borderColor, color: color, backgroundColor: backgroundColor }" class="uni-countdown__number">{{ i }}</text>
 		<text :style="{ color: splitorColor }" class="uni-countdown__splitor">{{ showColon ? ':' : '分' }}</text>
 		<text :style="{ borderColor: borderColor, color: color, backgroundColor: backgroundColor }" class="uni-countdown__number">{{ s }}</text>
@@ -15,6 +15,10 @@
 		name: 'UniCountdown',
 		props: {
 			showDay: {
+				type: Boolean,
+				default: true
+			},
+			showHour: {
 				type: Boolean,
 				default: true
 			},
@@ -32,7 +36,7 @@
 			},
 			color: {
 				type: String,
-				default: '#000000'
+				default: '#606266'
 			},
 			splitorColor: {
 				type: String,
@@ -159,7 +163,7 @@
 		/* #endif */
 		flex-direction: row;
 		justify-content: flex-start;
-		padding: 2rpx 0;
+		// padding: 2rpx 0;
 	}
 
 	.uni-countdown__splitor {
@@ -167,8 +171,8 @@
 		display: flex;
 		/* #endif */
 		justify-content: center;
-		line-height: $countdown-height;
-		padding: 5rpx;
+		// line-height: $countdown-height;
+		// padding: 5rpx;
 		font-size: $uni-font-size-sm;
 	}
 
@@ -181,7 +185,7 @@
 		// width: $countdown-width;
 		// height: $countdown-height;
 		// line-height: $countdown-height;
-		margin: 5rpx;
+		// margin: 5rpx;
 		text-align: center;
 		font-size: $uni-font-size-sm;
 	}

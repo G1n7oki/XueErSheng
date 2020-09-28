@@ -156,6 +156,7 @@
 							<view 
 								class="info"
 								v-for="(item, index) in topic.children"
+								:key="item.id"
 							>
 								<view class="split-line" v-if="index + 1 !== topic.children.length"></view>
 								<view class="top">
@@ -196,7 +197,6 @@
 	import ViewMore from '@/components/view-more/ViewMore.vue'
 	import Title from '@/components/title/Title.vue'
 	import Progress from '@/components/progress/progress.vue'
-	import UniSteps from '@/components/uni-steps/uni-steps.vue'
 	import Json from '@/static/data.json'
 	export default {
 		name: 'Topics',
@@ -204,8 +204,7 @@
 			NavBar,
 			ViewMore,
 			Title,
-			Progress,
-			UniSteps
+			Progress
 		},
 		data() {
 			return {
