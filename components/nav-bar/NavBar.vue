@@ -9,7 +9,7 @@
 					<image class="image" src="/static/image/study/return.png" mode=""></image>
 				</view>
 				<view class="navbar-arrow-line" v-if="isArrow && isArrowType === 'line'" @click="handleArrow"></view>
-				<view v-if="isTitle" class="navbar-title" :style="{'justify-content': textAlign, margin: margin + 'rpx'}">
+				<view v-if="isTitle" class="navbar-title" :style="{'justify-content': textAlign, 'margin-left': margin + 'rpx'}">
 					{{ title }}
 					<uni-icons 
 						style="margin-left: 18rpx;"
@@ -120,7 +120,7 @@
 			// 当前练习题目的索引
 			current: {
 				type: Number,
-				default: 0
+				default: 1
 			},
 			// 题目总数
 			total: {

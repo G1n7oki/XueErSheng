@@ -5,9 +5,11 @@
 			is-title="false"
 			is-icons="true"
 			@showPapers="showPapers"
+			:total="total"
+			:current="current"
 		/>
 		<!-- 答题部分 start -->
-		<swiper :duration="500" :style="{height: height}">
+		<swiper :duration="500" :style="{height: height}" @change="changeSwiper">
 			<swiper-item 
 				v-for="issue in issueList"
 				:key="issue.id"
@@ -30,7 +32,7 @@
 								class="option-cell"
 								v-for="(item, index) in issue.option"
 								:key="item.name"
-								@click="handleAnswer(index, item.id, issue)"
+								@click="handleAnswer(index, item, issue)"
 							>
 								<!-- result 1未答 2正确 3错误 -->
 								<view 
@@ -44,11 +46,16 @@
 								</view>
 							</view>
 						</view>
+						<uButton 
+							v-if="issue.type === '多选题'"
+							text="确认答案"
+							@click="handleConfirm"
+						/>
 					</view>
 					<view class="split-line" v-if="issue.analysis"></view>
-					<view class="analysis" v-if="issue.analysis && pattern === 'exercise'">
+					<view class="analysis" v-if="issue.analysis && pattern !== 'exam'">
 						<view class="tips">
-							正确答案 <text class="success">D</text> , 您的答案 <text class="result">C</text> , 用时{{ issue.count }}秒
+							正确答案 <text class="success">{{ issue.correct }}</text> , 您的答案 <text class="result">{{ issue.result }}</text> , 用时{{ issue.count }}秒
 						</view>
 						<view class="stat">
 							<view class="stat-title">
@@ -95,7 +102,7 @@
 							</view>
 						</view>
 					</view>
-					<view v-if="!issue.analysis && pattern === 'exercise'" class="button" @click="handleButton(issue)">
+					<view v-if="!issue.analysis && pattern === 'exercise'" class="button" @click="checkAnalysis(issue)">
 						<uButton text="查看解析" />
 					</view>
 				</scroll-view>
@@ -144,7 +151,10 @@
 				issueList: [],
 				count: 0,
 				timer: null,
-				pattern: 'exercise'
+				pattern: 'exam', // exercise 练习 self-study 自学 exam 考试
+				total: 0,
+				current: 1,
+				confirmList: [] // 多选题选择的答案
 			}
 		},
 		onLoad() {
@@ -156,6 +166,8 @@
 			this.height = wHeight - this.statusBarHeight - 42 + 'px'
 			
 			let list = Json.topics.issueList
+			
+			this.total = list.length
 			
 			// 计算每题的答题时间
 			this.timer = setInterval(() => {
@@ -172,22 +184,66 @@
 				 return
 			 }
 			 
-			 this.pattern === 'exercise' ? this.toExercisePattern(list) : ''
+			 this.pattern === 'exercise' ? this.toExercisePattern(list) : this.pattern === 'self-study' ? this.toSelfStudyPattern(list) : this.toExamPattern(list)
 		},
 		methods: {
+			changeSwiper(event) {
+				this.current = event.detail.current + 1
+			},
 			closePaper() {
 				this.isShowPapers = false
 			},
 			showPapers(val) {
 				this.isShowPapers = val
 			},
-			// 处理数据的方法
+			// 练习模式的数据
 			toExercisePattern(list) {
 				list.forEach(item => {
-					item.once = false // 是否只能答一次
+					let ids = []
 					item.analysis = false // 是否显示解析
 					item.count = 0 // 答题时间
-					item.result = 1 // 每道题目的答题结果
+					item.correct = [] // 解析展示的答案
+					
+					// 给儿子数组添加前端需要的字段
+					item.option.forEach(children => {
+						children.result = 1 // 每道题目的答题结果
+						ids.push(children.id) // 整理children id的集合
+					})
+					
+					// 解析里展示的答案
+					item.answer.split(',').forEach(res => {
+						item.correct.push(item.option[ids.indexOf(res)].name)
+					})
+				})
+				
+				this.issueList = list
+			},
+			// 自学模式的数据
+			toSelfStudyPattern(list) {
+				list.forEach(item => {
+					let ids = []
+					item.analysis = true // 是否显示解析
+					item.count = 0 // 答题时间
+					item.correct = [] // 解析展示的答案
+					
+					// 给儿子数组添加前端需要的字段
+					item.option.forEach(children => {
+						children.result = 1 // 每道题目的答题结果
+						ids.push(children.id) // 整理children id的集合
+					})
+					
+					// 解析里展示的答案
+					item.answer.split(',').forEach(res => {
+						item.correct.push(item.option[ids.indexOf(res)].name)
+						item.option[ids.indexOf(res)].result = 2
+					})
+				})
+				
+				this.issueList = list
+			},
+			// 考试模式的数据
+			toExamPattern(list) {
+				list.forEach(item => {
 					
 					// 给儿子数组添加前端需要的字段
 					item.option.forEach(children => {
@@ -197,30 +253,63 @@
 				
 				this.issueList = list
 			},
-			// 点击按钮
-			handleButton(issue) {
+			// 查看解析
+			checkAnalysis(issue) {
+				const result = issue.answer.split(',')
+				let options = []
+				
+				issue.option.forEach(item => {
+					options.push(item.id)
+				})
+				// 展示正确答案
+				result.forEach((item, index) => {
+					if(options.indexOf(item) !== -1) {
+						const index = options.indexOf(item)
+						issue.option[index].result = 2
+					}
+				})
+				
 				issue.analysis = true
-				issue.option[+issue.answer].result = 2
 			},
 			// 答题
-			handleAnswer(index, id, issue) {
+			handleAnswer(index, item, issue) {
 				// 是否可以答题
-				if (issue.once) {
+				if (issue.analysis) {
 					return
 				}
 				
-				this.single(index, id, issue)
+				issue.type === '单选题' ? this.single(index, item, issue) : this.choice(index, item, issue)
 			},
 			// 单选题
-			single(index, id, issue) {
-				issue.option.forEach(item => {
-					
-				})
-				issue.showAnswer = "D"
-				issue.answer === id ? issue.option[index].result = 2 : issue.option[index].result = 3
-				issue.option[+issue.answer - 1].result = 2 // 展示正确答案
-				issue.once = true
-				issue.analysis = true
+			single(index, item, issue) {
+				if (this.pattern === 'exam') {
+					issue.option.forEach(item => {
+						item.result = 1
+					})
+					issue.option[index].result = 2
+				} else {
+					issue.result = issue.option[index].name
+					issue.answer === item.id ? issue.option[index].result = 2 : issue.option[index].result = 3
+					issue.option[+issue.answer - 1].result = 2 // 展示正确答案
+					issue.analysis = true
+					issue.count = this.count
+					this.count = 0
+				}
+			},
+			// 多选题
+			choice(index, item, issue) {
+				if (this.confirmList.indexOf(item.id) === -1) {
+					this.confirmList.push(item.id)
+					issue.option[index].result = 2
+				} else {
+					let idx = this.confirmList.indexOf(item.id)
+					this.confirmList.splice(idx, 1)
+					issue.option[index].result = 1
+				}
+			},
+			// 多选确认
+			handleConfirm() {
+				
 			}
 		}
 	}

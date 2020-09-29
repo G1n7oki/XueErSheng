@@ -1,0 +1,204 @@
+.contaier-inner {
+	background-color: #F4F7F9;
+	padding: 0 32upx 50upx;
+}
+
+.info-card {
+	background-color: #45B2FF;
+	border-radius: 20px;
+	margin-top: 32upx;
+	padding: 44upx 0 44upx 44upx;
+	position: relative;
+	
+	.info {
+		display: flex;
+		align-items: center;
+		
+		.avatar {
+			width: 122upx;
+			height: 122upx;
+			background: #FFFFFF;
+			border-radius: 50%;
+		}
+		
+		.username-mobile {
+			margin-left: 20upx;
+			
+			.username {
+				font-size: 32upx;
+				font-weight: bold;
+				color: #FFFFFF;
+			}
+			
+			.mobile {
+				font-size: 22upx;
+				font-weight: 500;
+				color: #F0F0F0;
+				margin-top: 24upx;
+			}
+		}
+	}
+	
+	.tips {
+		width: 189upx;
+		height: 63upx;
+		background: linear-gradient(90deg, #FFF26E, #FFD025);
+		border-radius: 32upx 4upx 4upx 32upx;
+		font-size: 28upx;
+		font-weight: 500;
+		color: #CA9300;
+		text-align: center;
+		line-height: 63upx;
+		position: absolute;
+		top: 49upx;
+		right: -1px;
+	}
+	
+	.content {
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+		margin-top: 50upx;
+		
+		.line {
+			width: 4upx;
+			height: 40upx;
+			background-color: rgba(244, 247, 249, .2);
+		}
+		
+		.item {
+			text-align: center;
+			
+			.number {
+				font-size: 44upx;
+				font-family: DIN;
+				font-weight: 400;
+				color: #FFFFFF;
+			}
+			
+			.text {
+				
+				font-size: 24upx;
+				font-weight: 500;
+				color: #F0F0F0;
+			}
+		}
+	}
+}
+
+.me-study {
+	margin-top: 47upx;
+	
+	.box {
+		display: flex;
+		justify-content: space-between;
+		background-color: #fff;
+		border-radius: 20upx;
+		padding: 40upx 27upx;
+		margin-top: 30upx;
+		
+		.item {
+			text-align: center;
+			
+			.icon {
+				width: 54upx;
+				height: 54upx;
+			}
+			
+			.text {
+				font-size: 24upx;
+				font-weight: 500;
+				color: #303133;
+			}
+		}
+	}
+}
+
+.me-status {
+	margin-top: 50upx;
+	
+	.box {
+		position: relative;
+		padding: 32upx;
+		margin-top: 30upx;
+		background: #FFFFFF;
+		border-radius: 20upx;
+		
+		.amend {
+			width: 32upx;
+			height: 32upx;
+			position: absolute;
+			top: 42upx;
+			right: 34upx;
+		}
+		
+		.university {
+			display: flex;
+			
+			.logo {
+				width: 114upx;
+				height: 114upx;
+				border-radius: 50%;
+				background-color: #000;
+			}
+			
+			.info {
+				margin-left: 26upx;
+				
+				.name {
+					font-size: 32upx;
+					font-weight: bold;
+					color: #303133;
+					margin-bottom: 33upx;
+				}
+				
+				.item {
+					font-size: 28upx;
+					font-weight: 500;
+					color: #606266;
+					margin-bottom: 14upx;
+				}
+			}
+		}
+		
+		.button-group {
+			display: flex;
+			justify-content: flex-end;
+			margin-top: 28upx;
+			
+			button {
+				width: 136upx;
+				height: 56upx;
+				box-sizing: border-box;
+				font-size: 28upx;
+				font-weight: 500;
+				line-height: 56upx;
+				border-radius: 28upx;
+				margin-right: 24upx;
+				
+				&.button-1 {
+					color: #1283FF;
+					border: 1px solid #1283FF;
+					background-color: #F6F9FA;
+				}
+				
+				&.button-2 {
+					color: #fff;
+					background-color: #49A0FF;
+				}
+				
+				&.button-3 {
+					color: #fff;
+					background-color: #FA7935;
+				}
+			}
+		}
+	}
+}
+
+.list {
+	padding: 0 32upx;
+	margin-top: 48upx;
+	background-color: #fff;
+	border-radius: 20upx;
+}
