@@ -1,0 +1,175 @@
+.contaier-inner {
+	background-color: #F4F7F9;
+}
+
+.tabbar {
+	display: flex;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 29upx 0 39upx;
+	position: fixed;
+	left: 0;
+	box-sizing: border-box;
+	background-color: #fff;
+	border-bottom: 1px solid #DEDEDE;
+	
+	.item {
+		width: 25%;
+		text-align: center;
+		font-size: 28upx;
+		font-weight: 500;
+		color: #606266;
+		
+		&.active {
+			color: #000000;
+			font-weight: bold;
+		}
+	}
+	
+	.line-area {
+		width: 25%;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		transition: left .3s ease;
+		
+		.line {
+			width: 34upx;
+			height: 6upx;
+			background-color: #FA7A36;
+			border-radius: 3upx;
+			position: absolute;
+			left: 50%;
+			bottom: 25upx;
+			transform: translateX(-50%);
+			
+			&.active {
+				left: 75%;
+			}
+		}
+	}
+}
+
+.list {
+	
+	.item {
+		padding: 32upx 32upx 40upx;
+		background-color: #fff;
+		margin-bottom: 8upx;
+		
+		.info {
+			display: flex;
+			
+			.avatar {
+				width: 80upx;
+				height: 80upx;
+				margin-right: 20upx;
+			}
+			
+			.name-date {
+				
+				.name {
+					font-size: 32upx;
+					font-weight: bold;
+					color: #303133;
+				}
+				
+				.date {
+					font-size: 24upx;
+					font-weight: 500;
+					color: #909399;
+				}
+			}
+		}
+		
+		.content {
+			overflow: hidden;
+			font-size: 32upx;
+			font-weight: 500;
+			color: #303133;
+			margin-top: 32upx;
+		}
+		
+		.original {
+			font-size: 32upx;
+			font-weight: 500;
+			color: #1283FF;
+			margin-top: 28upx;
+		}
+		
+		.images {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+			margin-top: 35upx;
+			
+			.image-1 {
+				width: 321upx;
+				height: 321upx;
+			}
+			
+			.image-9 {
+				width: 218upx;
+				height: 218upx;
+				margin-bottom: 16upx;
+			}
+		}
+		
+		.bot {
+			display: flex;
+			justify-content: space-between;
+			margin-top: 36upx;
+			
+			.read {
+				font-size: 24upx;
+				font-weight: 500;
+				color: #909399;
+			}
+			
+			.icons {
+				display: flex;
+				
+				.icon-cell {
+					display: flex;
+					align-items: center;
+					margin-left: 28upx;
+					
+					.icon {
+						width: 30upx;
+						height: 30upx;
+						background-color: #000;
+					}
+					
+					.number {
+						font-size: 28upx;
+						font-weight: 500;
+						color: #606266;
+						margin-left: 8upx;
+					}
+				}
+			}
+		}
+	}
+}
+
+.issue {
+	width: 120upx;
+	height: 120upx;
+	background-color: #FA7A36;
+	border-radius: 50%;
+	position: fixed;
+	bottom: 158upx;
+	right: 32upx;
+	text-align: center;
+	
+	.icon {
+		width: 42upx;
+		height: 46upx;
+	}
+	
+	.text {
+		font-size: 24upx;
+		font-weight: 500;
+		color: #FFFFFF;
+	}
+}

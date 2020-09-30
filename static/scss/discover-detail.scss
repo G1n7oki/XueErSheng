@@ -1,0 +1,75 @@
+.top-half-part {
+	padding: 0 32upx;
+}
+
+.detail-title {
+	font-size: 32upx;
+	font-weight: bold;
+	color: #303234;
+	margin-top: 20upx;
+}
+
+.space-between {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 40upx 0 50upx;
+	
+	.avatar-name {
+		display: flex;
+		align-items: center;
+		
+		.avatar {
+			width: 40upx;
+			height: 40upx;
+			margin-right: 12upx;
+		}
+		
+		.name {
+			font-size: 24upx;
+			font-weight: 500;
+			color: #303234;
+		}
+	}
+	
+	.date {
+		display: flex;
+		align-items: center;
+		
+		.line {
+			width: 4upx;
+			height: 22upx;
+			background-color: #FA7A36;
+			margin-right: 12upx;
+		}
+		
+		.text {
+			font-size: 24upx;
+			font-weight: 500;
+			color: #606266;
+		}
+	}
+}
+
+.praise {
+	margin-top: 71upx;
+	text-align: center;
+	
+	.icon {
+		width: 52upx;
+		height: 52upx;
+		background-color: #000;
+	}
+	
+	.number {
+		font-size: 28upx;
+		font-weight: 500;
+		color: #606266;
+	}
+}
+
+.split-line {
+	height: 8upx;
+	background: #F4F7F9;
+	margin: 65upx 0 40upx;
+}

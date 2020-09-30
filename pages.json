@@ -78,6 +78,24 @@
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
+		}, {
+			"path": "pages/discover/discover",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "pages/discover/issue",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "pages/discover/detail",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
 		}
 	],
 	"globalStyle": {
@@ -102,7 +120,7 @@
         "selectedIconPath": "static/image/tabBarIco/study-hover.png",
         "text": "学习"
     }, {
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/discover/discover",
         "iconPath": "static/image/tabBarIco/discover.png",
         "selectedIconPath": "static/image/tabBarIco/discover-hover.png",
         "text": "发现"
