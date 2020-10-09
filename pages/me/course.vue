@@ -1,6 +1,6 @@
 <template>
 	<view class="contaier">
-		<NavBar
+		<xes-navbar
 			title="我的课程"
 			:is-arrow="true"
 			text-align="center"
@@ -79,12 +79,12 @@
 </template>
 
 <script>
-	import NavBar from '@/components/nav-bar/NavBar.vue'
+	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import Progress from '@/components/progress/progress.vue'
 	export default {
 		name: 'MeCourse',
 		components: {
-			NavBar,
+			XesNavbar,
 			Progress
 		},
 		data() {

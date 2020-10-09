@@ -44,15 +44,15 @@
 						</view>
 						<view class="icons">
 							<view class="icon-cell">
-								<image class="icon" src="" mode=""></image>
+								<image class="icon" src="/static/image/discover/dianzan@2x.png" mode=""></image>
 								<text class="number">20</text>
 							</view>
 							<view class="icon-cell">
-								<image class="icon" src="" mode=""></image>
+								<image class="icon" src="/static/image/discover/pinglun@2x.png" mode=""></image>
 								<text class="number">18</text>
 							</view>
 							<view class="icon-cell">
-								<image class="icon" src="" mode=""></image>
+								<image class="icon" src="/static/image/discover/fenxiang@2x.png" mode=""></image>
 							</view>
 						</view>
 					</view>
@@ -89,21 +89,18 @@
 				</view>
 			</view>
 			<view class="issue">
-				<image class="icon" src="" mode=""></image>
-				<view class="text">
-					发布
-				</view>
+				<image class="icon" src="/static/image/discover/fabu@2x.png" mode=""></image>
 			</view>
 		</view>
 	</view>
 </template>
 
 <script>
-	import NavBar from '@/components/nav-bar/NavBar.vue'
+	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	export default {
 		name: 'Discover',
 		components: {
-			NavBar
+			XesNavbar
 		},
 		data() {
 			return {

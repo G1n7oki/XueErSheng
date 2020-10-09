@@ -1,6 +1,6 @@
 <template>
 	<view class="contaier">
-		<NavBar 
+		<xes-navbar 
 			is-arrow="true"
 			title="中国近现代史纲要"
 			:margin="60"
@@ -193,7 +193,7 @@
 </template>
 
 <script>
-	import NavBar from '@/components/nav-bar/NavBar.vue'
+	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import ViewMore from '@/components/view-more/ViewMore.vue'
 	import Title from '@/components/title/Title.vue'
 	import Progress from '@/components/progress/progress.vue'
@@ -201,7 +201,7 @@
 	export default {
 		name: 'Topics',
 		components: { 
-			NavBar,
+			XesNavbar,
 			ViewMore,
 			Title,
 			Progress

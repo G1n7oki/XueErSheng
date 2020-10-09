@@ -1,6 +1,6 @@
 <template>
 	<view class="contaier">
-		<NavBar
+		<xes-navbar
 			title="忘记密码"
 			:is-arrow="true"
 			text-align="center"
@@ -29,12 +29,12 @@
 </template>
 
 <script>
-	import NavBar from '@/components/nav-bar/NavBar.vue'
+	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import uButton from '@/components/u-button/uButton.vue'
 	export default {
 		name: 'Forgot',
 		components: { 
-			NavBar,
+			XesNavbar,
 			uButton
 		},
 		data() {

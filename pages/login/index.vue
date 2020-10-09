@@ -1,6 +1,6 @@
 <template>
 	<view class="contaier">
-		<NavBar 
+		<xes-navbar
 			title="登录"
 			text-align="center"
 			:is-arrow="true"
@@ -35,13 +35,13 @@
 </template>
 
 <script>
-	import NavBar from '@/components/nav-bar/NavBar.vue'
+	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import uButton from '@/components/u-button/uButton.vue'
 	import { toLogin } from '@/common/api/api.js'
 	export default {
 		name: 'Login',
 		components: { 
-			NavBar,
+			XesNavbar,
 			uButton
 		},
 		data() {

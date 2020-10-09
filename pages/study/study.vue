@@ -1,6 +1,6 @@
 <template>
 	<view class="contaier">
-		<NavBar title="学习中心" backgroundColor="#F4F7F9" :margin="32" />
+		<xes-navbar title="学习中心" backgroundColor="#F4F7F9" :margin="32" />
 		<view class="lineChart">
 			<view class="tips">
 				近7天学习时间
@@ -185,7 +185,7 @@
 </template>
 
 <script>
-	import NavBar from '@/components/nav-bar/NavBar.vue'
+	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import Progress from '@/components/progress/progress.vue'
 	import uCharts from '@/tools/uChart/u-charts.min.js'
 	import json from '@/static/data.json'
@@ -194,7 +194,7 @@
 	export default {
 		name: 'Study',
 		components: {
-			NavBar,
+			XesNavbar,
 			Progress
 		},
 		data() {

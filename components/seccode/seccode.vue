@@ -62,8 +62,6 @@ isPwd：是否是密码模式
 					<block v-else>	{{ codeArr[5] ? codeArr[5] : ''}}</block>
 				</view>
 			</block>
-			
-			
 		</view>
 	</view>
 </template>

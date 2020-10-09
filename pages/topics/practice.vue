@@ -1,13 +1,14 @@
 <template>
 	<view class="contaier">
-		<NavBar
+		<xes-navbar
 			is-arrow="true"
 			is-title="false"
-			is-icons="true"
-			@showPapers="showPapers"
-			:total="total"
-			:current="current"
-		/>
+		>
+			<xes-tabbar
+				:current="current"
+				:total="total"
+			/>
+		</xes-navbar>
 		<!-- 答题部分 start -->
 		<swiper :duration="500" :style="{height: height}" @change="changeSwiper">
 			<swiper-item 
@@ -109,39 +110,20 @@
 			</swiper-item>
 		</swiper>
 		<!-- 答题部分 end -->
-		<!-- 交卷弹窗 start -->
-		<view class="papers-dialog" v-if="isShowPapers">
-			<view class="papers-dialog__inner">
-				<view class="papers-dialog__inner--title">
-					提示
-				</view>
-				<view class="papers-dialog__inner--content">
-					亲, 还有39道题目未完成
-				</view>
-				<view class="papers-dialog__inner--item">
-					查看未完成的题目
-				</view>
-				<view class="papers-dialog__inner--item">
-					继续提交
-				</view>
-				<view class="papers-dialog__inner--item" @click="closePaper">
-					关闭
-				</view>
-			</view>
-		</view>
-		<!-- 交卷弹窗 end -->
 	</view>
 </template>
 
 <script>
-	import NavBar from '@/components/nav-bar/NavBar.vue'
+	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import uButton from '@/components/u-button/uButton.vue'
+	import XesTabbar from '@/components/xes-tabbar/xes-tabbar.vue'
 	import Json from '@/static/data.json'
 	export default {
 		name: 'Practice',
 		components: {
-			NavBar,
-			uButton
+			XesNavbar,
+			uButton,
+			XesTabbar
 		},
 		data() {
 			return {
@@ -189,12 +171,6 @@
 		methods: {
 			changeSwiper(event) {
 				this.current = event.detail.current + 1
-			},
-			closePaper() {
-				this.isShowPapers = false
-			},
-			showPapers(val) {
-				this.isShowPapers = val
 			},
 			// 练习模式的数据
 			toExercisePattern(list) {

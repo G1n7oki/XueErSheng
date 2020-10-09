@@ -1,7 +1,7 @@
 <template>
 	<view class="contaier">
 		<view class="contaier-inner">
-			<NavBar title="我的" :margin="32" />
+			<xes-navbar title="我的" :margin="32" />
 			<!-- 卡片信息 start -->
 			<view class="info-card">
 				<view class="info">
@@ -161,13 +161,13 @@
 </template>
 
 <script>
-	import NavBar from '@/components/nav-bar/NavBar.vue'
+	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import Title from '@/components/title/Title.vue'
 	import ListItem from '@/components/list-item/list-item.vue'
 	export default {
 		name: 'Me',
 		components: {
-			NavBar,
+			XesNavbar,
 			Title,
 			ListItem
 		},

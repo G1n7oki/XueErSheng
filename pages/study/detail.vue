@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<!-- 导航栏 start -->
-		<NavBar 
+		<xes-navbar 
 			:is-arrow="true"
 			:is-empty="false"
 			is-arrow-type="image"
@@ -415,7 +415,7 @@
 </template>
 
 <script>
-	import NavBar from '@/components/nav-bar/NavBar.vue'
+	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import uButton from '@/components/u-button/uButton.vue'
 	import Title from '@/components/title/Title.vue'
 	import UniCollapse from '@/components/uni-collapse/uni-collapse.vue'
@@ -425,7 +425,7 @@
 	export default {
 		name: 'study-detail',
 		components: {
-			NavBar,
+			XesNavbar,
 			uButton,
 			Title,
 			UniCollapse,

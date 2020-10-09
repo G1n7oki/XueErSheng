@@ -1,6 +1,6 @@
 <template>
 	<view class="contaier">
-		<NavBar 
+		<xes-navbar 
 			title="验证码"
 			:is-arrow="true"
 			text-align="center"
@@ -24,13 +24,13 @@
 </template>
 
 <script>
-	import NavBar from '@/components/nav-bar/NavBar.vue'
+	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import Seccode from '@/components/seccode/seccode.vue'
 	import uButton from '@/components/u-button/uButton.vue'
 	export default {
 		name: 'Seccode',
 		components: {
-			NavBar,
+			XesNavbar,
 			Seccode,
 			uButton
 		},

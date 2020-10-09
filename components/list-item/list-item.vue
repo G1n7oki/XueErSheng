@@ -11,6 +11,12 @@
 </template>
 
 <script>
+	/**
+	 * 列表项目组件
+	 * @property {String} name 列表的名称
+	 * @property {String} icon 列表图片的路径
+	 * @property {String} isBorder 是否显示边框
+	 * */
 	import UniIcons from '@/components/uni-icons/uni-icons.vue'
 	export default {
 		name: 'ListItem',

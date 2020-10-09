@@ -13,3 +13,13 @@ textarea {
 	font-weight: 500;
 	color: #90949A;
 }
+
+.image-group {
+	display: flex;
+	margin-bottom: 25upx;
+		
+	image {
+		width: 200upx;
+		height: 200upx;
+	}
+}
