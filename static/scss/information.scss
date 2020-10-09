@@ -1,0 +1,179 @@
+.contaier {
+	width: 100%;
+	height: 100%;
+	background-color: #F4F7F9;
+	box-sizing: border-box;
+	padding: 0 32upx;
+}
+
+.order-info {
+	background-color: #fff;
+	margin-top: 32upx;
+	padding: 32upx;
+	border-radius: 20upx;
+	
+	.head {
+		display: flex;
+		border-bottom: 1px solid #DEDEDE;
+		padding-bottom: 32upx;
+		
+		.image {
+			flex-shrink: 0;
+			width: 211upx;
+			height: 136upx;
+		}
+		
+		.info {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-around;
+			margin-left: 25upx;
+			
+			.name {
+				width: 380upx;
+				font-size: 28upx;
+				font-weight: bold;
+				color: #303234;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			
+			.date {
+				font-size: 24upx;
+				font-weight: 500;
+				color: #606266;
+			}
+		}
+	}
+	
+	.list {
+		margin-top: 33upx;
+		
+		.item {
+			display: flex;
+			justify-content: space-between;
+			margin-bottom: 26upx;
+			
+			&:nth-last-child(1) {
+				margin-bottom: 0;
+			}
+			
+			.name {
+				font-size: 28upx;
+				font-weight: 500;
+				color: #303234;
+			}
+			
+			.price {
+				font-size: 32upx;
+				font-family: DIN;
+				font-weight: 500;
+				color: #90949A;
+				
+				&.active {
+					color: #FA7A36;
+				}
+				
+				text {
+					font-size: 20upx;
+					font-weight: bold;
+					color: #90949A;
+					margin-left: 6upx;
+					
+					&.active {
+						color: #FA7A36;
+					}
+				}
+			}
+		}
+	}
+}
+
+.coupon-info {
+	background-color: #fff;
+	padding: 0 32upx;
+	border-radius: 20upx;
+	margin-top: 32upx;
+	
+	.item {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		height: 88upx;
+		border-bottom: 1px solid #DEDEDE;
+		
+		&:nth-last-child(1) {
+			border: none;
+		}
+		
+		.name {
+			font-size: 28upx;
+			font-weight: 500;
+			color: #303234;
+		}
+		
+		.detail {
+			display: flex;
+			align-items: center;
+			
+			.text {
+				font-size: 28upx;
+				font-weight: 500;
+				color: #303234;
+				margin-right: 6upx;
+			}
+			
+			.icon {
+				width: 32upx;
+				height: 32upx;
+				margin-left: 14upx;
+			}
+		}
+	}
+}
+
+.fixed-area {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	height: 110upx;
+	background-color: #fff;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	padding: 0 32upx;
+	box-sizing: border-box;
+	
+	.actual {
+		font-size: 24upx;
+		font-weight: 500;
+		color: #90949A;
+		
+		.price {
+			font-size: 44upx;
+			font-family: DIN;
+			font-weight: bold;
+			color: #FA7A36;
+			margin: 0 8upx;
+		}
+		
+		.unit {
+			font-size: 20upx;
+			font-family: PingFang SC;
+			font-weight: bold;
+			color: #FA7A36;
+		}
+	}
+	
+	button {
+		width: 280upx;
+		height: 80upx;
+		background: #FA7A36;
+		border-radius: 40upx;
+		font-size: 32upx;
+		font-weight: 500;
+		color: #FEFEFE;
+	}
+}
