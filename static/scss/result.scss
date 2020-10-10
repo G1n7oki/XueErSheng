@@ -1,0 +1,254 @@
+.contaier {
+	background-color: #F4F7F9;
+}
+
+.placeholder {
+	width: 100%;
+	height: 348upx;
+	position: fixed;
+	top: 0;
+	left: 0;
+}
+
+.result-info {
+	width: 686upx;
+	background-color: #FFFFFF;
+	border-radius: 20upx;
+	margin: 72upx auto 0;
+	position: relative;
+	z-index: 10;
+	padding: 32upx;
+	box-sizing: border-box;
+	
+	.top {
+		display: flex;
+		justify-content: space-between;
+		
+		.info {
+			width: 380upx;
+			
+			.name {
+				font-size: 28upx;
+				font-weight: bold;
+				color: #303133;
+			}
+			
+			.time {
+				font-size: 24upx;
+				font-weight: 500;
+				color: #606266;
+				margin-top: 25upx;
+			}
+		}
+		
+		.progress {
+			width: 160upx;
+			height: 160upx;
+			position: relative;
+			
+			.score-area {
+				width: 100%;
+				position: absolute;
+				text-align: center;
+				top: 50%;
+				left: 0;
+				transform: translateY(-50%);
+				
+				.score {
+					font-size: 44upx;
+					font-family: DIN;
+					font-weight: bold;
+					color: #1283FF;
+					
+					text {
+						font-size: 20upx;
+						font-family: PingFang SC;
+					}
+				}
+				
+				.total {
+					font-size: 20upx;
+					font-weight: bold;
+					color: #C0C4CC;
+				}
+			}
+		}
+	}
+	
+	.bot {
+		display: flex;
+		justify-content: space-between;
+		margin-top: 53upx;
+		
+		.item {
+			text-align: center;
+			
+			.number {
+				font-size: 32upx;
+				font-family: DIN;
+				font-weight: 500;
+				color: #303133;
+			}
+			
+			.name {
+				font-size: 24upx;
+				font-weight: 500;
+				color: #606266;
+			}
+		}
+	}
+}
+
+.answer-sheet {
+	width: 686upx;
+	background-color: #fff;
+	border-radius: 20upx;
+	margin: 33upx auto 0;
+	position: relative;
+	padding: 32upx;
+	box-sizing: border-box;
+	
+	.tips {
+		display: flex;
+		justify-content: space-between;
+		
+		.tips-title {
+			font-size: 32upx;
+			font-weight: bold;
+			color: #303133;
+		}
+		
+		.tips-item {
+			display: flex;
+			
+			.item {
+				display: flex;
+				align-items: center;
+				margin-left: 24upx;
+				
+				.icon {
+					width: 28upx;
+					height: 28upx;
+					border-radius: 50%;
+					
+					&.icon-1 {
+						background-color: #1283FF;
+					}
+					
+					&.icon-2 {
+						background-color: #FA7935;
+					}
+					
+					&.icon-4 {
+						background-color: #F0F0F0;
+					}
+				}
+				.name {
+					font-size: 24upx;
+					font-weight: 500;
+					color: #909399;
+					margin-left: 12upx;
+				}
+			}
+		}
+	}
+	
+	.issue {
+		margin-top: 40upx;
+		
+		.issue-title {
+			display: flex;
+			justify-content: space-between;
+			
+			.name {
+				font-size: 28upx;
+				font-weight: 500;
+				color: #303133;
+			}
+			
+			.amount {
+				font-size: 24upx;
+				font-weight: 500;
+				color: #909399;
+			}
+		}
+		
+		.issue-item {
+			display: flex;
+			flex-wrap: wrap;
+			margin-top: 40upx;
+			
+			.item {
+				width: 64upx;
+				height: 64upx;
+				border-radius: 50%;
+				text-align: center;
+				line-height: 64upx;
+				font-size: 32upx;
+				font-family: DIN;
+				font-weight: 500;
+				margin: 0 64upx 40upx 0;
+				
+				&.item-1 {
+					background-color: #1283FF;
+					color: #FFFFFF;
+				}
+				
+				&.item-2 {
+					background-color: #FA7935;
+					color: #FFFFFF;
+				}
+				
+				&.item-3 {
+					background: url('http://api.liufangshan.com/banner/2.png') 0 0 no-repeat;
+					background-size: 100% 100%;
+					color: #C0C4CC;
+				}
+				
+				&.item-4 {
+					background-color: #EEEEEE;
+					color: #909399;
+				}
+				
+				&:nth-child(5n) {
+					margin-right: 0;
+				}
+			}
+		}
+	}
+}
+
+.button-group {
+	display: flex;
+	justify-content: space-around;
+	width: 100%;
+	padding: 24upx 0;
+	background-color: #fff;
+	box-sizing: border-box;
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	
+	.again {
+		width: 280upx;
+		height: 72upx;
+		border: 2px solid #1283FF;
+		border-radius: 10upx;
+		box-sizing: border-box;
+		font-size: 28upx;
+		font-weight: 500;
+		color: #1283FF;
+		line-height: 72upx;
+	}
+	
+	.answer {
+		width: 280upx;
+		height: 72upx;
+		background-color: #1283FF;
+		border-radius: 10upx;
+		font-size: 28upx;
+		font-weight: 500;
+		color: #FFFFFF;
+		line-height: 72upx;
+	}
+}

@@ -22,7 +22,7 @@
 		>
 			<swiper-item>
 				<scroll-view class="scroll-view" scroll-y="true">
-					<view class="swiper-item">
+					<view class="swiper-item" @click="handleItem">
 						<view class="image-info">
 							<image class="image" src="/static/image/discover/add@2x.png" mode=""></image>
 							<view class="info">
@@ -214,6 +214,11 @@
 			},
 			toId(id) {
 				this.tabbar.index = id
+			},
+			handleItem() {
+				uni.navigateTo({
+					url: '/pages/order/information'
+				})
 			}
 		}
 	}

@@ -1,7 +1,7 @@
 <template>
 	<view class="contaier">
 		<view class="contaier-inner">
-			<NavBar title="发现" :margin="32" />
+			<xes-navbar title="发现" :margin="32" />
 			<!-- tabbar start -->
 			<view class="tabbar" id="tabBar">
 				<view
@@ -88,7 +88,7 @@
 					</view>
 				</view>
 			</view>
-			<view class="issue">
+			<view class="issue" @click="handleIssue">
 				<image class="icon" src="/static/image/discover/fabu@2x.png" mode=""></image>
 			</view>
 		</view>
@@ -135,6 +135,11 @@
 		methods: {
 			handleTabBarItem(id) {
 				this.tabbar.index = id
+			},
+			handleIssue() {
+				uni.navigateTo({
+					url: '/pages/discover/issue'
+				})
 			}
 		}
 	}

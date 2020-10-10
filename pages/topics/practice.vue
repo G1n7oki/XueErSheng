@@ -47,11 +47,12 @@
 								</view>
 							</view>
 						</view>
-						<uButton 
-							v-if="issue.type === '多选题'"
-							text="确认答案"
-							@click="handleConfirm"
-						/>
+						<view @click="handleConfirm(issue)">
+							<uButton
+								v-if="issue.type === '多选题'"
+								text="确认答案"
+							/>
+						</view>
 					</view>
 					<view class="split-line" v-if="issue.analysis"></view>
 					<view class="analysis" v-if="issue.analysis && pattern !== 'exam'">
@@ -135,8 +136,7 @@
 				timer: null,
 				pattern: 'exam', // exercise 练习 self-study 自学 exam 考试
 				total: 0,
-				current: 1,
-				confirmList: [] // 多选题选择的答案
+				current: 1
 			}
 		},
 		onLoad() {
@@ -179,10 +179,12 @@
 					item.analysis = false // 是否显示解析
 					item.count = 0 // 答题时间
 					item.correct = [] // 解析展示的答案
+					item.confirmList = [] // 多选题选择的答案
+					item.result = 0 // 0 为未答 1 为正确 2 为半对 3 为错误
 					
 					// 给儿子数组添加前端需要的字段
 					item.option.forEach(children => {
-						children.result = 1 // 每道题目的答题结果
+						children.result = 1 // 每道题目选择后的高亮的结果
 						ids.push(children.id) // 整理children id的集合
 					})
 					
@@ -204,7 +206,7 @@
 					
 					// 给儿子数组添加前端需要的字段
 					item.option.forEach(children => {
-						children.result = 1 // 每道题目的答题结果
+						children.result = 1 // 每道题目选择后的高亮的结果
 						ids.push(children.id) // 整理children id的集合
 					})
 					
@@ -220,10 +222,11 @@
 			// 考试模式的数据
 			toExamPattern(list) {
 				list.forEach(item => {
-					
+					item.confirmList = []
+					item.result = 0 // 0 为未答 1 为正确 2 为半对 3 为错误
 					// 给儿子数组添加前端需要的字段
 					item.option.forEach(children => {
-						children.result = 1 // 每道题目的答题结果
+						children.result = 1 // 每道题目选择后的高亮的结果
 					})
 				})
 				
@@ -274,18 +277,36 @@
 			},
 			// 多选题
 			choice(index, item, issue) {
-				if (this.confirmList.indexOf(item.id) === -1) {
-					this.confirmList.push(item.id)
+				if (issue.confirmList.indexOf(item.id) === -1) {
+					issue.confirmList.push(item.id)
 					issue.option[index].result = 2
 				} else {
-					let idx = this.confirmList.indexOf(item.id)
-					this.confirmList.splice(idx, 1)
+					let idx = issue.confirmList.indexOf(item.id)
+					issue.confirmList.splice(idx, 1)
 					issue.option[index].result = 1
 				}
 			},
 			// 多选确认
-			handleConfirm() {
-				
+			handleConfirm(issue) {
+				const answer = issue.answer.split(',')
+				const { confirmList } = issue
+				// 判断答题结果为那种类型
+				if (!this.findOne(answer, confirmList)) {
+					issue.result = 3
+					console.log('错误')
+				} else {
+					if (confirmList.length < answer.length) { // 如果选择答案的长度小于标准答案则为半对
+						issue.result = 2
+						console.log('半对')
+					} else { // 否则为全对
+						issue.result = 1
+						console.log('正确')
+					}
+				}
+			},
+			// 检测选择的答案是否在正确答案内
+			findOne(haystack, arr) {
+				return arr.every(item => haystack.indexOf(item) >= 0)
 			}
 		}
 	}

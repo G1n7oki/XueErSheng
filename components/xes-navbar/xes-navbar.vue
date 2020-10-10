@@ -8,11 +8,11 @@
 				<view class="navbar-arrow-image" v-if="isArrow && isArrowType === 'image'" @click="handleArrow">
 					<image class="image" src="/static/image/study/return.png" mode=""></image>
 				</view>
-				<view class="navbar-arrow-line" v-if="isArrow && isArrowType === 'line'" @click="handleArrow"></view>
+				<view class="navbar-arrow-line" :class="{'active': isArrowColor === 'white' }" v-if="isArrow && isArrowType === 'line'" @click="handleArrow"></view>
 				<view 
 					v-if="isTitle"
 					class="navbar-title"
-					:style="{'justify-content': textAlign, 'margin-left': margin + 'rpx'}"
+					:style="{'justify-content': textAlign, 'margin-left': margin + 'rpx', color: color}"
 					@click="handleCourseList"
 				>
 					{{ title }}
@@ -36,6 +36,7 @@
 	/**
 	 * 导航栏组件
 	 * @property {String} title 导航栏标题
+	 * @property {String} color 导航栏标题字体颜色
 	 * @property {String} backgroundColor 导航栏背景颜色
 	 * @property {Boolean} isArrow 导航栏是否显示箭头
 	 * @property {String} textAlign 导航栏标题文字所在的位置
@@ -44,7 +45,9 @@
 	 * @property {Number} margin 标题和边界的空隙
 	 * @property {Boolean} isTitleIcon 是否显示标题旁的icon
 	 * @property {Boolean} isTitle 是否显示标题
+	 * @property {String} isArrowColor 线体箭头的颜色
 	 * @event {Function} handleCourseList 控制元素显示隐藏 
+	 * @event {Function} handleArrow 返回上一级页面
 	 * */
 	import UniIcons from '@/components/uni-icons/uni-icons.vue'
 	export default {
@@ -57,6 +60,11 @@
 			title: {
 				type: String,
 				default: ''
+			},
+			// 标题字体颜色
+			color: {
+				type: String,
+				default: '#303133'
 			},
 			// 导航栏背景颜色
 			backgroundColor: {
@@ -77,6 +85,11 @@
 			isArrowType: {
 				type: String,
 				default: 'line'
+			},
+			// 箭头颜色
+			isArrowColor: {
+				type: String,
+				default: 'black'
 			},
 			// 是否需要空元素占位
 			isEmpty: {
@@ -164,6 +177,11 @@
 				border-bottom: 2px solid #000;
 				border-left: 2px solid #000;
 				transform: translateY(-50%) rotate(45deg);
+				
+				&.active {
+					border-bottom: 2px solid #fff;
+					border-left: 2px solid #fff;
+				}
 			}
 			
 			.navbar-title {
@@ -172,7 +190,6 @@
 				width: 100%;
 				font-size: 40upx;
 				font-weight: bold;
-				color: #303133;
 			}
 			
 			.navbar-cover {
