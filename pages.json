@@ -120,6 +120,18 @@
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
+		}, {
+			"path": "pages/course/process",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "pages/course/review",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
 		}
 	],
 	"globalStyle": {

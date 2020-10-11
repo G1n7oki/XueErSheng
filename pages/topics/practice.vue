@@ -145,7 +145,7 @@
 			// 获取手机状态栏高度
 			this.statusBarHeight = uni.getSystemInfoSync()['statusBarHeight']
 			
-			this.height = wHeight - this.statusBarHeight - 42 + 'px'
+			this.height = wHeight - this.statusBarHeight - 44 + 'px'
 			
 			let list = Json.topics.issueList
 			

@@ -63,19 +63,19 @@
 					</view>
 				</view>
 				<view class="icon-list">
-					<view class="icon-cell">
+					<view class="icon-cell" @click="navigate('/pages/course/process', 0)">
 						<image class="icon" src="/static/image/home/main-icon.png" mode=""></image>
 						<text class="name">考生必看</text>
 					</view>
-					<view class="icon-cell">
+					<view class="icon-cell" @click="navigate('/pages/course/process', 1)">
 						<image class="icon" src="/static/image/home/main-icon.png" mode=""></image>
 						<text class="name">报考流程</text>
 					</view>
-					<view class="icon-cell">
+					<view class="icon-cell" @click="navigate('/pages/course/review', 0)">
 						<image class="icon" src="/static/image/home/main-icon.png" mode=""></image>
 						<text class="name">直播回顾</text>
 					</view>
-					<view class="icon-cell">
+					<view class="icon-cell" @click="navigate('/pages/me/course')">
 						<image class="icon" src="/static/image/home/main-icon.png" mode=""></image>
 						<text class="name">我的课程</text>
 					</view>
@@ -305,6 +305,11 @@
 			handleSwitch () {
 				uni.navigateTo({
 					url: '/pages/professional/professional'
+				})
+			},
+			navigate(url, id) {
+				uni.navigateTo({
+					url: url + '?id=' + id
 				})
 			}
 		},
