@@ -257,7 +257,7 @@
 		},
 		data() {
 			return {
-				isPay: true,
+				isPay: false,
 				treeList: [],
 				liveList: [],
 				courseList: [],
@@ -266,7 +266,7 @@
 				filter: false
 			}
 		},
-		onLoad() {
+		onLoad(options) {
 			this.liveList = json.home.liveList
 			this.courseList = json.home.courseList
 			this.filterList = json.home.filterList

@@ -105,7 +105,7 @@
 		<view class="practice">
 			<view class="practice-title">
 				<Title name="章节精练" />
-				<image class="icon" src="/static/image/topics/shehzi@2x.png" mode=""></image>
+				<image class="icon" src="/static/image/topics/shehzi@2x.png" mode="" @click="toSet"></image>
 			</view>
 			<view class="unfinished">
 				<view class="info">
@@ -244,6 +244,11 @@
 					if (item.id === id) {
 						item.isOpen = !item.isOpen
 					}
+				})
+			},
+			toSet() {
+				uni.navigateTo({
+					url: '/pages/topics/set'
 				})
 			}
 		}

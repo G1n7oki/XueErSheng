@@ -111,10 +111,10 @@
 					icon="/static/image/me/wodewenda@2x.png"
 					name="我的问答"
 				/>
-				<list-item
+				<!-- <list-item
 					icon="/static/image/me/wodehuancun@2x.png"
 					name="我的缓存"
-				/>
+				/> -->
 				<list-item
 					icon="/static/image/me/wodeshoucang@2x.png"
 					name="我的收藏"

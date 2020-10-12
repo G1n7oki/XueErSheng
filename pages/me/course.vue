@@ -19,10 +19,21 @@
 			<view class="line" :class="{'active': tabbar.index === 1}"></view>
 		</view>
 		<!-- tabbar end -->
-		<swiper class="swiper" :current="tabbar.index" :duration="500" :style="{height: height}" @change="changeSwiper">
+		<swiper 
+			class="swiper"
+			:current="tabbar.index"
+			:duration="500"
+			:style="{height: height}"
+			@change="changeSwiper"
+		>
 			<swiper-item>
 				<scroll-view class="scroll-view" scroll-y="true">
-					<view class="scroll-view__item">
+					<empty v-if="courseList.length <= 0" />
+					<view
+						class="scroll-view__item"
+						v-for="item in courseList"
+						:key="item.id"
+					>
 						<image class="image" src="/static/image/study/question.png" mode=""></image>
 						<view class="info">
 							<view class="name">
@@ -49,7 +60,12 @@
 			</swiper-item>
 			<swiper-item>
 				<scroll-view class="scroll-view" scroll-y="true">
-					<view class="scroll-view__item">
+					<empty v-if="liveList.length <= 0" />
+					<view 
+						class="scroll-view__item"
+						v-for="item in liveList"
+						:key="item.id"
+					>
 						<image class="image" src="/static/image/study/question.png" mode=""></image>
 						<view class="info">
 							<view class="name">
@@ -81,11 +97,15 @@
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import Progress from '@/components/progress/progress.vue'
+	import Empty from '@/components/empty/empty.vue'
+	import { me_course } from '@/common/api/api.js'
+	import { showToast } from '@/tools/util/util.js'
 	export default {
 		name: 'MeCourse',
 		components: {
 			XesNavbar,
-			Progress
+			Progress,
+			Empty
 		},
 		data() {
 			return {
@@ -99,7 +119,9 @@
 					}],
 					index: 0
 				},
-				height: 0
+				height: 0,
+				courseList: [],
+				liveList: []
 			}
 		},
 		onLoad() {
@@ -114,6 +136,8 @@
 				const tHeight = res.height
 				that.height = wHeight - tHeight - statusBarHeight - 42 + 'px'
 			}).exec()
+			
+			this.toMeCourse()
 		},
 		methods: {
 			handleTabBarItem(id) {
@@ -121,6 +145,17 @@
 			},
 			changeSwiper(e) {
 				this.tabbar.index = e.detail.current
+			},
+			toMeCourse() {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				me_course().then(response => {
+					console.log(response)
+					uni.hideLoading()
+				}).catch(error => {
+					console.log(error)
+				})
 			}
 		}
 	}

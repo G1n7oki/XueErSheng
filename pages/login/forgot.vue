@@ -60,5 +60,56 @@
 </script>
 
 <style lang="scss">
-	@import '../../static/scss/forgot.scss'
+	.inner {
+		padding: 0 70upx;
+		
+		.title {
+			font-size: 44upx;
+			font-weight: bold;
+			color: #303133;
+			margin-top: 108upx;
+			margin-bottom: 90upx;
+		}
+		
+		.input-area {
+			position: relative;
+			
+			input {
+				height: 92upx;
+				border-bottom: 1px solid #F5F5F5;
+				font-size: 28upx;
+			}
+			
+			.close {
+				width: 29upx;
+				height: 29upx;
+				position: absolute;
+				top: 50%;
+				right: 0;
+				transform: translateY(-50%);
+				z-index: 10;
+			}
+			
+			.eye {
+				width: 35upx;
+				height: 30upx;
+				position: absolute;
+				top: 50%;
+				right: 0;
+				transform: translateY(-50%);
+				z-index: 10;
+			}
+			
+			.text {
+				font-size: 28upx;
+				font-weight: 500;
+				color: #1283FF;
+				position: absolute;
+				top: 50%;
+				right: 0;
+				transform: translateY(-50%);
+				z-index: 10;
+			}
+		}
+	}
 </style>

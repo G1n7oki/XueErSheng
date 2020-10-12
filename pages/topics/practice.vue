@@ -10,7 +10,12 @@
 			/>
 		</xes-navbar>
 		<!-- 答题部分 start -->
-		<swiper :duration="500" :style="{height: height}" @change="changeSwiper">
+		<swiper 
+			class="swiper"
+			:duration="500"
+			:style="{height: height}"
+			@change="changeSwiper"
+		>
 			<swiper-item 
 				v-for="issue in issueList"
 				:key="issue.id"
@@ -134,7 +139,7 @@
 				issueList: [],
 				count: 0,
 				timer: null,
-				pattern: 'exam', // exercise 练习 self-study 自学 exam 考试
+				pattern: uni.getStorageSync('pattern') || 'exercise', // exercise 练习 self-study 自学 exam 考试
 				total: 0,
 				current: 1
 			}
