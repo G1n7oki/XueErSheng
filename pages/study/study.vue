@@ -45,7 +45,7 @@
 		<!-- 练习/问答 end -->
 		<!-- 课程/直播课 start -->
 		<view class="course-live">
-			<view class="tab">
+			<view class="tab" id="tabBar">
 				<view class="item" @click="handleTabItem(0)">
 					<text>我的课程</text>
 				</view>
@@ -54,84 +54,54 @@
 				</view>
 				<view class="line" :class="{'active': tabIndex === 1}"></view>
 			</view>
-			<swiper :current="tabIndex" :duration="1000" :style="{height: calculatedHeight}" @change="touchSwiper">
+			<swiper 
+				class="swiper"
+				:current="tabIndex"
+				:duration="500"
+				:style="{height: swiperH}"
+				@change="touchSwiper">
 				<swiper-item>
-					<view class="course-list">
-						<view 
-							class="item"
-							v-for="course in courseList"
-							:key="course.id"
-						>
-							<image class="image" :src="course.image" mode=""></image>
-							<view class="info">
-								<view class="name">
-									{{ course.name }}
-								</view>
-								<view class="validity">
-									课程有效期还剩：{{ course.validity }}天
-								</view>
-								<view class="bot">
-									<view class="progress">
-										<Progress 
-											:percent="course.progress" 
-											:show-info="false"
-											:stroke-width="3"
-										/>
-									</view>
-									<view class="text">
-										学习进度 {{ course.progress }}%
-									</view>
-								</view>
-							</view>
-						</view>
-					</view>
-				</swiper-item>
-				<swiper-item>
-					<view class="live live-area">
-						<view class="live-list">
+					<scroll-view class="scroll-view" scroll-y="true" >
+						<empty />
+						<view class="course-list">
 							<view 
-								class="item" 
-								v-for="live in liveList"
-								:key="live.id"
+								class="item"
+								v-for="course in courseList"
+								:key="course.id"
 							>
-								<image class="avatar" :src="live.avatar" mode=""></image>
+								<image class="image" :src="course.image" mode=""></image>
 								<view class="info">
-									<view class="type-title">
-										<view class="type">
-											{{ live.type }}
-										</view>
-										<view class="title">
-											{{ live.name }}
-										</view>
+									<view class="name">
+										{{ course.name }}
+									</view>
+									<view class="validity">
+										课程有效期还剩：{{ course.validity }}天
 									</view>
 									<view class="bot">
-										<view class="user-status">
-											<view class="user">
-												{{ live.user }} <text>{{ live.title }}</text>
-											</view>
-											<view class="status">
-												{{ live.status === 1 ? '正在直播' : live.time }}
-												<image v-if="live.status === 1" src="/static/image/home/live.png" mode=""></image>
-											</view>
+										<view class="progress">
+											<Progress 
+												:percent="course.progress" 
+												:show-info="false"
+												:stroke-width="3"
+											/>
 										</view>
-										<button v-if="live.status === 1" class="button button-1" type="default">
-											进入直播
-										</button>
-										<button v-if="live.status === 2" class="button button-2" type="default">
-											已预约
-										</button>
+										<view class="text">
+											学习进度 {{ course.progress }}%
+										</view>
 									</view>
 								</view>
 							</view>
 						</view>
-						<view class="split">
-							直播回顾
-						</view>
-						<view class="live-list">
+					</scroll-view>
+				</swiper-item>
+				<swiper-item>
+					<scroll-view class="scroll-view" scroll-y="true" >
+						<empty />
+						<view class="live live-area">
 							<view class="live-list">
 								<view 
 									class="item" 
-									v-for="live in historyList"
+									v-for="live in liveList"
 									:key="live.id"
 								>
 									<image class="avatar" :src="live.avatar" mode=""></image>
@@ -154,15 +124,56 @@
 													<image v-if="live.status === 1" src="/static/image/home/live.png" mode=""></image>
 												</view>
 											</view>
-											<button class="button button-1" type="default">
-												开始学习
+											<button v-if="live.status === 1" class="button button-1" type="default">
+												进入直播
+											</button>
+											<button v-if="live.status === 2" class="button button-2" type="default">
+												已预约
 											</button>
 										</view>
 									</view>
 								</view>
 							</view>
+							<view class="split" v-if="liveList.length > 0">
+								直播回顾
+							</view>
+							<view class="live-list">
+								<view class="live-list">
+									<view 
+										class="item" 
+										v-for="live in historyList"
+										:key="live.id"
+									>
+										<image class="avatar" :src="live.avatar" mode=""></image>
+										<view class="info">
+											<view class="type-title">
+												<view class="type">
+													{{ live.type }}
+												</view>
+												<view class="title">
+													{{ live.name }}
+												</view>
+											</view>
+											<view class="bot">
+												<view class="user-status">
+													<view class="user">
+														{{ live.user }} <text>{{ live.title }}</text>
+													</view>
+													<view class="status">
+														{{ live.status === 1 ? '正在直播' : live.time }}
+														<image v-if="live.status === 1" src="/static/image/home/live.png" mode=""></image>
+													</view>
+												</view>
+												<button class="button button-1" type="default">
+													开始学习
+												</button>
+											</view>
+										</view>
+									</view>
+								</view>
+							</view>
 						</view>
-					</view>
+					</scroll-view>
 				</swiper-item>
 			</swiper>
 		</view>
@@ -187,6 +198,8 @@
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import Progress from '@/components/progress/progress.vue'
+	import Empty from '@/components/empty/empty.vue'
+	import { me_course, me_live } from '@/common/api/api.js'
 	import uCharts from '@/tools/uChart/u-charts.min.js'
 	import json from '@/static/data.json'
 	let canvasLine = null
@@ -195,7 +208,8 @@
 		name: 'Study',
 		components: {
 			XesNavbar,
-			Progress
+			Progress,
+			Empty
 		},
 		data() {
 			return {
@@ -216,14 +230,22 @@
 			this.cHeight = uni.upx2px(308)
 			this.showLine('canvasLine')
 			
-			this.courseList = json.study.courseList
-			this.liveList = json.study.liveList
-			this.historyList = json.study.historyList
-		},
-		computed: {
-			calculatedHeight () {
-				return this.swiperH = this.tabIndex === 0 ? this.courseList.length * 216 + 'rpx' : (this.liveList.length * 240) + (this.historyList.length * 240) + 64 + 'rpx'
-			}
+			// 屏幕的高度
+			const wHeight = uni.getSystemInfoSync()['windowHeight']
+			// 获取手机状态栏高度
+			const statusBarHeight = uni.getSystemInfoSync()['statusBarHeight']
+			// tabBar的高度
+			const query = uni.createSelectorQuery().in(this)
+			query.select('#tabBar').boundingClientRect(res => {
+				const tHeight = res.height
+				that.swiperH = wHeight - tHeight - statusBarHeight - 50 + 'px'
+			}).exec()
+			
+			// this.courseList = json.study.courseList
+			// this.liveList = json.study.liveList
+			// this.historyList = json.study.historyList
+			
+			this.toMeCourse()
 		},
 		methods: {
 			showLine(canvasId) {
@@ -298,6 +320,30 @@
 			// 关闭上次观看提示
 			handleClose () {
 				this.close = true
+			},
+			async toMeCourse() {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				// 我的课程数据
+				const course = await me_course()
+				console.log(course)
+				if (course.statusCode === 200) {
+					this.courseList = course.data.data
+				} else {
+					showToast(course.data.message)
+					uni.hideLoading()
+					return false
+				}
+				// 我的直播课数据
+				const live = await me_live()
+				console.log(live)
+				if (live.statusCode === 200) {
+					this.liveList = course.data.data
+				} else {
+					showToast(live.data.message)
+				}
+				uni.hideLoading()
 			}
 		}
 	}

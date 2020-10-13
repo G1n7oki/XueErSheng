@@ -20,8 +20,10 @@
 				<input v-model="password" :type="type" value="" placeholder="请输入密码" />
 				<image class="eye" :src="src" mode="" @click="chooseType"></image>
 			</view>
-			<uButton text="登录" />
-			<navigator class="forgot">
+			<view @click="handleLogin">
+				<uButton text="登录" />
+			</view>
+			<navigator url="/pages/login/forgot" hover-class="none" class="forgot">
 				忘记密码？
 			</navigator>
 		</view>
@@ -31,6 +33,9 @@
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import uButton from '@/components/u-button/uButton.vue'
+	import { login } from '@/common/api/api.js'
+	import { isMobile } from '@/tools/verify/verify.js'
+	import { showToast } from '@/tools/util/util.js'
 	export default {
 		name: 'Password',
 		components: {
@@ -53,6 +58,17 @@
 				} else {
 					this.type = 'password'
 					this.src = '/static/image/login/eyeclose.png'
+				}
+			},
+			handleLogin() {
+				if (!isMobile(this.mobile)) {
+					showToast('请输入正确的手机号码')
+					return false
+				}
+				
+				if (this.password === '') {
+					showToast('密码不能为空')
+					return false
 				}
 			}
 		}

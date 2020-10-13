@@ -32,6 +32,15 @@ export const seccode_login = (data) => {
 	})
 }
 
+// 账号密码登录
+export const login = (data) => {
+	return http.request({
+		url: 'login',
+		method: 'POST', 
+		data
+	})
+}
+
 // 选择专业
 export const professional = (data) => {
 	return http.request({
@@ -50,10 +59,46 @@ export const home = (data) => {
 	})
 }
 
+// 全部课程
+export const courses = (data) => {
+	return http.request({
+		url: 'courses',
+		method: 'GET',
+		data
+	})
+}
+
 // 我的课程
 export const me_course = (data) => {
 	return http.request({
 		url: 'course',
+		method: 'GET',
+		data
+	})
+}
+
+// 我的直播课
+export const me_live = (data) => {
+	return http.request({
+		url: 'live',
+		method: 'GET',
+		data
+	})
+}
+
+// 当前用户信息
+export const userinfo = (data) => {
+	return http.request({
+		url: 'users/info',
+		method: 'GET',
+		data
+	})
+}
+
+// 章节精练
+export const refine = (data) => {
+	return http.request({
+		url: 'refine',
 		method: 'GET',
 		data
 	})

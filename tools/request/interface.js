@@ -43,8 +43,12 @@ export default {
 		
 		if (token) {
 			options.header = {
-				token
+				Authorization: token
 			}
+		}
+		
+		options.header = {
+			'X-Requested-With': 'XMLHttpRequest'
 		}
 
 		return new Promise((resolve, reject) => {
@@ -70,6 +74,7 @@ export default {
 				if (statusCode === 200) { //成功
 					resolve(response)
 				} else {
+					console.log(response)
 					reject(response)
 				}
 			}

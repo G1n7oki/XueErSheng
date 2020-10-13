@@ -5,13 +5,13 @@
 			<!-- 卡片信息 start -->
 			<view class="info-card">
 				<view class="info">
-					<image class="avatar" src="" mode=""></image>
+					<image class="avatar" :src="info.avatars" mode=""></image>
 					<view class="username-mobile">
 						<view class="username">
-							青青子衿-0815
+							{{ info.username }}
 						</view>
 						<view class="mobile">
-							188****2365
+							{{ info.login_tel }}
 						</view>
 					</view>
 				</view>
@@ -53,19 +53,19 @@
 				<title name="我的学习" />
 				<view class="box">
 					<view class="item">
-						<image class="icon" src="/static/image/me/banzhuren@2x.png" mode=""></image>
+						<image class="icon" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
 						<view class="text">我的班主任</view>
 					</view>
 					<view class="item">
-						<image class="icon" src="/static/image/me/ai@2x.png" mode=""></image>
+						<image class="icon" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
 						<view class="text">AI智能评估</view>
 					</view>
 					<view class="item">
-						<image class="icon" src="/static/image/me/wodekecheng@2x.png" mode=""></image>
+						<image class="icon" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
 						<view class="text">我的课程</view>
 					</view>
 					<view class="item">
-						<image class="icon" src="/static/image/me/xuexijilu@2x.png" mode=""></image>
+						<image class="icon" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
 						<view class="text">学习记录</view>
 					</view>
 				</view>
@@ -75,9 +75,9 @@
 			<view class="me-status">
 				<title name="我的学籍" />
 				<view class="box">
-					<image class="amend" src="/static/image/me/xiugai@2x.png" mode=""></image>
+					<image class="amend" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
 					<view class="university">
-						<image class="logo" src="" mode=""></image>
+						<image class="logo" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
 						<view class="info">
 							<view class="name">
 								[2021级] 南昌大学
@@ -104,11 +104,11 @@
 			<!-- 列表1 start -->
 			<view class="list">
 				<list-item
-					icon="/static/image/me/wodedingdan@2x.png"
+					icon="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg"
 					name="我的订单"
 				/>
 				<list-item
-					icon="/static/image/me/wodewenda@2x.png"
+					icon="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg"
 					name="我的问答"
 				/>
 				<!-- <list-item
@@ -116,11 +116,11 @@
 					name="我的缓存"
 				/> -->
 				<list-item
-					icon="/static/image/me/wodeshoucang@2x.png"
+					icon="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg"
 					name="我的收藏"
 				/>
 				<list-item
-					icon="/static/image/me/jifenshangcheng@2x.png"
+					icon="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg"
 					name="积分商城"
 					:is-border="false"
 				/>
@@ -129,15 +129,15 @@
 			<!-- 列表2 start -->
 			<view class="list">
 				<list-item
-					icon="/static/image/me/bangzhuyufankuio@2x.png"
+					icon="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg"
 					name="帮助与反馈"
 				/>
 				<list-item
-					icon="/static/image/me/guanyuwomen@2x.png"
+					icon="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg"
 					name="关于我们"
 				/>
 				<list-item
-					icon="/static/image/me/duihuanma@2x.png"
+					icon="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg"
 					name="兑换码核销"
 					:is-border="false"
 				/>
@@ -146,11 +146,11 @@
 			<!-- 列表3 start -->
 			<view class="list">
 				<list-item
-					icon="/static/image/me/xiaoxi@2x.png"
+					icon="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg"
 					name="消息"
 				/>
 				<list-item
-					icon="/static/image/me/shezhi@2x.png"
+					icon="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg"
 					name="设置"
 					:is-border="false"
 				/>
@@ -164,6 +164,8 @@
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import Title from '@/components/title/Title.vue'
 	import ListItem from '@/components/list-item/list-item.vue'
+	import { userinfo } from '@/common/api/api.js'
+	import { showToast } from '@/tools/util/util.js'
 	export default {
 		name: 'Me',
 		components: {
@@ -172,7 +174,26 @@
 			ListItem
 		},
 		data() {
-			return {}
+			return {
+				info: {}
+			}
+		},
+		onLoad() {
+			this.toUserinfo()
+		},
+		methods: {
+			toUserinfo() {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				userinfo().then(response => {
+					this.info = response.data.data
+					uni.hideLoading()
+				}).catch(error => {
+					uni.hideLoading()
+					showToast(error.data.message)
+				})
+			}
 		}
 	}
 </script>

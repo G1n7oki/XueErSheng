@@ -135,7 +135,7 @@
 							<view class="progress">
 								<Progress
 									:strokeWidth="3"
-									:percent="topic.correct / topic.total *100"
+									:percent="topic.correct / topic.total * 100"
 									:show-info="false"
 								/>
 							</view>
@@ -148,43 +148,44 @@
 							</view>
 						</view>
 					</view>
-					<view 
-						class="content"
-						:class="{'active': topic.isOpen}"
-					>
-						<view class="contet-info">
-							<view 
-								class="info"
-								v-for="(item, index) in topic.children"
-								:key="item.id"
-							>
-								<view class="split-line" v-if="index + 1 !== topic.children.length"></view>
-								<view class="top">
-									<view class="dot"></view>
-									<view class="name">
-										{{ item.name }}
+					<uni-transition :show="topic.isOpen" :modeClass="['fade']">
+						<view
+							class="content"
+						>
+							<view class="contet-info">
+								<view 
+									class="info"
+									v-for="(item, index) in topic.children"
+									:key="item.id"
+								>
+									<view class="split-line" v-if="index + 1 !== topic.children.length"></view>
+									<view class="top">
+										<view class="dot"></view>
+										<view class="name">
+											{{ item.name }}
+										</view>
+										<button type="default">做题</button>
 									</view>
-									<button type="default">做题</button>
-								</view>
-								<view class="bot">
-									<view class="progress">
-										<Progress
-											:strokeWidth="3"
-											:percent="item.correct / item.total *100"
-											:show-info="false"
-										/>
-									</view>
-									<view class="result-1">
-										{{ item.correct }} / {{ item.total }}
-									</view>
-									<view class="line"></view>
-									<view class="result-2">
-										正确率{{ item.accuracy }}%
+									<view class="bot">
+										<view class="progress">
+											<Progress
+												:strokeWidth="3"
+												:percent="item.correct / item.total *100"
+												:show-info="false"
+											/>
+										</view>
+										<view class="result-1">
+											{{ item.correct }} / {{ item.total }}
+										</view>
+										<view class="line"></view>
+										<view class="result-2">
+											正确率{{ item.accuracy }}%
+										</view>
 									</view>
 								</view>
 							</view>
 						</view>
-					</view>
+					</uni-transition>
 				</view>
 			</view>
 		</view>
@@ -197,6 +198,7 @@
 	import ViewMore from '@/components/view-more/ViewMore.vue'
 	import Title from '@/components/title/Title.vue'
 	import Progress from '@/components/progress/progress.vue'
+	import UniTransition from '@/components/uni-transition/uni-transition.vue'
 	import Json from '@/static/data.json'
 	export default {
 		name: 'Topics',
@@ -204,7 +206,8 @@
 			XesNavbar,
 			ViewMore,
 			Title,
-			Progress
+			Progress,
+			UniTransition
 		},
 		data() {
 			return {
@@ -225,6 +228,9 @@
 				item.isOpen = false
 				item.src = '/static/image/topics/shouqi@2x.png'
 			})
+			
+			list[0].isOpen = true
+			
 			this.topicList = list
 		},
 		methods: {

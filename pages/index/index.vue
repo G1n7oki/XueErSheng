@@ -1,20 +1,25 @@
 <template>
 	<view class="contaier">
+		<XesNavbar 
+			title="欢迎来到学尔升"
+			text-align="center"
+			background-color="#F4F7F9"
+		/>
 		<!-- banner start -->
 		<swiper :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000">
 			<swiper-item>
 				<view class="banner">
-					<image src="/static/image/home/banner.png" mode=""></image>
+					<image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3475570381,2768348736&fm=26&gp=0.jpg" mode=""></image>
 				</view>
 			</swiper-item>
 			<swiper-item>
 				<view class="banner">
-					<image src="/static/image/home/banner.png" mode=""></image>
+					<image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3475570381,2768348736&fm=26&gp=0.jpg" mode=""></image>
 				</view>
 			</swiper-item>
 			<swiper-item>
 				<view class="banner">
-					<image src="/static/image/home/banner.png" mode=""></image>
+					<image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3475570381,2768348736&fm=26&gp=0.jpg" mode=""></image>
 				</view>
 			</swiper-item>
 		</swiper>
@@ -27,7 +32,7 @@
 						欢迎来到学尔升！
 					</view>
 					<view class="school">
-						金融管理本科
+						{{ treeList[2] }}
 					</view>
 				</view>
 				<view v-else class="info-2">
@@ -41,14 +46,14 @@
 						</view>
 					</view>
 				</view>
-				<button type="default" class="{isPay ? 'active' : ''}">
+				<button type="default" class="{isPay ? 'active' : ''}" @click="handleMainBtn">
 					{{ isPay ? '立即缴费' : '我要报考' }}
 				</button>
 			</view>
 			<view class="bot">
 				<view class="crumbs-area">
 					<view class="left">
-						<image class="icon" src="/static/image/home/crumbs-icon.png" mode=""></image>
+						<image class="icon" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
 						<view class="crumbs">
 							<view class="crumbs-cell" v-for="(item, index) in treeList" :key="item">
 								<view class="text">
@@ -64,23 +69,23 @@
 				</view>
 				<view class="icon-list">
 					<view class="icon-cell" @click="navigate('/pages/course/process', 0)">
-						<image class="icon" src="/static/image/home/main-icon.png" mode=""></image>
+						<image class="icon" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
 						<text class="name">考生必看</text>
 					</view>
 					<view class="icon-cell" @click="navigate('/pages/course/process', 1)">
-						<image class="icon" src="/static/image/home/main-icon.png" mode=""></image>
+						<image class="icon" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
 						<text class="name">报考流程</text>
 					</view>
 					<view class="icon-cell" @click="navigate('/pages/course/review', 0)">
-						<image class="icon" src="/static/image/home/main-icon.png" mode=""></image>
+						<image class="icon" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
 						<text class="name">直播回顾</text>
 					</view>
 					<view class="icon-cell" @click="navigate('/pages/me/course')">
-						<image class="icon" src="/static/image/home/main-icon.png" mode=""></image>
+						<image class="icon" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
 						<text class="name">我的课程</text>
 					</view>
 					<view class="icon-cell">
-						<image class="icon" src="/static/image/home/main-icon.png" mode=""></image>
+						<image class="icon" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
 						<text class="name">学习记录</text>
 					</view>
 				</view>
@@ -94,7 +99,7 @@
 					<title name="上进故事" />
 					<view-more />
 				</view>
-				<image class="story" src="/static/image/home/banner.png" mode=""></image>
+				<image class="story" src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3475570381,2768348736&fm=26&gp=0.jpg" mode=""></image>
 			</view>
 			<!-- 上进故事end -->
 			<!-- 直播预告start -->
@@ -118,7 +123,7 @@
 									</view>
 									<view class="name">
 										{{ item.name }}
-										<image v-if="item.status === 1" class="icon" src="/static/image/home/live.png" mode=""></image>
+										<image v-if="item.status === 1" class="icon" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
 									</view>
 								</view>
 							</view>
@@ -143,7 +148,7 @@
 					<view class="tips">
 						全科
 					</view>
-					<image src="/static/image/home/banner.png" mode=""></image>
+					<image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3475570381,2768348736&fm=26&gp=0.jpg" mode=""></image>
 					<view class="info">
 						<view class="name">
 							[2020年秋] 金融管理本科-课程通关班
@@ -168,33 +173,33 @@
 				<view class="control">
 					<view class="item">
 						<text>排序</text>
-						<image class="arrow" src="/static/image/home/arrow-down.png" mode=""></image>
+						<image class="arrow" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
 					</view>
 					<view class="item">
 						<text>科目</text>
-						<image class="arrow" src="/static/image/home/arrow-down.png" mode=""></image>
+						<image class="arrow" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
 					</view>
 					<view class="item">
 						<text>班型</text>
-						<image class="arrow" src="/static/image/home/arrow-down.png" mode=""></image>
+						<image class="arrow" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
 					</view>
 					<view class="item" @click="handleFilter">
 						<text>筛选</text>
-						<image class="filter" src="/static/image/home/filter.png" mode=""></image>
+						<image class="filter" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
 					</view>
 				</view>
 				<view class="list">
 					<view class="list-cell" v-for="item in courseList" :key="item.id">
 						<view class="image">
-							<image :src="item.image" mode=""></image>
+							<image :src="item.cover" mode=""></image>
 						</view>
 						<view class="info">
 							<view class="name">
-								{{ item.name }}
+								{{ item.title }}
 							</view>
 							<view class="hour-price">
 								<view class="hour">
-									{{ item.hour }}
+									{{ item.video_num }}
 								</view>
 								<view class="price">
 									{{ item.price }}<text>元</text>
@@ -205,9 +210,7 @@
 				</view>
 			</view>
 			<!-- 全部课程end -->
-			<view class="loading" v-if="loading">
-				精彩马上就来
-			</view>
+			<uni-load-more :status="loading" />
 		</view>
 		<!-- 筛选 star -->
 		<view class="filter-area" :class="{'active': filter === true}">
@@ -247,13 +250,18 @@
 </template>
 
 <script>
+	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import ViewMore from '@/components/view-more/ViewMore.vue'
 	import Title from '@/components/title/Title.vue'
+	import UniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
+	import { courses } from '@/common/api/api.js'
 	import json from '@/static/data.json'
 	export default {
 		components: {
 			ViewMore,
-			Title
+			Title,
+			XesNavbar,
+			UniLoadMore
 		},
 		data() {
 			return {
@@ -262,14 +270,17 @@
 				liveList: [],
 				courseList: [],
 				filterList: [],
-				loading: false,
-				filter: false
+				loading: 'more',
+				filter: false,
+				page: 1,
+				totalPage: 0
 			}
 		},
 		onLoad(options) {
 			this.liveList = json.home.liveList
-			this.courseList = json.home.courseList
 			this.filterList = json.home.filterList
+			
+			this.toHome()
 		},
 		onShow() {
 			const crumbs = uni.getStorageSync('crumbs')
@@ -302,6 +313,7 @@
 					})
 				})
 			},
+			// 选择专业切换
 			handleSwitch () {
 				uni.navigateTo({
 					url: '/pages/professional/professional'
@@ -311,23 +323,58 @@
 				uni.navigateTo({
 					url: url + '?id=' + id
 				})
+			},
+			// 获取首页数据
+			toHome () {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				courses({
+					profession_id: uni.getStorageSync('profession_id'),
+					page: this.page
+				}).then(response => {
+					const res = response.data
+					this.courseList = res.data.data
+					this.totalPage = res.data.last_page
+					uni.hideLoading()
+				}).catch(error => {
+					uni.hideLoading()
+					uni.showToast({
+						icon: 'none',
+						title: error.data.message
+					})
+				})
+			},
+			// 点击缴费/支付按钮
+			handleMainBtn() {
+				this.isPay === true ? '' : this.navigate('/pages/plan/detail')
 			}
 		},
 		onReachBottom() {
-			// 模拟上拉加载
-			this.loading = true
-			setTimeout(() => {
-				for (let i = 0; i < 4; i++) {
-					this.courseList.push({
-						id: this.courseList.length + 1,
-						name: '特许金融分析师',
-						hour: '40课时',
-						price: '680',
-						image: '/static/image/home/banner.png'
-					})
-				}
-				this.loading = false
-			}, 2000)
+			++this.page
+			// 如果当前页数大于总页数说明没有更多的数据了
+			if (this.page >= this.totalPage) {
+				this.page = this.totalPage
+				this.loading = 'noMore'
+				return false
+			}
+			
+			this.loading = 'loading'
+			
+			courses({
+				profession_id: uni.getStorageSync('profession_id'),
+				page: this.page
+			}).then(response => {
+				const res = response.data
+				this.courseList = this.courseList.concat(res.data.data)
+				this.loading = 'more'
+			}).catch(error => {
+				console.log(error)
+				uni.showToast({
+					icon: 'none',
+					title: error.data.message
+				})
+			})
 		}
 	}
 </script>

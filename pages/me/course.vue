@@ -98,7 +98,7 @@
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import Progress from '@/components/progress/progress.vue'
 	import Empty from '@/components/empty/empty.vue'
-	import { me_course } from '@/common/api/api.js'
+	import { me_course, me_live } from '@/common/api/api.js'
 	import { showToast } from '@/tools/util/util.js'
 	export default {
 		name: 'MeCourse',
@@ -146,16 +146,29 @@
 			changeSwiper(e) {
 				this.tabbar.index = e.detail.current
 			},
-			toMeCourse() {
+			async toMeCourse() {
 				uni.showLoading({
 					title: '加载中...'
 				})
-				me_course().then(response => {
-					console.log(response)
+				// 我的课程数据
+				const course = await me_course()
+				console.log(course)
+				if (course.statusCode === 200) {
+					this.courseList = course.data.data
+				} else {
+					showToast(course.data.message)
 					uni.hideLoading()
-				}).catch(error => {
-					console.log(error)
-				})
+					return false
+				}
+				// 我的直播课数据
+				const live = await me_live()
+				console.log(live)
+				if (live.statusCode === 200) {
+					this.liveList = course.data.data
+				} else {
+					showToast(live.data.message)
+				}
+				uni.hideLoading()
 			}
 		}
 	}

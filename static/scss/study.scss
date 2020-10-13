@@ -1,15 +1,17 @@
 .contaier {
-	height: auto;
-	padding: 0 32upx 32upx;
+	height: 100%;
+	padding: 0 0 32upx;
 	box-sizing: border-box;
 	background-color: #F4F7F9;
 }
 
 .lineChart {
+	width: 686upx;
 	border-radius: 20upx;
 	background-color: #fff;
-	margin-top: 20upx;
+	margin: 20upx auto 0;
 	padding: 32upx;
+	box-sizing: border-box;
 	
 	.tips {
 		font-size: 24upx;
@@ -53,7 +55,8 @@
 .exercise-question {
 	display: flex;
 	justify-content: space-between;
-	margin-top: 32upx;
+	margin: 32upx auto 0;
+	padding: 0 32upx;
 	
 	.item {
 		width: 330upx;
@@ -66,8 +69,17 @@
 	}
 }
 
+.scroll-view {
+	height: 100%;
+	padding-top: 16upx;
+	position: relative;
+	box-sizing: border-box;
+}
+
 .course-live {
-	margin-top: 44upx;
+	margin: 44upx auto 0;
+	background-color: #F4F7F9;
+	padding: 0 32upx;
 	
 	.tab {
 		display: flex;
@@ -103,7 +115,6 @@
 	}
 	
 	.course-list {
-		margin-top: 16upx;
 		
 		.item {
 			display: flex;
@@ -159,7 +170,6 @@
 	}
 	
 	.live {
-		margin-top: 16upx;
 		
 		.live-list {
 			

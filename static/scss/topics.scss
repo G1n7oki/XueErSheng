@@ -279,15 +279,6 @@
 			
 			.content {
 				display: flex;
-				// height: 0;
-				// opacity: 0;
-				transition: all .3s ease-in;
-				
-				&.active {
-					margin-top: 56upx;
-					opacity: 1;
-					height: auto;
-				}
 				
 				.contet-info {
 					position: relative;

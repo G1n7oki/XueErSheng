@@ -2,7 +2,7 @@
 	"home": {
 		"liveList": [{
 			"id": 1,
-			"icon": "/static/image/home/main-icon.png",
+			"icon": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg",
 			"name": "讲师：李军",
 			"type": "英语（本）第 1 课",
 			"date": "2020.08.20",
@@ -10,7 +10,7 @@
 			"status": 1
 		}, {
 			"id": 2,
-			"icon": "/static/image/home/main-icon.png",
+			"icon": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg",
 			"name": "讲师：马正涛",
 			"type": "金融管理本科专业解读全金融管理本科专业解读全",
 			"date": "2020.08.20",
@@ -18,7 +18,7 @@
 			"status": 2
 		}, {
 			"id": 3,
-			"icon": "/static/image/home/main-icon.png",
+			"icon": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg",
 			"name": "张正宁",
 			"date": "2020.08.20",
 			"time": "18:00-20:00",
@@ -26,7 +26,7 @@
 			"status": 3
 		}, {
 			"id": 4,
-			"icon": "/static/image/home/main-icon.png",
+			"icon": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg",
 			"name": "管栎",
 			"type": "数学（本）第 3 课",
 			"date": "2020.08.20",
@@ -38,25 +38,25 @@
 			"name": "特许金融分析师",
 			"hour": "40课时",
 			"price": "680",
-			"image": "/static/image/home/banner.png"
+			"image": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3475570381,2768348736&fm=26&gp=0.jpg"
 		}, {
 			"id": 2,
 			"name": "特许金融分析师",
 			"hour": "40课时",
 			"price": "680",
-			"image": "/static/image/home/banner.png"
+			"image": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3475570381,2768348736&fm=26&gp=0.jpg"
 		}, {
 			"id": 3,
 			"name": "特许金融分析师",
 			"hour": "40课时",
 			"price": "680",
-			"image": "/static/image/home/banner.png"
+			"image": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3475570381,2768348736&fm=26&gp=0.jpg"
 		}, {
 			"id": 4,
 			"name": "特许金融分析师特许金融分析师",
 			"hour": "40课时",
 			"price": "680",
-			"image": "/static/image/home/banner.png"
+			"image": "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3475570381,2768348736&fm=26&gp=0.jpg"
 		}],
 		"filterList": [{
 			"id": 1,

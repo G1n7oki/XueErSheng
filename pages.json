@@ -3,8 +3,9 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "uni-app",
-				"navigationStyle": "custom"
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom",
+				"onReachBottomDistance": 150
 			}
 		}, {
 			"path": "pages/login/index",
@@ -134,6 +135,12 @@
 			}
 		}, {
 			"path": "pages/course/review",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "pages/plan/detail",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
