@@ -237,29 +237,9 @@
 				padding-left: 42upx;
 			}
 			
-			.item {
-				display: flex;
-				align-items: center;
-				margin-bottom: 20upx;
-				
-				image {
-					width: 115upx;
-					height: 110upx;
-				}
-				
-				.con {
-					width: 560upx;
-					
-					.con-title {
-						font-size: 28upx;
-						color: #646566;
-					}
-					
-					.con-content {
-						font-size: 24upx;
-						color: #969899;
-					}
-				}
+			.rich-text {
+				margin-bottom: 120upx;
+				padding: 41upx 52upx 0;
 			}
 		}
 	}

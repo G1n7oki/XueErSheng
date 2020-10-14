@@ -178,7 +178,7 @@
 				info: {}
 			}
 		},
-		onLoad() {
+		onShow() {
 			this.toUserinfo()
 		},
 		methods: {

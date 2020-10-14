@@ -1,6 +1,6 @@
 <template>
 	<view class="contaier">
-		
+		<view class="jumbotron"></view>
 	</view>
 </template>
 

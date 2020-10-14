@@ -103,7 +103,7 @@
 						const res = response.data
 						showToast(res.data)
 						this.timer1 = setTimeout(() => {
-							uni.navigateTo({
+							uni.reLaunch({
 								url: '/pages/login/seccode?mobile=' + this.mobile
 							})
 						}, 1500)

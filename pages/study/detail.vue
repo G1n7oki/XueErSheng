@@ -60,18 +60,19 @@
 		<!-- tabBar end -->
 		<!-- swiepr start -->
 		<swiper class="swiper" :current="tabBarIndex" :style="{height: height + 'px'}" :duration="500" @change="handleSwiper">
+			<!-- info start -->
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y="true" class="detail" >
 					<view class="info">
 						<view class="top">
 							<view class="left">
 								<view class="name">
-									2019年二级建造师市政专业著名讲师开讲冲刺精讲班
+									{{ info.title }}
 								</view>
 								<view class="date">
-									<text>课程有效期:260天</text>
+									<text>课程有效期:{{ info.validity }}天</text>
 									<text style="margin: 0 10rpx;">|</text>
-									<text>共18课时</text>
+									<text>共{{ info.video_num }}课时</text>
 								</view>
 							</view>
 							<view class="score">
@@ -108,163 +109,53 @@
 					<view class="recommend">
 						<Title name="课程介绍" color="#1283FF" />
 						<view class="text">
-							本课程以Python简洁语法为基础，带你走进编程的世界。通过对工具的使用和了解，让你能够使用代码处理简单的数学问题，提升效率。最后学习机器中的线性回归预测和感知分类，帮助你进一步掌握机器学习的一般方法和步骤。                       
+							{{ info.intro }}
 						</view>
 					</view>
 					<view class="prominent">
 						<view class="title-area">
 							<Title name="课程亮点" color="#1283FF" />
 						</view>
-						<view class="item" style="margin-top: 25rpx;">
-							<image src="/static/image/home/banner.png" mode=""></image>
-							<view class="con">
-								<view class="con-title">
-									易上手门槛低
-								</view>
-								<view class="con-content">
-									帮助你进一步掌握机器学习的一般方法和步骤。
-								</view>
-							</view>
-						</view>
-						<view class="item" style="padding-left: 24rpx;">
-							<view class="con">
-								<view class="con-title">
-									实战案例丰富
-								</view>
-								<view class="con-content">
-									帮助你进一步掌握机器学习的一般方法和步骤。
-								</view>
-							</view>
-							<image src="/static/image/home/banner.png" mode=""></image>
+						<!-- <rich-text :nodes="info.detail"></rich-text> -->
+						<view class="rich-text">
+							{{ info.details }}
 						</view>
 					</view>
 				</scroll-view>
 			</swiper-item>
+			<!-- info end -->
 			<!-- 目录 start -->
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y="true" class="catalog" >
-					<uni-collapse>
-						<uni-collapse-item open="true" number="01" :showAnimation="true" title="建设工程基本法律知识">
+					<uni-collapse
+						v-for="(chapter, index) in chapterList"
+						:key="chapter.id"
+					>
+						<uni-collapse-item
+							:number="index + 1 | formatId"
+							:showAnimation="true"
+							:title="chapter.name"
+						>
 							<view class="chapter">
-								<view class="item">
+								<view 
+									class="item"
+									v-for="video in chapter.video"
+									:key="video.id"
+								>
 									<view class="info">
 										<view class="name">
-											目标管理 让你的努力有的放矢
+											{{ video.name }}
 										</view>
 										<view class="time">
-											50分20秒
+											{{ video.duration }}
 										</view>
 									</view>
-									<image class="status-1" src="/static/image/study/lock.png" mode=""></image>
-								</view>
-								<view class="item">
-									<view class="info">
-										<view class="name">
-											教你如何改变视野  缩短于他人之间的各种差距
-										</view>
-										<view class="time">
-											1小时20分40秒
-										</view>
+									<image v-if="!watch && video.try === 0" class="status-1" src="/static/image/study/lock.png" mode=""></image>
+									<view v-else-if="!watch && video.try === 1" class="status-2">
+										试看
 									</view>
-									<view class="status-2">
-										试听
-									</view>
-								</view>
-								<view class="item">
-									<view class="info">
-										<view class="name active">
-											专业技术篇生活垃圾填埋处理工程填埋处理工程                      
-										</view>
-										<view class="time active">
-											1小时20分40秒
-										</view>
-									</view>
-									<image class="status-3" src="/static/image/home/live.png" mode=""></image>
-								</view>
-								<view class="item">
-									<view class="info">
-										<view class="name">
-											目标管理 让你的努力有的放矢
-										</view>
-										<view class="time">
-											50分20秒
-										</view>
-									</view>
-									<image class="status-1" src="/static/image/study/lock.png" mode=""></image>
-								</view>
-								<view class="item">
-									<view class="info">
-										<view class="name">
-											目标管理 让你的努力有的放矢
-										</view>
-										<view class="time">
-											50分20秒
-										</view>
-									</view>
-									<image class="status-4" src="/static/image/study/play.png" mode=""></image>
-								</view>
-							</view>
-						</uni-collapse-item>
-					</uni-collapse>
-					<uni-collapse>
-						<uni-collapse-item number="02" :showAnimation="true" title="精力管理 让工作事半功倍">
-							<view class="chapter">
-								<view class="item">
-									<view class="info">
-										<view class="name">
-											目标管理 让你的努力有的放矢
-										</view>
-										<view class="time">
-											50分20秒
-										</view>
-									</view>
-									<image class="status-1" src="/static/image/study/lock.png" mode=""></image>
-								</view>
-								<view class="item">
-									<view class="info">
-										<view class="name">
-											教你如何改变视野  缩短于他人之间的各种差距
-										</view>
-										<view class="time">
-											1小时20分40秒
-										</view>
-									</view>
-									<view class="status-2">
-										试听
-									</view>
-								</view>
-								<view class="item">
-									<view class="info">
-										<view class="name active">
-											专业技术篇生活垃圾填埋处理工程填埋处理工程                      
-										</view>
-										<view class="time active">
-											1小时20分40秒
-										</view>
-									</view>
-									<image class="status-3" src="/static/image/home/live.png" mode=""></image>
-								</view>
-								<view class="item">
-									<view class="info">
-										<view class="name">
-											目标管理 让你的努力有的放矢
-										</view>
-										<view class="time">
-											50分20秒
-										</view>
-									</view>
-									<image class="status-1" src="/static/image/study/lock.png" mode=""></image>
-								</view>
-								<view class="item">
-									<view class="info">
-										<view class="name">
-											目标管理 让你的努力有的放矢
-										</view>
-										<view class="time">
-											50分20秒
-										</view>
-									</view>
-									<image class="status-4" src="/static/image/study/play.png" mode=""></image>
+									<image v-else-if="watch && video.active" class="status-3" src="/static/image/study/live.png" mode=""></image>
+									<image v-else src="/static/image/study/play.png" mode=""></image>
 								</view>
 							</view>
 						</uni-collapse-item>
@@ -272,6 +163,7 @@
 				</scroll-view>
 			</swiper-item>
 			<!-- 目录 end -->
+			<!-- 评价 start -->
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y="true" class="evaluate">
 					<view class="exhibition">
@@ -368,6 +260,7 @@
 					</view>
 				</scroll-view>
 			</swiper-item>
+			<!-- 评价 end -->
 		</swiper>
 		<!-- swiper end -->
 		<!-- fixed start -->
@@ -422,6 +315,7 @@
 	import UniCollapseItem from '@/components/uni-collapse-item/uni-collapse-item.vue'
 	import UniRate from '@/components/uni-rate/uni-rate.vue'
 	import UniCountDown from '@/components/uni-countdown/uni-countdown.vue'
+	import { course_info, course_chapter } from '@/common/api/api.js'
 	export default {
 		name: 'study-detail',
 		components: {
@@ -435,7 +329,7 @@
 		},
 		data() {
 			return {
-				tabBarList: [{
+				tabBarList: [{ // tabbar的信息
 					id: 0,
 					name: '详情'
 				}, {
@@ -445,11 +339,15 @@
 					id: 2,
 					name: '评价'
 				}],
-				tabBarIndex: 2,
-				height: 0
+				tabBarIndex: 0, // 显示滑块的索引
+				height: 0, //scroll-view的高度
+				courseId: 0, // 课程的id
+				info: {}, // 课程详情
+				chapterList: [], // 课程章节
+				watch: false // 观看权限
 			}
 		},
-		onLoad() {
+		onLoad(options) {
 			const that = this
 			// 屏幕的高度
 			const wHeight = uni.getSystemInfoSync()['windowHeight']
@@ -475,13 +373,68 @@
 				dHeight = res.height
 				that.height = that.height - dHeight
 			}).exec()
+			
+			this.courseId = +options.id
+			
+			// 获取课程信息
+			uni.showLoading({
+				title: '加载中...'
+			})
+			course_info(this.courseId).then(response => {
+				const res = response.data
+				this.info = res.data
+				uni.hideLoading()
+			}).catch(error => {
+				uni.showToast({
+					icon: 'none',
+					title: error.data.message
+				})
+				uni.hideLoading()
+			})
+		},
+		filters: {
+			formatId(value) {
+				if (value < 10) {
+					return value = '0' + value
+				}
+				
+				return value
+			}
 		},
 		methods: {
+			// 点击切换卡
 			handleBarItem(id) {
 				this.tabBarIndex = id
 			},
+			// 切换卡滑块
 			handleSwiper(event) {
 				this.tabBarIndex = event.detail.current
+				if (this.tabBarIndex === 1) {
+					this.toCourseChapter(1)
+				}
+			},
+			// 获取课程章节数据
+			toCourseChapter(id) {
+				// 如果章节数组有数据则不需要请求
+				if (this.chapterList.length > 0) {
+					return false
+				}
+				
+				uni.showLoading({
+					title: '加载中...'
+				})
+				course_chapter({ id }).then(response => {
+					let res = response.data
+					this.watch = res.data.watch
+					this.chapterList = res.data.chapter
+					uni.hideLoading()
+				}).catch(error => {
+					uni.hideLoading()
+					uni.showToast({
+						icon: 'none',
+						title: error.data.message
+					})
+				})
 			}
 		}
 	}

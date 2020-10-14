@@ -75,7 +75,7 @@
 					showToast(res.status)
 					uni.setStorageSync('token', res.data.token)
 					this.timer = setTimeout(() => {
-						uni.switchTab({
+						uni.reLaunch({
 							url: '/pages/index/index'
 						})
 					}, 1500)

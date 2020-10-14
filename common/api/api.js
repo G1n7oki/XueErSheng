@@ -5,6 +5,9 @@ import http from '@/tools/request/interface.js'
  * 如果项目很大可以将 url 独立成文件，接口分成不同的模块
  */
 
+/**
+ * 以下为登录模块接口
+ * */
 // 微信手机登录
 export const wx_login = (data) => {
 	return http.request({
@@ -41,6 +44,10 @@ export const login = (data) => {
 	})
 }
 
+/**
+ * 以下选择专业接口
+ * */
+ 
 // 选择专业
 export const professional = (data) => {
 	return http.request({
@@ -49,6 +56,10 @@ export const professional = (data) => {
 		data
 	})
 }
+
+/**
+ * 以下首页接口
+ * */
 
 // 首页
 export const home = (data) => {
@@ -86,10 +97,44 @@ export const me_live = (data) => {
 	})
 }
 
+// 课程信息
+export const course_info = (data) => {
+	return http.request({
+		url: `courses/${data}`,
+		method: 'GET'
+	})
+}
+
+// 课程章节
+export const course_chapter = (data) => {
+	return http.request({
+		url: 'courses/chapter',
+		method: 'GET',
+		data
+	})
+}
+
+/**
+ * 以下为我的模块接口
+ * */
+
 // 当前用户信息
 export const userinfo = (data) => {
 	return http.request({
 		url: 'users/info',
+		method: 'GET',
+		data
+	})
+}
+
+/**
+ * 以下为题库模块接口
+ * */
+ 
+// 题库练习
+export const question = (data) => {
+	return http.request({
+		url: 'question',
 		method: 'GET',
 		data
 	})

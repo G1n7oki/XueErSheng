@@ -80,6 +80,12 @@
 				"navigationStyle": "custom"
 			}
 		}, {
+			"path": "pages/topics/paper",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, {
 			"path": "pages/me/me",
 			"style": {
 				"navigationBarTitleText": "",

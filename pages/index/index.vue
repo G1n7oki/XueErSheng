@@ -189,7 +189,13 @@
 					</view>
 				</view>
 				<view class="list">
-					<view class="list-cell" v-for="item in courseList" :key="item.id">
+					<navigator 
+						class="list-cell" 
+						v-for="item in courseList" 
+						:key="item.id"
+						hover-class="none"
+						:url="'/pages/study/detail?id=' + item.id"
+					>
 						<view class="image">
 							<image :src="item.cover" mode=""></image>
 						</view>
@@ -199,14 +205,14 @@
 							</view>
 							<view class="hour-price">
 								<view class="hour">
-									{{ item.video_num }}
+									{{ item.video_num }}课时
 								</view>
 								<view class="price">
 									{{ item.price }}<text>元</text>
 								</view>
 							</view>
 						</view>
-					</view>
+					</navigator>
 				</view>
 			</view>
 			<!-- 全部课程end -->
@@ -353,7 +359,7 @@
 		onReachBottom() {
 			++this.page
 			// 如果当前页数大于总页数说明没有更多的数据了
-			if (this.page >= this.totalPage) {
+			if (this.page > this.totalPage) {
 				this.page = this.totalPage
 				this.loading = 'noMore'
 				return false

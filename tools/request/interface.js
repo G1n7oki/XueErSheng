@@ -73,8 +73,18 @@ export default {
 				_reslog(response)
 				if (statusCode === 200) { //成功
 					resolve(response)
+				} else if (statusCode === 422) { 
+					uni.showToast({
+						icon: 'none',
+						title: response.data.message
+					})
+					setTimeout(() => {
+						uni.navigateTo({
+							url: '/pages/login/index'
+						})
+					}, 1500)
+					uni.removeStorageSync('token')
 				} else {
-					console.log(response)
 					reject(response)
 				}
 			}
