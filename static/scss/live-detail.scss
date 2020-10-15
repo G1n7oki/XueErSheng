@@ -1,0 +1,376 @@
+.contaier  {
+	background-color: #F4F7F9;
+}
+
+.live-area {
+	overflow: hidden;
+	
+	.video {
+		width: 100%;
+		height: 422upx;
+		float: left;
+	}
+}
+// 简略信息
+.brief-info {
+	background-color: #fff;
+	padding: 32upx;
+	
+	.title {
+		font-size: 32upx;
+		font-weight: bold;
+		color: #303234;
+	}
+	
+	.bot {
+		display: flex;
+		justify-content: space-between;
+		margin-top: 32upx;
+		
+		.user {
+			display: flex;
+			align-items: center;
+			
+			.avatar {
+				width: 40upx;
+				height: 40upx;
+				background-color: #eee;
+				border-radius: 50%;
+			}
+			
+			.name {
+				font-size: 24upx;
+				font-weight: 500;
+				color: #303234;
+				margin: 0 18upx;
+			}
+			
+			.post {
+				font-size: 24upx;
+				font-weight: 500;
+				color: #90949A;
+			}
+		}
+		
+		.number {
+			display: flex;
+			align-items: center;
+			
+			.watch, .hour {
+				font-size: 24upx;
+				font-weight: 500;
+				color: #606266;
+			}
+			
+			.line {
+				font-size: 24upx;
+				font-weight: 500;
+				color: #606266;
+				margin: 0 18upx;
+			}
+		}
+	}
+}
+// 切换卡
+.tabbar {
+	display: flex;
+	background-color: #fff;
+	margin-top: 20upx;
+	padding: 34upx 0;
+	position: relative;
+	border-bottom: 1px solid #DEDEDE;
+	
+	.tabbar-item {
+		width: 33.3333%;
+		font-size: 28upx;
+		font-weight: 500;
+		color: #606266;
+		text-align: center;
+		
+		&.active {
+			font-weight: bold;
+			color: #000000;
+		}
+	}
+	
+	.tabbar-line {
+		width: 33.3333%;
+		position: absolute;
+		left: 0;
+		bottom: 26upx;
+		transition: left .3s ease-in-out;
+		
+		.inner {
+			width: 34upx;
+			height: 6upx;
+			background-color: #FA7A36;
+			border-radius: 3upx;
+			position: absolute;
+			top: 0;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+	}
+}
+// 滑块
+.swiper {
+	background-color: #fff;
+}
+
+.scroll-view {
+	height: 100%;
+	box-sizing: border-box;
+	// 详情
+	.detail {
+		padding: 42upx 52upx 0;
+		
+		.text {
+			margin-top: 42upx;
+			padding: 0 10upx;
+			font-size: 28upx;
+			font-weight: 500;
+			color: #606266;
+		}
+		
+		.prominent {
+			margin: 42upx 0 130upx;
+			
+			.rich-text {
+				margin-top: 42upx;
+			}
+		}
+	}
+	// 目录
+	.catalog {
+		padding: 32upx 50upx;
+		
+		.item {
+			display: flex;
+			justify-content: space-between;
+			
+			.date {
+				display: flex;
+				align-items: center;
+				height: 30upx;
+				margin-top: 20upx;
+				
+				.text {
+					font-size: 28upx;
+					line-height: 30upx;
+					font-family: DIN;
+					font-weight: 400;
+					color: #303234;
+				}
+				
+				.dot {
+					width: 12upx;
+					height: 12upx;
+					background-color: #DEDEDE;
+					border-radius: 50%;
+					margin-left: 18upx;
+				}
+			}
+			
+			.content {
+				width: 516upx;
+				position: relative;
+				
+				.line {
+					height: 100%;
+					border-left: 1px dotted #EFEFEF;
+					position: absolute;
+					left: -40upx;
+					top: 34upx;
+					z-index: -1;
+				}
+				
+				.box {
+					padding: 32upx;
+					margin-bottom: 48upx;
+					border-radius: 10upx;
+					background-color: #F4F7F9;
+					
+					.tips {
+						display: inline-block;
+						vertical-align: middle;
+						width: 72upx;
+						height: 32upx;
+						background: linear-gradient(0deg, #FA7A36, #FF6262, #FF5E09);
+						border-radius: 16upx 10upx 10upx 0px;
+						text-align: center;
+						line-height: 32upx;
+						font-size: 20upx;
+						font-weight: bold;
+						color: #FFFFFF;
+						margin-right: 10upx;
+					}
+					
+					.box-text {
+						font-size: 28upx;
+						font-family: PingFang SC;
+						font-weight: bold;
+						color: #303234;
+					}
+					
+					.name {
+						display: flex;
+						align-items: center;
+						margin-top: 14upx;
+						font-size: 24upx;
+						font-weight: 500;
+						color: #303234;
+						
+						text {
+							width: 64upx;
+							height: 32upx;
+							background-color: #DEDEDE;
+							border-radius: 4upx;
+							font-size: 24upx;
+							font-weight: 500;
+							color: #313234;
+							line-height: 32upx;
+							text-align: center;
+							margin-left: 10upx;
+						}
+					}
+					
+					.box-watch {
+						font-size: 24upx;
+						font-weight: 500;
+						color: #606266;
+						margin-top: 10upx;
+					}
+				}
+			}
+		}
+	}
+	// 评价
+	.evaluation {
+		
+		.info {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 32upx;
+			
+			.rate {
+				display: flex;
+				align-items: center;
+				
+				.line {
+					width: 4upx;
+					height: 66upx;
+					background-color: #F4F7F9;
+					margin: 0 32upx;
+				}
+				
+				.number-unit {
+					text-align: center;
+					
+					.number {
+						font-size: 44upx;
+						font-family: DIN;
+						font-weight: bold;
+						color: #FA7A36;
+					}
+					
+					.unit {
+						font-size: 24upx;
+						font-weight: bold;
+						color: #303234;
+					}
+				}
+			}
+			
+			.button {
+				width: 168upx;
+				height: 64upx;
+				background-color: #1284FF;
+				border-radius: 32upx;
+				font-size: 28upx;
+				font-weight: 500;
+				color: #FFFFFF;
+				text-align: center;
+				line-height: 64upx;
+			}
+		}
+		
+		.split-line {
+			height: 20upx;
+			background-color: #F4F7F9;
+		}
+		
+		.list {
+			padding: 32upx;
+			
+			.list-title {
+				display: flex;
+				justify-content: space-between;
+				align-items: flex-end;
+				
+				.total {
+					font-size: 24upx;
+					font-weight: 500;
+					color: #606266;
+				}
+			}
+			
+			.list-item {
+				margin-top: 40upx;
+				
+				.item-top {
+					display: flex;
+					justify-content: space-between;
+					
+					.avatar-user {
+						display: flex;
+						
+						.avatar {
+							width: 80upx;
+							height: 80upx;
+							background-color: #eee;
+							border-radius: 50%;
+						}
+						
+						.user {
+							margin-left: 24upx;
+							
+							.username {
+								font-size: 28upx;
+								font-weight: bold;
+								color: #303234;
+							}
+							
+							.hour {
+								font-size: 24upx;
+								font-weight: 500;
+								color: #90949A;
+							}
+						}
+					}
+					
+					.date {
+						font-size: 24upx;
+						font-weight: 500;
+						color: #90949A;
+					}
+				}
+				
+				.content {
+					font-size: 28upx;
+					font-weight: 500;
+					color: #303234;
+					margin-top: 32upx;
+					padding-left: 104upx;
+				}
+				
+				.list-rate {
+					display: flex;
+					justify-content: flex-end;
+					margin-top: 16upx;
+				}
+			}
+		}
+	}
+}
+

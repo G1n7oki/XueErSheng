@@ -21,7 +21,7 @@
 		>
 			<swiper-item>
 				<scroll-view class="scroll-view" scroll-y="true" >
-					<view class="item">
+					<navigator url="/pages/live/detail" class="item">
 						<view class="banner">
 							<image class="image" src="/static/image/home/banner.png" mode=""></image>
 						</view>
@@ -43,8 +43,8 @@
 								<button class="button" @click="start">开始学习</button>
 							</view>
 						</view>
-					</view>
-					<view class="item">
+					</navigator>
+					<navigator url="/pages/live/detail" class="item">
 						<view class="banner">
 							<image class="image" src="/static/image/home/banner.png" mode=""></image>
 						</view>
@@ -66,8 +66,8 @@
 								<button class="button" @click="start">开始学习</button>
 							</view>
 						</view>
-					</view>
-					<view class="item">
+					</navigator>
+					<navigator url="/pages/live/detail" class="item">
 						<view class="banner">
 							<image class="image" src="/static/image/home/banner.png" mode=""></image>
 						</view>
@@ -89,7 +89,7 @@
 								<button class="button" @click="start">开始学习</button>
 							</view>
 						</view>
-					</view>
+					</navigator>
 				</scroll-view>
 			</swiper-item>
 			<swiper-item>

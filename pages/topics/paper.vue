@@ -118,14 +118,14 @@
 			// 屏幕的高度
 			const wHeight = uni.getSystemInfoSync()['windowHeight']
 			// 获取元素的信息
-			const query = uni.createSelectorQuery().in(this)
-			query.select('#picker').boundingClientRect(res => {
+			const picker = uni.createSelectorQuery().in(this)
+			picker.select('#picker').boundingClientRect(res => {
 				that.height = wHeight - res.height
-			}).exec(() => {
-				query.select('#navbar').boundingClientRect(res => {
-					that.height = that.height - res.height + 'px'
-				}).exec()
-			})
+			}).exec()
+			const navbar = uni.createSelectorQuery().in(this)
+			navbar.select('#navbar').boundingClientRect(res => {
+				that.height = that.height - res.height + 'px'
+			}).exec()
 		},
 		methods: {
 			// 选择年份

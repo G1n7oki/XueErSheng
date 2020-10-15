@@ -359,15 +359,16 @@
 				}
 			}
 			
-			button {
+			.button {
 				width: 168upx;
 				height: 64upx;
 				background-color: #1284FF;
 				border-radius: 32upx;
-				line-height: 64upx;
 				font-size: 28upx;
 				font-weight: 500;
 				color: #FFFFFF;
+				text-align: center;
+				line-height: 64upx;
 			}
 		}
 		

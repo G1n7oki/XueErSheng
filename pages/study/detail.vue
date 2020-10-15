@@ -187,7 +187,9 @@
 								</view>
 							</view>
 						</view>
-						<button hover-class="none" type="default">我要评价</button>
+						<navigator class="button" url="/pages/study/evaluation" hover-class="none">
+							我要评价
+						</navigator>
 					</view>
 					<view class="split-line"></view>
 					<view class="list">
@@ -351,46 +353,12 @@
 			const that = this
 			// 屏幕的高度
 			const wHeight = uni.getSystemInfoSync()['windowHeight']
-			// 视频的高度
-			let vHeight = 0
-			// tabBar的高度
-			let tHeight = 0
-			// 优惠券的高度
-			let dHeight = 0
 			
-			const query = uni.createSelectorQuery().in(this)
-			query.select('#video').boundingClientRect(res => {
-				vHeight = res.height
-				that.height = wHeight - vHeight
-			}).exec()
-			
-			query.select('#tabBar').boundingClientRect(res => {
-				tHeight = res.height
-				that.height = that.height - tHeight
-			}).exec()
-			
-			query.select('#discount').boundingClientRect(res => {
-				dHeight = res.height
-				that.height = that.height - dHeight
-			}).exec()
+			this.calculate(wHeight)
 			
 			this.courseId = +options.id
 			
-			// 获取课程信息
-			uni.showLoading({
-				title: '加载中...'
-			})
-			course_info(this.courseId).then(response => {
-				const res = response.data
-				this.info = res.data
-				uni.hideLoading()
-			}).catch(error => {
-				uni.showToast({
-					icon: 'none',
-					title: error.data.message
-				})
-				uni.hideLoading()
-			})
+			this.toCourseInfo(this.courseId)
 		},
 		filters: {
 			formatId(value) {
@@ -412,6 +380,42 @@
 				if (this.tabBarIndex === 1) {
 					this.toCourseChapter(1)
 				}
+			},
+			// 计算swiper的高度
+			calculate(height) {
+				// 每次获取元素前都必须使用createSelectorQuery否则会多次执行boundingClientRect
+				// 首先使用屏幕的高度减去视频的高度
+				const video = uni.createSelectorQuery().in(this)
+				video.select('#video').boundingClientRect(video => {
+					this.height = height - video.height
+				}).exec()
+				// 计算后的高度减去简略介绍的高度
+				const discount = uni.createSelectorQuery().in(this)
+				discount.select('#discount').boundingClientRect(discount => {
+					this.height = this.height - discount.height
+				}).exec()
+				// 计算后的高度减去选项卡的高度
+				const tabbar = uni.createSelectorQuery().in(this)
+				tabbar.select('#tabbar').boundingClientRect(tabbar => {
+					this.height = this.height - tabbar.height - 10
+				}).exec()
+			},
+			// 获取课程信息
+			toCourseInfo() {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				course_info(id).then(response => {
+					const res = response.data
+					this.info = res.data
+					uni.hideLoading()
+				}).catch(error => {
+					uni.showToast({
+						icon: 'none',
+						title: error.data.message
+					})
+					uni.hideLoading()
+				})
 			},
 			// 获取课程章节数据
 			toCourseChapter(id) {

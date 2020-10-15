@@ -56,6 +56,12 @@
 				"navigationStyle": "custom"
 			}
 		}, {
+			"path": "pages/study/evaluation",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, {
 			"path": "pages/topics/index",
 			"style": {
 				"navigationBarTitleText": "",
@@ -140,13 +146,19 @@
 				"navigationStyle": "custom"
 			}
 		}, {
-			"path": "pages/course/review",
+			"path": "pages/plan/detail",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
 		}, {
-			"path": "pages/plan/detail",
+			"path": "pages/live/review",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "pages/live/detail",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
