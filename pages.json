@@ -62,6 +62,12 @@
 				"navigationStyle": "custom"
 			}
 		}, {
+			"path": "pages/study/record",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, {
 			"path": "pages/topics/index",
 			"style": {
 				"navigationBarTitleText": "",
@@ -104,6 +110,12 @@
 				"navigationStyle": "custom"
 			}
 		}, {
+			"path": "pages/me/favorite",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, {
 			"path": "pages/discover/discover",
 			"style": {
 				"navigationBarTitleText": "",
@@ -140,7 +152,7 @@
 				"navigationStyle": "custom"
 			}
 		}, {
-			"path": "pages/course/process",
+			"path": "pages/plan/process",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"

@@ -68,11 +68,11 @@
 					</view>
 				</view>
 				<view class="icon-list">
-					<view class="icon-cell" @click="navigate('/pages/course/process', 0)">
+					<view class="icon-cell" @click="navigate('/pages/plan/process', 0)">
 						<image class="icon" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
 						<text class="name">考生必看</text>
 					</view>
-					<view class="icon-cell" @click="navigate('/pages/course/process', 1)">
+					<view class="icon-cell" @click="navigate('/pages/plan/process', 1)">
 						<image class="icon" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
 						<text class="name">报考流程</text>
 					</view>
@@ -84,7 +84,7 @@
 						<image class="icon" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
 						<text class="name">我的课程</text>
 					</view>
-					<view class="icon-cell">
+					<view class="icon-cell" @click="navigate('/pages/study/record')">
 						<image class="icon" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
 						<text class="name">学习记录</text>
 					</view>

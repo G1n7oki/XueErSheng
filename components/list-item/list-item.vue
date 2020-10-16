@@ -1,5 +1,9 @@
 <template>
-	<view class="u-list" :style="{'border-bottom': isBorder ? '1px solid #DEDEDE' : 'none'}">
+	<view 
+		class="u-list"
+		:style="{'border-bottom': isBorder ? '1px solid #DEDEDE' : 'none'}"
+		@click="handleItem"
+	>
 		<image class="u-list__icon" :src="icon" mode=""></image>
 		<view class="u-list__name">
 			{{ name }}
@@ -16,6 +20,7 @@
 	 * @property {String} name 列表的名称
 	 * @property {String} icon 列表图片的路径
 	 * @property {String} isBorder 是否显示边框
+	 * @property {String} url 跳转的路由
 	 * */
 	import UniIcons from '@/components/uni-icons/uni-icons.vue'
 	export default {
@@ -41,6 +46,22 @@
 			isBorder: {
 				type: Boolean,
 				default: true
+			},
+			// 跳转的路由
+			url: {
+				type: String,
+				default: ''
+			}
+		},
+		methods: {
+			handleItem() {
+				if (this.url === '') {
+					return false
+				}
+				
+				uni.navigateTo({
+					url: this.url
+				})
 			}
 		}
 	}

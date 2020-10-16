@@ -217,6 +217,32 @@
 			<!-- 评论 end -->
 		</swiper>
 		<!-- 滑块区域 end -->
+		<!-- fixed start -->
+		<view class="fixed-area" v-if="tabbar.current === 0">
+			<view class="price-info">
+				<view class="price">
+					<view class="present">
+						542 <text>元</text>
+					</view>
+					<view class="original">
+						<text class="num">680</text>
+						<text class="unit">元</text>
+					</view>
+				</view>
+				<view class="number">
+					已有200人购买
+				</view>
+			</view>
+			<view class="advisory">
+				<image class="icon" src="" mode=""></image>
+				<view class="text">咨询</view>
+			</view>
+			<view class="button">
+				<text class="symbol">+</text>
+				<text class="text">加入学习</text>
+			</view>
+		</view>
+		<!-- fixed end -->
 	</view>
 </template>
 
@@ -244,7 +270,7 @@
 						id: 2,
 						name: '评价'
 					}],
-					current: 2
+					current: 0
 				}, // 切换卡参数
 				height: 0, // swiper的高度
 				nodes: '<div>人工智能是目前最热门的学科之一，未来的发挥在那前景广阔。目前基于Python的人工智能学习如火如荼，为了迎接相关工作岗位的挑战，从现在起，学习Python编程和人工智能基础知识，可以为你的未来发展注入足够的能量。</div><div>本课程以Python简洁语法为基础，带你走进编程的世界。通过对工具的使用和了解，让你能够使用代码处理简单的数学问题，提升效率。最后学习机器中的线性回归预测和感知分类，帮助你进一步掌握机器学习的一般方法和步骤。</div>'
