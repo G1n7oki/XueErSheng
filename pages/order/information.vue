@@ -99,6 +99,9 @@
 		components: {
 			XesNavbar,
 			UniIcons
+		},
+		onLoad(options) {
+			console.log(options.id)
 		}
 	}
 </script>

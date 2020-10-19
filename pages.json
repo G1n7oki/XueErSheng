@@ -116,6 +116,24 @@
 				"navigationStyle": "custom"
 			}
 		}, {
+			"path": "pages/me/feedback",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "pages/me/about",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "pages/me/transcript",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, {
 			"path": "pages/discover/discover",
 			"style": {
 				"navigationBarTitleText": "",
@@ -165,6 +183,18 @@
 			}
 		}, {
 			"path": "pages/live/review",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "pages/live/review-play",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "pages/live/live-play",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"

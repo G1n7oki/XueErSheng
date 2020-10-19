@@ -1,0 +1,227 @@
+.contaier {
+	padding-top: 422upx;
+	box-sizing: border-box;
+}
+
+.video-area {
+	width: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	overflow: hidden;
+	z-index: 10;
+	
+	.video {
+		width: 100%;
+		height: 422upx;
+		float: left;
+	}
+}
+// 课程信息
+.course-info {
+	padding: 48upx 0;
+	
+	.brief {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0 32upx;
+		
+		.title-hour {
+			width: 478upx;
+			
+			.brief-title {
+				font-size: 32upx;
+				font-weight: bold;
+				color: #303234;
+			}
+			
+			.brief-hour {
+				font-size: 24upx;
+				font-weight: 500;
+				color: #606266;
+				margin-top: 10upx;
+			}
+		}
+		
+		.button {
+			width: 168upx;
+			height: 64upx;
+			background-color: #1284FF;
+			border-radius: 32upx;
+			text-align: center;
+			line-height: 64upx;
+			font-size: 28upx;
+			font-weight: 500;
+			color: #FFFFFF;
+		}
+	}
+	
+	.list {
+		margin-top: 48upx;
+		padding-left: 32upx;
+		white-space: nowrap;
+		box-sizing: border-box;
+		
+		.item {
+			display: inline-block;
+			width: 410upx;
+			background-color: #F4F7F9;
+			border-radius: 10upx;
+			padding: 32upx;
+			box-sizing: border-box;
+			margin-right: 32upx;
+			
+			.icon-title {
+				margin-bottom: 10upx;
+				
+				.icon {
+					display: inline-block;
+					width: 72upx;
+					height: 32upx;
+					background: linear-gradient(0deg, #FA7A36, #FF6262, #FF5E09);
+					border-radius: 16upx 10upx 10upx 0;
+					font-size: 20upx;
+					font-weight: bold;
+					color: #FFFFFF;
+					text-align: center;
+					line-height: 32upx;
+					margin-right: 10upx;
+				}
+				
+				.item-title {
+					display: inline;
+					white-space: normal;
+					font-size: 28upx;
+					font-weight: bold;
+					color: #303234;
+				}
+			}
+			
+			.user {
+				font-size: 24upx;
+				font-family: PingFang SC;
+				font-weight: 500;
+				color: #303234;
+				
+				text {
+					padding: 0 8upx;
+					height: 32upx;
+					background-color: #DEDEDE;
+					border-radius: 4upx;
+					line-height: 32upx;
+					margin-left: 10upx;
+				}
+			}
+			
+			.play {
+				font-size: 24upx;
+				font-weight: 500;
+				color: #606266;
+				margin-top: 10upx;
+			}
+		}
+	}
+}
+// 分割线
+.split-line {
+	height: 20upx;
+	background-color: #F4F7F9;
+}
+// 滚动区域
+.scroll-view {
+	height: 100%;
+	background-color: #eee;
+}
+
+.introduce {
+	padding: 60upx 60upx 0 60upx;
+	
+	.text {
+		font-size: 28upx;
+		font-weight: 500;
+		color: #606266;
+		margin-top: 42upx;
+		padding: 0 10upx;
+	}
+}
+
+.prominent {
+	padding: 60upx;
+	
+	.rich-text {
+		margin-top: 42upx;
+		padding: 0 10upx;
+	}
+}
+
+.note {
+	padding: 40upx 0;
+	
+	.item {
+		display: flex;
+		justify-content: space-between;
+		width: 686upx;
+		background: #F4F7F9;
+		border-radius: 20upx;
+		padding: 32upx;
+		margin: 0 auto 40upx;
+		box-sizing: border-box;
+		
+		.info {
+			
+			.name {
+				width: 497upx;
+				font-size: 28upx;
+				font-weight: bold;
+				color: #303234;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			
+			.size {
+				font-size: 24upx;
+				font-weight: 500;
+				color: #90949A;
+				margin-top: 10upx;
+			}
+		}
+		
+		.icon {
+			width: 43upx;
+			height: 43upx;
+			background-color: #eee;
+		}
+	}
+}
+// 输入框
+.input-area {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	height: 120upx;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	box-sizing: border-box;
+	padding: 0 32upx;
+	
+	.input {
+		width: 600upx;
+		height: 72upx;
+		background-color: #F4F7F9;
+		border-radius: 36upx;
+		box-sizing: border-box;
+		padding-left: 32upx;
+		line-height: 72upx;
+		font-size: 24upx;
+	}
+	
+	.icon {
+		width: 30upx;
+		height: 30upx;
+		background-color: #eee;
+	}
+}

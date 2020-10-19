@@ -7,7 +7,7 @@
 				class="item"
 				v-for="(item, index) in favorite"
 				:key="item.id"
-				@longtap="handleItem(index)"
+				@longpress="handleItem(index)"
 			>
 				<image class="image" :src="item.image" mode=""></image>
 				<view class="info">

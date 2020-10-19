@@ -22,7 +22,7 @@
 	/**
 	 * 文字型选项卡
 	 * @property {Array} list 选项卡列表
-	 * @property {Number} index 选项卡的索引
+	 * @property {Number} current 选项卡的索引
 	 * @event {Function} handleItem 选项卡高亮选择
 	 * */
 	export default {

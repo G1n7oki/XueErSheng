@@ -285,8 +285,6 @@
 		onLoad(options) {
 			this.liveList = json.home.liveList
 			this.filterList = json.home.filterList
-			
-			this.toHome()
 		},
 		onShow() {
 			const crumbs = uni.getStorageSync('crumbs')
@@ -297,6 +295,8 @@
 			} else {
 				this.treeList = crumbs
 			}
+			
+			this.toHome()
 		},
 		methods: {
 			handleFilter () {

@@ -43,7 +43,7 @@
 		</view>
 		<!-- 优惠券 end -->
 		<!-- tabBar start -->
-		<view class="tab-bar" id="tabBar">
+		<view class="tab-bar" id="tabbar">
 			<view 
 				class="item"
 				:class="{'active': tabBarIndex === index}"
@@ -300,9 +300,9 @@
 				<view class="icon">
 					+
 				</view>
-				<view class="text">
+				<navigator :url="'/pages/order/information?id=' + courseId" hover-class="none" class="text">
 					加入学习
-				</view>
+				</navigator>
 			</view>
 		</view>
 		<!-- fixed end -->
@@ -350,7 +350,6 @@
 			}
 		},
 		onLoad(options) {
-			const that = this
 			// 屏幕的高度
 			const wHeight = uni.getSystemInfoSync()['windowHeight']
 			
@@ -401,7 +400,7 @@
 				}).exec()
 			},
 			// 获取课程信息
-			toCourseInfo() {
+			toCourseInfo(id) {
 				uni.showLoading({
 					title: '加载中...'
 				})
