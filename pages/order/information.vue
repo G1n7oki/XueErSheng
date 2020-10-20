@@ -8,28 +8,28 @@
 		<!-- 订单信息 start -->
 		<view class="order-info">
 			<view class="head">
-				<image class="image" src="/static/image/discover/add@2x.png" mode=""></image>
+				<image class="image" :src="infoData.cover" mode=""></image>
 				<view class="info">
 					<view class="name">
-						特许金融分析师(CFA三级)特许金融分析师(CFA三级)
+						{{ infoData.title }}
 					</view>
 					<view class="date">
-						课程有效期还剩：360天
+						课程有效期还剩：{{ infoData.validity }}天
 					</view>
 				</view>
 			</view>
 			<view class="list">
 				<view class="item">
 					<view class="name">
-						订单编号
+						订单原价
 					</view>
 					<view class="price">
-						599 <text>元</text>
+						{{ infoData.virtual_price }} <text>元</text>
 					</view>
 				</view>
 				<view class="item">
 					<view class="name">
-						下单时间
+						已优惠
 					</view>
 					<view class="price active">
 						-399 <text class="active">元</text>
@@ -94,14 +94,36 @@
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import UniIcons from '@/components/uni-icons/uni-icons.vue'
+	import { order_information } from '@/common/api/api.js'
 	export default {
 		name: 'Information',
 		components: {
 			XesNavbar,
 			UniIcons
 		},
+		data() {
+			return {
+				infoData: {}
+			}
+		},
 		onLoad(options) {
-			console.log(options.id)
+			this.toOrderInfo(+options.id, options.type)
+		},
+		methods: {
+			toOrderInfo(id, type) {
+				order_information({ 
+					id,
+					order_type: type
+				}).then(response => {
+					const res = response.data
+					this.infoData = res.data.info
+				}).catch(error => {
+					uni.showToast({
+						icon: 'none',
+						title: error.data.message
+					})
+				})
+			}
 		}
 	}
 </script>

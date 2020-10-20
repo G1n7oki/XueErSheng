@@ -3,12 +3,43 @@
 }
 
 .live-area {
-	overflow: hidden;
+	width: 100%;
+	height: 422upx;
+	position: relative;
 	
-	.video {
+	.live-mask {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
 		width: 100%;
-		height: 422upx;
-		float: left;
+		height: 100%;
+		background-color: rgba(0, 0, 0, .8);
+		
+		.text {
+			width: 510upx;
+			text-align: center;
+			font-size: 32upx;
+			font-weight: 500;
+			color: #FFFFFF;
+			
+			text {
+				color: #1384FF;
+			}
+		}
+		
+		.button {
+			width: 168upx;
+			height: 64upx;
+			background-color: #1284FF;
+			border-radius: 32upx;
+			font-size: 28upx;
+			font-weight: 500;
+			color: #FFFFFF;
+			text-align: center;
+			line-height: 64upx;
+			margin-top: 42upx;
+		}
 	}
 }
 // 简略信息

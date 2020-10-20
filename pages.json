@@ -1,206 +1,230 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-		{
+		{ // 首页
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom",
 				"onReachBottomDistance": 150
 			}
-		}, {
+		}, { // 登录首页
 			"path": "pages/login/index",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
-		}, {
+		}, { // 验证码
 			"path": "pages/login/seccode",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
-		}, {
+		}, { // 密码登陆
 			"path": "pages/login/password",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
-		}, {
+		}, { // 忘记密码
 			"path": "pages/login/forgot",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
-		}, {
+		}, { // 修改密码
 			"path": "pages/login/modify",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
-		}, {
+		}, { // 切换专业
 			"path": "pages/professional/professional",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
-		}, {
+		}, { // 学习首页
 			"path": "pages/study/study",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
-		}, {
+		}, { // 学习详情
 			"path": "pages/study/detail",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
-		}, {
+		}, { // 评价
 			"path": "pages/study/evaluation",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
-		}, {
+		}, { // 学习记录
 			"path": "pages/study/record",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
-		}, {
+		}, { // 题库首页
 			"path": "pages/topics/index",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
-		}, {
+		}, { // 练题
 			"path": "pages/topics/practice",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
-		}, {
+		}, { // 答题结果
 			"path": "pages/topics/result",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
-		}, {
+		}, { // 练题设置
 			"path": "pages/topics/set",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
-		}, {
+		}, { // 试卷
 			"path": "pages/topics/paper",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
-		}, {
+		}, { // 我的
 			"path": "pages/me/me",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
-		}, {
+		}, { // 我的课程
 			"path": "pages/me/course",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
-		}, {
+		}, { // 我的收藏
 			"path": "pages/me/favorite",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
-		}, {
+		}, { // 我的反馈
 			"path": "pages/me/feedback",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
-		}, {
+		}, { // 关于我们
 			"path": "pages/me/about",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
-		}, {
+		}, { // 成绩单
 			"path": "pages/me/transcript",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
-		}, {
+		}, { // 发现
 			"path": "pages/discover/discover",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
-		}, {
+		}, { // 发布圈子
 			"path": "pages/discover/issue",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
-		}, {
+		}, { // 发现详情
 			"path": "pages/discover/detail",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
-		}, {
+		}, { // 订单首页
 			"path": "pages/order/order",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
-		}, {
+		}, { // 订单详情
 			"path": "pages/order/information",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
-		}, {
+		}, { // 待付款
 			"path": "pages/order/unpaid",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
-		}, {
+		}, { // 报考流程
 			"path": "pages/plan/process",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
-		}, {
+		}, { // 计划详情
 			"path": "pages/plan/detail",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
-		}, {
+		}, { // 直播 · 预告
+			"path": "pages/live/live",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, { // 直播回顾
 			"path": "pages/live/review",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
-		}, {
+		}, { // 回顾播放页
 			"path": "pages/live/review-play",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
-		}, {
+		}, { // 直播播放页
 			"path": "pages/live/live-play",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
-		}, {
+		}, { // 直播详情页
 			"path": "pages/live/detail",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, { // 设置
+			"path": "pages/set/set",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, { // 账号设置
+			"path": "pages/set/account",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, { // 设置昵称
+			"path": "pages/set/nickname",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"

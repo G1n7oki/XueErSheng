@@ -11,14 +11,14 @@
 		<!-- 导航栏 end -->
 		<!-- 播放器 start -->
 		<view class="live-area" id="video">
-			<video 
-				class="video" 
-				id="video" 
-				src="http://ivi.bupt.edu.cn/hls/cctv5phd.m3u8" 
-				controls
-				poster="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602737528008&di=69cc1ca9e06a7b3e9b47755147bee8b2&imgtype=0&src=http%3A%2F%2Fimg1.imgtn.bdimg.com%2Fit%2Fu%3D259364631%2C2307942273%26fm%3D214%26gp%3D0.jpg"
-			>
-			</video>
+			<view class="live-mask">
+				<view class="text">
+					立即购买或激活课程，即可解锁观看 若已购买，请 <text @click="toLogin">登录</text>
+				</view>
+				<navigator class="button" :url="'/pages/live/live-play'">
+					开始学习
+				</navigator>
+			</view>
 		</view>
 		<!-- 播放器 end -->
 		<!-- 简略信息 start -->
@@ -309,6 +309,12 @@
 				tabbar.select('#tabbar').boundingClientRect(tabbar => {
 					this.height = this.height - tabbar.height - 10
 				}).exec()
+			},
+			// 路由切换
+			toLogin() {
+				uni.navigateTo({
+					url: '/pages/login/index'
+				})
 			}
 		}
 	}

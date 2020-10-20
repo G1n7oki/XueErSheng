@@ -1,6 +1,59 @@
 <template>
 	<view class="contaier">
-		
+		<!-- 导航栏 start -->
+		<xes-navbar 
+			title="成绩单"
+			text-align="center"
+			:is-arrow="true"
+		/>
+		<!-- 导航栏 end -->
+		<!-- 成绩卡 start -->
+		<view class="card">
+			<view class="university">
+				<image class="logo" src="" mode=""></image>
+				<view class="professional">
+					工商企业管理
+				</view>
+			</view>
+			<view class="info">
+				<view class="tips">
+					<view class="item">
+						代码
+					</view>
+					<view class="item">
+						课程名称
+					</view>
+					<view class="item">
+						成绩
+					</view>
+				</view>
+				<view class="content">
+					<view class="cell">
+						<view class="item">
+							00152
+						</view>
+						<view class="item">
+							南大国际贸易理论与实务
+						</view>
+						<view class="item">
+							80
+						</view>
+					</view>
+					<view class="cell">
+						<view class="item">
+							00152
+						</view>
+						<view class="item">
+							经管本科
+						</view>
+						<view class="item">
+							80
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>
+		<!-- 成绩卡 end -->
 	</view>
 </template>
 
@@ -15,4 +68,85 @@
 </script>
 
 <style lang="scss">
+	.contaier {
+		background-color: #F4F7F9;
+	}
+	// 成绩卡
+	@mixin children-width {
+		&:nth-child(1) {
+			width: 82upx;
+		}
+		
+		&:nth-child(2) {
+			width: 224upx;
+		}
+		
+		&:nth-child(3) {
+			width: 60upx;
+		}
+	}
+	
+	.card {
+		width: 686upx;
+		height: 1000upx;
+		margin: 0 auto;
+		background-color: #fff;
+		margin-top: 32upx;
+		
+		.university {
+			text-align: center;
+			padding-top: 80upx;
+			
+			.logo {
+				width: 160upx;
+				height: 160upx;
+				border-radius: 50%;
+				background-color: #eee;
+			}
+			
+			.professional {
+				font-size: 28upx;
+				font-weight: bold;
+				color: #000000;
+				margin-top: 26upx;
+			}
+		}
+		
+		.info {
+			padding: 0 74upx;
+			margin-top: 178upx;
+			
+			.tips {
+				display: flex;
+				justify-content: space-between;
+				
+				.item {
+					font-size: 28upx;
+					font-weight: 500;
+					color: #90949A;
+					text-align: center;
+					
+					@include children-width;
+				}
+			}
+			
+			.content {
+				
+				.cell {
+					display: flex;
+					justify-content: space-between;
+					margin-top: 42upx;
+					
+					.item {
+						font-size: 28upx;
+						font-weight: bold;
+						color: #000000;
+						text-align: center;
+						
+						@include children-width;
+					}
+				}
+			}
+		}
+	}
 </style>

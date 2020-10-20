@@ -44,6 +44,15 @@ export const login = (data) => {
 	})
 }
 
+// 退出登录
+export const logout = (data) => {
+	return http.request({
+		url: 'logout',
+		method: 'GET', 
+		data
+	})
+}
+
 /**
  * 以下选择专业接口
  * */
@@ -58,7 +67,7 @@ export const professional = (data) => {
 }
 
 /**
- * 以下首页接口
+ * 以下选择专业接口
  * */
 
 // 首页
@@ -148,3 +157,15 @@ export const refine = (data) => {
 		data
 	})
 }
+
+/**
+ * 以下为订单模块接口
+ * */
+ // 订单信息
+ export const order_information = (data) => {
+	 return http.request({
+		 url: 'order/preview',
+		 method: 'GET',
+		 data
+	 })
+ }

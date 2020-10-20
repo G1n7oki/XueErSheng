@@ -106,7 +106,7 @@
 			<view class="block">
 				<view class="top">
 					<title name="直播 · 预告" />
-					<view-more />
+					<view-more url="/pages/live/live" />
 				</view>
 				<view class="live">
 					<view class="live-cell" v-for="item in liveList" :key="item.id">
@@ -128,7 +128,7 @@
 								</view>
 							</view>
 							<view class="status">
-								<button v-if="item.status === 1" class="button-1" type="default">正在直播</button>
+								<button v-if="item.status === 1" class="button-1" type="default" @click="toLivePlay">正在直播</button>
 								<button v-else-if="item.status === 2" class="button-2" type="default">直播回放</button>
 								<button v-else-if="item.status === 3" class="button-3" type="default">立即预约</button>
 								<button v-else class="button-4" type="default">已预约</button>
@@ -142,7 +142,7 @@
 			<view class="block">
 				<view class="top">
 					<title name="精选课程" />
-					<view-more />
+					<!-- <view-more /> -->
 				</view>
 				<view class="course" style="margin-top: 32upx;">
 					<view class="tips">
@@ -354,6 +354,12 @@
 			// 点击缴费/支付按钮
 			handleMainBtn() {
 				this.isPay === true ? '' : this.navigate('/pages/plan/detail')
+			},
+			// 跳转直播播放页
+			toLivePlay() {
+				uni.navigateTo({
+					url: '/pages/live/live-play'
+				})
 			}
 		},
 		onReachBottom() {

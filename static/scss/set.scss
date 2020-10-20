@@ -1,0 +1,62 @@
+.contaier {
+		background-color: #F4F7F9;
+	}
+	
+	// 列表
+	.list {
+		margin-top: 20upx;
+		background-color: #fff;
+		padding-left: 32upx;
+		
+		.list-item {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			border-bottom: 1px solid #DEDEDE;
+			box-sizing: border-box;
+			padding: 36upx 0;
+			
+			.name {
+				font-size: 28upx;
+				font-weight: 500;
+				color: #000000;
+			}
+			
+			.switch {
+				transform: scale(.7, .7)
+			}
+			
+			.icon {
+				display: flex;
+				align-items: center;
+				padding-right: 14upx;
+				
+				.text {
+					font-size: 28upx;
+					font-weight: 500;
+					color: #90949A;
+				}
+				
+				.avatar {
+					width: 80upx;
+					height: 80upx;
+					border-radius: 50%;
+					background-color: #eee;
+				}
+			}
+			
+			&:nth-last-child(1) {
+				border-bottom: none;
+			}
+		}
+	}
+	
+	.logout-button {
+		height: 100upx;
+		font-size: 28upx;
+		font-weight: 500;
+		color: #FA7A36;
+		background-color: #fff;
+		line-height: 100upx;
+		margin-top: 20upx;
+	}

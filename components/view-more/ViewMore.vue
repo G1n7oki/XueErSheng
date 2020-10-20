@@ -1,5 +1,5 @@
 <template>
-	<view class="view-contaier">
+	<view class="view-contaier" @click="handleView">
 		<view class="view-text">
 			{{ text }}
 		</view>
@@ -14,6 +14,20 @@
 			text: {
 				type: String,
 				default: '全部'
+			},
+			url: {
+				type: String,
+				default: ''
+			}
+		},
+		methods: {
+			handleView() {
+				if (this.url === '') {
+					return false
+				}
+				uni.navigateTo({
+					url: this.url
+				})
 			}
 		}
 	}

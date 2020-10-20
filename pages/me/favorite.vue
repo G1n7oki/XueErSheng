@@ -1,6 +1,10 @@
 <template>
 	<view class="contaier">
-		<xes-navbar title="我的收藏" is-arrow="true" text-align="center" />
+		<xes-navbar 
+			title="我的收藏"
+			:is-arrow="true"
+			text-align="center"
+		/>
 		<empty v-if="!show" />
 		<view v-else class="list">
 			<view 

@@ -300,7 +300,7 @@
 				<view class="icon">
 					+
 				</view>
-				<navigator :url="'/pages/order/information?id=' + courseId" hover-class="none" class="text">
+				<navigator :url="'/pages/order/information?id=' + courseId + '&type=1'" hover-class="none" class="text">
 					加入学习
 				</navigator>
 			</view>

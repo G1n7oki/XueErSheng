@@ -3,6 +3,8 @@ import {
 	token
 } from '@/common/config/config.js'
 
+console.log(token)
+
 export default {
 	config: {
 		baseUrl: baseUrl,
@@ -41,15 +43,10 @@ export default {
 		options.header = Object.assign({}, options.header, _token,_sign) 
 		*/
 		
-		if (token) {
-			options.header = {
-				Authorization: token
-			}
-		}
-		
-		options.header = {
-			'X-Requested-With': 'XMLHttpRequest'
-		}
+		options.header = Object.assign({}, options.header, {
+			'X-Requested-With': 'XMLHttpRequest',
+			'Authorization': token
+		})
 
 		return new Promise((resolve, reject) => {
 			let _config = null
