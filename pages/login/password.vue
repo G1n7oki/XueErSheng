@@ -14,7 +14,7 @@
 			</view>
 			<view class="input-area">
 				<input v-model="mobile" type="text" value="" placeholder="请输入手机号" />
-				<image class="close" src="/static/image/login/close.png" mode="" @click="clearInput"></image>
+				<image class="close" src="http://dummyimage.com/120x600" mode="" @click="clearInput"></image>
 			</view>
 			<view class="input-area">
 				<input v-model="password" :type="type" value="" placeholder="请输入密码" />
@@ -47,17 +47,17 @@
 				mobile: '',
 				password: '',
 				type: 'password',
-				src: '/static/image/login/eyeclose.png'
+				src: 'http://dummyimage.com/120x600'
 			}
 		},
 		methods: {
 			chooseType() {
 				if (this.type === 'password') {
 					this.type = 'text'
-					this.src = '/static/image/login/eye.png'
+					this.src = 'http://dummyimage.com/120x600'
 				} else {
 					this.type = 'password'
-					this.src = '/static/image/login/eyeclose.png'
+					this.src = 'http://dummyimage.com/120x600'
 				}
 			},
 			handleLogin() {

@@ -7,7 +7,7 @@
 		/>
 		<textarea value="" placeholder="灵感稍纵即逝，赶紧记录下来吧~" />
 		<view class="image-group">
-			<image src="/static/image/discover/add@2x.png" mode=""></image>
+			<image src="http://dummyimage.com/120x600" mode=""></image>
 		</view>
 		<view class="tips">
 			小提示:个人发布的信息，将在圈子中出现

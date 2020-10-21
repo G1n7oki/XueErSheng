@@ -9,7 +9,7 @@
 			background-color="transparent"
 			id="navbar"
 		/>
-		<image class="placeholder" src="/static/image/topics/result.png" mode=""></image>
+		<image class="placeholder" src="http://dummyimage.com/120x600" mode=""></image>
 		<!-- 答题信息 start -->
 		<view class="result-info" id="result-info">
 			<view class="top">
@@ -102,7 +102,7 @@
 						<view class="name">错误</view>
 					</view>
 					<view class="item">
-						<image class="icon" src="/static/image/topics/banduicuo@2x.png" mode=""></image>
+						<image class="icon" src="http://dummyimage.com/120x600" mode=""></image>
 						<view class="name">半对</view>
 					</view>
 					<view class="item">

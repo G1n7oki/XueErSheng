@@ -24,7 +24,7 @@
 				<scroll-view class="scroll-view" scroll-y="true">
 					<view class="swiper-item" @click="handleItem">
 						<view class="image-info">
-							<image class="image" src="/static/image/discover/add@2x.png" mode=""></image>
+							<image class="image" src="http://dummyimage.com/120x600" mode=""></image>
 							<view class="info">
 								<view class="info-title">
 									特许金融分析师(CFA三级)
@@ -49,7 +49,7 @@
 					</view>
 					<view class="swiper-item">
 						<view class="image-info">
-							<image class="image" src="/static/image/discover/add@2x.png" mode=""></image>
+							<image class="image" src="http://dummyimage.com/120x600" mode=""></image>
 							<view class="info">
 								<view class="info-title">
 									特许金融分析师(CFA三级)
@@ -71,7 +71,7 @@
 					</view>
 					<view class="swiper-item">
 						<view class="image-info">
-							<image class="image" src="/static/image/discover/add@2x.png" mode=""></image>
+							<image class="image" src="http://dummyimage.com/120x600" mode=""></image>
 							<view class="info">
 								<view class="info-title">
 									特许金融分析师(CFA三级)
@@ -93,7 +93,7 @@
 					</view>
 					<view class="swiper-item">
 						<view class="image-info">
-							<image class="image" src="/static/image/discover/add@2x.png" mode=""></image>
+							<image class="image" src="http://dummyimage.com/120x600" mode=""></image>
 							<view class="info">
 								<view class="info-title">
 									特许金融分析师(CFA三级)
@@ -118,7 +118,7 @@
 			<swiper-item>
 				<view class="swiper-item">
 					<view class="image-info">
-						<image class="image" src="/static/image/discover/add@2x.png" mode=""></image>
+						<image class="image" src="http://dummyimage.com/120x600" mode=""></image>
 						<view class="info">
 							<view class="info-title">
 								特许金融分析师(CFA三级)
@@ -142,7 +142,7 @@
 			<swiper-item>
 				<view class="swiper-item">
 					<view class="image-info">
-						<image class="image" src="/static/image/discover/add@2x.png" mode=""></image>
+						<image class="image" src="http://dummyimage.com/120x600" mode=""></image>
 						<view class="info">
 							<view class="info-title">
 								特许金融分析师(CFA三级)

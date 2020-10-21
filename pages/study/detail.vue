@@ -16,7 +16,7 @@
 		<!-- 优惠券 start -->
 		<view class="discount" id="discount">
 			<view class="left">
-				<image class="sale" src="/static/image/study/sale.png" mode=""></image>
+				<image class="sale" src="http://dummyimage.com/120x600" mode=""></image>
 				<view class="price-time">
 					<view class="price">
 						<view class="current">
@@ -86,15 +86,15 @@
 						</view>
 						<view class="control">
 							<view class="item">
-								<image src="/static/image/study/collect.png" mode=""></image>
+								<image src="http://dummyimage.com/120x600" mode=""></image>
 								<view class="text">收藏</view>
 							</view>
 							<view class="item">
-								<image src="/static/image/study/note.png" mode=""></image>
+								<image src="http://dummyimage.com/120x600" mode=""></image>
 								<view class="text">讲义</view>
 							</view>
 							<view class="item">
-								<image src="/static/image/study/issue.png" mode=""></image>
+								<image src="http://dummyimage.com/120x600" mode=""></image>
 								<view class="text">提问</view>
 							</view>
 						</view>
@@ -150,12 +150,12 @@
 											{{ video.duration }}
 										</view>
 									</view>
-									<image v-if="!watch && video.try === 0" class="status-1" src="/static/image/study/lock.png" mode=""></image>
+									<image v-if="!watch && video.try === 0" class="status-1" src="http://dummyimage.com/120x600" mode=""></image>
 									<view v-else-if="!watch && video.try === 1" class="status-2">
 										试看
 									</view>
-									<image v-else-if="watch && video.active" class="status-3" src="/static/image/study/live.png" mode=""></image>
-									<image v-else src="/static/image/study/play.png" mode=""></image>
+									<image v-else-if="watch && video.active" class="status-3" src="http://dummyimage.com/120x600" mode=""></image>
+									<image v-else src="http://dummyimage.com/120x600" mode=""></image>
 								</view>
 							</view>
 						</uni-collapse-item>
@@ -202,7 +202,7 @@
 						<view class="item">
 							<view class="info">
 								<view class="avatar-name">
-									<image class="avatar" src="/static/image/home/main-icon.png" mode=""></image>
+									<image class="avatar" src="http://dummyimage.com/120x600" mode=""></image>
 									<view class="name-tips">
 										<view class="name">
 											一只大肥羊
@@ -232,7 +232,7 @@
 						<view class="item">
 							<view class="info">
 								<view class="avatar-name">
-									<image class="avatar" src="/static/image/home/main-icon.png" mode=""></image>
+									<image class="avatar" src="http://dummyimage.com/120x600" mode=""></image>
 									<view class="name-tips">
 										<view class="name">
 											一只大肥羊
@@ -283,13 +283,13 @@
 				</view>
 				<view class="icons">
 					<view class="icons-cell">
-						<image class="icon" src="/static/image/study/listen.png" mode=""></image>
+						<image class="icon" src="http://dummyimage.com/120x600" mode=""></image>
 						<view class="text">
 							试听
 						</view>
 					</view>
 					<view class="icons-cell">
-						<image class="icon" src="/static/image/study/advice.png" mode=""></image>
+						<image class="icon" src="http://dummyimage.com/120x600" mode=""></image>
 						<view class="text">
 							咨询
 						</view>

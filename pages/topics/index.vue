@@ -73,30 +73,30 @@
 			<view class="links">
 				<view class="top">
 					<view class="item">
-						<image class="icon" src="/static/image/topics/meiriyilian@2x.png" mode=""></image>
+						<image class="icon" src="http://dummyimage.com/120x600" mode=""></image>
 						<text class="text">每日一练</text>
 					</view>
 					<view class="line"></view>
 					<view class="item">
-						<image class="icon" src="/static/image/topics/paihangbang@2x.png" mode=""></image>
+						<image class="icon" src="http://dummyimage.com/120x600" mode=""></image>
 						<text class="text">排行榜</text>
 					</view>
 				</view>
 				<view class="bot">
 					<navigator url="/pages/topics/paper?title=历年真题" class="item" hover-class="none">
-						<image class="icon" src="/static/image/topics/linianzhenti@2x.png" mode=""></image>
+						<image class="icon" src="http://dummyimage.com/120x600" mode=""></image>
 						<text class="text">历年真题</text>
 					</navigator>
 					<navigator url="/pages/topics/paper?title=模拟试卷" class="item" hover-class="none">
-						<image class="icon" src="/static/image/topics/monishijuan@2x.png" mode=""></image>
+						<image class="icon" src="http://dummyimage.com/120x600" mode=""></image>
 						<text class="text">模拟试卷</text>
 					</navigator>
-					<navigator class="item" hover-class="none">
-						<image class="icon" src="/static/image/topics/cuotishoucang@2x.png" mode=""></image>
+					<navigator class="item" url="/pages/topics/wrong" hover-class="none">
+						<image class="icon" src="http://dummyimage.com/120x600" mode=""></image>
 						<text class="text">错题收藏</text>
 					</navigator>
-					<navigator class="item" hover-class="none">
-						<image class="icon" src="/static/image/topics/zuotijkilu@2x.png" mode=""></image>
+					<navigator class="item" url="/pages/topics/record" hover-class="none">
+						<image class="icon" src="http://dummyimage.com/120x600" mode=""></image>
 						<text class="text">做题记录</text>
 					</navigator>
 				</view>
@@ -106,7 +106,7 @@
 			<view class="practice">
 				<view class="practice-title">
 					<Title name="章节精练" />
-					<image class="icon" src="/static/image/topics/shehzi@2x.png" mode="" @click="toSet"></image>
+					<image class="icon" src="http://dummyimage.com/120x600" mode="" @click="toSet"></image>
 				</view>
 				<view class="unfinished" v-if="questionData.not_complete">
 					<view class="info">
@@ -216,8 +216,8 @@
 			return {
 				flag: false, // 显示隐藏子学科
 				treeList: [], // 面包屑
-				foldIcon: '/static/image/topics/shouqi@2x.png', // 折叠图片
-				unfoldIcon: '/static/image/topics/zhankai@2x.png', // 折叠图片
+				foldIcon: 'http://dummyimage.com/120x600', // 折叠图片
+				unfoldIcon: 'http://dummyimage.com/120x600', // 折叠图片
 				topicList: [],
 				questionData: {}
 			}

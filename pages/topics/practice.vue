@@ -1,5 +1,6 @@
 <template>
 	<view class="contaier">
+		<!-- 导航栏 start -->
 		<xes-navbar
 			is-arrow="true"
 			is-title="false"
@@ -9,6 +10,7 @@
 				:total="total"
 			/>
 		</xes-navbar>
+		<!-- 导航栏 end -->
 		<!-- 答题部分 start -->
 		<swiper 
 			class="swiper"
@@ -123,6 +125,7 @@
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import uButton from '@/components/u-button/uButton.vue'
 	import XesTabbar from '@/components/xes-tabbar/xes-tabbar.vue'
+	import { question } from '@/common/api/api.js'
 	import Json from '@/static/data.json'
 	export default {
 		name: 'Practice',
@@ -145,6 +148,14 @@
 			}
 		},
 		onLoad() {
+			question({
+				profession_id: 44
+			}).then(response => {
+				console.log(response)
+			}).catch(error => {
+				
+			})
+			
 			// 屏幕的高度
 			const wHeight = uni.getSystemInfoSync()['windowHeight']
 			// 获取手机状态栏高度

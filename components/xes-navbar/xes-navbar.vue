@@ -6,7 +6,7 @@
 		>
 			<view class="navbar-content">
 				<view class="navbar-arrow-image" v-if="isArrow && isArrowType === 'image'" @click="handleArrow">
-					<image class="image" src="/static/image/study/return.png" mode=""></image>
+					<image class="image" src="http://dummyimage.com/120x600" mode=""></image>
 				</view>
 				<view class="navbar-arrow-line" :class="{'active': isArrowColor === 'white' }" v-if="isArrow && isArrowType === 'line'" @click="handleArrow"></view>
 				<view 

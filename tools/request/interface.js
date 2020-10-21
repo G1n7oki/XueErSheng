@@ -3,8 +3,6 @@ import {
 	token
 } from '@/common/config/config.js'
 
-console.log(token)
-
 export default {
 	config: {
 		baseUrl: baseUrl,

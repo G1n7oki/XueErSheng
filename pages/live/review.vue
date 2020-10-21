@@ -1,10 +1,13 @@
 <template>
 	<view class="contaier">
-		<XesNavbar
+		<!-- 导航栏 start -->
+		<xes-navbar
 			title="直播回顾"
 			:is-arrow="true"
 			text-align="center"
 		/>
+		<!-- 导航栏 end -->
+		<!-- 选项卡 start -->
 		<view id="tabBar">
 			<XesTextTabbar
 				:list="tabbar.list"
@@ -12,6 +15,8 @@
 				@postId="toId"
 			/>
 		</view>
+		<!-- 选项卡 end -->
+		<!-- 数据列表 start -->
 		<swiper
 			class="swiper"
 			:style="{height: height}"
@@ -19,305 +24,47 @@
 			:current="tabbar.current"
 			@change="chooseSwiper"
 		>
-			<swiper-item>
+			<swiper-item v-for="(n, index) in 4" :key="index">
 				<scroll-view class="scroll-view" scroll-y="true" >
-					<navigator url="/pages/live/detail" class="item">
+					<navigator 
+						url="/pages/live/detail"
+						class="item"
+						v-for="item in listData"
+						:key="item.id"
+					>
 						<view class="banner">
-							<image class="image" src="/static/image/home/banner.png" mode=""></image>
+							<image class="image" :src="item.avatar" mode=""></image>
 						</view>
 						<view class="info">
 							<view class="info-title">
-								汉语言文学-本科导学直播课
+								{{ item.title }}
 							</view>
 							<view class="space-between">
 								<view class="left">
 									<view class="user">
-										<image class="avatar" src="/static/image/discover/add@2x.png" mode=""></image>
-										<view class="name">杨明波</view>
-										<view class="post">江西省高级教师</view>
+										<image class="avatar" :src="item.avatar" mode=""></image>
+										<view class="name">{{ item.title }}</view>
+										<view class="post">{{ item.post }}</view>
 									</view>
 									<view class="time-number">
-										正在学习 50 人 <text class="time">共30课时</text>
+										正在学习 {{ item.people }} 人 <text class="time">共{{ item.hour }}课时</text>
 									</view>
 								</view>
-								<button class="button" @click="start">开始学习</button>
+								<button class="button" hover-class="none" @click="start">开始学习</button>
 							</view>
 						</view>
 					</navigator>
-					<navigator url="/pages/live/detail" class="item">
-						<view class="banner">
-							<image class="image" src="/static/image/home/banner.png" mode=""></image>
-						</view>
-						<view class="info">
-							<view class="info-title">
-								汉语言文学-本科导学直播课
-							</view>
-							<view class="space-between">
-								<view class="left">
-									<view class="user">
-										<image class="avatar" src="/static/image/discover/add@2x.png" mode=""></image>
-										<view class="name">杨明波</view>
-										<view class="post">江西省高级教师</view>
-									</view>
-									<view class="time-number">
-										正在学习 50 人 <text class="time">共30课时</text>
-									</view>
-								</view>
-								<button class="button" @click="start">开始学习</button>
-							</view>
-						</view>
-					</navigator>
-					<navigator url="/pages/live/detail" class="item">
-						<view class="banner">
-							<image class="image" src="/static/image/home/banner.png" mode=""></image>
-						</view>
-						<view class="info">
-							<view class="info-title">
-								汉语言文学-本科导学直播课
-							</view>
-							<view class="space-between">
-								<view class="left">
-									<view class="user">
-										<image class="avatar" src="/static/image/discover/add@2x.png" mode=""></image>
-										<view class="name">杨明波</view>
-										<view class="post">江西省高级教师</view>
-									</view>
-									<view class="time-number">
-										正在学习 50 人 <text class="time">共30课时</text>
-									</view>
-								</view>
-								<button class="button" @click="start">开始学习</button>
-							</view>
-						</view>
-					</navigator>
-				</scroll-view>
-			</swiper-item>
-			<swiper-item>
-				<scroll-view class="scroll-view" scroll-y="true" >
-					<view class="item">
-						<view class="banner">
-							<image class="image" src="/static/image/home/banner.png" mode=""></image>
-						</view>
-						<view class="info">
-							<view class="info-title">
-								汉语言文学-本科导学直播课
-							</view>
-							<view class="space-between">
-								<view class="left">
-									<view class="user">
-										<image class="avatar" src="/static/image/discover/add@2x.png" mode=""></image>
-										<view class="name">杨明波</view>
-										<view class="post">江西省高级教师</view>
-									</view>
-									<view class="time-number">
-										正在学习 50 人 <text class="time">共30课时</text>
-									</view>
-								</view>
-								<button class="button">开始学习</button>
-							</view>
-						</view>
-					</view>
-					<view class="item">
-						<view class="banner">
-							<image class="image" src="/static/image/home/banner.png" mode=""></image>
-						</view>
-						<view class="info">
-							<view class="info-title">
-								汉语言文学-本科导学直播课
-							</view>
-							<view class="space-between">
-								<view class="left">
-									<view class="user">
-										<image class="avatar" src="/static/image/discover/add@2x.png" mode=""></image>
-										<view class="name">杨明波</view>
-										<view class="post">江西省高级教师</view>
-									</view>
-									<view class="time-number">
-										正在学习 50 人 <text class="time">共30课时</text>
-									</view>
-								</view>
-								<button class="button">开始学习</button>
-							</view>
-						</view>
-					</view>
-					<view class="item">
-						<view class="banner">
-							<image class="image" src="/static/image/home/banner.png" mode=""></image>
-						</view>
-						<view class="info">
-							<view class="info-title">
-								汉语言文学-本科导学直播课
-							</view>
-							<view class="space-between">
-								<view class="left">
-									<view class="user">
-										<image class="avatar" src="/static/image/discover/add@2x.png" mode=""></image>
-										<view class="name">杨明波</view>
-										<view class="post">江西省高级教师</view>
-									</view>
-									<view class="time-number">
-										正在学习 50 人 <text class="time">共30课时</text>
-									</view>
-								</view>
-								<button class="button">开始学习</button>
-							</view>
-						</view>
-					</view>
-				</scroll-view>
-			</swiper-item>
-			<swiper-item>
-				<scroll-view class="scroll-view" scroll-y="true" >
-					<view class="item">
-						<view class="banner">
-							<image class="image" src="/static/image/home/banner.png" mode=""></image>
-						</view>
-						<view class="info">
-							<view class="info-title">
-								汉语言文学-本科导学直播课
-							</view>
-							<view class="space-between">
-								<view class="left">
-									<view class="user">
-										<image class="avatar" src="/static/image/discover/add@2x.png" mode=""></image>
-										<view class="name">杨明波</view>
-										<view class="post">江西省高级教师</view>
-									</view>
-									<view class="time-number">
-										正在学习 50 人 <text class="time">共30课时</text>
-									</view>
-								</view>
-								<button class="button">开始学习</button>
-							</view>
-						</view>
-					</view>
-					<view class="item">
-						<view class="banner">
-							<image class="image" src="/static/image/home/banner.png" mode=""></image>
-						</view>
-						<view class="info">
-							<view class="info-title">
-								汉语言文学-本科导学直播课
-							</view>
-							<view class="space-between">
-								<view class="left">
-									<view class="user">
-										<image class="avatar" src="/static/image/discover/add@2x.png" mode=""></image>
-										<view class="name">杨明波</view>
-										<view class="post">江西省高级教师</view>
-									</view>
-									<view class="time-number">
-										正在学习 50 人 <text class="time">共30课时</text>
-									</view>
-								</view>
-								<button class="button">开始学习</button>
-							</view>
-						</view>
-					</view>
-					<view class="item">
-						<view class="banner">
-							<image class="image" src="/static/image/home/banner.png" mode=""></image>
-						</view>
-						<view class="info">
-							<view class="info-title">
-								汉语言文学-本科导学直播课
-							</view>
-							<view class="space-between">
-								<view class="left">
-									<view class="user">
-										<image class="avatar" src="/static/image/discover/add@2x.png" mode=""></image>
-										<view class="name">杨明波</view>
-										<view class="post">江西省高级教师</view>
-									</view>
-									<view class="time-number">
-										正在学习 50 人 <text class="time">共30课时</text>
-									</view>
-								</view>
-								<button class="button">开始学习</button>
-							</view>
-						</view>
-					</view>
-				</scroll-view>
-			</swiper-item>
-			<swiper-item>
-				<scroll-view class="scroll-view" scroll-y="true" >
-					<view class="item">
-						<view class="banner">
-							<image class="image" src="/static/image/home/banner.png" mode=""></image>
-						</view>
-						<view class="info">
-							<view class="info-title">
-								汉语言文学-本科导学直播课
-							</view>
-							<view class="space-between">
-								<view class="left">
-									<view class="user">
-										<image class="avatar" src="/static/image/discover/add@2x.png" mode=""></image>
-										<view class="name">杨明波</view>
-										<view class="post">江西省高级教师</view>
-									</view>
-									<view class="time-number">
-										正在学习 50 人 <text class="time">共30课时</text>
-									</view>
-								</view>
-								<button class="button">开始学习</button>
-							</view>
-						</view>
-					</view>
-					<view class="item">
-						<view class="banner">
-							<image class="image" src="/static/image/home/banner.png" mode=""></image>
-						</view>
-						<view class="info">
-							<view class="info-title">
-								汉语言文学-本科导学直播课
-							</view>
-							<view class="space-between">
-								<view class="left">
-									<view class="user">
-										<image class="avatar" src="/static/image/discover/add@2x.png" mode=""></image>
-										<view class="name">杨明波</view>
-										<view class="post">江西省高级教师</view>
-									</view>
-									<view class="time-number">
-										正在学习 50 人 <text class="time">共30课时</text>
-									</view>
-								</view>
-								<button class="button">开始学习</button>
-							</view>
-						</view>
-					</view>
-					<view class="item">
-						<view class="banner">
-							<image class="image" src="/static/image/home/banner.png" mode=""></image>
-						</view>
-						<view class="info">
-							<view class="info-title">
-								汉语言文学-本科导学直播课
-							</view>
-							<view class="space-between">
-								<view class="left">
-									<view class="user">
-										<image class="avatar" src="/static/image/discover/add@2x.png" mode=""></image>
-										<view class="name">杨明波</view>
-										<view class="post">江西省高级教师</view>
-									</view>
-									<view class="time-number">
-										正在学习 50 人 <text class="time">共30课时</text>
-									</view>
-								</view>
-								<button class="button">开始学习</button>
-							</view>
-						</view>
-					</view>
 				</scroll-view>
 			</swiper-item>
 		</swiper>
+		<!-- 数据列表 end -->
 	</view>
 </template>
 
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import XesTextTabbar from '@/components/xes-text-tabbar/xes-text-tabbar.vue'
+	import Json from '@/static/data.json'
 	export default {
 		name: 'Review',
 		components: {
@@ -342,7 +89,8 @@
 					}],
 					current: 0
 				},
-				height: 0
+				height: 0 ,// swiper的高度
+				listData: [] // 模拟的数据
 			}
 		},
 		onLoad() {
@@ -357,6 +105,15 @@
 				const tHeight = res.height
 				that.height = wHeight - tHeight - statusBarHeight - 42 + 'px'
 			}).exec()
+			
+			this.listData = Json.review
+			
+			uni.login({
+				provider: 'weixin',
+				success(res) {
+					console.log(res)
+				}
+			})
 		},
 		methods: {
 			toId(i) {

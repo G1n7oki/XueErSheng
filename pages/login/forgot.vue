@@ -39,7 +39,7 @@
 		},
 		data() {
 			return {
-				src: '/static/image/login/eyeclose.png',
+				src: 'http://dummyimage.com/120x600',
 				mobile: '',
 				password: '',
 				type: 'password'

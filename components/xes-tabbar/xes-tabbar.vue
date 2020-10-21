@@ -4,7 +4,7 @@
 		<view class="navbar-icons">
 			<view class="navbar-icons__cell" @click="clock">
 				<!-- 计时器 start -->
-				<image class="u-clock__icon" src="/static/image/topics/shijian@2x.png" mode=""></image>
+				<image class="u-clock__icon" src="http://dummyimage.com/120x600" mode=""></image>
 				<view class="u-clock__text">
 					<view class="u-clock__text--item">
 						{{ minute }}:
@@ -16,19 +16,19 @@
 				<!-- 计时器 end -->
 			</view>
 			<view class="navbar-icons__cell" @click="show('answer-dialog')">
-				<image class="navbar-icons--cell--icon" src="/static/image/topics/datika@2x.png" mode=""></image>
+				<image class="navbar-icons--cell--icon" src="http://dummyimage.com/120x600" mode=""></image>
 				<view class="navbar-icons--cell--text" style="font-size: 24rpx;">
 					{{ current }}/{{ total }}
 				</view>
 			</view>
 			<view class="navbar-icons__cell" @click="show('papers-dialog')">
-				<image class="navbar-icons--cell--icon" src="/static/image/topics/jiaojuan@2x.png" mode=""></image>
+				<image class="navbar-icons--cell--icon" src="http://dummyimage.com/120x600" mode=""></image>
 				<view class="navbar-icons--cell--text">
 					交卷
 				</view>
 			</view>
 			<view class="navbar-icons__cell" @click="show('set-dialog')">
-				<image class="navbar-icons--cell--icon" src="/static/image/topics/shezhi@2x.png" mode=""></image>
+				<image class="navbar-icons--cell--icon" src="http://dummyimage.com/120x600" mode=""></image>
 				<view class="navbar-icons--cell--text">
 					设置
 				</view>
@@ -95,25 +95,25 @@
 					<view class="triangle"></view>
 					<view class="item-area">
 						<view class="item" @click="handleItem">
-							<image class="icon" src="/static/image/topics/yejianmoshi@2x.png" mode=""></image>
+							<image class="icon" src="http://dummyimage.com/120x600" mode=""></image>
 							<view class="name">
 								夜间模式
 							</view>
 						</view>
 						<view class="item">
-							<image class="icon" src="/static/image/topics/ziti@2x.png" mode=""></image>
+							<image class="icon" src="http://dummyimage.com/120x600" mode=""></image>
 							<view class="name">
 								字体放大
 							</view>
 						</view>
-						<view class="item">
-							<image class="icon" src="/static/image/topics/jiucuo@2x.png" mode=""></image>
+						<navigator url="/pages/topics/correction" hover-class="none" class="item">
+							<image class="icon" src="http://dummyimage.com/120x600" mode=""></image>
 							<view class="name">
 								题目纠错
 							</view>
-						</view>
+						</navigator>
 						<view class="item">
-							<image class="icon" src="/static/image/topics/tiwen@2x.png" mode=""></image>
+							<image class="icon" src="http://dummyimage.com/120x600" mode=""></image>
 							<view class="name">
 								我要提问
 							</view>

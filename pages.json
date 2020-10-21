@@ -97,6 +97,24 @@
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
+		}, { // 题目纠错
+			"path": "pages/topics/correction",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, { // 做题记录
+			"path": "pages/topics/record",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, { // 错误/收藏
+			"path": "pages/topics/wrong",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
 		}, { // 我的
 			"path": "pages/me/me",
 			"style": {

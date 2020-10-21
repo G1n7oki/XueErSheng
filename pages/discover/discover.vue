@@ -22,7 +22,7 @@
 			<view class="list" :style="{'margin-top': height}">
 				<view class="item">
 					<view class="info">
-						<image class="avatar" src="/static/image/home/main-icon.png" mode=""></image>
+						<image class="avatar" src="http://dummyimage.com/120x600" mode=""></image>
 						<view class="name-date">
 							<view class="name">
 								学尔升课堂
@@ -36,7 +36,7 @@
 						最新！2020年江西省高校毕业生“三支一扶”计划招募考试笔试时间确定！
 					</view>
 					<view class="images">
-						<image class="image-1" src="/static/image/study/exercise.png" mode=""></image>
+						<image class="image-1" src="http://dummyimage.com/120x600" mode=""></image>
 					</view>
 					<view class="bot">
 						<view class="read">
@@ -44,22 +44,22 @@
 						</view>
 						<view class="icons">
 							<view class="icon-cell">
-								<image class="icon" src="/static/image/discover/dianzan@2x.png" mode=""></image>
+								<image class="icon" src="http://dummyimage.com/120x600" mode=""></image>
 								<text class="number">20</text>
 							</view>
 							<view class="icon-cell">
-								<image class="icon" src="/static/image/discover/pinglun@2x.png" mode=""></image>
+								<image class="icon" src="http://dummyimage.com/120x600" mode=""></image>
 								<text class="number">18</text>
 							</view>
 							<view class="icon-cell">
-								<image class="icon" src="/static/image/discover/fenxiang@2x.png" mode=""></image>
+								<image class="icon" src="http://dummyimage.com/120x600" mode=""></image>
 							</view>
 						</view>
 					</view>
 				</view>
 				<view class="item">
 					<view class="info">
-						<image class="avatar" src="/static/image/home/main-icon.png" mode=""></image>
+						<image class="avatar" src="http://dummyimage.com/120x600" mode=""></image>
 						<view class="name-date">
 							<view class="name">
 								学尔升课堂
@@ -76,20 +76,20 @@
 						查看原文
 					</view>
 					<view class="images">
-						<image class="image-9" src="/static/image/study/exercise.png" mode=""></image>
-						<image class="image-9" src="/static/image/study/exercise.png" mode=""></image>
-						<image class="image-9" src="/static/image/study/exercise.png" mode=""></image>
-						<image class="image-9" src="/static/image/study/exercise.png" mode=""></image>
-						<image class="image-9" src="/static/image/study/exercise.png" mode=""></image>
-						<image class="image-9" src="/static/image/study/exercise.png" mode=""></image>
-						<image class="image-9" src="/static/image/study/exercise.png" mode=""></image>
-						<image class="image-9" src="/static/image/study/exercise.png" mode=""></image>
-						<image class="image-9" src="/static/image/study/exercise.png" mode=""></image>
+						<image class="image-9" src="http://dummyimage.com/120x600" mode=""></image>
+						<image class="image-9" src="http://dummyimage.com/120x600" mode=""></image>
+						<image class="image-9" src="http://dummyimage.com/120x600" mode=""></image>
+						<image class="image-9" src="http://dummyimage.com/120x600" mode=""></image>
+						<image class="image-9" src="http://dummyimage.com/120x600" mode=""></image>
+						<image class="image-9" src="http://dummyimage.com/120x600" mode=""></image>
+						<image class="image-9" src="http://dummyimage.com/120x600" mode=""></image>
+						<image class="image-9" src="http://dummyimage.com/120x600" mode=""></image>
+						<image class="image-9" src="http://dummyimage.com/120x600" mode=""></image>
 					</view>
 				</view>
 			</view>
 			<view class="issue" @click="handleIssue">
-				<image class="icon" src="/static/image/discover/fabu@2x.png" mode=""></image>
+				<image class="icon" src="http://dummyimage.com/120x600" mode=""></image>
 			</view>
 		</view>
 	</view>

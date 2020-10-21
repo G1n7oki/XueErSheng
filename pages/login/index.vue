@@ -14,7 +14,7 @@
 			</view>
 			<view class="input-area">
 				<input v-model="mobile" type="text" value="" placeholder="请输入手机号" />
-				<image class="close" src="/static/image/login/close.png" mode="" @click="clearInput"></image>
+				<image class="close" src="http://dummyimage.com/120x600" mode="" @click="clearInput"></image>
 			</view>
 			<view @click="toSeccode">
 				<uButton text="获取验证码" />

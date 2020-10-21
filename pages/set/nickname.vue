@@ -7,8 +7,11 @@
 			:is-arrow="true"
 		/>
 		<!-- 导航栏 end -->
+		<!-- 用户昵称 start -->
+		<input class="nickname-input" type="text" v-model="value" />
+		<!-- 用户昵称 end -->
 		<!-- 按钮 start -->
-		<view>
+		<view class="nickname-button" @click="confirm">
 			<u-button text="完成" />
 		</view>
 		<!-- 按钮 end -->
@@ -23,10 +26,47 @@
 		components: {
 			XesNavbar,
 			uButton
+		},
+		data() {
+			return {
+				value: '学员_122100112'
+			}
+		},
+		methods: {
+			// 确认修改
+			confirm() {
+				if (this.value === '') {
+					uni.showToast({
+						icon: 'none',
+						title: '取个好听的名字吧'
+					})
+					return false
+				}
+				console.log(this.value)
+			}
 		}
 	}
 </script>
 
 <style lang="scss">
-	
+	.contaier {
+		background-color: #F4F7F9;
+	}
+	// 昵称输入框
+	.nickname-input {
+		width: 686upx;
+		height: 100upx;
+		background-color: #FFFFFF;
+		border-radius: 20upx;
+		margin: 20upx auto 0;
+		font-size: 28upx;
+		font-weight: 500;
+		box-sizing: border-box;
+		padding-left: 32upx;
+	}
+	// 修改昵称按钮
+	.nickname-button {
+		width: 686upx;
+		margin: 0 auto;
+	}
 </style>

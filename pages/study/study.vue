@@ -36,10 +36,10 @@
 		<!-- 练习/问答 start -->
 		<view class="exercise-question">
 			<navigator class="item" url="/pages/topics/index">
-				<image src="/static/image/study/exercise.png" mode=""></image>
+				<image src="http://dummyimage.com/120x600" mode=""></image>
 			</navigator>
 			<view class="item">
-				<image src="/static/image/study/question.png" mode=""></image>
+				<image src="http://dummyimage.com/120x600" mode=""></image>
 			</view>
 		</view>
 		<!-- 练习/问答 end -->
@@ -121,7 +121,7 @@
 												</view>
 												<view class="status">
 													{{ live.status === 1 ? '正在直播' : live.time }}
-													<image v-if="live.status === 1" src="/static/image/home/live.png" mode=""></image>
+													<image v-if="live.status === 1" src="http://dummyimage.com/120x600" mode=""></image>
 												</view>
 											</view>
 											<button v-if="live.status === 1" class="button button-1" type="default">
@@ -180,7 +180,7 @@
 		<!-- 课程/直播课 end -->
 		<!-- 上次观看 start -->
 		<view v-if="!close" class="last-watch">
-			<image class="image" src="/static/image/home/banner.png" mode=""></image>
+			<image class="image" src="http://dummyimage.com/120x600" mode=""></image>
 			<view class="info">
 				<view class="text">
 					上次观看：
@@ -189,7 +189,7 @@
 					童哲校长-新手股民必备技能童哲校长-新手股民必备技能
 				</view>
 			</view>
-			<image class="close" src="/static/image/study/close.png" mode="" @click="handleClose"></image>
+			<image class="close" src="http://dummyimage.com/120x600" mode="" @click="handleClose"></image>
 		</view>
 		<!-- 上次观看 end -->
 	</view>
