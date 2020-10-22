@@ -1,6 +1,7 @@
 <template>
-	<view class="contaier">
-		<XesNavbar
+	<view class="container">
+		<!-- 导航栏 start -->
+		<xes-navbar
 			title="答题结果"
 			color="#fff"
 			:is-arrow="true"
@@ -9,6 +10,7 @@
 			background-color="transparent"
 			id="navbar"
 		/>
+		<!-- 导航栏 end -->
 		<image class="placeholder" src="http://dummyimage.com/120x600" mode=""></image>
 		<!-- 答题信息 start -->
 		<view class="result-info" id="result-info">

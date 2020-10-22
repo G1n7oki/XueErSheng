@@ -1,8 +1,14 @@
 <template>
-	<view class="contaier">
-		<xes-navbar :is-arrow="true" title="练题设置" text-align="center">
-		</xes-navbar>
+	<view class="container">
+		<!-- 导航栏 start -->
+		<xes-navbar 
+			:is-arrow="true" 
+			title="练题设置" 
+			text-align="center"
+		/>
+		<!-- 导航栏 end -->
 		<view class="pattern-filter">
+			<!-- 模式 start -->
 			<view class="pattern">
 				<view class="title-content">
 					<title name="做题模式" />
@@ -26,6 +32,8 @@
 					</view>
 				</view>
 			</view>
+			<!-- 模式 end -->
+			<!-- 题型 start -->
 			<view class="filter">
 				<view class="title-content">
 					<title name="题型筛选" />
@@ -49,10 +57,13 @@
 					</view>
 				</view>
 			</view>
+			<!-- 题型 end -->
 		</view>
+		<!-- 按钮 start -->
 		<view class="button-area" @click="handleBtn">
 			<u-button text="恢复默认设置" />
 		</view>
+		<!-- 按钮 end -->
 	</view>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-	<view class="contaier">
+	<view class="container">
 		<xes-navbar title="学习中心" backgroundColor="#F4F7F9" :margin="32" />
 		<view class="lineChart">
 			<view class="tips">
@@ -62,8 +62,8 @@
 				@change="touchSwiper">
 				<swiper-item>
 					<scroll-view class="scroll-view" scroll-y="true" >
-						<empty />
-						<view class="course-list">
+						<empty v-if="showCourse" />
+						<view v-else class="course-list">
 							<view 
 								class="item"
 								v-for="course in courseList"
@@ -96,8 +96,8 @@
 				</swiper-item>
 				<swiper-item>
 					<scroll-view class="scroll-view" scroll-y="true" >
-						<empty />
-						<view class="live live-area">
+						<empty v-if="showLive" />
+						<view v-else class="live live-area">
 							<view class="live-list">
 								<view 
 									class="item" 
@@ -215,16 +215,21 @@
 			return {
 				cWidth: '',
 				cHeight: '',
-				pixelRatio: 1,
-				courseList: [],
-				liveList: [],
-				historyList: [],
-				tabIndex: 0,
-				swiperH: 0,
-				close: false
+				pixelRatio: 1, // 像素
+				courseList: [], // 课程列表
+				liveList: [], // 直播列表
+				historyList: [], // 历史列表
+				tabIndex: 0, // 当前显示的索引
+				swiperH: 0, // swiper的高度
+				close: false, // 是否显示上次播放
+				showCourse: false, // 是否显课程列表的空状态
+				showLive: false ,// 是否显现空状态的直播数据
+				week: [] // 生成的日期
 			}
 		},
 		onLoad() {
+			this.generateWeekly()
+			
 			that = this
 			this.cWidth = uni.upx2px(630)
 			this.cHeight = uni.upx2px(308)
@@ -241,13 +246,27 @@
 				that.swiperH = wHeight - tHeight - statusBarHeight - 50 + 'px'
 			}).exec()
 			
-			// this.courseList = json.study.courseList
-			// this.liveList = json.study.liveList
-			// this.historyList = json.study.historyList
+			this.courseList = json.study.courseList
+			this.liveList = json.study.liveList
+			this.historyList = json.study.historyList
 			
-			this.toMeCourse()
+			// this.toMeCourse()
+			
 		},
 		methods: {
+			// 生成当前日期向前推7天的时间
+			generateWeekly() {
+				// 得到当前的时间戳
+				const timestamp = Date.now()
+				// 循环获得当前时间向前推7天的时间戳
+				const dateWeek = Array.from(new Array(7)).map((_, i) => {
+					const weekTimestamp = new Date(timestamp - i * 24 * 60 * 60 * 1000)
+					// 整成自己需要的样式
+					const date = String(weekTimestamp.getMonth() + 1) + '.' + String(new Date(weekTimestamp).getDate())
+					// 倒序插入
+					this.week.unshift(date)
+				})
+			},
 			showLine(canvasId) {
 				canvasLine = new uCharts({
 					$this: that,
@@ -264,10 +283,10 @@
 					dataPointShape: true,
 					background: '#FFFFFF',
 					pixelRatio: that.pixelRatio,
-					categories: ['8.1', '8.2', '8.3', '8.4', '8.5', '8.6', '8.7'],
+					categories: that.week,
 					series: [{
 						"name": "",
-						"data": [35, 36, 31, 33, 13, 34, 55],
+						"data": [15, 3, 5, 7, 9, 11, 15],
 						"color": "#2BD0FF"
 					}],
 					animation: true,
@@ -305,7 +324,7 @@
 				// canvasLine.touchLegend(e)
 				canvasLine.showToolTip(e, {
 					format: function (item, category) {
-						return category + ' ' + item.name + ':' + item.data 
+						return '今日' + item.data + '小时' 
 					}
 				});
 			},
@@ -321,29 +340,8 @@
 			handleClose () {
 				this.close = true
 			},
-			async toMeCourse() {
-				uni.showLoading({
-					title: '加载中...'
-				})
-				// 我的课程数据
-				const course = await me_course()
-				console.log(course)
-				if (course.statusCode === 200) {
-					this.courseList = course.data.data
-				} else {
-					showToast(course.data.message)
-					uni.hideLoading()
-					return false
-				}
-				// 我的直播课数据
-				const live = await me_live()
-				console.log(live)
-				if (live.statusCode === 200) {
-					this.liveList = course.data.data
-				} else {
-					showToast(live.data.message)
-				}
-				uni.hideLoading()
+			toMeCourse() {
+				
 			}
 		}
 	}

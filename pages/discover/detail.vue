@@ -1,5 +1,5 @@
 <template>
-	<view class="contaier">
+	<view class="container">
 		<XesNavbar
 			title="发现详情"
 			:is-arrow="true"

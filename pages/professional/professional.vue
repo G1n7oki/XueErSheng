@@ -1,5 +1,5 @@
 <template>
-	<view class="contaier">
+	<view class="container">
 		<!-- 提示 start -->
 		<view class="tips">
 			<view class="title">
@@ -120,9 +120,8 @@
 </script>
 
 <style lang="scss">
-	.contaier {
+	.container {
 		padding-top: 75upx;
-		box-sizing: border-box;
 	}
 	
 	.tips {

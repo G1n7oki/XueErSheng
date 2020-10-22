@@ -1,0 +1,119 @@
+.inner {
+	box-sizing: border-box;
+	position: relative;
+	padding: 109upx 69upx 0;
+		
+	.title {
+		font-size: 44upx;
+		color: #303133;
+		font-weight: bold;
+		
+		&.title-1 {
+			margin-bottom: 100upx;
+		}
+	}
+	
+	.tips {
+		margin-top: 33upx;
+		font-size: 28upx;
+		font-weight: 500;
+		color: #606266;
+		margin-bottom: 100upx;
+	}
+	
+	.seccode {
+		margin-top: 80upx;
+	}
+	
+	.resend {
+		margin-top: 42upx;
+		font-size: 28upx;
+		font-weight: 500;
+		color: #909399;
+		text-align: center;
+		
+		text {
+			color: #1283FF;
+		}
+	}
+		
+	.input-area {
+		position: relative;
+		
+		input {
+			height: 92upx;
+			border-bottom: 1px solid #F5F5F5;
+			font-size: 28upx;
+		}
+		
+		.close {
+			width: 29upx;
+			height: 29upx;
+			position: absolute;
+			top: 50%;
+			right: 0;
+			transform: translateY(-50%);
+			z-index: 10;
+		}
+		
+		.eye {
+			width: 35upx;
+			height: 30upx;
+			position: absolute;
+			top: 50%;
+			right: 0;
+			transform: translateY(-50%);
+			z-index: 10;
+		}
+		
+		.text {
+			font-size: 28upx;
+			font-weight: 500;
+			color: #1283FF;
+			position: absolute;
+			top: 50%;
+			right: 0;
+			transform: translateY(-50%);
+			z-index: 10;
+		}
+	}
+		
+	.password-login {
+		text-align: center;
+		font-size: 32upx;
+		font-weight: 500;
+		color: #1283FF;
+		text-decoration: underline;
+		margin-top: 30upx;
+	}
+		
+	.tripartite {
+		width: 100%;
+		text-align: center;
+		position: absolute;
+		left: 0;
+		bottom: 80upx;
+		
+		.text {
+			font-size: 28upx;
+			font-weight: 500;
+			color: #C0C4CC;
+		}
+		
+		.weixin {
+			width: 80upx;
+			height: 80upx;
+			background: url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg') 0 0 no-repeat;
+			background-size: 100% 100%;
+			margin: 67upx auto 0;
+		}
+	}
+	
+	navigator {
+		font-size: 26upx;
+		font-weight: 500;
+		color: #1283FF;
+		text-align: right;
+		margin-top: 30upx;
+	}
+}

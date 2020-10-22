@@ -1,27 +1,40 @@
 <template>
-	<view class="contaier">
+	<view class="container">
+		<!-- 导航栏 start -->
 		<xes-navbar
 			title="登录"
 			text-align="center"
 			:is-arrow="true"
 		/>
+		<!-- 导航栏 end -->
 		<view class="inner" :style="{height: wHeight - statusBarHeight - 42 + 'px'}">
+			<!-- 页面小标题 start -->
 			<view class="title">
 				手机号登陆
 			</view>
-			<view class="explain">
+			<!-- 页面小标题 end -->
+			<!-- 提示 start -->
+			<view class="tips">
 				新用户登陆之后自动生成账号
 			</view>
+			<!-- 提示 end -->
+			<!-- 输入框 start -->
 			<view class="input-area">
 				<input v-model="mobile" type="text" value="" placeholder="请输入手机号" />
 				<image class="close" src="http://dummyimage.com/120x600" mode="" @click="clearInput"></image>
 			</view>
+			<!-- 输入框 end -->
+			<!-- 获取验证码 start -->
 			<view @click="toSeccode">
 				<uButton text="获取验证码" />
 			</view>
+			<!-- 获取验证码 end -->
+			<!-- 密码登录 start -->
 			<navigator url="/pages/login/password" hover-class="none" class="password-login">
 				密码登录
 			</navigator>
+			<!-- 密码登录 end -->
+			<!-- 三方 start -->
 			<view class="tripartite">
 				<view class="text">
 					第三方登录
@@ -32,6 +45,7 @@
 					@getphonenumber="toPhoneLogin">
 				</button>
 			</view>
+			<!-- 三方 end -->
 		</view>
 	</view>
 </template>
@@ -117,73 +131,5 @@
 </script>
 
 <style lang="scss">
-	.inner {
-		box-sizing: border-box;
-		position: relative;
-		padding: 109upx 69upx 0;
-		
-		.title {
-			font-size: 44upx;
-			color: #303133;
-			font-weight: bold;
-		}
-		
-		.explain {
-			font-size: 28upx;
-			color: #606266;
-			margin-top: 32upx;
-			margin-bottom: 105upx;
-		}
-		
-		.input-area {
-			position: relative;
-			
-			input {
-				height: 92upx;
-				border-bottom: 1px solid #F5F5F5;
-				font-size: 28upx;
-			}
-			
-			.close {
-				width: 29upx;
-				height: 29upx;
-				position: absolute;
-				top: 50%;
-				right: 0;
-				transform: translateY(-50%);
-				z-index: 10;
-			}
-		}
-		
-		.password-login {
-			text-align: center;
-			font-size: 32upx;
-			font-weight: 500;
-			color: #1283FF;
-			text-decoration: underline;
-			margin-top: 30upx;
-		}
-		
-		.tripartite {
-			width: 100%;
-			text-align: center;
-			position: absolute;
-			left: 0;
-			bottom: 80upx;
-			
-			.text {
-				font-size: 28upx;
-				font-weight: 500;
-				color: #C0C4CC;
-			}
-			
-			.weixin {
-				width: 80upx;
-				height: 80upx;
-				background: url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg') 0 0 no-repeat;
-				background-size: 100% 100%;
-				margin: 67upx auto 0;
-			}
-		}
-	}
+	@import '~@/static/scss/login.scss'
 </style>

@@ -1,10 +1,12 @@
 <template>
-	<view class="contaier">
-		<XesNavbar 
+	<view class="container">
+		<!-- 导航栏 start -->
+		<xes-navbar 
 			title="欢迎来到学尔升"
 			text-align="center"
 			background-color="#F4F7F9"
 		/>
+		<!-- 导航栏 end -->
 		<!-- banner start -->
 		<swiper :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000">
 			<swiper-item>
@@ -216,7 +218,10 @@
 				</view>
 			</view>
 			<!-- 全部课程end -->
-			<uni-load-more :status="loading" />
+			<uni-load-more
+				:status="loading"
+				:iconSize="14"
+			/>
 		</view>
 		<!-- 筛选 star -->
 		<view class="filter-area" :class="{'active': filter === true}">

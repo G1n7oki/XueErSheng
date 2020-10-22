@@ -1,5 +1,5 @@
 <template>
-	<view class="contaier">
+	<view class="container">
 		<XesNavbar
 			title="发布圈子"
 			:is-arrow="true"
@@ -34,5 +34,29 @@
 </script>
 
 <style lang="scss">
-	@import '~@/static/scss/issue.scss'
+	.container {
+		padding: 0 32upx;
+	}
+	
+	textarea {
+		width: 100%;
+		height: 307upx;
+		margin-top: 38upx;
+	}
+	
+	.tips {
+		font-size: 24upx;
+		font-weight: 500;
+		color: #90949A;
+	}
+	
+	.image-group {
+		display: flex;
+		margin-bottom: 25upx;
+			
+		image {
+			width: 200upx;
+			height: 200upx;
+		}
+	}
 </style>

@@ -1,10 +1,12 @@
 <template>
-	<view class="contaier">
+	<view class="container">
+		<!-- 导航栏 start -->
 		<xes-navbar
 			title="待付款"
 			textAlign="center"
 			:is-arrow="true"
 		/>
+		<!-- 导航栏 end -->
 		<!-- 提示 start -->
 		<view class="tips">
 			<view class="name">

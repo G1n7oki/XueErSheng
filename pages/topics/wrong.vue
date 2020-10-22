@@ -1,5 +1,5 @@
 <template>
-	<view class="contaier">
+	<view class="container">
 		<!-- 导航栏 start -->
 		<xes-navbar 
 			title="错题"
@@ -19,7 +19,8 @@
 		<!-- 切换卡 end -->
 		<!-- 列表数据 start -->
 		<view class="list-data" :class="{'active': tabbar.current === 0}">
-			<view class="pattern">
+			<empty v-if="listData.length <= 0" />
+			<view class="pattern" v-if="tabbar.current === 0">
 				<switch 
 					class="switch"
 					color="#1283FF"
@@ -29,7 +30,7 @@
 					背题模式
 				</view>
 			</view>
-			<view 
+			<view
 				class="list-cell"
 				v-for="item in listData"
 				:key="item.id"
@@ -45,12 +46,24 @@
 						{{ item.number }}道
 					</view>
 				</view>
-				<button class="button" :class="{'active': tabbar.current === 1}">重做</button>
+				<button 
+					class="button"
+					:class="{'active': tabbar.current === 1}"
+					@click="handleAgain"
+				>
+					重做
+				</button>
 			</view>
+			<!-- loading start -->
+			<uni-load-more 
+				:status="loading"
+				:iconSize="14"
+			/>
+			<!-- loading end -->
 		</view>
 		<!-- 列表数据 end -->
 		<!-- 按钮 start -->
-		<view class="fixed-button" v-if="tabbar.current === 0">
+		<view class="fixed-button" v-if="tabbar.current === 0 && listData.length > 0">
 			<button class="button">练习全部错题</button>
 		</view>
 		<!-- 按钮 end -->
@@ -60,12 +73,16 @@
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import XesTextTabbar from '@/components/xes-text-tabbar/xes-text-tabbar.vue'
+	import Empty from '@/components/empty/empty.vue'
+	import UniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
 	import Json from '@/static/data.json'
 	export default {
 		name: 'Wrong',
 		components: {
 			XesNavbar,
-			XesTextTabbar
+			XesTextTabbar,
+			Empty,
+			UniLoadMore
 		},
 		data() {
 			return {
@@ -80,7 +97,8 @@
 					current: 0
 				},
 				top: 0, // tabbar的定位
-				listData: [] // 列表数据
+				listData: [], // 列表数据
+				loading: 'more' // 上拉加载的状态
 			}
 		},
 		onLoad() {
@@ -92,6 +110,12 @@
 			
 			this.listData = Json.wrong
 		},
+		onReachBottom() {
+			this.loading = 'loading'
+			setTimeout(() => {
+				this.loading = 'noMore'
+			}, 1500)
+		},
 		methods: {
 			toId(id) {
 				this.tabbar.current = id
@@ -99,13 +123,19 @@
 			// 开启背题模式
 			patternSwitch() {
 				uni.setStorageSync('pattern', 'self-study')
+			},
+			// 点击重做
+			handleAgain() {
+				uni.navigateTo({
+					url: '/pages/topics/practice'
+				})
 			}
 		}
 	}
 </script>
 
 <style lang="scss">
-	.contaier {
+	.container {
 		background-color: #F4F7F9;
 	}
 	// 选项卡
@@ -123,7 +153,7 @@
 		background-color: #F4F7F9;
 		
 		&.active {
-			padding-bottom: 100upx;
+			padding-bottom: 120upx;
 		}
 		
 		.pattern {

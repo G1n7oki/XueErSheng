@@ -1,11 +1,16 @@
 <template>
-	<view class="contaier">
+	<view class="container">
+		<!-- 导航栏 start -->
 		<xes-navbar 
 			title="我的收藏"
 			:is-arrow="true"
 			text-align="center"
 		/>
+		<!-- 导航栏 end -->
+		<!-- 空数据 start -->
 		<empty v-if="!show" />
+		<!-- 空数据 end -->
+		<!-- 列表 start -->
 		<view v-else class="list">
 			<view 
 				class="item"
@@ -30,6 +35,7 @@
 				长按可以删除
 			</view>
 		</view>
+		<!-- 列表 end -->
 	</view>
 </template>
 
@@ -88,8 +94,7 @@
 </script>
 
 <style lang="scss">
-	.contaier {
-		height: 100%;
+	.container {
 		background-color: #F4F7F9;
 	}
 

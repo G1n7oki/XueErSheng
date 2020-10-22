@@ -1,5 +1,5 @@
 <template>
-	<view class="contaier">
+	<view class="container">
 		<!-- 导航栏 start -->
 		<xes-navbar 
 			title="题目纠错"

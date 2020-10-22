@@ -1,17 +1,22 @@
 <template>
-	<view class="contaier">
-		<XesNavbar 
+	<view class="container">
+		<!-- 导航栏 start -->
+		<xes-navbar 
 			title="报考流程"
 			:is-arrow="true"
 			text-align="center"
 		/>
+		<!-- 导航栏 end -->
+		<!-- 切换卡 start -->
 		<view id="tabBar">
-			<XesTextTabbar
+			<xes-text-tabbar
 				:list="tabbar.list"
 				:current="tabbar.current"
 				@postId="toId"
 			/>
 		</view>
+		<!-- 切换卡 end -->
+		<!-- 滑块区域 start -->
 		<swiper
 			:style="{height: height}"
 			:duration="500"
@@ -30,6 +35,7 @@
 			</swiper-item>
 		</swiper>
 	</view>
+	<!-- 滑块区域 end -->
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-	<view class="contaier">
+	<view class="container">
 		<!-- 导航栏 start -->
 		<XesNavbar 
 			title="评价"
@@ -93,10 +93,8 @@
 </script>
 
 <style lang="scss">
-	.contaier {
-		width: 100%;
+	.container {
 		padding: 0 56upx;
-		box-sizing: border-box;
 	}
 	
 	.tips {

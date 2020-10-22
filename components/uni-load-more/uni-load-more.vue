@@ -85,7 +85,7 @@
 		},
 		data() {
 			return {
-                webviewHide: false,
+        webviewHide: false,
 				platform: platform
 			}
 		},
@@ -136,7 +136,7 @@
 	}
 
 	.uni-load-more__text {
-		font-size: 15px;
+		font-size: 12px;
 	}
 
 	.uni-load-more__img {

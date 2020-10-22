@@ -1,5 +1,5 @@
 <template>
-	<view class="contaier">
+	<view class="container">
 		<!-- 导航栏 start -->
 		<xes-navbar 
 			title="成绩单"
@@ -68,7 +68,7 @@
 </script>
 
 <style lang="scss">
-	.contaier {
+	.container {
 		background-color: #F4F7F9;
 	}
 	// 成绩卡

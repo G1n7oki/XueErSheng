@@ -1,6 +1,5 @@
 import {
-	baseUrl,
-	token
+	baseUrl
 } from '@/common/config/config.js'
 
 export default {
@@ -40,6 +39,10 @@ export default {
 		_sign = {'sign': sign(JSON.stringify(options.data))}
 		options.header = Object.assign({}, options.header, _token,_sign) 
 		*/
+	 
+	 const token = uni.getStorageSync('token')
+	 
+	 console.log(token)
 		
 		options.header = Object.assign({}, options.header, {
 			'X-Requested-With': 'XMLHttpRequest',

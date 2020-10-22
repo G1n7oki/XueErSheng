@@ -1,7 +1,9 @@
 <template>
-	<view class="contaier">
-		<view class="contaier-inner">
+	<view class="container">
+		<view class="container-inner">
+			<!-- 导航栏 start -->
 			<xes-navbar title="发现" :margin="32" />
+			<!-- 导航栏 end -->
 			<!-- tabbar start -->
 			<view class="tabbar" id="tabBar">
 				<view
@@ -72,7 +74,7 @@
 					<view class="content">
 						2020年，经北京市政府批准、由朝阳区政府主办的北京中学正式建校。学校以开阔视野，多元化。2017年为了满足部分学生和家长的多元化升学需求北京中学组建国际方向班级。           
 					</view>
-					<view class="original">
+					<view class="original" @click="toDetail">
 						查看原文
 					</view>
 					<view class="images">
@@ -136,9 +138,16 @@
 			handleTabBarItem(id) {
 				this.tabbar.index = id
 			},
+			// 跳转到提问页
 			handleIssue() {
 				uni.navigateTo({
 					url: '/pages/discover/issue'
+				})
+			},
+			// 跳转到详细信息
+			toDetail() {
+				uni.navigateTo({
+					url: '/pages/discover/detail'
 				})
 			}
 		}

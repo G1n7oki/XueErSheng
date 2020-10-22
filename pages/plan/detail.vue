@@ -1,5 +1,5 @@
 <template>
-	<view class="contaier">
+	<view class="container">
 		<view class="jumbotron"></view>
 	</view>
 </template>

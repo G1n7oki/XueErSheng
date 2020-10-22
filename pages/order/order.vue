@@ -1,10 +1,13 @@
 <template>
-	<view class="contaier">
+	<view class="container">
+		<!-- 导航栏 start -->
 		<xes-navbar
 			title="我的订单"
 			textAlign="center"
 			:is-arrow="true"
 		/>
+		<!-- 导航栏 end -->
+		<!-- 切换卡 start -->
 		<view id="tabBar">
 			<xes-text-tabbar
 				:list="tabbar.list"
@@ -12,6 +15,7 @@
 				@postId="toId"
 			/>
 		</view>
+		<!-- 切换卡 end -->
 		<!-- 列表 start -->
 		<swiper 
 			class="swiper"

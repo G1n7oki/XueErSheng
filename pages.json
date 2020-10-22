@@ -115,6 +115,12 @@
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
+		}, { // 排行榜
+			"path": "pages/topics/rank",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
 		}, { // 我的
 			"path": "pages/me/me",
 			"style": {

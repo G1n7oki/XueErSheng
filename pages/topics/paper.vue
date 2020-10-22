@@ -1,5 +1,5 @@
 <template>
-	<view class="contaier">
+	<view class="container">
 		<XesNavbar 
 			:title="title"
 			text-align="center"
@@ -137,8 +137,7 @@
 </script>
 
 <style lang="scss">
-	.contaier {
-		height: 100%;
+	.container {
 		background-color: #F4F7F9;
 	}
 	

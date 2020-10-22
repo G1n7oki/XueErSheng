@@ -1,0 +1,245 @@
+.container {
+		background-color: #F3F7F9;
+		height: auto;
+		padding-bottom: 120upx;
+	}
+	
+	.jumbotron {
+		display: flex;
+		justify-content: center;
+		align-items: flex-end;
+		height: 728upx;
+		background-color: #007AFF;
+		box-sizing: border-box;
+		padding-bottom: 30upx;
+		
+		.side {
+			
+			.avatar-area {
+				width: 120upx;
+				height: 120upx;
+				margin: 0 auto;
+				overflow: hidden;
+				
+				.avatar {
+					width: 116upx;
+					height: 116upx;
+					background-color: #eee;
+					float: left;
+					border-radius: 50%;
+				}
+			}
+			
+			.cylinder {
+				width: 226upx;
+				height: 287upx;
+				background: linear-gradient(0deg, #3165FF 0%, #45B2FF 100%);
+				text-align: center;
+				box-sizing: border-box;
+				padding-top: 37upx;
+			
+				.nickname {
+					font-size: 28upx;
+					font-weight: bold;
+					color: #FFFFFF;
+				}
+				
+				.score {
+					font-size: 32upx;
+					font-family: DIN;
+					font-weight: 500;
+					color: #FFFFFF;
+					margin: 13upx 0 31upx;
+					
+					text {
+						font-size: 20upx;
+						font-family: PingFang SC;
+						font-weight: 500;
+						margin-left: 8upx;
+					}
+				}
+				
+				.rank {
+					font-size: 80upx;
+					font-family: DIN;
+					font-weight: 500;
+					color: #FFFFFF;
+				}
+			}
+		}
+		
+		.center {
+			.avatar-area {
+				width: 170upx;
+				height: 170upx;
+				margin: 0 auto;
+				overflow: hidden;
+				
+				.avatar {
+					width: 150upx;
+					height: 150upx;
+					background-color: #eee;
+					float: left;
+					border-radius: 50%;
+				}
+			}
+			
+			.cylinder {
+				width: 251upx;
+				height: 357upx;
+				background: linear-gradient(0deg, #3165FF 0%, #45B2FF 100%);
+				text-align: center;
+				box-sizing: border-box;
+				padding-top: 37upx;
+				
+				.nickname {
+					font-size: 28upx;
+					font-weight: bold;
+					color: #FFFFFF;
+				}
+				
+				.score {
+					font-size: 32upx;
+					font-family: DIN;
+					font-weight: 500;
+					color: #FFFFFF;
+					margin: 13upx 0 31upx;
+					
+					text {
+						font-size: 20upx;
+						font-family: PingFang SC;
+						font-weight: 500;
+						margin-left: 8upx;
+					}
+				}
+				
+				.rank {
+					font-size: 100upx;
+					font-family: DIN;
+					font-weight: 500;
+					color: #FFFFFF;
+				}
+			}
+		}
+	}
+	// 排行榜
+	.rank-list {
+		box-sizing: border-box;
+		padding: 0 32upx;
+		background-color: #fff;
+		position: relative;
+		z-index: 2;
+		margin-top: -20upx;
+		border-radius: 20upx;
+		overflow: hidden;
+		
+		.item {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			border-bottom: 1px solid #dedede;
+			padding: 24upx 0;
+			background-color: #fff;
+			
+			&:nth-last-child(1) {
+				border-bottom: none;
+			}
+			
+			.index {
+				font-size: 40upx;
+				font-family: DIN;
+				font-weight: 500;
+				color: #2F3133;
+			}
+			
+			.info {
+				flex: 1;
+				display: flex;
+				align-items: center;
+				margin-left: 52upx;
+				
+				.avatar {
+					width: 64upx;
+					height: 64upx;
+					border-radius: 50%;
+				}
+				
+				.name {
+					font-size: 28upx;
+					font-weight: 500;
+					color: #2F3133;
+					margin-left: 32upx;
+				}
+			}
+			
+			.number {
+				font-size: 32upx;
+				font-family: DIN;
+				font-weight: 500;
+				color: #2F3133;
+				
+				text {
+					font-size: 20upx;
+					font-family: PingFang SC;
+					font-weight: 500;
+					margin-left: 8upx;
+				}
+			}
+		}
+	}
+	// 我的排行
+	.me-rank {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		width: 100%;
+		padding: 24upx 32upx;
+		background-color: #fff;
+		position: fixed;
+		left: 0;
+		bottom: 0;
+		box-sizing: border-box;
+		border-top: 1px solid #dedede;
+		z-index: 3;
+		
+		.index {
+			font-size: 40upx;
+			font-family: DIN;
+			font-weight: 500;
+			color: #1283FF;
+		}
+		
+		.info {
+			flex: 1;
+			display: flex;
+			align-items: center;
+			margin-left: 52upx;
+			
+			.avatar {
+				width: 64upx;
+				height: 64upx;
+				border-radius: 50%;
+			}
+			
+			.name {
+				font-size: 28upx;
+				font-weight: 500;
+				color: #1283FF;
+				margin-left: 32upx;
+			}
+		}
+		
+		.number {
+			font-size: 32upx;
+			font-family: DIN;
+			font-weight: 500;
+			color: #1283FF;
+			
+			text {
+				font-size: 20upx;
+				font-family: PingFang SC;
+				font-weight: 500;
+				margin-left: 8upx;
+			}
+		}
+	}

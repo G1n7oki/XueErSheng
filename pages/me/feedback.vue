@@ -1,5 +1,5 @@
 <template>
-	<view class="contaier">
+	<view class="container">
 		<!-- 导航栏 start -->
 		<XesNavbar 
 			title="意见反馈"
@@ -52,8 +52,7 @@
 </script>
 
 <style lang="scss">
-	.contaier {
-		height: 100%;
+	.container {
 		background-color: #F4F7F9;
 	}
 	// 内容输入区域

@@ -1,5 +1,5 @@
 <template>
-	<view class="contaier">
+	<view class="container">
 		<xes-navbar 
 			is-arrow="true"
 			:title="treeList[2]"
@@ -77,10 +77,10 @@
 						<text class="text">每日一练</text>
 					</view>
 					<view class="line"></view>
-					<view class="item">
+					<navigator url="/pages/topics/rank" hover-class="none" class="item">
 						<image class="icon" src="http://dummyimage.com/120x600" mode=""></image>
 						<text class="text">排行榜</text>
-					</view>
+					</navigator>
 				</view>
 				<view class="bot">
 					<navigator url="/pages/topics/paper?title=历年真题" class="item" hover-class="none">

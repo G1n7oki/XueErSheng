@@ -1,5 +1,5 @@
 <template>
-	<view class="contaier">
+	<view class="container">
 		<xes-navbar 
 			title="学习记录"
 			:is-arrow="true"
@@ -68,10 +68,8 @@
 </script>
 
 <style lang="scss">
-	.contaier {
-		height: 100%;
+	.container {
 		background-color: #F4F7F9;
-		position: relative;
 	}
 	
 	.inner {

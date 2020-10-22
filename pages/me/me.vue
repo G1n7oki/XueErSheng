@@ -1,6 +1,6 @@
 <template>
-	<view class="contaier">
-		<view class="contaier-inner">
+	<view class="container">
+		<view class="container-inner">
 			<xes-navbar title="我的" :margin="32" />
 			<!-- 卡片信息 start -->
 			<view class="info-card">

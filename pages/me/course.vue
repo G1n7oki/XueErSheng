@@ -1,11 +1,13 @@
 <template>
-	<view class="contaier">
+	<view class="container">
+		<!-- 导航栏 start -->
 		<xes-navbar
 			title="我的课程"
 			:is-arrow="true"
 			text-align="center"
 		/>
-		<!-- tabbar start -->
+		<!-- 导航栏 end -->
+		<!-- 切换卡 start -->
 		<view class="tabbar" id="tabBar">
 			<view 
 				class="item"
@@ -18,7 +20,8 @@
 			</view>
 			<view class="line" :class="{'active': tabbar.index === 1}"></view>
 		</view>
-		<!-- tabbar end -->
+		<!-- 切换卡 end -->
+		<!-- 滚动区域 start -->
 		<swiper 
 			class="swiper"
 			:current="tabbar.index"
@@ -91,6 +94,7 @@
 				</scroll-view>
 			</swiper-item>
 		</swiper>
+		<!-- 滚动区域 end -->
 	</view>
 </template>
 

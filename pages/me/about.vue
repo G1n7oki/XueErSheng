@@ -1,5 +1,5 @@
 <template>
-	<view class="contaier">
+	<view class="container">
 		<!-- 导航栏 start -->
 		<xes-navbar 
 			title="关于我们"
@@ -70,8 +70,7 @@
 </script>
 
 <style lang="scss">
-	.contaier {
-		height: 100%;
+	.container {
 		background-color: #F4F7F9;
 		padding-top: 77upx;
 	}

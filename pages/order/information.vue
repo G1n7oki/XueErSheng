@@ -1,10 +1,12 @@
 <template>
-	<view class="contaier">
+	<view class="container">
+		<!-- 导航栏 start -->
 		<xes-navbar
 			title="订单信息"
 			textAlign="center"
 			:is-arrow="true"
 		/>
+		<!-- 导航栏 end -->
 		<!-- 订单信息 start -->
 		<view class="order-info">
 			<view class="head">
