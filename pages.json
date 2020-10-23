@@ -157,6 +157,18 @@
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
+		}, { // 充值学币
+			"path": "pages/me/recharge",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, { // 我的卡包
+			"path": "pages/me/card",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
 		}, { // 发现
 			"path": "pages/discover/discover",
 			"style": {

@@ -56,13 +56,14 @@
 		},
 		data() {
 			return {
-				mobile: '',
-				password: '',
-				type: 'password',
+				mobile: '', // 手机
+				password: '', // 密码
+				type: 'password', // 输入框类型
 				src: 'http://dummyimage.com/120x600'
 			}
 		},
 		methods: {
+			// 是否显示密码
 			chooseType() {
 				if (this.type === 'password') {
 					this.type = 'text'
@@ -72,6 +73,7 @@
 					this.src = 'http://dummyimage.com/120x600'
 				}
 			},
+			// 点击登录按钮
 			handleLogin() {
 				if (!isMobile(this.mobile)) {
 					showToast('请输入正确的手机号码')
@@ -82,6 +84,22 @@
 					showToast('密码不能为空')
 					return false
 				}
+				
+				login({
+					login_tel: this.mobile,
+					password: this.password
+				}).then(response => {
+					const res = response.data
+					showToast(res.status)
+					uni.setStorageSync('token', res.data.token)
+					this.timer = setTimeout(() => {
+						uni.switchTab({
+							url: '/pages/index/index'
+						})
+					}, 1500)
+				}).catch(error => {
+					showToast(error.data.message)
+				})
 			}
 		}
 	}
@@ -89,61 +107,4 @@
 
 <style lang="scss">
 	@import '~@/static/scss/login.scss'
-	
-	// .inner {
-	// 	padding: 0 70upx;
-		
-	// 	.title {
-	// 		font-size: 44upx;
-	// 		font-weight: bold;
-	// 		color: #303133;
-	// 		margin-top: 108upx;
-	// 	}
-		
-	// 	.tips {
-	// 		margin-top: 33upx;
-	// 		font-size: 28upx;
-	// 		font-weight: 500;
-	// 		color: #606266;
-	// 		margin-bottom: 100upx;
-	// 	}
-		
-	// 	.input-area {
-	// 		position: relative;
-			
-	// 		input {
-	// 			height: 92upx;
-	// 			border-bottom: 1px solid #F5F5F5;
-	// 			font-size: 28upx;
-	// 		}
-			
-	// 		.close {
-	// 			width: 29upx;
-	// 			height: 29upx;
-	// 			position: absolute;
-	// 			top: 50%;
-	// 			right: 0;
-	// 			transform: translateY(-50%);
-	// 			z-index: 10;
-	// 		}
-			
-	// 		.eye {
-	// 			width: 35upx;
-	// 			height: 30upx;
-	// 			position: absolute;
-	// 			top: 50%;
-	// 			right: 0;
-	// 			transform: translateY(-50%);
-	// 			z-index: 10;
-	// 		}
-	// 	}
-		
-	// 	navigator {
-	// 		font-size: 26upx;
-	// 		font-weight: 500;
-	// 		color: #1283FF;
-	// 		text-align: right;
-	// 		margin-top: 30upx;
-	// 	}
-	// }
 </style>

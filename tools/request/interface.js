@@ -41,8 +41,6 @@ export default {
 		*/
 	 
 	 const token = uni.getStorageSync('token')
-	 
-	 console.log(token)
 		
 		options.header = Object.assign({}, options.header, {
 			'X-Requested-With': 'XMLHttpRequest',

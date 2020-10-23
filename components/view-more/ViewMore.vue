@@ -18,6 +18,10 @@
 			url: {
 				type: String,
 				default: ''
+			},
+			openType: {
+				type: String,
+				default: 'navigate'
 			}
 		},
 		methods: {
@@ -25,7 +29,10 @@
 				if (this.url === '') {
 					return false
 				}
-				uni.navigateTo({
+				
+				this.openType === 'navigate' ? uni.navigateTo({
+					url: this.url
+				}) : uni.switchTab({
 					url: this.url
 				})
 			}

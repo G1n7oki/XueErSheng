@@ -44,6 +44,15 @@ export const login = (data) => {
 	})
 }
 
+// 忘记密码
+export const forgot = (data) => {
+	return http.request({
+		url: 'register',
+		method: 'POST', 
+		data
+	})
+}
+
 // 退出登录
 export const logout = (data) => {
 	return http.request({

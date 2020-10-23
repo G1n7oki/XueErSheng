@@ -75,6 +75,11 @@
 			right: 0;
 			transform: translateY(-50%);
 			z-index: 10;
+			
+			&.countdown {
+				color: #909399;
+				font-size: 24upx;
+			}
 		}
 	}
 		

@@ -99,7 +99,10 @@
 			<view class="block">
 				<view class="top" style="margin-top: 0;">
 					<title name="上进故事" />
-					<view-more />
+					<view-more 
+						url="/pages/discover/discover"
+						open-type="switchTab"
+					/>
 				</view>
 				<image class="story" src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3475570381,2768348736&fm=26&gp=0.jpg" mode=""></image>
 			</view>

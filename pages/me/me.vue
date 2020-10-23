@@ -19,23 +19,23 @@
 					签到领福利
 				</view>
 				<view class="content">
-					<view class="item">
+					<navigator url="/pages/me/card" hover-class="none" class="item">
 						<view class="number">
 							25
 						</view>
 						<view class="text">
 							卡包
 						</view>
-					</view>
+					</navigator>
 					<view class="line"></view>
-					<view class="item">
+					<navigator url="/pages/me/recharge" hover-class="none" class="item">
 						<view class="number">
 							628
 						</view>
 						<view class="text">
 							学币
 						</view>
-					</view>
+					</navigator>
 					<view class="line"></view>
 					<view class="item">
 						<view class="number">
@@ -184,7 +184,7 @@
 			}
 		},
 		onShow() {
-			// this.toUserinfo()
+			this.toUserinfo()
 		},
 		methods: {
 			toUserinfo() {
