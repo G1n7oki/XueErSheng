@@ -76,7 +76,7 @@ export const professional = (data) => {
 }
 
 /**
- * 以下选择专业接口
+ * 以下为首页接口
  * */
 
 // 首页
@@ -87,6 +87,19 @@ export const home = (data) => {
 		data
 	})
 }
+
+// banner
+export const banners = (data) => {
+	return http.request({
+		url: 'banners',
+		method: 'GET',
+		data
+	})
+}
+
+/**
+ * 以下为课程接口
+ * */
 
 // 全部课程
 export const courses = (data) => {

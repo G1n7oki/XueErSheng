@@ -37,14 +37,14 @@
 						</view>
 					</navigator>
 					<view class="line"></view>
-					<view class="item">
+					<navigator url="/pages/integral/integral" hover-class="none" class="item">
 						<view class="number">
 							221
 						</view>
 						<view class="text">
 							积分
 						</view>
-					</view>
+					</navigator>
 				</view>
 			</view>
 			<!-- 卡片信息 end -->

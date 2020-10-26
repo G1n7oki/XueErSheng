@@ -265,6 +265,36 @@
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
+		}, { // 我的积分
+			"path": "pages/integral/integral",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, { // 积分规则
+			"path": "pages/integral/rule",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, { // 兑换记录
+			"path": "pages/integral/record",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, { // 商品详情
+			"path": "pages/integral/detail",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, { // 兑换结果
+			"path": "pages/integral/result",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
 		}
 	],
 	"globalStyle": {

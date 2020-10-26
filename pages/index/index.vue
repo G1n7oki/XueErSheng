@@ -9,19 +9,12 @@
 		<!-- 导航栏 end -->
 		<!-- banner start -->
 		<swiper :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000">
-			<swiper-item>
+			<swiper-item
+				v-for="banner in bannerList"
+				:key="banner.id"
+			>
 				<view class="banner">
-					<image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3475570381,2768348736&fm=26&gp=0.jpg" mode=""></image>
-				</view>
-			</swiper-item>
-			<swiper-item>
-				<view class="banner">
-					<image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3475570381,2768348736&fm=26&gp=0.jpg" mode=""></image>
-				</view>
-			</swiper-item>
-			<swiper-item>
-				<view class="banner">
-					<image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3475570381,2768348736&fm=26&gp=0.jpg" mode=""></image>
+					<image :src="banner.image_url" mode=""></image>
 				</view>
 			</swiper-item>
 		</swiper>
@@ -100,11 +93,11 @@
 				<view class="top" style="margin-top: 0;">
 					<title name="上进故事" />
 					<view-more 
-						url="/pages/discover/discover"
+						:url="'/pages/discover/discover?id='+ story.id"
 						open-type="switchTab"
 					/>
 				</view>
-				<image class="story" src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3475570381,2768348736&fm=26&gp=0.jpg" mode=""></image>
+				<image class="story" :src="story.preview" mode=""></image>
 			</view>
 			<!-- 上进故事end -->
 			<!-- 直播预告start -->
@@ -114,17 +107,20 @@
 					<view-more url="/pages/live/live" />
 				</view>
 				<view class="live">
-					<view class="live-cell" v-for="item in liveList" :key="item.id">
+					<view 
+						class="live-cell"
+						v-for="item in liveList"
+						:key="item.sol_id"
+					>
 						<view class="date-time">
-							<text class="item">{{ item.date }}</text>
-							<text class="item">{{item.time}}</text>
+							<text class="item">{{ item.start_time }}</text>
 						</view>
 						<view class="bot">
 							<view class="info">
-								<image class="avatar" :src="item.icon" mode=""></image>
+								<image class="avatar" :src="item.image" mode=""></image>
 								<view class="course-name">
 									<view class="course">
-										{{ item.type }}
+										{{ item.title }}
 									</view>
 									<view class="name">
 										{{ item.name }}
@@ -151,19 +147,19 @@
 				</view>
 				<view class="course" style="margin-top: 32upx;">
 					<view class="tips">
-						全科
+						{{ selection.category | formatType }}
 					</view>
-					<image src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3475570381,2768348736&fm=26&gp=0.jpg" mode=""></image>
+					<image :src="selection.cover" mode=""></image>
 					<view class="info">
 						<view class="name">
-							[2020年秋] 金融管理本科-课程通关班
+							{{ selection.title }}
 						</view>
 						<view class="time-price">
 							<view class="time">
-								40课时
+								{{ selection.video_num }}课时
 							</view>
 							<view class="price">
-								6800<text>元</text>
+								{{ selection.price }}<text>元</text>
 							</view>
 						</view>
 					</view>
@@ -268,7 +264,7 @@
 	import ViewMore from '@/components/view-more/ViewMore.vue'
 	import Title from '@/components/title/Title.vue'
 	import UniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
-	import { courses } from '@/common/api/api.js'
+	import { home, courses, banners } from '@/common/api/api.js'
 	import json from '@/static/data.json'
 	export default {
 		components: {
@@ -280,10 +276,13 @@
 		data() {
 			return {
 				isPay: false,
-				treeList: [],
-				liveList: [],
-				courseList: [],
+				treeList: [], // 面包屑
+				story: {}, // 上进故事
+				liveList: [], // 直播预告
+				courseList: [], // 全部课程
+				selection: {}, // 精选课程
 				filterList: [],
+				bannerList: [], // Banner列表
 				loading: 'more',
 				filter: false,
 				page: 1,
@@ -291,7 +290,6 @@
 			}
 		},
 		onLoad(options) {
-			this.liveList = json.home.liveList
 			this.filterList = json.home.filterList
 		},
 		onShow() {
@@ -306,6 +304,22 @@
 			
 			this.toHome()
 		},
+		filters: {
+			formatType(value) {
+				switch (value) {
+					case 1:
+						return '全科'
+					case 2:
+						return '冲刺'
+					case 3:
+						return '密训'
+					case 4:
+						return '精讲'
+					default:
+						return ''
+				}
+			}
+		},
 		methods: {
 			handleFilter () {
 				this.filter = true
@@ -315,7 +329,6 @@
 			},
 			handleItem (name) {
 				this.filterList.forEach((item) => {
-					
 					item.item.findIndex((cell, indxe) => {
 						if (cell.name === name && cell.active === false) {
 							cell.active = true
@@ -339,10 +352,31 @@
 				})
 			},
 			// 获取首页数据
-			toHome () {
+			toHome() {
 				uni.showLoading({
 					title: '加载中...'
 				})
+				home({
+					profession_id: uni.getStorageSync('profession_id')
+				}).then(response => {
+					const res = response.data.data
+					this.story = res.article
+					this.liveList = res.sol
+					this.selection = res.handpick
+				}).catch(error => {
+					uni.hideLoading()
+					uni.showToast({
+						icon: 'none',
+						title: error.data.message
+					})
+				}).then(() => {
+					this.toCourse()
+				}).then(() => {
+					this.toBanners()
+				})
+			},
+			// 获取全部课程
+			toCourse () {
 				courses({
 					profession_id: uni.getStorageSync('profession_id'),
 					page: this.page
@@ -350,6 +384,21 @@
 					const res = response.data
 					this.courseList = res.data.data
 					this.totalPage = res.data.last_page
+				}).catch(error => {
+					uni.hideLoading()
+					uni.showToast({
+						icon: 'none',
+						title: error.data.message
+					})
+				})
+			},
+			// 获取Banner数据
+			toBanners() {
+				banners({ 
+					profession_id: uni.getStorageSync('profession_id') 
+				}).then(response => {
+					const res = response.data.data
+					this.bannerList = res.banner
 					uni.hideLoading()
 				}).catch(error => {
 					uni.hideLoading()
@@ -389,7 +438,6 @@
 				this.courseList = this.courseList.concat(res.data.data)
 				this.loading = 'more'
 			}).catch(error => {
-				console.log(error)
 				uni.showToast({
 					icon: 'none',
 					title: error.data.message
