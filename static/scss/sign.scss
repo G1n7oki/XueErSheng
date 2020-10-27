@@ -1,0 +1,290 @@
+.container {
+	background-color: #F4F7F9;
+}
+// 巨幕
+.jumbotron {
+	width: 750upx;
+	height: 714upx;
+	background: linear-gradient(90deg, #FFAA00, #FFAE00);
+	// 签到天数
+	.days {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-top: 81upx;
+		
+		.text {
+			font-size: 32upx;
+			font-weight: 500;
+			color: #FFFFFF;
+		}
+		
+		.numbers {
+			display: flex;
+			margin: 0 10upx;
+			
+			.item {
+				width: 90upx;
+				height: 120upx;
+				overflow: hidden;
+				margin-right: 7upx;
+				
+				.item-inner {
+					
+					.cell {
+						width: 90upx;
+						height: 120upx;
+						border-radius: 12upx;
+						background-size: cover;
+						overflow: hidden;
+						font-size: 79upx;
+						font-family: DIN;
+						font-weight: 500;
+						color: #FA7935;
+						text-align: center;
+						line-height: 120upx;
+					}
+				}
+			}
+		}
+	}
+	// 签到名次
+	.rank {
+		font-size: 28upx;
+		font-weight: 500;
+		color: #FFFFFF;
+		text-align: center;
+		margin-top: 30upx;
+	}
+	// 盒子
+	.box {
+		width: 686upx;
+		height: 536upx;
+		background-color: #FFFFFF;
+		border-radius: 20upx;
+		margin: 65upx auto 0;
+		padding: 50upx 24upx 0;
+		box-sizing: border-box;
+		position: relative;
+		z-index: 1;
+		
+		.integral{
+			font-size: 36upx;
+			font-family: DIN;
+			font-weight: 500;
+			color: #FA7935;
+			text-align: center;
+			
+			text {
+				font-size: 24upx;
+				font-weight: 500;
+				color: #606266;
+				margin-left: 12upx;
+			}
+		}
+		
+		.text {
+			font-size: 24upx;
+			font-weight: 500;
+			color: #909399;
+			text-align: center;
+			margin-top: 17upx;
+		}
+		
+		.tips {
+			width: 100%;
+			height: 48upx;
+			position: relative;
+			margin-top: 68upx;
+			
+			.tips-inner {
+				width: 108upx;
+				height: 48upx;
+				background: linear-gradient(90deg, #FFDF54, #FFB845);
+				border-radius: 21upx;
+				font-size: 24upx;
+				font-weight: 500;
+				color: #804A22;
+				text-align: center;
+				line-height: 48upx;
+				position: absolute;
+				left: 0;
+				top: 0;
+				transform: translateX(-60%);
+				
+				&::after {
+					content: '';
+					width: 0;
+					height: 0;
+					border-left: 10upx solid transparent;
+					border-right: 10upx solid transparent;
+					border-top: 10upx solid #FFB845;
+					position: absolute;
+					bottom: -10upx;
+					left: 50%;
+					transform: translateX(-50%);
+				}
+			}
+		}
+		
+		.progress {
+			margin-top: 17upx;
+		}
+		
+		.day-wrap {
+			display: flex;
+			justify-content: space-between;
+			width: 624upx;
+			margin-top: 22upx;
+			
+			.day {
+				font-size: 24upx;
+				font-weight: 500;
+				color: #909399;
+				
+				&.active {
+					font-weight: bold;
+					color: #303133;
+				}
+			}
+		}
+		
+		.button {
+			display: block;
+			width: 400upx;
+			height: 80upx;
+			background-color: #FA7935;
+			border-radius: 40upx;
+			font-size: 32upx;
+			font-weight: 500;
+			color: #FFFFFF;
+			line-height: 80upx;
+			margin: 64upx auto 0;
+		}
+	}
+}
+// 线体
+.line-body {
+	background-color: #F4F7F9;
+	padding: 142upx 32upx 0;
+	// 每日任务
+	.block {
+		margin-top: 50upx;
+		
+		.title-text {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			
+			.text {
+				font-size: 24upx;
+				font-weight: 500;
+				color: #303133;
+			}
+		}
+		
+		.box {
+			background: #FFFFFF;
+			border-radius: 20upx;
+			padding-left: 32upx;
+			margin-top: 32upx;
+			
+			.item {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				border-bottom: 1px solid #DEDEDE;
+				padding: 32upx 0;
+				
+				&:nth-last-child(1) {
+					border-bottom: none;
+				}
+				
+				.item-lfet {
+					display: flex;
+					
+					.icon {
+						width: 32upx;
+						height: 32upx;
+						background-color: #eee;
+						margin-right: 26upx;
+					}
+					
+					.title-integral {
+						
+						.title {
+							font-size: 28upx;
+							font-weight: 500;
+							color: #303133;
+						}
+						
+						.integral {
+							font-size: 24upx;
+							font-weight: 500;
+							color: #909399;
+						}
+					}
+				}
+				
+				.button {
+					width: 124upx;
+					height: 56upx;
+					background-color: #1283FF;
+					border-radius: 28upx;
+					font-size: 24upx;
+					font-weight: 500;
+					color: #FFFFFF;
+					line-height: 56upx;
+					margin-right: 32upx;
+					
+					&.active {
+						background-color: #EEEEEE;
+						color: #909399;
+					}
+				}
+			}
+		}
+		
+		.item-list {
+			display: flex;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			
+			.item {
+				width: 326upx;
+				margin-top: 32upx;
+				background-color: #fff;
+				border-radius: 20upx;
+				overflow: hidden;
+				padding-bottom: 24upx;
+				
+				.image {
+					width: 326upx;
+					height: 210upx;
+					background-color: #eee;
+				}
+				
+				.title {
+					font-size: 28upx;
+					font-weight: 500;
+					color: #303133;
+					padding-left: 19upx;
+					margin: 6upx 0;
+				}
+				
+				.price {
+					padding-left: 19upx;
+					font-size: 32upx;
+					font-family: DIN;
+					font-weight: bold;
+					color: #FA7935;
+					
+					.unit {
+						font-size: 20upx;
+						margin-left: 8upx;
+					}
+				}
+			}
+		}
+	}
+}

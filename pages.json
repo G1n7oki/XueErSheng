@@ -145,6 +145,12 @@
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
+		}, { // 我的班主任
+			"path": "pages/me/teacher",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
 		}, { // 关于我们
 			"path": "pages/me/about",
 			"style": {
@@ -165,6 +171,12 @@
 			}
 		}, { // 我的卡包
 			"path": "pages/me/card",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, { // 签到
+			"path": "pages/me/sign",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
@@ -265,7 +277,7 @@
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
-		}, { // 我的积分
+		}, { // 积分商城
 			"path": "pages/integral/integral",
 			"style": {
 				"navigationBarTitleText": "",

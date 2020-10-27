@@ -68,7 +68,7 @@
 						<text class="name">考生必看</text>
 					</view>
 					<view class="icon-cell" @click="navigate('/pages/plan/process', 1)">
-						<image class="icon" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
+						<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/home/baokaoliucehgn%402x.png" mode=""></image>
 						<text class="name">报考流程</text>
 					</view>
 					<view class="icon-cell" @click="navigate('/pages/live/review', 0)">
@@ -123,7 +123,7 @@
 										{{ item.title }}
 									</view>
 									<view class="name">
-										{{ item.name }}
+										讲师：{{ item.name }}
 										<image v-if="item.status === 1" class="icon" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
 									</view>
 								</view>
@@ -143,7 +143,6 @@
 			<view class="block">
 				<view class="top">
 					<title name="精选课程" />
-					<!-- <view-more /> -->
 				</view>
 				<view class="course" style="margin-top: 32upx;">
 					<view class="tips">

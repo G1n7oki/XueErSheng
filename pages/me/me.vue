@@ -15,9 +15,9 @@
 						</view>
 					</view>
 				</view>
-				<view class="tips">
+				<navigator url="/pages/me/sign" hover-class="none" class="tips">
 					签到领福利
-				</view>
+				</navigator>
 				<view class="content">
 					<navigator url="/pages/me/card" hover-class="none" class="item">
 						<view class="number">
@@ -52,10 +52,10 @@
 			<view class="me-study">
 				<title name="我的学习" />
 				<view class="box">
-					<view class="item">
+					<navigator url="/pages/me/teacher" class="item">
 						<image class="icon" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
 						<view class="text">我的班主任</view>
-					</view>
+					</navigator>
 					<view class="item">
 						<image class="icon" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
 						<view class="text">AI智能评估</view>
