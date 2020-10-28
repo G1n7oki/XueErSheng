@@ -1,6 +1,6 @@
 <template>
 	<view class="xes-empty">
-		<image class="xes-empty__image" src="http://api.liufangshan.com/images/placeholder/empty.png" mode=""></image>
+		<image class="xes-empty__image" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/zanwu%402x.png" mode=""></image>
 		<view class="xes-empty__text">
 			暂无数据~
 		</view>

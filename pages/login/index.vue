@@ -21,7 +21,7 @@
 			<!-- 输入框 start -->
 			<view class="input-area">
 				<input v-model="mobile" type="text" value="" placeholder="请输入手机号" />
-				<image class="close" src="http://dummyimage.com/120x600" mode="" @click="clearInput"></image>
+				<image class="close" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/login/close%402x.png" mode="" @click="clearInput"></image>
 			</view>
 			<!-- 输入框 end -->
 			<!-- 获取验证码 start -->

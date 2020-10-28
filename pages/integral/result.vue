@@ -9,7 +9,7 @@
 		<!-- 导航栏 end -->
 		<!-- 提示 start -->
 		<view class="tips">
-			<image class="icon" src="" mode=""></image>
+			<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/xuanhzong%402x.png" mode=""></image>
 			<view class="text">
 				恭喜，兑换成功！
 			</view>
@@ -20,7 +20,7 @@
 			<!-- 信息 start -->
 			<view class="info">
 				<view class="ticket">
-					<image class="image" src="" mode=""></image>
+					<image class="image" src="http://dummyimage.com/720x300" mode=""></image>
 					<view>
 						<view class="title">
 							15元无门槛课程优惠券
@@ -114,9 +114,8 @@
 		background-color: #fff;
 		
 		.icon {
-			width: 40upx;
-			height: 40upx;
-			background-color: #1283FF;
+			width: 32upx;
+			height: 32upx;
 			margin-right: 18upx;
 		}
 		

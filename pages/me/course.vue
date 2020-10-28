@@ -37,7 +37,7 @@
 						v-for="item in courseList"
 						:key="item.id"
 					>
-						<image class="image" src="/static/image/study/question.png" mode=""></image>
+						<image class="image" src="http://dummyimage.com/180x150" mode=""></image>
 						<view class="info">
 							<view class="name">
 								童哲校长-新手股民必备技能童哲校长-新手股民必备技能
@@ -69,7 +69,7 @@
 						v-for="item in liveList"
 						:key="item.id"
 					>
-						<image class="image" src="/static/image/study/question.png" mode=""></image>
+						<image class="image" src="http://dummyimage.com/180x150" mode=""></image>
 						<view class="info">
 							<view class="name">
 								童哲校长-新手股民必备技能童哲校长-新手股民必备技能

@@ -21,7 +21,7 @@
 			<!-- 输入框 start -->
 			<view class="input-area">
 				<input v-model="mobile" type="text" value="" placeholder="请输入手机号" />
-				<image class="close" src="http://dummyimage.com/120x600" mode="" @click="clearInput"></image>
+				<image class="close" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/login/close%402x.png" mode="" @click="clearInput"></image>
 			</view>
 			<view class="input-area">
 				<input v-model="password" :type="type" value="" placeholder="请输入密码" />
@@ -59,7 +59,7 @@
 				mobile: '', // 手机
 				password: '', // 密码
 				type: 'password', // 输入框类型
-				src: 'http://dummyimage.com/120x600'
+				src: 'https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/login/eyeclose%402x.png'
 			}
 		},
 		methods: {
@@ -67,10 +67,10 @@
 			chooseType() {
 				if (this.type === 'password') {
 					this.type = 'text'
-					this.src = 'http://dummyimage.com/120x600'
+					this.src = 'https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/login/eye%402x.png'
 				} else {
 					this.type = 'password'
-					this.src = 'http://dummyimage.com/120x600'
+					this.src = 'https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/login/eyeclose%402x.png'
 				}
 			},
 			// 点击登录按钮

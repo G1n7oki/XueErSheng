@@ -13,7 +13,7 @@
 		<!-- 巨幕 end -->
 		<!-- 班主任信息 start -->
 		<view class="info">
-			<image class="avatar" src="" mode=""></image>
+			<image class="avatar" src="http://dummyimage.com/100x100" mode=""></image>
 			<view class="name">
 				Dr. Bruce Fang 
 			</view>
@@ -94,8 +94,9 @@
 	// 巨幕
 	.jumbotron {
 		width: 750upx;
-		height: 350upx;
-		background: linear-gradient(169deg, #3265FF 0%, #45B2FF 100%);
+		height: 369upx;
+		background: url('https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/teacher.png') 0 0 no-repeat;
+		background-size: 100%;
 	}
 	// 班主任信息
 	.info {

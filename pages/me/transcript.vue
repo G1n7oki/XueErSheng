@@ -10,11 +10,12 @@
 		<!-- 成绩卡 start -->
 		<view class="card">
 			<view class="university">
-				<image class="logo" src="" mode=""></image>
+				<image class="logo" src="http://dummyimage.com/160x160" mode=""></image>
 				<view class="professional">
 					工商企业管理
 				</view>
 			</view>
+			<image class="line" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/line.png" mode=""></image>
 			<view class="info">
 				<view class="tips">
 					<view class="item">
@@ -92,6 +93,7 @@
 		margin: 0 auto;
 		background-color: #fff;
 		margin-top: 32upx;
+		border-radius: 20upx;
 		
 		.university {
 			text-align: center;
@@ -112,9 +114,14 @@
 			}
 		}
 		
+		.line {
+			width: 686upx;
+			height: 23upx;
+			margin: 90upx 0 80upx;
+		}
+		
 		.info {
 			padding: 0 74upx;
-			margin-top: 178upx;
 			
 			.tips {
 				display: flex;

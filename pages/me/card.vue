@@ -23,7 +23,7 @@
 				class="item"
 				v-for="(item, index) in 10"
 			>
-				<view class="stamp"></view>
+				<image class="stamp" :src="index % 2 === 0 ? dueUrl : usedUrl" mode=""></image>
 				<view class="worth">
 					<view class="type">
 						课程优惠券
@@ -73,7 +73,9 @@
 					}],
 					current: 0
 				},
-				top: 0 // tabbar的top值
+				top: 0, // tabbar的top值
+				dueUrl: 'https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/yiguoqi%402x.png',
+				usedUrl: 'https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/yishiyong%402x.png'
 			}
 		},
 		onLoad() {
@@ -112,16 +114,16 @@
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
-			height: 176upx;
-			border: 1px solid #C6272A;
+			height: 192upx;
 			position: relative;
 			padding: 0 145upx 0 30upx;
 			margin-bottom: 40upx;
+			background: url('https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/border-1.png') 0 0 no-repeat;
+			background-size: 100%;
 			
 			.stamp {
-				width: 112upx;
+				width: 140upx;
 				height: 112upx;
-				background-color: #CDCDCD;
 				border-radius: 50%;
 				position: absolute;
 				top: 50%;

@@ -9,31 +9,42 @@
 		justify-content: center;
 		align-items: flex-end;
 		height: 728upx;
-		background-color: #007AFF;
+		background: url('https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/topics/paihangbangbg%402x.png') 0 0 no-repeat;
+		background-size: 100% 100%;
 		box-sizing: border-box;
 		padding-bottom: 30upx;
 		
-		.side {
+		.side-1 {
+			padding-left: 10upx;
 			
 			.avatar-area {
 				width: 120upx;
 				height: 120upx;
-				margin: 0 auto;
-				overflow: hidden;
+				margin: 0 auto 14upx;
+				background-size: 100% 100%;
+				position: relative;
+				
+				.crown {
+					width: 57upx;
+					height: 57upx;
+					position: absolute;
+					top: -24upx;
+					left: -26upx;
+				}
 				
 				.avatar {
-					width: 116upx;
-					height: 116upx;
+					width: 120upx;
+					height: 120upx;
 					background-color: #eee;
 					float: left;
 					border-radius: 50%;
+					border: 4upx solid #C5D3E3;
 				}
 			}
 			
 			.cylinder {
 				width: 226upx;
-				height: 287upx;
-				background: linear-gradient(0deg, #3165FF 0%, #45B2FF 100%);
+				height: 266upx;
 				text-align: center;
 				box-sizing: border-box;
 				padding-top: 37upx;
@@ -49,7 +60,71 @@
 					font-family: DIN;
 					font-weight: 500;
 					color: #FFFFFF;
-					margin: 13upx 0 31upx;
+					margin: 13upx 0 32upx;
+					
+					text {
+						font-size: 20upx;
+						font-family: PingFang SC;
+						font-weight: 500;
+						margin-left: 8upx;
+					}
+				}
+				
+				.rank {
+					font-size: 80upx;
+					font-family: DIN;
+					font-weight: 500;
+					color: #FFFFFF;
+				}
+			}
+		}
+		
+		.side-2 {
+			padding-right: 10upx;
+			
+			.avatar-area {
+				width: 110upx;
+				height: 110upx;
+				margin: 0 auto 14upx;
+				position: relative;
+				
+				.crown {
+					width: 52upx;
+					height: 52upx;
+					position: absolute;
+					top: -22upx;
+					left: -24upx;
+				}
+				
+				.avatar {
+					width: 110upx;
+					height: 110upx;
+					border: 4upx solid #F9A771;
+					background-color: #eee;
+					float: left;
+					border-radius: 50%;
+				}
+			}
+			
+			.cylinder {
+				width: 226upx;
+				height: 245upx;
+				text-align: center;
+				box-sizing: border-box;
+				padding-top: 37upx;
+			
+				.nickname {
+					font-size: 28upx;
+					font-weight: bold;
+					color: #FFFFFF;
+				}
+				
+				.score {
+					font-size: 32upx;
+					font-family: DIN;
+					font-weight: 500;
+					color: #FFFFFF;
+					margin: 13upx 0 10upx;
 					
 					text {
 						font-size: 20upx;
@@ -69,25 +144,35 @@
 		}
 		
 		.center {
+			
 			.avatar-area {
-				width: 170upx;
-				height: 170upx;
-				margin: 0 auto;
-				overflow: hidden;
+				width: 156upx;
+				height: 156upx;
+				margin: 0 auto 16upx;
+				background-size: 100% 100%;
+				position: relative;
+				
+				.crown {
+					width: 70upx;
+					height: 70upx;
+					position: absolute;
+					top: -30upx;
+					left: -32upx;
+				}
 				
 				.avatar {
-					width: 150upx;
-					height: 150upx;
+					width: 156upx;
+					height: 156upx;
 					background-color: #eee;
 					float: left;
 					border-radius: 50%;
+					border: 4upx solid #FCD012;
 				}
 			}
 			
 			.cylinder {
 				width: 251upx;
-				height: 357upx;
-				background: linear-gradient(0deg, #3165FF 0%, #45B2FF 100%);
+				height: 328upx;
 				text-align: center;
 				box-sizing: border-box;
 				padding-top: 37upx;

@@ -9,7 +9,7 @@
 		<!-- 导航栏 end -->
 		<!-- banner start -->
 		<view class="banner">
-			<image class="image" src="" mode=""></image>
+			<image class="image" src="http://dummyimage.com/720x480" mode=""></image>
 		</view>
 		<!-- banner end -->
 		<view class="line-body">
@@ -38,7 +38,7 @@
 				<view class="text">
 					您还未选择收货地址
 				</view>
-				<image class="icon" src="" mode=""></image>
+				<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/integral/zengjia%402x.png" mode=""></image>
 			</view>
 			<!-- 添加地址 end -->
 			<!-- 商品详情 start -->
@@ -210,7 +210,6 @@
 			.icon {
 				width: 32upx;
 				height: 32upx;
-				background-color: #1283FF;
 			}
 		}
 		// 商品详情、使用说明

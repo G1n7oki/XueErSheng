@@ -7,18 +7,18 @@
 				<view class="info">
 					<image class="avatar" :src="info.avatars" mode=""></image>
 					<view class="username-mobile">
-						<view class="username">
-							{{ info.username }}
+						<view class="username" @click="handleLogin">
+							{{ login ? info.username : '登陆/注册' }}
 						</view>
 						<view class="mobile">
-							{{ info.login_tel }}
+							{{ login ? info.login_tel : '登陆之后可查看个人信息' }}
 						</view>
 					</view>
 				</view>
 				<navigator url="/pages/me/sign" hover-class="none" class="tips">
 					签到领福利
 				</navigator>
-				<view class="content">
+				<view class="content" v-if="login">
 					<navigator url="/pages/me/card" hover-class="none" class="item">
 						<view class="number">
 							25
@@ -53,19 +53,19 @@
 				<title name="我的学习" />
 				<view class="box">
 					<navigator url="/pages/me/teacher" class="item">
-						<image class="icon" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
+						<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/banzhuren%402x.png" mode=""></image>
 						<view class="text">我的班主任</view>
 					</navigator>
 					<view class="item">
-						<image class="icon" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
+						<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/ai%402x.png" mode=""></image>
 						<view class="text">AI智能评估</view>
 					</view>
 					<navigator url="/pages/me/course" hover-class="none" class="item">
-						<image class="icon" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
+						<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/wodekecheng%402x.png" mode=""></image>
 						<view class="text">我的课程</view>
 					</navigator>
 					<navigator url="/pages/study/record" hover-class="none" class="item">
-						<image class="icon" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
+						<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/xuexijilu%402x.png" mode=""></image>
 						<view class="text">学习记录</view>
 					</navigator>
 				</view>
@@ -75,9 +75,9 @@
 			<view class="me-status">
 				<title name="我的学籍" />
 				<view class="box">
-					<image class="amend" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
+					<image class="amend" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/xiugai%402x.png" mode=""></image>
 					<view class="university">
-						<image class="logo" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
+						<image class="logo" src="http://dummyimage.com/114x114" mode=""></image>
 						<view class="info">
 							<view class="name">
 								[2021级] 南昌大学
@@ -104,26 +104,28 @@
 			<!-- 列表1 start -->
 			<view class="list">
 				<list-item
-					icon="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg"
+					icon="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/wodedingdan%402x.png"
 					name="我的订单"
 					url="/pages/order/order"
 				/>
 				<list-item
-					icon="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg"
+					icon="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/wodewenda%402x.png"
 					name="我的问答"
+					url="/pages/issue/issue"
 				/>
 				<!-- <list-item
 					icon="/static/image/me/wodehuancun@2x.png"
 					name="我的缓存"
 				/> -->
 				<list-item
-					icon="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg"
+					icon="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/wodeshoucang%402x.png"
 					name="我的收藏"
 					url="/pages/me/favorite"
 				/>
 				<list-item
-					icon="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg"
+					icon="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/wodedingdan%402x.png"
 					name="积分商城"
+					url="/pages/integral/integral"
 					:is-border="false"
 				/>
 			</view>
@@ -131,17 +133,17 @@
 			<!-- 列表2 start -->
 			<view class="list">
 				<list-item
-					icon="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg"
+					icon="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/bangzhuyufankuio%402x.png"
 					name="帮助与反馈"
 					url="/pages/me/feedback"
 				/>
 				<list-item
-					icon="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg"
+					icon="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/guanyuwomen%402x.png"
 					name="关于我们"
 					url="/pages/me/about"
 				/>
 				<list-item
-					icon="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg"
+					icon="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/duihuanjindu%402x.png"
 					name="兑换码核销"
 					:is-border="false"
 				/>
@@ -149,12 +151,12 @@
 			<!-- 列表2 end -->
 			<!-- 列表3 start -->
 			<view class="list">
-				<list-item
-					icon="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg"
+				<!-- <list-item
+					icon="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/wodedingdan%402x.png"
 					name="消息"
-				/>
+				/> -->
 				<list-item
-					icon="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg"
+					icon="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/shezhi%402x.png"
 					name="设置"
 					url="/pages/set/set"
 					:is-border="false"
@@ -180,24 +182,38 @@
 		},
 		data() {
 			return {
-				info: {}
+				info: {
+					avatars: 'https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/tou%402x.png'
+				},
+				login: false
 			}
 		},
 		onShow() {
 			this.toUserinfo()
 		},
 		methods: {
+			// 获取个人信息
 			toUserinfo() {
 				uni.showLoading({
 					title: '加载中...'
 				})
 				userinfo().then(response => {
 					this.info = response.data.data
+					this.login = true
 					uni.hideLoading()
 				}).catch(error => {
 					uni.hideLoading()
+					this.login = false
 					showToast(error.data.message)
 				})
+			},
+			// 点击跳转登录页
+			handleLogin() {
+				if (!this.login) {
+					uni.navigateTo({
+						url: '/pages/login/index'
+					})
+				}
 			}
 		}
 	}

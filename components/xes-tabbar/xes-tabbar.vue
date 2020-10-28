@@ -4,7 +4,7 @@
 		<view class="navbar-icons">
 			<view class="navbar-icons__cell" @click="clock">
 				<!-- 计时器 start -->
-				<image class="u-clock__icon" src="http://dummyimage.com/120x600" mode=""></image>
+				<image class="u-clock__icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/topics/shijian%402x.png" mode=""></image>
 				<view class="u-clock__text">
 					<view class="u-clock__text--item">
 						{{ minute }}:
@@ -16,19 +16,19 @@
 				<!-- 计时器 end -->
 			</view>
 			<view class="navbar-icons__cell" @click="show('answer-dialog')">
-				<image class="navbar-icons--cell--icon" src="http://dummyimage.com/120x600" mode=""></image>
+				<image class="navbar-icons--cell--icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/topics/datika%402x.png" mode=""></image>
 				<view class="navbar-icons--cell--text" style="font-size: 24rpx;">
 					{{ current }}/{{ total }}
 				</view>
 			</view>
 			<view class="navbar-icons__cell" @click="show('papers-dialog')">
-				<image class="navbar-icons--cell--icon" src="http://dummyimage.com/120x600" mode=""></image>
+				<image class="navbar-icons--cell--icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/topics/jiaojuan%402x.png" mode=""></image>
 				<view class="navbar-icons--cell--text">
 					交卷
 				</view>
 			</view>
 			<view class="navbar-icons__cell" @click="show('set-dialog')">
-				<image class="navbar-icons--cell--icon" src="http://dummyimage.com/120x600" mode=""></image>
+				<image class="navbar-icons--cell--icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/topics/shezhi%402x.png" mode=""></image>
 				<view class="navbar-icons--cell--text">
 					设置
 				</view>

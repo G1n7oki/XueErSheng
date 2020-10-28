@@ -129,11 +129,13 @@
 			margin-top: 57upx;
 			
 			.icon-cell {
+				text-align: center;
 				
 				.icon {
 					display: block;
 					width: 88upx;
 					height: 88upx;
+					margin: 0 auto;
 				}
 				
 				.name {

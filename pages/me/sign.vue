@@ -33,7 +33,6 @@
 						>
 							<view
 								class="cell"
-								style="background: url(/static/image/number.png) center center no-repeat;"
 							>
 								{{ n }}
 							</view>
@@ -95,9 +94,9 @@
 					</view>
 				</view>
 				<view class="box">
-					<view class="item" v-for="n in 3" :key="n">
+					<view class="item">
 						<view class="item-lfet">
-							<image class="icon" src="" mode=""></image>
+							<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/discover/fenxiang%402x.png" mode=""></image>
 							<view class="title-integral">
 								<view class="title">
 									分享好友（0/3）
@@ -107,7 +106,35 @@
 								</view>
 							</view>
 						</view>
-						<button class="button" :class="{'active': n === 0}">{{ n === 0 ? '已完成' : n === 1 ? '去完成' : '查看' }}</button>
+						<button class="button active">已完成</button>
+					</view>
+					<view class="item">
+						<view class="item-lfet">
+							<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/discover/pinglun%402x.png" mode=""></image>
+							<view class="title-integral">
+								<view class="title">
+									发表课程精彩评价（0/3）
+								</view>
+								<view class="integral">
+									+5积分
+								</view>
+							</view>
+						</view>
+						<button class="button">去完成</button>
+					</view>
+					<view class="item">
+						<view class="item-lfet">
+							<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/yaoqing%402x.png" mode=""></image>
+							<view class="title-integral">
+								<view class="title">
+									邀请注册（0/3）
+								</view>
+								<view class="integral">
+									+5积分
+								</view>
+							</view>
+						</view>
+						<button class="button">查看</button>
 					</view>
 				</view>
 			</view>
@@ -118,19 +145,33 @@
 					<title name="新手任务" />
 				</view>
 				<view class="box">
-					<view class="item" v-for="n in 3" :key="n">
+					<view class="item">
 						<view class="item-lfet">
-							<image class="icon" src="" mode=""></image>
+							<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/wanshan%402x.png" mode=""></image>
 							<view class="title-integral">
 								<view class="title">
-									分享好友（0/3）
+									完善资料
 								</view>
 								<view class="integral">
 									+5积分
 								</view>
 							</view>
 						</view>
-						<button class="button" :class="{'active': n === 0}">{{ n === 0 ? '已完成' : n === 1 ? '去完成' : '查看' }}</button>
+						<button class="button active">已完成</button>
+					</view>
+					<view class="item">
+						<view class="item-lfet">
+							<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/yaoqing%402x.png" mode=""></image>
+							<view class="title-integral">
+								<view class="title">
+									邀请注册
+								</view>
+								<view class="integral">
+									+5积分
+								</view>
+							</view>
+						</view>
+						<button class="button">去完成</button>
 					</view>
 				</view>
 			</view>
@@ -147,7 +188,7 @@
 						:key="index"
 						@click="handleItem"
 					>
-						<image class="image" src="" mode=""></image>
+						<image class="image" src="http://dummyimage.com/326x210" mode=""></image>
 						<view class="title">
 							15元课程优惠券
 						</view>

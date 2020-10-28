@@ -9,7 +9,7 @@
           class="progress-content flex j-end"
           id="content"
           ref="progressContent"
-          :style="{ height: strokeWidth + 'px', background: bgColor, width: contentWidth, transition: `width ${duration / 1000}s ease` }"
+          :style="{ height: strokeWidth + 'px', width: contentWidth, transition: `width ${duration / 1000}s ease` }"
           v-if="isAnimate"
         >
           <view class="textInside flex a-center j-center" v-if="textInside && !noData">
@@ -141,6 +141,7 @@ export default {
   .progress-content {
     border-radius: 100px;
     width: 0;
+		background: url('https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/process.png') 0 0 repeat;
   }
   .textInside {
     color: #fff;

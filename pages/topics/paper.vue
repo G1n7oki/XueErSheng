@@ -25,18 +25,19 @@
 					<view class="item-year">
 						{{ paper.year }}年
 					</view>
-					<image class="item-icon" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602672328929&di=746c8967bb5fb09f4306f4ffbca4b2c8&imgtype=0&src=http%3A%2F%2Fbpic.588ku.com%2Felement_origin_min_pic%2F00%2F26%2F48%2F9256d0dd700305c.jpg" mode=""></image>
-					<view class="item-title">
+					<view class="item-title" v-if="paper.title">
 						{{ paper.title }}
 					</view>
-					<view class="item-content">
+					<view class="item-content" :class="{'active': paper.title === ''}">
 						{{ paper.content }}
 					</view>
-					<view class="item-num">
-						做过 <text>{{ paper.num }}</text> 次 
-					</view>
-					<view class="item-score">
-						上次得分<text>{{ paper.score }}</text>分
+					<view class="item-bot">
+						<view class="item-num">
+							做过 <text>{{ paper.num }}</text> 次 
+						</view>
+						<view class="item-score">
+							上次得分<text>{{ paper.score }}</text>分
+						</view>
 					</view>
 				</view>
 			</view>
@@ -105,8 +106,8 @@
 				}, {
 					id: 7,
 					year: '2020',
-					title: '二级建造师',
-					content: '建筑实务',
+					title: '',
+					content: '二级建造师建设工程法规及相关知识白皮卷三',
 					num: '14',
 					score: '91'
 				}] // 试卷列表
@@ -172,11 +173,12 @@
 			height: 370upx;
 			background: #FFFFFF;
 			border-radius: 10upx;
-			background: url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602672182228&di=17702b3f22112a7ed316b0aadc18d15d&imgtype=0&src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F201902%2F08%2F20190208225724_Mkz8s.thumb.400_0.jpeg') 0 0 no-repeat;
+			background: url('https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/topics/linianzhengti%402x.png') 0 0 no-repeat;
 			background-size: 100% 100%;
 			box-sizing: border-box;
-			padding: 16upx 0;
+			padding: 6upx 0;
 			margin-bottom: 60upx;
+			position: relative;
 			
 			.item-year {
 				text-align: center;
@@ -185,19 +187,12 @@
 				color: #FFFFFF;
 			}
 			
-			.item-icon {
-				display: block;
-				width: 26upx;
-				height: 64upx;
-				margin: 0 auto;
-			}
-			
 			.item-title {
 				font-size: 28upx;
 				font-weight: bold;
 				color: #303234;
 				text-align: center;
-				margin-top: 26upx;
+				margin-top: 86upx;
 			}
 			
 			.item-content {
@@ -206,25 +201,38 @@
 				color: #070727;
 				text-align: center;
 				margin-top: 10upx;
-			}
-			
-			.item-num, .item-score {
-				font-size: 24upx;
-				font-weight: 500;
-				color: #90949A;
-				text-align: center;
 				
-				text {
-					color: #1384FF;
+				&.active {
+					margin-top: 90upx;
 				}
 			}
 			
-			.item-num {
-				margin-top: 54upx;
-			}
-			
-			.item-score {
-				margin-top: 10upx;
+			.item-bot {
+				width: 100%;
+				height: 123upx;
+				text-align: center;
+				position: absolute;
+				left: 0;
+				bottom: 0;
+				
+				.item-num, .item-score {
+					font-size: 24upx;
+					font-weight: 500;
+					color: #90949A;
+					text-align: center;
+					
+					text {
+						color: #1384FF;
+					}
+				}
+				
+				.item-num {
+					margin-top: 23upx;
+				}
+				
+				.item-score {
+					margin-top: 10upx;
+				}
 			}
 		}
 	}

@@ -161,7 +161,7 @@
 							<view class="list-item">
 								<view class="item-top">
 									<view class="avatar-user">
-										<image class="avatar" src="" mode=""></image>
+										<image class="avatar" src="http://dummyimage.com/40x40" mode=""></image>
 										<view class="user">
 											<view class="username">一只大肥羊</view>
 											<view class="hour">学习1个课时评价</view>
@@ -234,7 +234,7 @@
 				</view>
 			</view>
 			<view class="advisory">
-				<image class="icon" src="" mode=""></image>
+				<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/zixun%402x.png" mode=""></image>
 				<view class="text">咨询</view>
 			</view>
 			<view class="button">

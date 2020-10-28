@@ -46,15 +46,15 @@
 						</view>
 						<view class="icons">
 							<view class="icon-cell">
-								<image class="icon" src="http://dummyimage.com/120x600" mode=""></image>
+								<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/discover/dianzan%402x.png" mode=""></image>
 								<text class="number">20</text>
 							</view>
 							<view class="icon-cell">
-								<image class="icon" src="http://dummyimage.com/120x600" mode=""></image>
+								<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/discover/pinglun%402x.png" mode=""></image>
 								<text class="number">18</text>
 							</view>
 							<view class="icon-cell">
-								<image class="icon" src="http://dummyimage.com/120x600" mode=""></image>
+								<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/discover/fenxiang%402x.png" mode=""></image>
 							</view>
 						</view>
 					</view>
@@ -91,7 +91,7 @@
 				</view>
 			</view>
 			<view class="issue" @click="handleIssue">
-				<image class="icon" src="http://dummyimage.com/120x600" mode=""></image>
+				<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/discover/fabu%402x.png" mode=""></image>
 			</view>
 		</view>
 	</view>

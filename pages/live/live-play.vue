@@ -66,7 +66,7 @@
 		<!-- 输入框 start -->
 		<view class="input-area" v-if="tabbar.current === 0">
 			<input class="input" type="text" value="" placeholder="请来说几句吧" />
-			<image class="icon" src="" mode=""></image>
+			<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/discover/fabiaojiantou%402x.png" mode=""></image>
 		</view>
 		<!-- 输入框 end -->
 	</view>

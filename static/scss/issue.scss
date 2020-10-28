@@ -1,0 +1,84 @@
+.container {
+	background-color: #F4F7F9;
+}
+// 搜索框
+.search-input {
+	width: 460upx;
+	height: 64upx;
+	background-color: #F4F7F9;
+	border-radius: 32px;
+	position: absolute;
+	left: 70upx;
+	top: 50%;
+	transform: translateY(-50%);
+	line-height: 64upx;
+	text-align: center;
+	font-size: 28upx;
+	font-weight: 500;
+	color: #909399;
+}
+// 选项卡
+.tabbar {
+	width: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 10;
+}
+// 内容
+.content {
+	background-color: #F4F7F9;
+	padding: 32upx;
+	margin-top: 104upx;
+	// 热门问题
+	.hot {
+		
+		.filter {
+			display: flex;
+			justify-content: space-around;
+			background-color: #FFFFFF;
+			border-radius: 20upx;
+			padding: 35upx 0;
+			margin-bottom: 32upx;
+			
+			.picker {
+				overflow: hidden;
+				
+				.text {
+					float: left;
+					font-size: 28upx;
+					font-weight: 500;
+					color: #303133;
+				}
+				
+				.icon {
+					float: left;
+					width: 14upx;
+					height: 10upx;
+					margin: 17upx 0 0 12upx;
+				}
+			}
+		}
+		
+		.item {
+			padding: 32upx;
+			background-color: #FFFFFF;
+			border-radius: 20upx;
+			margin-bottom: 32upx;
+			
+			.crumbs {
+				width: 100%;
+				background-color: #F0F0F0;
+				border-radius: 16upx 10upx 10upx 0;
+				font-size: 24upx;
+				font-weight: 500;
+				color: #303133;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				padding: 12upx 20upx;
+				box-sizing: border-box;
+			}
+		}
+	}
+}

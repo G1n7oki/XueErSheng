@@ -49,7 +49,7 @@
 </script>
 
 <style lang="scss">
-	.contaier {
+	.container {
 		background-color: #F4F7F9;
 	}
 	// 昵称输入框

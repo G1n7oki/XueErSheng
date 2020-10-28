@@ -11,14 +11,14 @@
 		<!-- 选项卡 start -->
 		<view class="integral-note" :style="{top: top + 'px'}">
 			<view class="integral">
-				<image class="icon" src="" mode=""></image>
+				<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/integral/jifen%402x.png" mode=""></image>
 				<view class="text">
 					积分 <text>120</text>
 				</view>
 			</view>
 			<view class="line"></view>
 			<navigator url="/pages/integral/record" hover-class="none" class="note">
-				<image class="icon" src="" mode=""></image>
+				<image class="icon-2" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/integral/duihuanjindu%402x.png" mode=""></image>
 				<view class="text">
 					兑换记录 
 				</view>
@@ -41,7 +41,7 @@
 					:key="index"
 					@click="handleItem"
 				>
-					<image class="image" src="" mode=""></image>
+					<image class="image" src="http://dummyimage.com/234x60" mode=""></image>
 					<view class="title">
 						15元课程优惠券
 					</view>
@@ -116,6 +116,7 @@
 		position: fixed;
 		top: 0;
 		left: 0;
+		z-index: 10;
 		
 		.line {
 			width: 3upx;
@@ -128,9 +129,13 @@
 			align-items: center;
 			
 			.icon {
+				width: 37upx;
+				height: 29upx;
+			}
+			
+			.icon-2 {
 				width: 27upx;
 				height: 30upx;
-				background-color: #eee;
 			}
 			
 			.text {

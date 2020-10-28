@@ -77,7 +77,7 @@
 					<view class="text">
 						可用学币抵扣100元
 					</view>
-					<image class="icon" src="/static/image/order/xuanhzong@2x.png" mode=""></image>
+					<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/xuanhzong%402x.png" mode=""></image>
 				</view>
 			</view>
 		</view>

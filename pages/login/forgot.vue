@@ -16,7 +16,7 @@
 			<!-- 输入框 start -->
 			<view class="input-area">
 				<input v-model="mobile" type="text" value="" placeholder="请输入手机号" />
-				<!-- <image class="close" src="/static/image/login/close.png" mode="" @click="clearInput"></image> -->
+				<!-- <image class="close" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/login/close%402x.png" mode="" @click="clearInput"></image> -->
 			</view>
 			<view class="input-area">
 				<input v-model="seccode" type="text" value="" placeholder="请输入验证码" />
@@ -54,7 +54,7 @@
 		},
 		data() {
 			return {
-				src: 'http://dummyimage.com/120x600',
+				src: 'https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/login/eyeclose%402x.png',
 				mobile: '',
 				password: '',
 				seccode: '',
@@ -70,10 +70,10 @@
 			chooseType() {
 				if (this.type === 'password') {
 					this.type = 'text'
-					this.src = '/static/image/login/eye.png'
+					this.src = 'https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/login/eye%402x.png'
 				} else {
 					this.type = 'password'
-					this.src = '/static/image/login/eyeclose.png'
+					this.src = 'https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/login/eyeclose%402x.png'
 				}
 			},
 			// 点击获取验证码

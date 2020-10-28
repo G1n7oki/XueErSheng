@@ -25,7 +25,7 @@
 			<view class="stat">
 				<view class="top">
 					<view class="left">
-						<image class="icon" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
+						<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/crumbs.png" mode=""></image>
 						<view class="crumbs">
 							<view class="crumbs-cell" v-for="(item, index) in treeList" :key="item">
 								<view class="text">
@@ -73,30 +73,30 @@
 			<view class="links">
 				<view class="top">
 					<view class="item">
-						<image class="icon" src="http://dummyimage.com/120x600" mode=""></image>
+						<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/topics/meiriyilian%402x.png" mode=""></image>
 						<text class="text">每日一练</text>
 					</view>
 					<view class="line"></view>
 					<navigator url="/pages/topics/rank" hover-class="none" class="item">
-						<image class="icon" src="http://dummyimage.com/120x600" mode=""></image>
+						<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/topics/paihangbang%402x.png" mode=""></image>
 						<text class="text">排行榜</text>
 					</navigator>
 				</view>
 				<view class="bot">
 					<navigator url="/pages/topics/paper?title=历年真题" class="item" hover-class="none">
-						<image class="icon" src="http://dummyimage.com/120x600" mode=""></image>
+						<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/topics/linianzhenti%402x.png" mode=""></image>
 						<text class="text">历年真题</text>
 					</navigator>
 					<navigator url="/pages/topics/paper?title=模拟试卷" class="item" hover-class="none">
-						<image class="icon" src="http://dummyimage.com/120x600" mode=""></image>
+						<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/topics/monishijuan%402x.png" mode=""></image>
 						<text class="text">模拟试卷</text>
 					</navigator>
 					<navigator class="item" url="/pages/topics/wrong" hover-class="none">
-						<image class="icon" src="http://dummyimage.com/120x600" mode=""></image>
+						<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/topics/cuotishoucang%402x.png" mode=""></image>
 						<text class="text">错题收藏</text>
 					</navigator>
 					<navigator class="item" url="/pages/topics/record" hover-class="none">
-						<image class="icon" src="http://dummyimage.com/120x600" mode=""></image>
+						<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/topics/zuotijkilu%402x.png" mode=""></image>
 						<text class="text">做题记录</text>
 					</navigator>
 				</view>
@@ -106,7 +106,7 @@
 			<view class="practice">
 				<view class="practice-title">
 					<Title name="章节精练" />
-					<image class="icon" src="http://dummyimage.com/120x600" mode="" @click="toSet"></image>
+					<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/topics/setting.png" mode="" @click="toSet"></image>
 				</view>
 				<view class="unfinished" v-if="questionData.not_complete">
 					<view class="info">
@@ -216,10 +216,14 @@
 			return {
 				flag: false, // 显示隐藏子学科
 				treeList: [], // 面包屑
-				foldIcon: 'http://dummyimage.com/120x600', // 折叠图片
-				unfoldIcon: 'http://dummyimage.com/120x600', // 折叠图片
+				foldIcon: 'https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/topics/shouqi%402x.png',  // 折叠图片
+				unfoldIcon: 'https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/topics/zhankai%402x.png', // 折叠图片
 				topicList: [],
-				questionData: {}
+				questionData: {
+					today: 0,
+					amount: 0,
+					accuracy: 0
+				}
 			}
 		},
 		onLoad() {

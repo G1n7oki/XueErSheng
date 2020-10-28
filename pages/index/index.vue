@@ -48,7 +48,7 @@
 			<view class="bot">
 				<view class="crumbs-area">
 					<view class="left">
-						<image class="icon" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
+						<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/crumbs.png" mode=""></image>
 						<view class="crumbs">
 							<view class="crumbs-cell" v-for="(item, index) in treeList" :key="item">
 								<view class="text">
@@ -64,23 +64,23 @@
 				</view>
 				<view class="icon-list">
 					<view class="icon-cell" @click="navigate('/pages/plan/process', 0)">
-						<image class="icon" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
+						<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/home/kaoshengbikan@2x.png" mode=""></image>
 						<text class="name">考生必看</text>
 					</view>
 					<view class="icon-cell" @click="navigate('/pages/plan/process', 1)">
-						<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/home/baokaoliucehgn%402x.png" mode=""></image>
+						<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/home/baokaoliucehgn@2x.png" mode=""></image>
 						<text class="name">报考流程</text>
 					</view>
 					<view class="icon-cell" @click="navigate('/pages/live/review', 0)">
-						<image class="icon" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
+						<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/home/zhibiohuigu@2x.png" mode=""></image>
 						<text class="name">直播回顾</text>
 					</view>
 					<view class="icon-cell" @click="navigate('/pages/me/course')">
-						<image class="icon" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
+						<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/home/wodekecheng@2x.png" mode=""></image>
 						<text class="name">我的课程</text>
 					</view>
 					<view class="icon-cell" @click="navigate('/pages/study/record')">
-						<image class="icon" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
+						<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/home/xuexijilu@2x.png" mode=""></image>
 						<text class="name">学习记录</text>
 					</view>
 				</view>
@@ -173,19 +173,19 @@
 				<view class="control">
 					<view class="item">
 						<text>排序</text>
-						<image class="arrow" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
+						<image class="arrow" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/arrowdown.png" mode=""></image>
 					</view>
 					<view class="item">
 						<text>科目</text>
-						<image class="arrow" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
+						<image class="arrow" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/arrowdown.png" mode=""></image>
 					</view>
 					<view class="item">
 						<text>班型</text>
-						<image class="arrow" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
+						<image class="arrow" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/arrowdown.png" mode=""></image>
 					</view>
 					<view class="item" @click="handleFilter">
 						<text>筛选</text>
-						<image class="filter" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
+						<image class="filter" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/filter.png" mode=""></image>
 					</view>
 				</view>
 				<view class="list">
@@ -223,7 +223,7 @@
 		</view>
 		<!-- 筛选 star -->
 		<view class="filter-area" :class="{'active': filter === true}">
-			<view class="mask"></view>
+			<view class="mask" @click="handleAffirm"></view>
 			<view class="content">
 				<view class="title">
 					筛选
@@ -239,13 +239,9 @@
 				<view class="filter-cell">
 					<text>价格区间</text>
 					<view class="item-wrap">
-						<view class="item">
-							最低价
-						</view>
+						<input class="item" type="text" placeholder="最低价" />
 						<view class="line"></view>
-						<view class="item">
-							最高价
-						</view>
+						<input class="item" type="text" placeholder="最高价" />
 					</view>
 				</view>
 				<view class="button-group">

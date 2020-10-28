@@ -9,7 +9,7 @@
 		<!-- 导航栏 end -->
 		<!-- logo/版本 start -->
 		<view class="logo-version">
-			<image class="logo" src="" mode=""></image>
+			<image class="logo" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/logo%402x.png" mode=""></image>
 			<view class="version">版本号：V1.0</view>
 		</view>
 		<!-- logo/版本 end -->
@@ -82,7 +82,6 @@
 			width: 166upx;
 			height: 166upx;
 			border-radius: 20upx;
-			background-color: #eee;
 		}
 		
 		.version {

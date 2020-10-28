@@ -25,7 +25,7 @@
 				:key="item.id"
 			>
 				<view class="date">
-					<image class="icon" src="" mode=""></image>
+					<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/time.png" mode=""></image>
 					<view class="text">
 						{{ item.date }}
 					</view>
@@ -150,7 +150,6 @@
 				.icon {
 					width: 24upx;
 					height: 24upx;
-					background-color: #90949A;
 					margin-right: 10upx;
 				}
 				

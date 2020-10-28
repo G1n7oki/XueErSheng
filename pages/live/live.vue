@@ -13,7 +13,7 @@
 				<view class="tips">
 					LIVE
 				</view>
-				<image class="image" src="" mode=""></image>
+				<image class="image" src="http://dummyimage.com/180x180" mode=""></image>
 				<view class="info">
 					<view class="title">
 						金融管理本科专业解读全金融管理本科专业解读全
@@ -42,7 +42,7 @@
 				<view class="tips">
 					LIVE
 				</view>
-				<image class="image" src="" mode=""></image>
+				<image class="image" src="http://dummyimage.com/180x180" mode=""></image>
 				<view class="info">
 					<view class="title">
 						金融管理本科专业解读全金融管理本科专业解读全
@@ -67,7 +67,7 @@
 				</button>
 			</view>
 			<view class="item">
-				<image class="image" src="" mode=""></image>
+				<image class="image" src="http://dummyimage.com/180x180" mode=""></image>
 				<view class="info">
 					<view class="title">
 						金融管理本科专业解读全金融管理本科专业解读全

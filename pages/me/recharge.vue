@@ -154,7 +154,8 @@
 		align-items: center;
 		width: 686upx;
 		height: 260upx;
-		background: linear-gradient(180deg, #3265FF 0%, #45B2FF 100%);
+		background: url('https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/xuebi%402x.png') 0 0 no-repeat;
+		background-size: 100%;
 		border-radius: 20upx;
 		margin: 32upx auto 48upx;
 		

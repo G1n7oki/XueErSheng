@@ -15,7 +15,7 @@
 				id="video" 
 				src="http://ivi.bupt.edu.cn/hls/cctv5phd.m3u8" 
 				controls
-				poster="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602737528008&di=69cc1ca9e06a7b3e9b47755147bee8b2&imgtype=0&src=http%3A%2F%2Fimg1.imgtn.bdimg.com%2Fit%2Fu%3D259364631%2C2307942273%26fm%3D214%26gp%3D0.jpg"
+				poster="http://dummyimage.com/750x422"
 			>
 			</video>
 		</view>
@@ -115,7 +115,7 @@
 								50.2M
 							</view>
 						</view>
-						<image class="icon" src="" mode="" @click="handleDownload"></image>
+						<!-- <image class="icon" src="" mode="" @click="handleDownload"></image> -->
 					</view>
 					<view class="item">
 						<view class="info">
@@ -126,7 +126,6 @@
 								50.2M
 							</view>
 						</view>
-						<image class="icon" src="" mode=""></image>
 					</view>
 				</scroll-view>
 				<!-- 课程讲义 end -->

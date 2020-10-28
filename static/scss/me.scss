@@ -4,7 +4,8 @@
 }
 
 .info-card {
-	background-color: #45B2FF;
+	background: url('https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/bg1%402x.png') 0 0 no-repeat;
+	background-size: 100%;
 	border-radius: 20px;
 	margin-top: 32upx;
 	padding: 44upx 0 44upx 44upx;
@@ -139,7 +140,6 @@
 				width: 114upx;
 				height: 114upx;
 				border-radius: 50%;
-				background-color: #000;
 			}
 			
 			.info {

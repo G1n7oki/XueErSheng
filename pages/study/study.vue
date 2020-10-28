@@ -36,10 +36,10 @@
 		<!-- 练习/问答 start -->
 		<view class="exercise-question">
 			<navigator class="item" url="/pages/topics/index">
-				<image src="http://dummyimage.com/120x600" mode=""></image>
+				<image src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/study/tikulianxi%402x.png" mode=""></image>
 			</navigator>
 			<view class="item">
-				<image src="http://dummyimage.com/120x600" mode=""></image>
+				<image src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/study/wodewenda%402x.png" mode=""></image>
 			</view>
 		</view>
 		<!-- 练习/问答 end -->
@@ -189,7 +189,7 @@
 					童哲校长-新手股民必备技能童哲校长-新手股民必备技能
 				</view>
 			</view>
-			<image class="close" src="http://dummyimage.com/120x600" mode="" @click="handleClose"></image>
+			<image class="close" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/close.png" mode="" @click="handleClose"></image>
 		</view>
 		<!-- 上次观看 end -->
 	</view>

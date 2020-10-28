@@ -11,7 +11,7 @@
 			id="navbar"
 		/>
 		<!-- 导航栏 end -->
-		<image class="placeholder" src="http://dummyimage.com/120x600" mode=""></image>
+		<image class="placeholder" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/topics/datijieguo%402x.png" mode=""></image>
 		<!-- 答题信息 start -->
 		<view class="result-info" id="result-info">
 			<view class="top">
@@ -104,7 +104,7 @@
 						<view class="name">错误</view>
 					</view>
 					<view class="item">
-						<image class="icon" src="http://dummyimage.com/120x600" mode=""></image>
+						<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/banduicuo%402x.png" mode=""></image>
 						<view class="name">半对</view>
 					</view>
 					<view class="item">

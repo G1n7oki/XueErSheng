@@ -10,9 +10,10 @@
 		<!-- 导航栏 end -->
 		<!-- 巨幕 start -->
 		<view class="jumbotron">
-			<view class="side">
+			<view class="side-1">
 				<view class="avatar-area">
-					<image class="avatar" src="" mode=""></image>
+					<image class="crown" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/topics/yinguan%402x.png" mode=""></image>
+					<image class="avatar" src="http://dummyimage.com/240x400" mode=""></image>
 				</view>
 				<view class="cylinder">
 					<view class="nickname">
@@ -28,7 +29,8 @@
 			</view>
 			<view class="center">
 				<view class="avatar-area">
-					<image class="avatar" src="" mode=""></image>
+					<image class="crown" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/topics/huangguan%402x.png" mode=""></image>
+					<image class="avatar" src="http://dummyimage.com/240x400" mode=""></image>
 				</view>
 				<view class="cylinder">
 					<view class="nickname">
@@ -42,9 +44,10 @@
 					</view>
 				</view>
 			</view>
-			<view class="side">
+			<view class="side-2">
 				<view class="avatar-area">
-					<image class="avatar" src="" mode=""></image>
+					<image class="crown" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/topics/tongguan%402x.png" mode=""></image>
+					<image class="avatar" src="http://dummyimage.com/240x400" mode=""></image>
 				</view>
 				<view class="cylinder">
 					<view class="nickname">

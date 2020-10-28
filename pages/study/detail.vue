@@ -16,7 +16,7 @@
 		<!-- 优惠券 start -->
 		<view class="discount" id="discount">
 			<view class="left">
-				<image class="sale" src="http://dummyimage.com/120x600" mode=""></image>
+				<image class="sale" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/study/xianhitehui%402x.png" mode=""></image>
 				<view class="price-time">
 					<view class="price">
 						<view class="current">
@@ -86,15 +86,15 @@
 						</view>
 						<view class="control">
 							<view class="item">
-								<image src="http://dummyimage.com/120x600" mode=""></image>
+								<image src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/study/shoucang%402x.png" mode=""></image>
 								<view class="text">收藏</view>
 							</view>
 							<view class="item">
-								<image src="http://dummyimage.com/120x600" mode=""></image>
+								<image src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/study/jinagyi%402x.png" mode=""></image>
 								<view class="text">讲义</view>
 							</view>
 							<view class="item">
-								<image src="http://dummyimage.com/120x600" mode=""></image>
+								<image src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/study/tiwen%402x.png" mode=""></image>
 								<view class="text">提问</view>
 							</view>
 						</view>
@@ -283,13 +283,13 @@
 				</view>
 				<view class="icons">
 					<view class="icons-cell">
-						<image class="icon" src="http://dummyimage.com/120x600" mode=""></image>
+						<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/study/shiting%402x.png" mode=""></image>
 						<view class="text">
 							试听
 						</view>
 					</view>
 					<view class="icons-cell">
-						<image class="icon" src="http://dummyimage.com/120x600" mode=""></image>
+						<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/study/zixun%402x.png" mode=""></image>
 						<view class="text">
 							咨询
 						</view>
