@@ -95,25 +95,25 @@
 					<view class="triangle"></view>
 					<view class="item-area">
 						<view class="item" @click="handleItem">
-							<image class="icon" src="http://dummyimage.com/120x600" mode=""></image>
+							<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/topics/yejianmoshi%402x.png" mode=""></image>
 							<view class="name">
 								夜间模式
 							</view>
 						</view>
 						<view class="item">
-							<image class="icon" src="http://dummyimage.com/120x600" mode=""></image>
+							<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/topics/ziti%402x.png" mode=""></image>
 							<view class="name">
 								字体放大
 							</view>
 						</view>
 						<navigator url="/pages/topics/correction" hover-class="none" class="item">
-							<image class="icon" src="http://dummyimage.com/120x600" mode=""></image>
+							<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/topics/jiucuo%402x.png" mode=""></image>
 							<view class="name">
 								题目纠错
 							</view>
 						</navigator>
 						<view class="item">
-							<image class="icon" src="http://dummyimage.com/120x600" mode=""></image>
+							<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/topics/tiwen%402x.png" mode=""></image>
 							<view class="name">
 								我要提问
 							</view>

@@ -181,6 +181,12 @@
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
+		}, { // 积分记录
+			"path": "pages/me/record",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
 		}, { // 发现
 			"path": "pages/discover/discover",
 			"style": {
@@ -309,6 +315,30 @@
 			}
 		}, { // 热门问题
 			"path": "pages/issue/issue",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, { // 提问
+			"path": "pages/issue/ask",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, { // 选择专业
+			"path": "pages/issue/choose",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, { // 搜索
+			"path": "pages/issue/search",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, { // 问题详情
+			"path": "pages/issue/detail",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"

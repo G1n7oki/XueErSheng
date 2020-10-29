@@ -1,0 +1,156 @@
+.container {
+	background-color: #F4F7F9;
+}
+// 输入框
+.input-group {
+	position: absolute;
+	left: 70upx;
+	top: 50%;
+	transform: translateY(-50%);
+	
+	.input {
+		width: 460upx;
+		height: 64upx;
+		background-color: #F4F7F9;
+		border-radius: 32px;
+		font-size: 28upx;
+		font-weight: 500;
+		color: #303133;
+		padding: 0 50upx 0 32upx;
+		box-sizing: border-box;
+	}
+	
+	.icon {
+		width: 29upx;
+		height: 29upx;
+		position: absolute;
+		right: 20upx;
+		top: 50%;
+		transform: translateY(-50%);
+		z-index: 10;
+	}
+}
+// 搜索历史
+.history {
+	padding: 32upx;
+	background-color: #F4F7F9;
+	
+	.title-delete {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 47upx;
+		
+		.title {
+			font-size: 32upx;
+			font-weight: bold;
+			color: #000000;
+		}
+		
+		.delete {
+			width: 31upx;
+			height: 33upx;
+		}
+	}
+	
+	.list {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		
+		.item {
+			display: flex;
+			align-items: center;
+			margin-bottom: 48upx;
+			
+			.dot {
+				width: 6upx;
+				height: 6upx;
+				background-color: #FA7935;
+				border-radius: 50%;
+				margin-right: 12upx;
+			}
+			
+			.text {
+				width: 280upx;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				font-size: 28upx;
+				font-weight: 500;
+				color: #303133;
+			}
+		}
+	}
+}
+// 搜索结果
+.result {
+	padding: 32upx;
+	background-color: #F4F7F9;
+	
+	.tips {
+		font-size: 24upx;
+		font-weight: 500;
+		color: #909399;
+		margin-bottom: 32upx;
+	}
+	
+	.item {
+		padding: 32upx;
+		background-color: #FFFFFF;
+		border-radius: 20upx;
+		margin-bottom: 32upx;
+		
+		.crumbs {
+			width: 100%;
+			background-color: #F0F0F0;
+			border-radius: 16upx 10upx 10upx 0;
+			font-size: 24upx;
+			font-weight: 500;
+			color: #303133;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			padding: 12upx 20upx;
+			box-sizing: border-box;
+		}
+		
+		.title {
+			font-size: 28upx;
+			font-weight: bold;
+			color: #303133;
+			margin-top: 26upx;
+		}
+		
+		.source {
+			font-size: 24upx;
+			font-weight: 500;
+			color: #606266;
+			margin-top: 34upx;
+			overflow : hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-line-clamp: 2;
+			-webkit-box-orient: vertical;
+		}
+		
+		.bot {
+			display: flex;
+			justify-content: space-between;
+			margin-top: 23upx;
+			
+			.praise-reply {
+				font-size: 24upx;
+				font-weight: 500;
+				color: #909399;
+			}
+			
+			.date {
+				font-size: 24upx;
+				font-family: DIN;
+				font-weight: 500;
+				color: #909399;
+			}
+		}
+	}
+}

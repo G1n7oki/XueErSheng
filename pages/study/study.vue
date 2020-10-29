@@ -135,7 +135,11 @@
 								</view>
 							</view>
 							<view class="split" v-if="liveList.length > 0">
-								直播回顾
+								<image class="image" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/study/left%402x.png" mode=""></image>
+								<view class="text">
+									直播回顾
+								</view>
+								<image class="image" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/study/right%402x.png" mode=""></image>
 							</view>
 							<view class="live-list">
 								<view class="live-list">
@@ -348,5 +352,5 @@
 </script>
 
 <style lang="scss">
-	@import "../../static/scss/study.scss"
+	@import "~@/static/scss/study.scss"
 </style>

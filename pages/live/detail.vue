@@ -15,7 +15,7 @@
 				<view class="text">
 					立即购买或激活课程，即可解锁观看 若已购买，请 <text @click="toLogin">登录</text>
 				</view>
-				<navigator class="button" :url="'/pages/live/live-play'">
+				<navigator class="button" :url="'/pages/live/review-play'">
 					开始学习
 				</navigator>
 			</view>

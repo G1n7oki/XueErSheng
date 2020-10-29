@@ -3,6 +3,9 @@
 }
 // 搜索框
 .search-input {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	width: 460upx;
 	height: 64upx;
 	background-color: #F4F7F9;
@@ -11,11 +14,15 @@
 	left: 70upx;
 	top: 50%;
 	transform: translateY(-50%);
-	line-height: 64upx;
-	text-align: center;
 	font-size: 28upx;
 	font-weight: 500;
 	color: #909399;
+	
+	.icon {
+		width: 27upx;
+		height: 26upx;
+		margin-right: 15upx;
+	}
 }
 // 选项卡
 .tabbar {
@@ -32,30 +39,41 @@
 	margin-top: 104upx;
 	// 热门问题
 	.hot {
+		padding-top: 130upx;
 		
-		.filter {
-			display: flex;
-			justify-content: space-around;
-			background-color: #FFFFFF;
-			border-radius: 20upx;
-			padding: 35upx 0;
-			margin-bottom: 32upx;
+		.filter-area {
+			width: 100%;
+			width: 686upx;
+			position: fixed;
+			left: 50%;
+			transform: translateX(-50%);
+			box-sizing: border-box;
+			background-color: #F4F7F9;
+			padding-top: 32upx;
 			
-			.picker {
-				overflow: hidden;
+			.filter {
+				display: flex;
+				justify-content: space-around;
+				background-color: #FFFFFF;
+				border-radius: 20upx;
+				padding: 35upx 0;
 				
-				.text {
-					float: left;
-					font-size: 28upx;
-					font-weight: 500;
-					color: #303133;
-				}
-				
-				.icon {
-					float: left;
-					width: 14upx;
-					height: 10upx;
-					margin: 17upx 0 0 12upx;
+				.picker {
+					overflow: hidden;
+					
+					.text {
+						float: left;
+						font-size: 28upx;
+						font-weight: 500;
+						color: #303133;
+					}
+					
+					.icon {
+						float: left;
+						width: 14upx;
+						height: 10upx;
+						margin: 17upx 0 0 12upx;
+					}
 				}
 			}
 		}
@@ -79,6 +97,226 @@
 				padding: 12upx 20upx;
 				box-sizing: border-box;
 			}
+			
+			.title {
+				font-size: 28upx;
+				font-weight: bold;
+				color: #303133;
+				margin-top: 26upx;
+			}
+			
+			.source {
+				font-size: 24upx;
+				font-weight: 500;
+				color: #606266;
+				margin-top: 34upx;
+				overflow : hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				-webkit-line-clamp: 2;
+				-webkit-box-orient: vertical;
+			}
+			
+			.bot {
+				display: flex;
+				justify-content: space-between;
+				margin-top: 23upx;
+				
+				.praise-reply {
+					font-size: 24upx;
+					font-weight: 500;
+					color: #909399;
+				}
+				
+				.date {
+					font-size: 24upx;
+					font-family: DIN;
+					font-weight: 500;
+					color: #909399;
+				}
+			}
 		}
 	}
+	// 我的提问
+	.question {
+		
+		.item {
+			padding: 32upx;
+			background-color: #FFFFFF;
+			border-radius: 20upx;
+			margin-bottom: 32upx;
+			
+			.crumbs {
+				width: 100%;
+				background-color: #F0F0F0;
+				border-radius: 16upx 10upx 10upx 0;
+				font-size: 24upx;
+				font-weight: 500;
+				color: #303133;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				padding: 12upx 20upx;
+				box-sizing: border-box;
+			}
+			
+			.title {
+				font-size: 28upx;
+				font-weight: bold;
+				color: #303133;
+				margin-top: 26upx;
+			}
+			
+			.source {
+				font-size: 24upx;
+				font-weight: 500;
+				color: #606266;
+				margin-top: 34upx;
+				overflow : hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				-webkit-line-clamp: 2;
+				-webkit-box-orient: vertical;
+			}
+			
+			.bot {
+				display: flex;
+				justify-content: space-between;
+				margin-top: 23upx;
+				
+				.praise-reply {
+					font-size: 24upx;
+					font-weight: 500;
+					color: #909399;
+				}
+				
+				.date {
+					font-size: 24upx;
+					font-family: DIN;
+					font-weight: 500;
+					color: #909399;
+				}
+			}
+		}
+	}
+	// 我的回答
+	.answer {
+		
+		.item {
+			position: relative;
+			background-color: #FFFFFF;
+			border-radius: 20upx;
+			padding: 32upx;
+			margin-bottom: 32upx;
+			
+			.delete {
+				width: 31upx;
+				height: 33upx;
+				position: absolute;
+				top: 43upx;
+				right: 37upx;
+			}
+			
+			.userinfo {
+				display: flex;
+				align-items: center;
+				
+				.avatar {
+					width: 80upx;
+					height: 80upx;
+					border-radius: 50%;
+				}
+				
+				.name-date {
+					margin-left: 26upx;
+					
+					.name {
+						font-size: 28upx;
+						font-weight: 500;
+						color: #606266;
+					}
+					
+					.date {
+						font-size: 24upx;
+						font-weight: 500;
+						color: #909399;
+						margin-top: 6upx;
+					}
+				}
+			}
+			
+			.reply {
+				font-size: 28upx;
+				font-weight: bold;
+				color: #303133;
+				margin-top: 32upx;
+			}
+			
+			.bot {
+				background-color: #F4F7F9;
+				border-radius: 20upx;
+				padding: 32upx;
+				margin-top: 40upx;
+				
+				.bot-crumbs {
+					padding: 12upx 20upx;
+					background-color: #FFFFFF;
+					border-radius: 16upx 10upx 10upx 0;
+					font-size: 24upx;
+					font-weight: 500;
+					color: #303133;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+				}
+				
+				.bot-title {
+					font-size: 28upx;
+					font-weight: bold;
+					color: #303133;
+					margin-top: 26upx;
+				}
+				
+				.bot-answer {
+					display: flex;
+					align-items: center;
+					font-size: 24upx;
+					font-weight: 500;
+					color: #303133;
+					margin-top: 33upx;
+					
+					.icon {
+						width: 14upx;
+						height: 10upx;
+						margin-left: 8upx;
+					}
+				}
+			}
+			
+			.praise {
+				display: flex;
+				align-items: center;
+				font-size: 24upx;
+				font-weight: 500;
+				color: #606266;
+				margin-top: 30upx;
+				
+				.icon {
+					width: 24upx;
+					height: 24upx;
+					margin-right: 8upx;
+				}
+			}
+		}
+	}
+}
+// 提问
+.ask {
+	width: 152upx;
+	height: 152upx;
+	background: url('https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/issue/tiwen%402x.png') 0 0 no-repeat;
+	background-size: 100%;
+	position: fixed;
+	bottom: 80upx;
+	right: 60upx;
 }

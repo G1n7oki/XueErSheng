@@ -72,10 +72,10 @@
 			<!-- link start -->
 			<view class="links">
 				<view class="top">
-					<view class="item">
+					<navigator url="/pages/topics/practice" hover-class="none" class="item">
 						<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/topics/meiriyilian%402x.png" mode=""></image>
 						<text class="text">每日一练</text>
-					</view>
+					</navigator>
 					<view class="line"></view>
 					<navigator url="/pages/topics/rank" hover-class="none" class="item">
 						<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/topics/paihangbang%402x.png" mode=""></image>

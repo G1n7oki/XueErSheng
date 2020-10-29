@@ -104,7 +104,9 @@
 		},
 		methods: {
 			handleBtn() {
-				console.log('11111')
+				uni.navigateTo({
+					url: '/pages/live/live-play'
+				})
 			}
 		}
 	}

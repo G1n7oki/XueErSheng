@@ -2,105 +2,85 @@
 	<view class="container">
 		<!-- 导航栏 start -->
 		<xes-navbar 
-			title="积分记录"
+			title="兑换记录"
 			text-align="center"
 			:is-arrow="true"
 		/>
 		<!-- 导航栏 end -->
-		<!-- 没有记录 start -->
-		<empty v-if="show" />
-		<!-- 没有记录 end -->
-		<!-- 记录 start -->
-		<view v-else class="record">
-			<view 
-				class="item"
-				v-for="(item, index) in 10"
-				:key="index"
-			>
-				<view>
+		<!-- 列表 start -->
+		<view class="list">
+			<view class="item" v-for="n in 10" :key="n">
+				<image class="image" src="http://dummyimage.com/250x250" mode=""></image>
+				<view class="info">
 					<view class="title">
-						积分商城兑换
+						15元无门槛课程优惠券
+					</view>
+					<view class="indate" v-if="n % 2 === 0">
+						有效期还剩：844天
 					</view>
 					<view class="date">
-						2020.08.15  10:06:28
+						2020.08.05-2023.12.15
 					</view>
 				</view>
-				<view class="number" :class="{'active': index % 2 === 0}">
-					{{ index % 2 === 0 ? '-' : '+' }}154
-				</view>
 			</view>
-			<!-- 加载更多 start -->
-			<uni-load-more
-				:status="loading"
-				:iconSize="12"
-			/>
-			<!-- 加载更多 end -->
 		</view>
-		<!-- 记录 end -->
+		<!-- 列表 end -->
 	</view>
 </template>
 
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
-	import UniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
-	import Empty from '@/components/empty/empty.vue'
 	export default {
-		name: 'IntegralRecord',
+		name: 'Record',
 		components: {
-			XesNavbar,
-			UniLoadMore,
-			Empty
-		},
-		data() {
-			return {
-				loading: 'more',
-				show: true
-			}
-		},
-		onReachBottom() {
-			this.loading = 'loading'
-			
-			setTimeout(() => {
-				this.loading = 'more'
-			}, 1000)
+			XesNavbar
 		}
 	}
 </script>
 
 <style lang="scss">
-	.record {
-		border-top: 1px solid #DEDEDE;
-		padding-left: 32upx;
+	.container {
+		background-color: #F4F7F9;
+	}
+	// 列表
+	.list {
+		background-color: #F4F7F9;
+		padding: 32upx;
 		
 		.item {
 			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			border-bottom: 1px solid #DEDEDE;
-			padding: 40upx 32upx 40upx 0;
+			background-color: #fff;
+			border-radius: 10upx;
+			padding: 32upx;
+			margin-bottom: 32upx;
 			
-			.title {
-				font-size: 28upx;
-				font-weight: bold;
-				color: #303133;
+			.image {
+				width: 212upx;
+				height: 136upx;
+				margin-right: 28upx;
 			}
 			
-			.date {
-				font-size: 28upx;
-				font-family: DIN;
-				font-weight: 500;
-				color: #909399;
-				margin-top: 10upx;
-			}
-			
-			.number {
-				font-size: 36upx;
-				font-family: DIN;
-				font-weight: 500;
-				color: #303133;
+			.info {
 				
-				&.active {
-					color: #1283FF;
+				.title {
+					font-size: 28upx;
+					font-weight: bold;
+					color: #303133;
+				}
+				
+				.indate {
+					font-size: 24upx;
+					font-weight: 500;
+					color: #606266;
+					margin-top: 15upx;
+				}
+				
+				.date {
+					font-size: 24upx;
+					font-family: DIN;
+					font-weight: 500;
+					color: #909399;
+					margin-top: 10upx;
 				}
 			}
 		}

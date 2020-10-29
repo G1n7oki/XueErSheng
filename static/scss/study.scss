@@ -273,11 +273,22 @@
 		}
 		
 		.split {
-			text-align: center;
-			font-size: 28upx;
-			font-weight: bold;
-			color: #303133;
+			display: flex;
+			justify-content: center;
+			align-items: center;
 			margin: 57upx 0 32upx;
+			
+			.text {
+				margin: 0 26upx;
+				font-size: 28upx;
+				font-weight: bold;
+				color: #303133;
+			}
+			
+			.image {
+				width: 152upx;
+				height: 16upx;
+			}
 		}
 	}
 }

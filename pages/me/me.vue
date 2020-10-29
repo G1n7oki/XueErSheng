@@ -94,9 +94,9 @@
 						</view>
 					</view>
 					<view class="button-group">
-						<button class="button-1" type="default">成绩单</button>
-						<button class="button-2" type="default">去学习</button>
-						<button class="button-3" type="default">去缴费</button>
+						<button class="button-1" @click="toPage('/pages/me/transcript')">成绩单</button>
+						<button class="button-2" @click="toPage('/pages/me/course')">去学习</button>
+						<button class="button-3">去缴费</button>
 					</view>
 				</view>
 			</view>
@@ -214,6 +214,12 @@
 						url: '/pages/login/index'
 					})
 				}
+			},
+			// 路由跳转
+			toPage(url) {
+				uni.navigateTo({
+					url
+				})
 			}
 		}
 	}
