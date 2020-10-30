@@ -135,7 +135,7 @@
 				<list-item
 					icon="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/bangzhuyufankuio%402x.png"
 					name="帮助与反馈"
-					url="/pages/me/feedback"
+					url="/pages/me/help"
 				/>
 				<list-item
 					icon="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/guanyuwomen%402x.png"
@@ -145,6 +145,7 @@
 				<list-item
 					icon="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/duihuanjindu%402x.png"
 					name="兑换码核销"
+					url="/pages/me/exchange"
 					:is-border="false"
 				/>
 			</view>

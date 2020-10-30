@@ -139,7 +139,13 @@
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
-		}, { // 我的反馈
+		}, { // 帮助反馈
+			"path": "pages/me/help",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, { // 意见反馈
 			"path": "pages/me/feedback",
 			"style": {
 				"navigationBarTitleText": "",
@@ -183,6 +189,12 @@
 			}
 		}, { // 积分记录
 			"path": "pages/me/record",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, { // 兑换码核销
+			"path": "pages/me/exchange",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
@@ -279,6 +291,18 @@
 			}
 		}, { // 设置昵称
 			"path": "pages/set/nickname",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, { // 地址管理
+			"path": "pages/set/address",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, { // 编辑地址
+			"path": "pages/set/edit",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"

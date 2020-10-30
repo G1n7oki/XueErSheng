@@ -50,10 +50,15 @@
 							同时，我省还公布了艺术、体育类各批次文化录取控制线和专业合格线、资格线。
 						</view>
 						<view class="date-reply">
-							22小时前   <text class="reply" @click="handleReply">回复</text>
+							22小时前   <text class="reply" @click="handleReply('学员_122100112')">回复</text>
 						</view>
 						<view class="comment-list">
-							<view class="comment-list__item">
+							<view 
+								v-if="n <= flod"
+								class="comment-list__item"
+								v-for="n in 10"
+								:key="n"
+							>
 								<view class="comment-list__item--head">
 									<image class="comment-list__item--head---avatar" src="http://dummyimage.com/120x600" mode=""></image>
 									<view class="comment-list__item--head---name">
@@ -64,19 +69,8 @@
 									同时，我省还公布了艺术、体育类各批次文化录取控制线和专业合格线。
 								</view>
 							</view>
-							<view class="comment-list__item">
-								<view class="comment-list__item--head">
-									<image class="comment-list__item--head---avatar" src="http://dummyimage.com/120x600" mode=""></image>
-									<view class="comment-list__item--head---name">
-										l略略略专家建议
-									</view>
-								</view>
-								<view class="comment-list__item--comment">
-									同时，我省还公布了艺术、体育类各批次文化录取控制线和专业合格线。
-								</view>
-							</view>
-							<view class="fold">
-								展开8条回复 <view class="triangle-down"></view>
+							<view class="fold" @click="unfold">
+								{{ flod <= 1 ? '展开' : '收起' }}8条回复 <image class="arrow" :src="flod <= 1 ? flodUrl : unflodUrl" mode=""></image>
 							</view>
 						</view>
 					</view>
@@ -129,8 +123,20 @@
 				</view>
 			</view>
 			<view class="reply-area">
-				<input class="input" type="text" placeholder="请输入您的看法" value="" />
-				<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/discover/fabiaojiantou%402x.png" mode=""></image>
+				<view class="replying" v-if="replying">
+					正在回复{{ replying }}
+				</view>
+				<view class="input-area">
+					<input 
+						class="input" 
+						type="text" 
+						v-model="comment"
+						confirm-type="send"
+						placeholder="请输入您的看法"
+						@confirm="confirm"
+					/>
+					<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/discover/fabiaojiantou%402x.png" mode="" @click="confirm"></image>
+				</view>
 			</view>
 		</view>
 	</view>
@@ -148,15 +154,29 @@
 		},
 		data() {
 			return {
-				info: {}
+				info: {},
+				replying: '', // 正在回复谁
+				comment: '', // 评论内容
+				unflodUrl: 'https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/shangsou%402x.png',
+				flodUrl: 'https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/arrowdown.png',
+				flod: 1
 			}
 		},
 		onLoad() {
 			this.info = Json.discover.detail
 		},
 		methods: {
-			handleReply() {
-				console.log('Handle Reply')
+			handleReply(str) {
+				this.replying = str
+			},
+			// 点击发送按钮
+			confirm() {
+				this.comment = ''
+				this.replying = ''
+			},
+			// 展开折叠的评论
+			unfold() {
+				this.flod <= 1 ? this.flod = 10 : this.flod = 1
 			}
 		}
 	}
