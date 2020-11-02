@@ -56,10 +56,10 @@
 						<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/banzhuren%402x.png" mode=""></image>
 						<view class="text">我的班主任</view>
 					</navigator>
-					<view class="item">
+					<navigator url="/pages/me/ai" class="item">
 						<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/ai%402x.png" mode=""></image>
 						<view class="text">AI智能评估</view>
-					</view>
+					</navigator>
 					<navigator url="/pages/me/course" hover-class="none" class="item">
 						<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/wodekecheng%402x.png" mode=""></image>
 						<view class="text">我的课程</view>
@@ -96,7 +96,7 @@
 					<view class="button-group">
 						<button class="button-1" @click="toPage('/pages/me/transcript')">成绩单</button>
 						<button class="button-2" @click="toPage('/pages/me/course')">去学习</button>
-						<button class="button-3">去缴费</button>
+						<button class="button-3" @click="toPage('/pages/order/information')">去缴费</button>
 					</view>
 				</view>
 			</view>

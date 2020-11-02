@@ -1,0 +1,70 @@
+.container {
+	background-color: #F4F7F9;
+}
+// 输入、选择框
+.input-area {
+	background-color: #fff;
+	padding-left: 32upx;
+	
+	&.mt-20 {
+		margin-top: 20upx;
+	}
+	
+	.input-group {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		border-bottom: 1px solid #DEDEDE;
+		height: 99upx;
+		padding-right: 32upx;
+		
+		&:nth-last-child(1) {
+			border-bottom: none;
+		}
+		
+		.label {
+			font-size: 28upx;
+			font-weight: 500;
+			color: #303133;
+		}
+		
+		.input {
+			font-size: 28upx;
+			font-weight: 500;
+			color: #303133;
+			text-align: right;
+		}
+		
+		.picker {
+			overflow: hidden;
+			
+			.text {
+				font-size: 28upx;
+				font-weight: 500;
+				color: #303133;
+				float: left;
+				margin-right: 10upx;
+			}
+			
+			.icon {
+				float: left;
+				margin-right: -8upx;
+			}
+		}
+	}
+}
+// 按钮
+.button {
+	width: 100%;
+	height: 100upx;
+	line-height: 100upx;
+	font-size: 32upx;
+	font-weight: 500;
+	color: #FFFFFF;
+	background-color: #1283FF;
+	border-radius: 0;
+	margin-top: 63upx;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+}

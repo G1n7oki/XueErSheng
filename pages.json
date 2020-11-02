@@ -181,6 +181,18 @@
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
+		}, { // AI智能测评
+			"path": "pages/me/ai",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, { // AI智能测评分享
+			"path": "pages/me/ai-share",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
 		}, { // 签到
 			"path": "pages/me/sign",
 			"style": {
@@ -243,6 +255,24 @@
 			}
 		}, { // 计划详情
 			"path": "pages/plan/detail",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, { // 我要报读
+			"path": "pages/plan/want",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, { // 确认信息
+			"path": "pages/plan/affirm",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, { // 提交成功
+			"path": "pages/plan/success",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"

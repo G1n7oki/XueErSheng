@@ -1,0 +1,198 @@
+.container {
+		background-color: #F4F7F9;
+	}
+	
+	.content {
+		background-color: #F4F7F9;
+		padding-bottom: 40upx;
+	}
+	// 巨幕
+	.jumbotron {
+		background: linear-gradient(-45deg, #3265FF 0%, #45B2FF 100%);
+		padding-top: 74upx;
+		
+		.box {
+			display: flex;
+			align-items: center;
+			width: 516upx;
+			background-color: rgba(255, 255, 255, .9);
+			border-radius: 20upx;
+			margin: 0 auto;
+			padding: 24upx 32upx;
+			box-sizing: border-box;
+			
+			.total {
+				width: 152upx;
+				height: 152upx;
+				border: 8upx dashed #C0C4CC;
+				border-radius: 50%;
+				
+				.point {
+					font-size: 44upx;
+					font-family: DIN;
+					font-weight: bold;
+					color: #1283FF;
+					text-align: center;
+					margin: 34upx 0 11upx;
+				}
+				
+				.text {
+					font-size: 20upx;
+					font-weight: bold;
+					color: #909399;
+					text-align: center;
+				}
+			}
+			
+			.professional {
+				margin-left: 48upx;
+				
+				.name {
+					font-size: 32upx;
+					font-weight: bold;
+					color: #303133;
+				}
+				
+				.choose {
+					display: flex;
+					align-items: center;
+					margin-top: 14upx;
+					
+					.text {
+						font-size: 24upx;
+						font-weight: 500;
+						color: #606266;
+					}
+				}
+			}
+		}
+		
+		.tips {
+			margin: 58upx 0 66upx;
+			text-align: center;
+			
+			.text-large {
+				font-size: 32upx;
+				font-weight: bold;
+				color: #FFFFFF;
+			}
+			
+			.text-small {
+				font-size: 28upx;
+				font-weight: 500;
+				color: #FFFFFF;
+				margin-top: 14upx;
+			}
+		}
+		
+		.charts-area {
+			width: 310px;
+			height: 270px;
+			margin: 0 auto;
+			position: relative;
+			
+			.charts {
+				width: 310px;
+				height: 270px;
+			}
+			
+			.info {
+				width: 310px;
+				height: 270px;
+				position: absolute;
+				top: 0;
+				left: 0;
+				
+				.text {
+					font-size: 22px;
+					font-family: DIN;
+					font-weight: 500;
+					color: #FFFFFF;
+					
+					text {
+						font-size: 12px;
+					}
+					
+					&.today {
+						position: absolute;
+						top: -8px;
+						left: 50%;
+						transform: translateX(-50%);
+					}
+					
+					&.amount {
+						position: absolute;
+						top: 64px;
+						right: 9px;
+					}
+					
+					&.accuracy {
+						position: absolute;
+						bottom: 60px;
+						right: 57px;
+					}
+					
+					&.liveness {
+						position: absolute;
+						bottom: 60px;
+						left: 55px;
+					}
+					
+					&.continuous {
+						position: absolute;
+						top: 64px;
+						left: 4px;
+					}
+				}
+			}
+		}
+	}
+	// 用户信息
+	.user-box {
+		width: 686upx;
+		background-color: #FFFFFF;
+		border-radius: 15upx;
+		position: relative;
+		z-index: 1;
+		margin: -70upx auto 0;
+		text-align: center;
+		padding: 56upx 32upx;
+		box-sizing: border-box;
+		
+		.avatar {
+			width: 136upx;
+			height: 136upx;
+			border-radius: 50%;
+		}
+		
+		.nickname {
+			font-size: 28upx;
+			font-weight: 500;
+			color: #606266;
+		}
+		
+		.signature {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			width: 528upx;
+			margin: 64upx auto 78upx;
+			
+			.quotes {
+				width: 24upx;
+				height: 19upx;
+			}
+		}
+		
+		.button {
+			width: 320upx;
+			height: 80upx;
+			background-color: #1283FF;
+			border-radius: 40upx;
+			font-size: 28upx;
+			font-weight: 500;
+			color: #FFFFFF;
+			line-height: 80upx;
+			margin: 0 auto;
+		}
+	}
