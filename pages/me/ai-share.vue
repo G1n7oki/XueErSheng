@@ -4,7 +4,7 @@
 		<xes-navbar 
 			title="AI智能测评"
 			text-align="center"
-			:is-arrow="true"
+			:is-arrow="false"
 		/>
 		<!-- 导航栏 end -->
 		<view class="content">
@@ -51,7 +51,7 @@
 							{{ info.continuous }} <text>min</text>
 						</view>
 					</view>
-					<canvas canvas-id="canvasRadar" id="canvasRadar" class="charts"></canvas>
+					<canvas canvas-id="canvasRadar" id="canvasRadar" class="charts" @click="touchLine"></canvas>
 				</view>
 			</view>
 			<!-- 巨幕 end -->
@@ -76,16 +76,18 @@
 
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
+	import UniIcons from '@/components/uni-icons/uni-icons.vue'
 	import uCharts from '@/tools/uChart/u-charts.min.js'
 	export default {
-		name: 'AIShare',
+		name: 'AI',
 		components: {
-			XesNavbar
+			XesNavbar,
+			UniIcons
 		},
 		data() {
 			return {
-				cWidth: '',
-				cHeight: '',
+				cWidth: 310,
+				cHeight: 270,
 				chartData: {
 					categories: ['今日学习', '练题数量', '正确率', '活跃度', '连续学习'],
 					series: [{
@@ -108,16 +110,20 @@
 			}
 		},
 		onLoad(options) {
-			console.log(options)
 			// 赋值
 			const data = JSON.parse(options.data)
 			this.chartData.series.data = data.series
 			this.info = data
-			
-			this.cWidth = uni.upx2px(620)
-			this.cHeight = uni.upx2px(540)
-			
 			this.showRadar('canvasRadar', this.chartData)
+		},
+		// 页面分享
+		onShareAppMessage() {
+			this.shareData = JSON.stringify(this.shareData)
+			
+			return {
+				title: 'AI智能评测',
+				path: '/pages/me/ai-share?data=' + this.shareData
+			}
 		},
 		methods: {
 			showRadar(canvasId, chartData) {
@@ -125,7 +131,7 @@
 					$this:this,
 					canvasId: canvasId,
 					type: 'radar',
-					fontSize: 11,
+					fontSize: 12,
 					legend: {show: false},
 					background: '#FFFFFF',
 					pixelRatio: 1,
@@ -136,6 +142,7 @@
 					series: chartData.series,
 					width: this.cWidth,
 					height: this.cHeight,
+					padding: [0, 0, 0, 0],
 					extra: {
 						radar: {
 							max: 100, //雷达数值的最大值

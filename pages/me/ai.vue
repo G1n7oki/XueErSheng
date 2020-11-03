@@ -118,9 +118,6 @@
 			}
 		},
 		onLoad() {
-			// this.cWidth = uni.upx2px(620)
-			// this.cHeight = uni.upx2px(540)
-			
 			this.showRadar('canvasRadar', this.chartData)
 		},
 		// 页面分享

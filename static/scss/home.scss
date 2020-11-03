@@ -464,6 +464,7 @@
 	top: 0;
 	z-index: 10;
 	transition: all .3s ease-in;
+	box-sizing: border-box;
 	
 	&.active {
 		transform: translateX(-100%);
@@ -480,13 +481,13 @@
 	
 	.content {
 		width: 600upx;
-		height: 100vh;
+		height: 100%;
 		background-color: #fff;
 		position: absolute;
 		top: 0;
 		right: 0;
 		box-sizing: border-box;
-		padding: 80upx 0 0 30upx;
+		padding-left: 30upx;
 		
 		.title {
 			font-size: 32upx;

@@ -198,7 +198,7 @@
 
 	.uni-collapse-cell__title-text {
 		flex: 1;
-		font-size: 32upx;
+		font-size: 28upx;
 		font-weight: bold;
 		color: #303234;
 		/* #ifndef APP-NVUE */

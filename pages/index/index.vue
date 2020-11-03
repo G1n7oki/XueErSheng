@@ -5,6 +5,7 @@
 			title="欢迎来到学尔升"
 			text-align="center"
 			background-color="#F4F7F9"
+			id="navbar"
 		/>
 		<!-- 导航栏 end -->
 		<!-- banner start -->
@@ -27,7 +28,7 @@
 						欢迎来到学尔升！
 					</view>
 					<view class="school">
-						{{ treeList[2] }}
+						{{ major }}
 					</view>
 				</view>
 				<view v-else class="info-2">
@@ -124,15 +125,15 @@
 									</view>
 									<view class="name">
 										讲师：{{ item.name }}
-										<image v-if="item.status === 1" class="icon" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg" mode=""></image>
+										<image v-if="item.is_play === 1" class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/live.gif" mode=""></image>
 									</view>
 								</view>
 							</view>
 							<view class="status">
-								<button v-if="item.status === 1" class="button-1" type="default" @click="toLivePlay">正在直播</button>
-								<button v-else-if="item.status === 2" class="button-2" type="default">直播回放</button>
-								<button v-else-if="item.status === 3" class="button-3" type="default">立即预约</button>
-								<button v-else class="button-4" type="default">已预约</button>
+								<button v-if="item.is_play === 1" class="button-1" @click="toLivePlay">正在直播</button>
+								<button v-else-if="item.is_play === 2" class="button-2">直播回放</button>
+								<button v-else-if="item.is_play === 0 && item.subscribe === 0" class="button-3">立即预约</button>
+								<button v-else class="button-4">已预约</button>
 							</view>
 						</view>
 					</view>
@@ -224,7 +225,7 @@
 		<!-- 筛选 star -->
 		<view class="filter-area" :class="{'active': filter === true}">
 			<view class="mask" @click="handleAffirm"></view>
-			<view class="content">
+			<view class="content" :style="{'padding-top': top}">
 				<view class="title">
 					筛选
 				</view>
@@ -281,10 +282,19 @@
 				loading: 'more',
 				filter: false,
 				page: 1,
-				totalPage: 0
+				totalPage: 0,
+				major: '', // 专业名称
+				profession_id: uni.getStorageSync('profession_id') || 44, // 默认选择的专业
+				top: 0 // content的padding-top值
 			}
 		},
-		onLoad(options) {
+		onLoad() {
+			// 设置content的padding-top值
+			const navbar = uni.createSelectorQuery().in(this)
+			navbar.select('#navbar').boundingClientRect(navbar => {
+				this.top = navbar.height + 20 + 'px'
+			}).exec()
+			// 模拟数据上线后删除
 			this.filterList = json.home.filterList
 		},
 		onShow() {
@@ -295,6 +305,7 @@
 				})
 			} else {
 				this.treeList = crumbs
+				this.major = this.treeList[2]
 			}
 			
 			this.toHome()
@@ -352,7 +363,7 @@
 					title: '加载中...'
 				})
 				home({
-					profession_id: uni.getStorageSync('profession_id')
+					profession_id: this.profession_id
 				}).then(response => {
 					const res = response.data.data
 					this.story = res.article
@@ -373,7 +384,7 @@
 			// 获取全部课程
 			toCourse () {
 				courses({
-					profession_id: uni.getStorageSync('profession_id'),
+					profession_id: this.profession_id,
 					page: this.page
 				}).then(response => {
 					const res = response.data
@@ -390,7 +401,7 @@
 			// 获取Banner数据
 			toBanners() {
 				banners({ 
-					profession_id: uni.getStorageSync('profession_id') 
+					profession_id: this.profession_id 
 				}).then(response => {
 					const res = response.data.data
 					this.bannerList = res.banner
@@ -443,5 +454,5 @@
 </script>
 
 <style lang="scss">
-	@import "../../static/scss/home.scss"
+	@import "~@/static/scss/home.scss"
 </style>

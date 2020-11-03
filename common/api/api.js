@@ -66,11 +66,20 @@ export const logout = (data) => {
  * 以下选择专业接口
  * */
  
-// 选择专业
+// 选择专业列表
 export const professional = (data) => {
 	return http.request({
 		url: 'professions',
 		method: 'GET',
+		data
+	})
+}
+
+// 选择专业post
+export const choose = (data) => {
+	return http.request({
+		url: 'choose',
+		method: 'POST',
 		data
 	})
 }

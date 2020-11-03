@@ -1,37 +1,53 @@
 {
 	"home": {
-		"liveList": [{
-			"id": 1,
-			"icon": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg",
-			"name": "讲师：李军",
-			"type": "英语（本）第 1 课",
-			"date": "2020.08.20",
-			"time": "18:00-20:00",
-			"status": 1
+		"banner": [{
+			"id": 86,
+			"title": "支个身科",
+			"image_url": "http://dummyimage.com/400x400",
+			"profession_id": 58,
+			"sort": 47,
+			"jump_type": 77,
+			"jump_url": "http://mrxqjfqgo.su/lqfocgluo",
+			"web_url": "http://octi.dj/lql",
+			"status": 23,
+			"page_type": 80,
+			"backgroundcolor": "tempor laborum"
 		}, {
-			"id": 2,
-			"icon": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg",
-			"name": "讲师：马正涛",
-			"type": "金融管理本科专业解读全金融管理本科专业解读全",
-			"date": "2020.08.20",
-			"time": "18:00-20:00",
-			"status": 2
+			"id": 37,
+			"title": "南说但还加不",
+			"image_url": "http://dummyimage.com/400x400",
+			"profession_id": 43,
+			"sort": 87,
+			"jump_type": 88,
+			"jump_url": "http://dulk.ml/sxis",
+			"web_url": "http://fldni.zr/iwjrv",
+			"status": 69,
+			"page_type": 87,
+			"backgroundcolor": "est minim proident fugiat sunt"
 		}, {
-			"id": 3,
-			"icon": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg",
-			"name": "张正宁",
-			"date": "2020.08.20",
-			"time": "18:00-20:00",
-			"type": "政治（本）第 3 课",
-			"status": 3
+			"id": 97,
+			"title": "京验位始",
+			"image_url": "http://dummyimage.com/400x400",
+			"profession_id": 24,
+			"sort": 8,
+			"jump_type": 40,
+			"jump_url": "http://bbzvpntx.mw/weqlkk",
+			"web_url": "http://xkuvum.bt/vivlg",
+			"status": 76,
+			"page_type": 79,
+			"backgroundcolor": "incididunt eiusmod laborum irure"
 		}, {
-			"id": 4,
-			"icon": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602579342591&di=8781b7e64524a383c102a82bedabb7d0&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Felement_origin_min_pic%2F01%2F34%2F96%2F23573bca52a6b30.jpg",
-			"name": "管栎",
-			"type": "数学（本）第 3 课",
-			"date": "2020.08.20",
-			"time": "18:00-20:00",
-			"status": 4
+			"id": 12,
+			"title": "东那统关工把",
+			"image_url": "http://dummyimage.com/400x400",
+			"profession_id": 58,
+			"sort": 11,
+			"jump_type": 36,
+			"jump_url": "http://gfglnt.hn/cifkxlv",
+			"web_url": "http://pnohqungz.bb/hsthh",
+			"status": 68,
+			"page_type": 81,
+			"backgroundcolor": "culpa mollit qui"
 		}],
 		"courseList": [{
 			"id": 1,
@@ -88,91 +104,6 @@
 			}]
 		}]
 	},
-	"professional": [{
-		"id": 1,
-		"name": "自学考试",
-		"children": [{
-			"id": 1,
-			"name": "金融类",
-			"item": [{
-				"id": 1,
-				"name": "金融管理专科"
-			}, {
-				"id": 2,
-				"name": "金融学本科"
-			}, {
-				"id": 3,
-				"name": "金融管理本科"
-			}]
-		}, {
-			"id": 2,
-			"name": "经管类",
-			"item": [{
-				"id": 1,
-				"name": "商务管理本科"
-			}, {
-				"id": 2,
-				"name": "电子商务本科"
-			}, {
-				"id": 3,
-				"name": "会展经济与管理本科"
-			}, {
-				"id": 4,
-				"name": "现代企业管理专科"
-			}]
-		}]
-	}, {
-		"id": 2,
-		"name": "成人考试",
-		"children": [{
-			"id": 1,
-			"name": "金融类",
-			"item": [{
-				"id": 1,
-				"name": "金融管理专科"
-			}, {
-				"id": 2,
-				"name": "金融学本科"
-			}, {
-				"id": 3,
-				"name": "金融管理本科"
-			}]
-		}]
-	}, {
-		"id": 3,
-		"name": "研究生考试",
-		"children": [{
-			"id": 1,
-			"name": "金融类",
-			"item": [{
-				"id": 1,
-				"name": "金融管理专科"
-			}, {
-				"id": 2,
-				"name": "金融学本科"
-			}, {
-				"id": 3,
-				"name": "金融管理本科"
-			}]
-		}]
-	}, {
-		"id": 4,
-		"name": "职业资格",
-		"children": [{
-			"id": 1,
-			"name": "金融类",
-			"item": [{
-				"id": 1,
-				"name": "金融管理专科"
-			}, {
-				"id": 2,
-				"name": "金融学本科"
-			}, {
-				"id": 3,
-				"name": "金融管理本科"
-			}]
-		}]
-	}],
 	"study": {
 		"courseList": [{
 			"id": 1,

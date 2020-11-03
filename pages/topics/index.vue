@@ -274,7 +274,7 @@
 			// 点击切换专业
 			toProfessional() {
 				uni.navigateTo({
-					url: '/pages/professional/professional'
+					url: '/pages/professional/professional?type=1'
 				})
 			},
 			// 折叠

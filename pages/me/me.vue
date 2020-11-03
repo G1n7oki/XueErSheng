@@ -75,7 +75,7 @@
 			<view class="me-status">
 				<title name="我的学籍" />
 				<view class="box">
-					<image class="amend" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/xiugai%402x.png" mode=""></image>
+					<image class="amend" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/xiugai%402x.png" mode="" @click="toPage('/pages/plan/userinfo')"></image>
 					<view class="university">
 						<image class="logo" src="http://dummyimage.com/114x114" mode=""></image>
 						<view class="info">

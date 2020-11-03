@@ -53,19 +53,21 @@
 
 <script>
 	import json from '@/static/data.json'
-	import { professional } from '@/common/api/api.js'
+	import { professional, choose } from '@/common/api/api.js'
 	import { showToast } from '@/tools/util/util.js'
 	export default {
 		name: 'professional',
 		data() {
 			return {
-				categoryList: [],
-				categoryIndex: 1,
-				categoryList2: [],
-				chooseResult: []
+				categoryList: [], // 一级类目
+				categoryIndex: 1, // 一级类目的索引
+				categoryList2: [], // 二级类目
+				chooseResult: [], // 选择的结果
+				type: '' // 跳转的类型
 			}
 		},
-		onLoad() {
+		onLoad(options) {
+			this.type = options.type
 			this.toProfessional()
 		},
 		methods: {
@@ -99,6 +101,22 @@
 			},
 			// 点击三级类目
 			handleCell(event, name, id) {
+				const token = uni.getStorageSync('token') || ''
+				// 如果有token则需要向后端发起接口请求
+				if (token) {
+					choose({
+						profession_id: id
+					}).then(response => {
+						
+					}).catch(error => {
+						uni.showToast({
+							icon: 'none',
+							title: error.data.message
+						})
+						return false
+					})
+				}
+				
 				const that = this
 				this.chooseResult[1] = event.target.dataset.parent
 				this.chooseResult[2] = name
@@ -109,9 +127,15 @@
 					key: 'crumbs',
 					data: that.chooseResult,
 					success() {
-						uni.switchTab({
-							url: '/pages/index/index'
-						})
+						if (that.type === '') {
+							uni.switchTab({
+								url: '/pages/index/index'
+							})
+						} else {
+							uni.navigateBack({
+								delta: 1
+							})
+						}
 					}
 				})
 			}

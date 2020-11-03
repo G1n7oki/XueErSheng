@@ -277,6 +277,18 @@
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
+		}, { // 报读信息 - 个人信息
+			"path": "pages/plan/userinfo",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		}, { // 报读信息 - 学历信息
+			"path": "pages/plan/education",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
 		}, { // 直播 · 预告
 			"path": "pages/live/live",
 			"style": {
