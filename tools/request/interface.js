@@ -81,6 +81,10 @@ export default {
 					}, 1500)
 					uni.removeStorageSync('token')
 				} else {
+					uni.showToast({
+						icon: 'none',
+						title: response.data.message
+					})
 					reject(response)
 				}
 			}

@@ -23,7 +23,7 @@
 		<!-- 金刚区start -->
 		<view class="main">
 			<view class="top">
-				<view v-if="!isPay" class="info-1">
+				<view v-if="!isInfo" class="info-1">
 					<view class="welcome">
 						欢迎来到学尔升！
 					</view>
@@ -42,8 +42,8 @@
 						</view>
 					</view>
 				</view>
-				<button type="default" class="{isPay ? 'active' : ''}" @click="handleMainBtn">
-					{{ isPay ? '立即缴费' : '我要报考' }}
+				<button v-if="isButton" type="default" :class="{'active': isPay !== 9}" @click="handleMainBtn">
+					{{ isPay === 0 ? '立即缴费' : isPay === 1 ? '已缴费' : '我要报名' }}
 				</button>
 			</view>
 			<view class="bot">
@@ -90,7 +90,7 @@
 		<!-- 金刚区end -->
 		<view class="line-body">
 			<!-- 上进故事start -->
-			<view class="block">
+			<view class="block" v-if="story">
 				<view class="top" style="margin-top: 0;">
 					<title name="上进故事" />
 					<view-more 
@@ -271,7 +271,9 @@
 		},
 		data() {
 			return {
-				isPay: false,
+				isInfo: null, // 是否显示用户信息
+				isButton: false, // 是否显示按钮 
+				isPay: 0, // 支付状态
 				treeList: [], // 面包屑
 				story: {}, // 上进故事
 				liveList: [], // 直播预告
@@ -285,7 +287,8 @@
 				totalPage: 0,
 				major: '', // 专业名称
 				profession_id: uni.getStorageSync('profession_id') || 44, // 默认选择的专业
-				top: 0 // content的padding-top值
+				top: 0, // content的padding-top值
+				today: 0
 			}
 		},
 		onLoad() {
@@ -369,6 +372,8 @@
 					this.story = res.article
 					this.liveList = res.sol
 					this.selection = res.handpick
+					this.isButton = res.applyButton
+					this.isPay = res.applyStaus
 				}).catch(error => {
 					uni.hideLoading()
 					uni.showToast({
@@ -416,7 +421,7 @@
 			},
 			// 点击缴费/支付按钮
 			handleMainBtn() {
-				this.isPay === true ? '' : this.navigate('/pages/plan/detail')
+				this.isPay === 9 ? this.navigate('/pages/plan/detail') : this.isPay === 0 ? this.navigate('/pages/order/information') : ''
 			},
 			// 跳转直播播放页
 			toLivePlay() {

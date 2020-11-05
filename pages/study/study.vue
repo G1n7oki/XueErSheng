@@ -1,7 +1,9 @@
 <template>
 	<view class="container">
+		<!-- 导航栏 start -->
 		<xes-navbar title="学习中心" backgroundColor="#F4F7F9" :margin="32" />
-		<view class="lineChart">
+		<!-- 导航栏 end -->
+		<view class="line-chart">
 			<view class="tips">
 				近7天学习时间
 			</view>
@@ -9,7 +11,7 @@
 			<view class="statistical">
 				<view class="item">
 					<view class="top">
-						50<text>min</text>
+						{{ today }}<text>min</text>
 					</view>
 					<view class="bot">
 						今日学习
@@ -17,7 +19,7 @@
 				</view>
 				<view class="item">
 					<view class="top">
-						4<text>min</text>
+						{{ total }}<text>min</text>
 					</view>
 					<view class="bot">
 						累计学习
@@ -25,7 +27,7 @@
 				</view>
 				<view class="item">
 					<view class="top">
-						12<text>day</text>
+						{{ keep }}<text>day</text>
 					</view>
 					<view class="bot">
 						连续学习
@@ -60,22 +62,31 @@
 				:duration="500"
 				:style="{height: swiperH}"
 				@change="touchSwiper">
+				<!-- 课程 -->
 				<swiper-item>
-					<scroll-view class="scroll-view" scroll-y="true" >
-						<empty v-if="showCourse" />
+					<scroll-view 
+						class="scroll-view"
+						scroll-y="true"
+						@scrolltolower="pullUpLoading"
+					>
+						<empty v-if="course.show" />
 						<view v-else class="course-list">
-							<view 
+							<navigator
 								class="item"
-								v-for="course in courseList"
+								v-for="course in course.list"
 								:key="course.id"
+								:url="'/pages/study/detail?id=' + course.id"
 							>
-								<image class="image" :src="course.image" mode=""></image>
+								<image class="image" :src="course.cover" mode=""></image>
 								<view class="info">
 									<view class="name">
-										{{ course.name }}
+										{{ course.title }}
 									</view>
-									<view class="validity">
+									<view v-if="course.validity > 0" class="validity">
 										课程有效期还剩：{{ course.validity }}天
+									</view>
+									<view v-else class="validity">
+										已过期
 									</view>
 									<view class="bot">
 										<view class="progress">
@@ -90,51 +101,51 @@
 										</view>
 									</view>
 								</view>
-							</view>
+							</navigator>
 						</view>
 					</scroll-view>
 				</swiper-item>
+				<!-- 直播课 -->
 				<swiper-item>
-					<scroll-view class="scroll-view" scroll-y="true" >
-						<empty v-if="showLive" />
+					<scroll-view 
+						class="scroll-view"
+						scroll-y="true"
+						@scrolltolower="pullUpLoading"
+					>
+						<empty v-if="live.show" />
 						<view v-else class="live live-area">
 							<view class="live-list">
 								<view 
 									class="item" 
-									v-for="live in liveList"
+									v-for="live in live.list"
 									:key="live.id"
 								>
-									<image class="avatar" :src="live.avatar" mode=""></image>
+									<image class="avatar" :src="live.image" mode=""></image>
 									<view class="info">
 										<view class="type-title">
-											<view class="type">
-												{{ live.type }}
-											</view>
-											<view class="title">
-												{{ live.name }}
-											</view>
+											{{ live.title }}
 										</view>
 										<view class="bot">
 											<view class="user-status">
 												<view class="user">
-													{{ live.user }} <text>{{ live.title }}</text>
+													{{ live.name }}
 												</view>
 												<view class="status">
-													{{ live.status === 1 ? '正在直播' : live.time }}
-													<image v-if="live.status === 1" src="http://dummyimage.com/120x600" mode=""></image>
+													{{ live.isPlay === 1 ? '正在直播' : live.start_time + '-' + live.end_time }}
+													<image v-if="live.isPlay === 1" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/live.gif" mode=""></image>
 												</view>
 											</view>
-											<button v-if="live.status === 1" class="button button-1" type="default">
+											<button v-if="live.isPlay === 1" class="button button-1">
 												进入直播
 											</button>
-											<button v-if="live.status === 2" class="button button-2" type="default">
+											<button v-else class="button button-2">
 												已预约
 											</button>
 										</view>
 									</view>
 								</view>
 							</view>
-							<view class="split" v-if="liveList.length > 0">
+							<view class="split" v-if="live.history.length >= 0">
 								<image class="image" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/study/left%402x.png" mode=""></image>
 								<view class="text">
 									直播回顾
@@ -145,27 +156,23 @@
 								<view class="live-list">
 									<view 
 										class="item" 
-										v-for="live in historyList"
-										:key="live.id"
+										v-for="history in live.history"
+										:key="history.id"
 									>
-										<image class="avatar" :src="live.avatar" mode=""></image>
+										<image class="avatar" :src="history.banner" mode=""></image>
 										<view class="info">
 											<view class="type-title">
-												<view class="type">
-													{{ live.type }}
-												</view>
 												<view class="title">
-													{{ live.name }}
+													{{ history.title }}
 												</view>
 											</view>
 											<view class="bot">
 												<view class="user-status">
 													<view class="user">
-														{{ live.user }} <text>{{ live.title }}</text>
+														{{ history.user }}
 													</view>
 													<view class="status">
-														{{ live.status === 1 ? '正在直播' : live.time }}
-														<image v-if="live.status === 1" src="/static/image/home/live.png" mode=""></image>
+														共30课时
 													</view>
 												</view>
 												<button class="button button-1" type="default">
@@ -203,7 +210,7 @@
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import Progress from '@/components/progress/progress.vue'
 	import Empty from '@/components/empty/empty.vue'
-	import { me_course, me_live } from '@/common/api/api.js'
+	import { study_stats, me_course, me_live } from '@/common/api/api.js'
 	import uCharts from '@/tools/uChart/u-charts.min.js'
 	import json from '@/static/data.json'
 	let canvasLine = null
@@ -220,24 +227,31 @@
 				cWidth: '',
 				cHeight: '',
 				pixelRatio: 1, // 像素
-				courseList: [], // 课程列表
-				liveList: [], // 直播列表
-				historyList: [], // 历史列表
+				course: { // 课程相关
+					list: [],
+					show: false,
+					page: 1, // 当前页数
+					total: 0 // 总页数
+				},
+				live: { // 直播相关
+					list: [],
+					show: false,
+					history: [],
+					page: 1,
+					total: 0
+				},
 				tabIndex: 0, // 当前显示的索引
 				swiperH: 0, // swiper的高度
 				close: false, // 是否显示上次播放
-				showCourse: false, // 是否显课程列表的空状态
-				showLive: false ,// 是否显现空状态的直播数据
-				week: [] // 生成的日期
+				week: [], // 生成的日期
+				series: [], // 7天的观看时间
+				today: 0, // 今日学习
+				total: 0, // 累计学习
+				keep: 0 // 连续学习
 			}
 		},
 		onLoad() {
-			this.generateWeekly()
-			
 			that = this
-			this.cWidth = uni.upx2px(630)
-			this.cHeight = uni.upx2px(308)
-			this.showLine('canvasLine')
 			
 			// 屏幕的高度
 			const wHeight = uni.getSystemInfoSync()['windowHeight']
@@ -250,25 +264,82 @@
 				that.swiperH = wHeight - tHeight - statusBarHeight - 50 + 'px'
 			}).exec()
 			
-			this.courseList = json.study.courseList
-			this.liveList = json.study.liveList
-			this.historyList = json.study.historyList
-			
-			// this.toMeCourse()
-			
+			this.toStats()
+			this.toMeCourse()
+			this.toMeLive()
 		},
 		methods: {
-			// 生成当前日期向前推7天的时间
-			generateWeekly() {
-				// 得到当前的时间戳
-				const timestamp = Date.now()
-				// 循环获得当前时间向前推7天的时间戳
-				const dateWeek = Array.from(new Array(7)).map((_, i) => {
-					const weekTimestamp = new Date(timestamp - i * 24 * 60 * 60 * 1000)
-					// 整成自己需要的样式
-					const date = String(weekTimestamp.getMonth() + 1) + '.' + String(new Date(weekTimestamp).getDate())
-					// 倒序插入
-					this.week.unshift(date)
+			// 获取统计数据
+			toStats() {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				study_stats().then(response => {
+					const res = response.data.data
+					res.top_record.map(item => {
+						this.week.push(item.key)
+						this.series.push(item.total_time)
+					})
+					
+					this.today = res.record.today.value
+					this.total = res.record.total.value
+					this.keep = res.record.keep.value
+					
+					this.cWidth = uni.upx2px(630)
+					this.cHeight = uni.upx2px(308)
+					this.showLine('canvasLine')
+					uni.hideLoading()
+				}).catch(error => {
+					uni.hideLoading()
+					uni.showToast({
+						icon: 'none',
+						title: error.data.message
+					})
+				})
+			},
+			// 获取课程数据
+			toMeCourse() {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				me_course({
+					page: this.course.page
+				}).then(response => {
+					const res = response.data.data
+					this.course.list = this.course.list.concat(res.data)
+					this.course.show = this.course.list.length <= 0 ? true : false
+					this.course.total = res.last_page
+					uni.hideLoading()
+				}).catch(error => {
+					uni.hideLoading()
+					uni.showToast({
+						icon: 'none',
+						title: error.data.message
+					})
+				})
+			},
+			// 获取直播数据
+			toMeLive() {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				me_live({
+					page: this.live.page
+				}).then(response => {
+					const res = response.data.data
+					res.live.map(item => {
+						item.start_time = item.start_time.substring(5)
+					})
+					this.live.list = res.live
+					this.live.history = this.live.history.concat(res.list.data)
+					this.live.show = this.live.list.length <= 0 && this.live.history <= 0 ? true : false
+					this.live.total = res.list.last_page
+				}).catch(error => {
+					uni.hideLoading()
+					uni.showToast({
+						icon: 'none',
+						title: error.data.message
+					})
 				})
 			},
 			showLine(canvasId) {
@@ -286,11 +357,11 @@
 					dataLabel: false,
 					dataPointShape: true,
 					background: '#FFFFFF',
-					pixelRatio: that.pixelRatio,
+					pixelRatio: 1,
 					categories: that.week,
 					series: [{
 						"name": "",
-						"data": [15, 3, 5, 7, 9, 11, 15],
+						"data": that.series,
 						"color": "#2BD0FF"
 					}],
 					animation: true,
@@ -311,8 +382,8 @@
 							}
 						}],
 					},
-					width: that.cWidth * that.pixelRatio,
-					height: that.cHeight * that.pixelRatio,
+					width: that.cWidth,
+					height: that.cHeight,
 					extra: {
 						line: {
 							type: 'curve'
@@ -323,9 +394,7 @@
 					}
 				})
 			},
-			toJSON () {},
 			touchLine(e) {
-				// canvasLine.touchLegend(e)
 				canvasLine.showToolTip(e, {
 					format: function (item, category) {
 						return '今日' + item.data + '小时' 
@@ -344,8 +413,44 @@
 			handleClose () {
 				this.close = true
 			},
-			toMeCourse() {
-				
+			// 上拉加载
+			pullUpLoading() {
+				if (this.tabIndex === 0) {
+					let { page, total } = this.course
+					this.course.page++
+					if (page > total) {
+						uni.showToast({
+							icon: 'none',
+							title: '没有更多数据了'
+						})
+						return false
+					}
+					this.toMeCourse()
+				} else {
+					this.live.page++
+					if (this.live.page > this.live.total) {
+						uni.showToast({
+							icon: 'none',
+							title: '没有更多数据了'
+						})
+						return false
+					}
+					uni.showLoading({
+						title: '加载中...'
+					})
+					me_live({
+						page: this.live.page
+					}).then(response => {
+						const res = response.data.data
+						this.live.history = this.live.history.concat(res.list.data)
+					}).catch(error => {
+						uni.hideLoading()
+						uni.showToast({
+							icon: 'none',
+							title: error.data.message
+						})
+					})
+				}
 			}
 		}
 	}

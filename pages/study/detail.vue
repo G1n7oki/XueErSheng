@@ -10,7 +10,14 @@
 		<!-- 导航栏 end -->
 		<!-- video start -->
 		<view class="video-area">
-			<video class="video" id="video" src="http://cctvalih5ca.v.myalicdn.com/live/cctv1_2/index.m3u8" controls></video>
+			<video 
+				class="video"
+				id="video"
+				poster="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1604557737&di=6ac45f974c280ed5c9e2420884bcc4e1&src=http://h.hiphotos.baidu.com/zhidao/pic/item/0dd7912397dda144dac4acc9b2b7d0a20df486f8.jpg"
+				src="http://ivi.bupt.edu.cn/hls/cctv1hd.m3u8"
+				@play="play"
+				controls
+			></video>
 		</view>
 		<!-- video end -->
 		<!-- 优惠券 start -->
@@ -20,10 +27,10 @@
 				<view class="price-time">
 					<view class="price">
 						<view class="current">
-							￥542
+							￥{{ info.price }}
 						</view>
 						<view class="old">
-							680
+							{{ info.virtual_price }}
 						</view>
 					</view>
 					<view class="time">
@@ -85,25 +92,27 @@
 							</view>
 						</view>
 						<view class="control">
-							<view class="item">
-								<image src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/study/shoucang%402x.png" mode=""></image>
+							<view class="item" @click="handlefavorite">
+								<image :src="favorite.url" mode=""></image>
 								<view class="text">收藏</view>
 							</view>
-							<view class="item">
+							<view class="item" @click="handleNotes">
 								<image src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/study/jinagyi%402x.png" mode=""></image>
 								<view class="text">讲义</view>
 							</view>
-							<view class="item">
+							<navigator url="/pages/issue/choose" hover-class="none" class="item">
 								<image src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/study/tiwen%402x.png" mode=""></image>
 								<view class="text">提问</view>
-							</view>
+							</navigator>
 						</view>
 					</view>
 					<view class="coupon">
 						<view class="text">
 							您有优惠券可领取
 						</view>
-						<uButton size="small" text="领取" />
+						<view @click="handleGet">
+							<uButton size="small" text="领取" />
+						</view>
 					</view>
 					<view class="split-line"></view>
 					<view class="recommend">
@@ -150,12 +159,12 @@
 											{{ video.duration }}
 										</view>
 									</view>
-									<image v-if="!watch && video.try === 0" class="status-1" src="http://dummyimage.com/120x600" mode=""></image>
-									<view v-else-if="!watch && video.try === 1" class="status-2">
+									<image v-if="!watch && video.try === 0" class="status-1" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/suo%402x.png" mode=""></image>
+									<view v-else-if="!watch && video.try === 1" class="status-2" @click="preview">
 										试看
 									</view>
-									<image v-else-if="watch && video.active" class="status-3" src="http://dummyimage.com/120x600" mode=""></image>
-									<image v-else src="http://dummyimage.com/120x600" mode=""></image>
+									<image v-else-if="watch && video.active" class="status-3" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/live.gif" mode=""></image>
+									<image v-else src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/bofang%402x.png" mode=""></image>
 								</view>
 							</view>
 						</uni-collapse-item>
@@ -165,7 +174,11 @@
 			<!-- 目录 end -->
 			<!-- 评价 start -->
 			<swiper-item class="swiper-item">
-				<scroll-view scroll-y="true" class="evaluate">
+				<scroll-view 
+					scroll-y="true"
+					class="evaluate"
+					@scrolltolower="pullUpLoading"
+				>
 					<view class="exhibition">
 						<view class="left">
 							<uni-rate
@@ -196,28 +209,31 @@
 						<view class="top">
 							<Title name="所有评价" />
 							<view class="text">
-								共40个评价
+								共{{ evaluate.total }}个评价
 							</view>
 						</view>
-						<view class="item">
+						<view class="item" 
+							v-for="list in evaluate.list"
+							:key="list.id"
+						>
 							<view class="info">
 								<view class="avatar-name">
-									<image class="avatar" src="http://dummyimage.com/120x600" mode=""></image>
+									<image class="avatar" :src="list.avatars" mode=""></image>
 									<view class="name-tips">
 										<view class="name">
-											一只大肥羊
+											{{ list.username }}
 										</view>
 										<view class="tips">
-											学习1个课时评价
+											学习{{ list.period }}个课时评价
 										</view>
 									</view>
 								</view>
 								<view class="date">
-									2020.08.05
+									{{ list.add_time }}
 								</view>
 							</view>
 							<view class="content">
-								老师讲的很详细，本人在这次学习中收获了很多，感谢学尔升课堂提供的平台，希望开发人员能在后续的改版迭代中连续开发出更好的功能，为学员提供更好的服务。
+								{{ list.content }}
 							</view>
 							<view class="rate">
 								<uni-rate 
@@ -225,41 +241,16 @@
 									:size="16"
 									:margin="5"
 									:allowHalf="true"
-									:value="5"
-								/>
-							</view>
-						</view>
-						<view class="item">
-							<view class="info">
-								<view class="avatar-name">
-									<image class="avatar" src="http://dummyimage.com/120x600" mode=""></image>
-									<view class="name-tips">
-										<view class="name">
-											一只大肥羊
-										</view>
-										<view class="tips">
-											学习1个课时评价
-										</view>
-									</view>
-								</view>
-								<view class="date">
-									2020.08.05
-								</view>
-							</view>
-							<view class="content">
-								老师讲的很详细，本人在这次学习中收获了很多，感谢学尔升课堂提供的平台，希望开发人员能在后续的改版迭代中连续开发出更好的功能，为学员提供更好的服务。
-							</view>
-							<view class="rate">
-								<uni-rate 
-									:readonly="true"
-									:size="16"
-									:margin="5"
-									:allowHalf="true"
-									:value="5"
+									:value="list.mark"
 								/>
 							</view>
 						</view>
 					</view>
+					<uni-load-more 
+						v-if="evaluate.total > 2"
+						:status="evaluate.loading"
+						:iconSize="14"
+					/>
 				</scroll-view>
 			</swiper-item>
 			<!-- 评价 end -->
@@ -271,10 +262,15 @@
 				<view class="price-time">
 					<view class="price">
 						<view class="current">
-							542 <text>元</text>
+							{{ info.price }} <text>元</text>
 						</view>
 						<view class="old">
-							680 <text>元</text>
+							<view class="number">
+								{{ info.virtual_price }}
+							</view>
+							<view class="text">
+								元
+							</view>
 						</view>
 					</view>
 					<view class="time">
@@ -293,6 +289,7 @@
 						<view class="text">
 							咨询
 						</view>
+						<button class="button" hover-class="none" open-type="contact"></button>
 					</view>
 				</view>
 			</view>
@@ -300,12 +297,85 @@
 				<view class="icon">
 					+
 				</view>
-				<navigator :url="'/pages/order/information?id=' + courseId + '&type=1'" hover-class="none" class="text">
+				<navigator :url="'/pages/order/information?id=' + courseId + '&type=' + info.type" hover-class="none" class="text">
 					加入学习
 				</navigator>
 			</view>
 		</view>
 		<!-- fixed end -->
+		<!-- 优惠券弹窗 start -->
+		<uni-popup ref="popup" type="bottom">
+			<scroll-view class="coupon-popup" scroll-y="true">
+				<view class="title">
+					领取优惠券
+				</view>
+				<view class="item">
+					<view class="worth">
+						<view class="type">
+							满减券
+						</view>
+						<view class="text">
+							<text class="unit">￥</text>
+							15
+						</view>
+					</view>
+					<view class="explain">
+						<view class="title">
+							每满100使用
+						</view>
+						<view class="date">
+							2019.04.05~2021.04.05
+						</view>
+					</view>
+				</view>
+				<view class="item">
+					<view class="worth">
+						<view class="type">
+							随机立减券
+						</view>
+						<view class="text active">
+							<view>
+								随机
+							</view>
+							<view>
+								立减
+							</view>
+						</view>
+					</view>
+					<view class="explain">
+						<view class="title">
+							无门槛使用
+						</view>
+						<view class="source">
+							100~500之间
+						</view>
+						<view class="date">
+							2019.04.05~2021.04.05
+						</view>
+					</view>
+				</view>
+				<view class="item">
+					<view class="worth">
+						<view class="type">
+							打折券
+						</view>
+						<view class="text">
+							9.8
+							<text class="unit">折</text>
+						</view>
+					</view>
+					<view class="explain">
+						<view class="title">
+							无门槛使用
+						</view>
+						<view class="date">
+							2019.04.05~2021.04.05
+						</view>
+					</view>
+				</view>
+			</scroll-view>
+		</uni-popup>
+		<!-- 优惠券弹窗 end -->
 	</view>
 </template>
 
@@ -317,7 +387,10 @@
 	import UniCollapseItem from '@/components/uni-collapse-item/uni-collapse-item.vue'
 	import UniRate from '@/components/uni-rate/uni-rate.vue'
 	import UniCountDown from '@/components/uni-countdown/uni-countdown.vue'
-	import { course_info, course_chapter } from '@/common/api/api.js'
+	import UniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
+	import UniPopup from '@/components/uni-popup/uni-popup.vue'
+	import { course_info, course_chapter, course_evaluate } from '@/common/api/api.js'
+	import { msec2day } from '@/tools/util/util.js'
 	export default {
 		name: 'study-detail',
 		components: {
@@ -327,7 +400,8 @@
 			UniCollapse,
 			UniCollapseItem,
 			UniRate,
-			UniCountDown
+			UniCountDown,
+			UniLoadMore
 		},
 		data() {
 			return {
@@ -346,7 +420,21 @@
 				courseId: 0, // 课程的id
 				info: {}, // 课程详情
 				chapterList: [], // 课程章节
-				watch: false // 观看权限
+				evaluate: {
+					list: [], // 评价列表
+					total: 0, // 总评论数
+					page: 1, // 当前页数
+					totalPage: 0, // 总页数
+					loading: 'more' // loading状态
+				},
+				watch: false, // 观看权限
+				poster: '', // 封面
+				favorite: {
+					unused: 'https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/study/shoucang%402x.png',
+					used: 'https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/study/shoucang-hover%402x.png',
+					flag: false,
+					url: 'https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/study/shoucang%402x.png'
+				}
 			}
 		},
 		onLoad(options) {
@@ -357,7 +445,7 @@
 			
 			this.courseId = +options.id
 			
-			this.toCourseInfo(this.courseId)
+			this.toData(this.courseId)
 		},
 		filters: {
 			formatId(value) {
@@ -376,9 +464,6 @@
 			// 切换卡滑块
 			handleSwiper(event) {
 				this.tabBarIndex = event.detail.current
-				if (this.tabBarIndex === 1) {
-					this.toCourseChapter(1)
-				}
 			},
 			// 计算swiper的高度
 			calculate(height) {
@@ -399,45 +484,110 @@
 					this.height = this.height - tabbar.height - 10
 				}).exec()
 			},
-			// 获取课程信息
-			toCourseInfo(id) {
+			async toData(id) {
 				uni.showLoading({
 					title: '加载中...'
 				})
-				course_info(id).then(response => {
-					const res = response.data
-					this.info = res.data
-					uni.hideLoading()
-				}).catch(error => {
-					uni.showToast({
-						icon: 'none',
-						title: error.data.message
-					})
-					uni.hideLoading()
+				// 获取课程详情数据
+				const info = await course_info(id)
+				const infoData = info.data.data
+				infoData.validity = msec2day(infoData.validity)
+				this.info = infoData
+				
+				// 获取课程章节数据
+				// const chapter = await course_chapter({ id })
+				// const chapterData = chapter.data.data
+				// this.watch = chapterData.watch
+				// this.poster = chapterData.chapter[0].video[0].video_cover
+				// this.chapterList = chapterData.chapter
+				
+				// 获取评价数据
+				const evaluate = await course_evaluate({ id })
+				const evaluateData = evaluate.data.data
+				// 格式化时间格式
+				evaluateData.list_info.data.map(item => {
+					item.add_time = item.add_time.substring(0, 10)
 				})
+				this.evaluate.list = evaluateData.list_info.data
+				this.evaluate.total = evaluateData.list_info.total
+				this.evaluate.totalPage = evaluateData.list_info.last_page
+				uni.hideLoading()
 			},
-			// 获取课程章节数据
-			toCourseChapter(id) {
-				// 如果章节数组有数据则不需要请求
-				if (this.chapterList.length > 0) {
+			// 上拉加载
+			pullUpLoading() {
+				this.evaluate.page++
+				if (this.evaluate.page > this.evaluate.totalPage) {
+					this.evaluate.loading = 'noMore'
 					return false
 				}
-				
-				uni.showLoading({
-					title: '加载中...'
+				this.evaluate.loading = 'loading'
+				course_evaluate({
+					id: this.courseId
+				}).then(response => {
+					const res = response.data.data
+					this.evaluate.list = this.evaluate.list.concat(res.list_info.data)
 				})
-				course_chapter({ id }).then(response => {
-					let res = response.data
-					this.watch = res.data.watch
-					this.chapterList = res.data.chapter
-					uni.hideLoading()
-				}).catch(error => {
-					uni.hideLoading()
+			},
+			// 播放视频
+			play() {
+				const that = this
+				const video = uni.createVideoContext('video')
+				if (!this.watch) {
+					uni.showModal({
+						title: '提示',
+						content: '您没有权限观看, 是否购买?',
+						success(res) {
+							if (res.confirm) {
+								uni.navigateTo({
+									url: '/pages/order/information?id=' + that.courseId + '&type=' + that.info.type
+								})
+							}
+						}
+					})
+					video.pause()
+				}
+			},
+			// 预览
+			preview() {
+				
+			},
+			// 领取优惠券
+			handleGet() {
+				this.$refs.popup.open()
+			},
+			// 点击讲义
+			handleNotes() {
+				console.log('111')
+				uni.downloadFile({
+				  url: 'http://www.windriver.com.cn/downloads/pdfviewer/web/viewer.aspx?pdfurl=/downloads/files/WP_Medical_Device_Safety_Through_Software.pdf',
+				  success: function (res) {
+				    var filePath = res.tempFilePath
+				    uni.openDocument({
+				      filePath: filePath,
+				      success: function (res) {
+				        console.log('打开文档成功')
+				      }
+				    })
+				  }
+				})
+			},
+			// 点击收藏
+			handlefavorite() {
+				this.favorite.flag = !this.favorite.flag
+				if (this.favorite.flag) {
+					this.favorite.url = this.favorite.used
 					uni.showToast({
 						icon: 'none',
-						title: error.data.message
+						title: '收藏成功'
 					})
-				})
+				} else {
+					this.favorite.url = this.favorite.unused
+					uni.showToast({
+						icon: 'none',
+						title: '取消成功'
+					})
+				}
+				
 			}
 		}
 	}

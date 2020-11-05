@@ -122,7 +122,7 @@ export const courses = (data) => {
 // 我的课程
 export const me_course = (data) => {
 	return http.request({
-		url: 'course',
+		url: 'users/course',
 		method: 'GET',
 		data
 	})
@@ -131,7 +131,7 @@ export const me_course = (data) => {
 // 我的直播课
 export const me_live = (data) => {
 	return http.request({
-		url: 'live',
+		url: 'users/live',
 		method: 'GET',
 		data
 	})
@@ -149,6 +149,15 @@ export const course_info = (data) => {
 export const course_chapter = (data) => {
 	return http.request({
 		url: 'courses/chapter',
+		method: 'GET',
+		data
+	})
+}
+
+// 课程评价列表
+export const course_evaluate = (data) => {
+	return http.request({
+		url: 'courses/evaluate',
 		method: 'GET',
 		data
 	})
@@ -200,3 +209,15 @@ export const refine = (data) => {
 		 data
 	 })
  }
+ 
+/**
+* 以下为学习模块接口
+* */
+// 学习中心统计
+export const study_stats = (data) => {
+	 return http.request({
+		 url: 'study',
+		 method: 'GET',
+		 data
+	 })
+}
