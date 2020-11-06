@@ -50,7 +50,7 @@
 
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
-	import Json from '@/static/data.json'
+	import { study_record } from '@/common/api/api.js'
 	export default {
 		name: 'StudyRecord',
 		components: {
@@ -62,7 +62,13 @@
 			}
 		},
 		onLoad() {
-			this.list = Json.record.learn
+			this.toData()
+		},
+		methods: {
+			async toData() {
+				const response = await study_record()
+				console.log(response)
+			}
 		}
 	}
 </script>

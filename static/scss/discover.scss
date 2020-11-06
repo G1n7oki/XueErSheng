@@ -52,6 +52,10 @@
 
 .list {
 	
+	.loading {
+		background-color: #fff;
+	}
+	
 	.item {
 		padding: 32upx 32upx 40upx;
 		background-color: #fff;
@@ -100,7 +104,6 @@
 		.images {
 			display: flex;
 			flex-wrap: wrap;
-			justify-content: space-between;
 			margin-top: 35upx;
 			
 			.image-1 {
@@ -108,10 +111,15 @@
 				height: 321upx;
 			}
 			
-			.image-9 {
+			.image-2 {
 				width: 218upx;
 				height: 218upx;
 				margin-bottom: 16upx;
+				margin-right: 16upx;
+				
+				&:nth-child(3n) {
+					margin-right: 0;
+				}
 			}
 		}
 		
@@ -128,6 +136,7 @@
 			
 			.icons {
 				display: flex;
+				align-items: center;
 				
 				.icon-cell {
 					display: flex;
@@ -145,6 +154,14 @@
 						color: #606266;
 						margin-left: 8upx;
 					}
+				}
+				
+				.button {
+					width: 32upx;
+					height: 32upx;
+					margin-left: 28upx;
+					background: url('https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/discover/fenxiang%402x.png') center center no-repeat;
+					background-size: cover;
 				}
 			}
 		}

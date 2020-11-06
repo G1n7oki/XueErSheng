@@ -145,7 +145,7 @@
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import Title from '@/components/title/Title.vue'
-	import Json from '@/static/data.json'
+	import { discover_detail, discover_comment } from '@/common/api/api.js'
 	export default {
 		name: 'DiscoverDetail',
 		components: {
@@ -162,10 +162,13 @@
 				flod: 1
 			}
 		},
-		onLoad() {
-			this.info = Json.discover.detail
+		onLoad(options) {
+			this.toData(options.id)
 		},
 		methods: {
+			async toData(id) {
+				const response = await discover_detail({ id })
+			},
 			handleReply(str) {
 				this.replying = str
 			},

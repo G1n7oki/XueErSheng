@@ -190,7 +190,7 @@
 		</view>
 		<!-- 课程/直播课 end -->
 		<!-- 上次观看 start -->
-		<view v-if="!close" class="last-watch">
+		<view v-if="close" class="last-watch">
 			<image class="image" src="http://dummyimage.com/120x600" mode=""></image>
 			<view class="info">
 				<view class="text">
@@ -284,6 +284,8 @@
 					this.today = res.record.today.value
 					this.total = res.record.total.value
 					this.keep = res.record.keep.value
+					
+					this.close = res.last.length > 0 ? true : false
 					
 					this.cWidth = uni.upx2px(630)
 					this.cHeight = uni.upx2px(308)
@@ -411,7 +413,7 @@
 			},
 			// 关闭上次观看提示
 			handleClose () {
-				this.close = true
+				this.close = false
 			},
 			// 上拉加载
 			pullUpLoading() {

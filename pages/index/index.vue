@@ -229,11 +229,19 @@
 				<view class="title">
 					筛选
 				</view>
-				<view class="filter-cell" v-for="item in filterList" :key="item.id">
-					<text>{{ item.name }}</text>
+				<view class="filter-cell">
+					<text>优惠/折扣</text>
 					<view class="item-wrap">
-						<view class="item" :class="{'active': cell.active === true}" v-for="cell in item.item" :key="cell.id" @click="handleItem(cell.name)">
+						<view class="item" :class="{'active': cell.active === true}" v-for="cell in filterList.sale" :key="cell.key" @click="handleItem(cell.name)">
 							{{ cell.name }}
+						</view>
+					</view>
+				</view>
+				<view class="filter-cell">
+					<text>上架时间</text>
+					<view class="item-wrap">
+						<view class="item" :class="{'active': cell.active === true}" v-for="cell in filterList.year" :key="cell" @click="handleItem(cell.name)">
+							{{ cell }}
 						</view>
 					</view>
 				</view>
@@ -260,8 +268,7 @@
 	import ViewMore from '@/components/view-more/ViewMore.vue'
 	import Title from '@/components/title/Title.vue'
 	import UniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
-	import { home, courses, banners } from '@/common/api/api.js'
-	import json from '@/static/data.json'
+	import { home, courses, banners, filter } from '@/common/api/api.js'
 	export default {
 		components: {
 			ViewMore,
@@ -279,16 +286,19 @@
 				liveList: [], // 直播预告
 				courseList: [], // 全部课程
 				selection: {}, // 精选课程
-				filterList: [],
 				bannerList: [], // Banner列表
 				loading: 'more',
-				filter: false,
+				filter: true,
 				page: 1,
 				totalPage: 0,
 				major: '', // 专业名称
 				profession_id: uni.getStorageSync('profession_id') || 44, // 默认选择的专业
 				top: 0, // content的padding-top值
-				today: 0
+				sort: 0, // 排序
+				filterList: {
+					sale: [],
+					year: []
+				}
 			}
 		},
 		onLoad() {
@@ -297,8 +307,6 @@
 			navbar.select('#navbar').boundingClientRect(navbar => {
 				this.top = navbar.height + 20 + 'px'
 			}).exec()
-			// 模拟数据上线后删除
-			this.filterList = json.home.filterList
 		},
 		onShow() {
 			const crumbs = uni.getStorageSync('crumbs')
@@ -312,6 +320,7 @@
 			}
 			
 			this.toHome()
+			this.toFliter()
 		},
 		filters: {
 			formatType(value) {
@@ -361,63 +370,82 @@
 				})
 			},
 			// 获取首页数据
-			toHome() {
+			async toHome() {
 				uni.showLoading({
 					title: '加载中...'
 				})
-				home({
-					profession_id: this.profession_id
-				}).then(response => {
-					const res = response.data.data
-					this.story = res.article
-					this.liveList = res.sol
-					this.selection = res.handpick
-					this.isButton = res.applyButton
-					this.isPay = res.applyStaus
-				}).catch(error => {
-					uni.hideLoading()
-					uni.showToast({
-						icon: 'none',
-						title: error.data.message
-					})
-				}).then(() => {
-					this.toCourse()
-				}).then(() => {
-					this.toBanners()
-				})
-			},
-			// 获取全部课程
-			toCourse () {
-				courses({
+				// 获取首页数据
+				const homes = await home({ profession_id: this.profession_id })
+				const homeData = homes.data.data
+				this.story = homeData.article
+				this.liveList = homeData.sol
+				this.selection = homeData.handpick
+				this.isButton = homeData.applyButton
+				this.isPay = homeData.applyStaus
+				// 获取全部课程
+				const course = await courses({
 					profession_id: this.profession_id,
 					page: this.page
-				}).then(response => {
-					const res = response.data
-					this.courseList = res.data.data
-					this.totalPage = res.data.last_page
-				}).catch(error => {
-					uni.hideLoading()
-					uni.showToast({
-						icon: 'none',
-						title: error.data.message
-					})
 				})
-			},
-			// 获取Banner数据
-			toBanners() {
-				banners({ 
+				const courseData = course.data.data
+				this.courseList = courseData.data.data
+				this.totalPage = courseData.data.last_page
+				// 获取Banner数据
+				const banner = await banners({
 					profession_id: this.profession_id 
-				}).then(response => {
-					const res = response.data.data
-					this.bannerList = res.banner
-					uni.hideLoading()
-				}).catch(error => {
-					uni.hideLoading()
-					uni.showToast({
-						icon: 'none',
-						title: error.data.message
-					})
 				})
+				const bannerData = banner.data.data
+				this.bannerList = bannerData.banner
+				uni.hideLoading()
+				
+				// home({
+				// 	profession_id: this.profession_id
+				// }).then(response => {
+				// 	const res = response.data.data
+				// 	this.story = res.article
+				// 	this.liveList = res.sol
+				// 	this.selection = res.handpick
+				// 	this.isButton = res.applyButton
+				// 	this.isPay = res.applyStaus
+				// }).catch(error => {
+				// 	uni.hideLoading()
+				// }).then(() => {
+				// 	this.toCourse()
+				// }).then(() => {
+				// 	this.toBanners()
+				// })
+			},
+			// 获取全部课程
+			// toCourse () {
+			// 	courses({
+			// 		profession_id: this.profession_id,
+			// 		page: this.page
+			// 	}).then(response => {
+			// 		const res = response.data
+			// 		this.courseList = res.data.data
+			// 		this.totalPage = res.data.last_page
+			// 	}).catch(error => {
+			// 		uni.hideLoading()
+			// 	})
+			// },
+			// // 获取Banner数据
+			// toBanners() {
+			// 	banners({ 
+			// 		profession_id: this.profession_id 
+			// 	}).then(response => {
+			// 		const res = response.data.data
+			// 		this.bannerList = res.banner
+			// 		uni.hideLoading()
+			// 	}).catch(error => {
+			// 		uni.hideLoading()
+			// 	})
+			// },
+			// 获取筛选数据
+			async toFliter() {
+				const filterData = await filter()
+				const { discount, year  } = filterData.data.data
+				this.filterList.sale = discount
+				this.filterList.year = year
 			},
 			// 点击缴费/支付按钮
 			handleMainBtn() {
@@ -443,7 +471,8 @@
 			
 			courses({
 				profession_id: uni.getStorageSync('profession_id'),
-				page: this.page
+				page: this.page,
+				sort: this.sort
 			}).then(response => {
 				const res = response.data
 				this.courseList = this.courseList.concat(res.data.data)

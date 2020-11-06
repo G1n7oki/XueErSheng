@@ -17,35 +17,14 @@
 			<uni-rate
 				:size="40"
 				:margin="28"
-				:allowHalf="true"
-				:value="0"
+				:value="rate"
+				@change="selectedRate"
 			/>
+			<view class="text">
+				{{ text }}
+			</view>
 		</view>
 		<!-- 评分 end -->
-		<!-- 选择等级 start -->
-		<view class="level">
-			<view class="level-title">
-				你觉得该节课程
-			</view>
-			<view class="level-cell">
-				<view class="item">
-					太简单
-				</view>
-				<view class="item">
-					简单
-				</view>
-				<view class="item">
-					适中
-				</view>
-				<view class="item">
-					有点难
-				</view>
-				<view class="item">
-					太难了
-				</view>
-			</view>
-		</view>
-		<!-- 选择等级 end -->
 		<!-- 评论区 start -->
 		<view class="textarea">
 			<textarea 
@@ -60,7 +39,7 @@
 			</view>
 		</view>
 		<!-- 评论区 end -->
-		<view>
+		<view @click="handleSubmit">
 			<uButton text="确定" />
 		</view>
 	</view>
@@ -70,6 +49,7 @@
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import UniRate from '@/components/uni-rate/uni-rate.vue'
 	import uButton from '@/components/u-button/uButton.vue'
+	import { study_evaluate } from '@/common/api/api.js'
 	export default {
 		name: 'Evaluation',
 		components: {
@@ -79,14 +59,66 @@
 		},
 		data() {
 			return {
-				value: '',
-				len: 0
+				value: '', // 输入框内容
+				len: 0, // 字数
+				id: 0,
+				rate: 0, // 评分
+				text: '未评分', // 评分对应的内容
+				timer: null // 计时器
 			}
+		},
+		onLoad(options) {
+			this.id = options.id
+		},
+		onUnload() {
+			clearTimeout(this.timer)
 		},
 		methods: {
 			handleInput(e) {
 				this.value = e.detail.value
 				this.len = e.detail.value.length
+			},
+			selectedRate(rate) {
+				this.rate = rate.value
+				switch (rate.value) {
+					case 1: this.text = '非常差'
+						break
+					case 2: this.text = '不满意'
+						break
+					case 3: this.text = '很一般'
+						break
+					case 4: this.text = '还可以'
+						break
+					case 5: this.text = '超级棒'
+						break
+					default: this.text = ''
+				}
+			},
+			handleSubmit() {
+				if (this.rate === 0) {
+					uni.showToast({
+						icon: 'none',
+						title: '请给课程打个分吧'
+					})
+					return false
+				}
+				
+				study_evaluate({
+					id: this.id,
+					mark: this.rate,
+					content: this.value
+				}).then(response => {
+					const res = response.data
+					uni.showToast({
+						icon: 'none',
+						title: res.status
+					})
+					this.timer = setTimeout(() => {
+						uni.navigateBack({
+							delta: 1
+						})
+					}, 1500)
+				})
 			}
 		}
 	}
@@ -106,33 +138,13 @@
 	
 	.rate {
 		margin-top: 54upx;
-	}
-	
-	.level {
-		margin-top: 112upx;
 		
-		.level-title {
-			font-size: 32upx;
-			font-weight: bold;
-			color: #303234;
-		}
-		
-		.level-cell {
-			display: flex;
-			justify-content: space-between;
-			margin-top: 56upx;
-			
-			.item {
-				width: 120upx;
-				height: 48upx;
-				background-color: #F4F7F9;
-				border-radius: 24upx;
-				font-size: 24upx;
-				font-weight: 500;
-				color: #303234;
-				text-align: center;
-				line-height: 48upx;
-			}
+		.text {
+			text-align: center;
+			font-size: 24upx;
+			font-weight: 500;
+			color: #303133;
+			margin-top: 30upx;
 		}
 	}
 	

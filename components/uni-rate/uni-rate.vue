@@ -208,6 +208,8 @@
 				const index = parseInt(rateMoveRange / (this.size + this.margin))
 				const range = parseInt(rateMoveRange - ((this.size + this.margin) * index))
 				let value = 0
+				
+				value = index + 1
 
 				if (this.allowHalf) {
 					if (range > (this.size / 2)) {

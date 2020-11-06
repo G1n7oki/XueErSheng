@@ -200,7 +200,7 @@
 								</view>
 							</view>
 						</view>
-						<navigator class="button" url="/pages/study/evaluation" hover-class="none">
+						<navigator class="button" :url="'/pages/study/evaluation?id=' + courseId" hover-class="none">
 							我要评价
 						</navigator>
 					</view>
@@ -557,16 +557,20 @@
 			},
 			// 点击讲义
 			handleNotes() {
-				console.log('111')
 				uni.downloadFile({
 				  url: 'http://www.windriver.com.cn/downloads/pdfviewer/web/viewer.aspx?pdfurl=/downloads/files/WP_Medical_Device_Safety_Through_Software.pdf',
 				  success: function (res) {
+						console.log(res)
 				    var filePath = res.tempFilePath
 				    uni.openDocument({
 				      filePath: filePath,
 				      success: function (res) {
+								console.log(res)
 				        console.log('打开文档成功')
-				      }
+				      },
+							fail(error) {
+								console.log(error)
+							}
 				    })
 				  }
 				})

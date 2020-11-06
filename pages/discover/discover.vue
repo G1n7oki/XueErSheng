@@ -22,12 +22,15 @@
 			</view>
 			<!-- tabbar end -->
 			<view class="list" :style="{'margin-top': height}">
-				<view class="item">
+				<view class="item" 
+					v-for="item in listData"
+					:key="item.id"
+				>
 					<view class="info">
 						<image class="avatar" src="http://dummyimage.com/120x600" mode=""></image>
 						<view class="name-date">
 							<view class="name">
-								学尔升课堂
+								{{ item.username }}
 							</view>
 							<view class="date">
 								8月22日
@@ -35,59 +38,40 @@
 						</view>
 					</view>
 					<view class="content">
-						最新！2020年江西省高校毕业生“三支一扶”计划招募考试笔试时间确定！
+						{{ item.content }}
+					</view>
+					<view class="original" @click="toDetail(item.id)">
+						查看原文
 					</view>
 					<view class="images">
-						<image class="image-1" src="http://dummyimage.com/120x600" mode=""></image>
+						<image 
+							v-for="image in item.image"
+							:key="image.id"
+							:class="[image.length > 0 ? 'image-2' : 'image-1']"
+							:src="image.image_url"
+							mode=""
+						>
+						</image>
 					</view>
 					<view class="bot">
 						<view class="read">
-							2210人阅读
+							{{ item.click }}阅读
 						</view>
 						<view class="icons">
-							<view class="icon-cell">
+							<view class="icon-cell" @click="praise(item.id)">
 								<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/discover/dianzan%402x.png" mode=""></image>
-								<text class="number">20</text>
+								<text class="number">{{ item.admire }}</text>
 							</view>
 							<view class="icon-cell">
 								<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/discover/pinglun%402x.png" mode=""></image>
 								<text class="number">18</text>
 							</view>
-							<view class="icon-cell">
-								<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/discover/fenxiang%402x.png" mode=""></image>
-							</view>
+							<button class="button" open-type="share"></button>
 						</view>
 					</view>
 				</view>
-				<view class="item">
-					<view class="info">
-						<image class="avatar" src="http://dummyimage.com/120x600" mode=""></image>
-						<view class="name-date">
-							<view class="name">
-								学尔升课堂
-							</view>
-							<view class="date">
-								8月22日
-							</view>
-						</view>
-					</view>
-					<view class="content">
-						2020年，经北京市政府批准、由朝阳区政府主办的北京中学正式建校。学校以开阔视野，多元化。2017年为了满足部分学生和家长的多元化升学需求北京中学组建国际方向班级。           
-					</view>
-					<view class="original" @click="toDetail">
-						查看原文
-					</view>
-					<view class="images">
-						<image class="image-9" src="http://dummyimage.com/120x600" mode=""></image>
-						<image class="image-9" src="http://dummyimage.com/120x600" mode=""></image>
-						<image class="image-9" src="http://dummyimage.com/120x600" mode=""></image>
-						<image class="image-9" src="http://dummyimage.com/120x600" mode=""></image>
-						<image class="image-9" src="http://dummyimage.com/120x600" mode=""></image>
-						<image class="image-9" src="http://dummyimage.com/120x600" mode=""></image>
-						<image class="image-9" src="http://dummyimage.com/120x600" mode=""></image>
-						<image class="image-9" src="http://dummyimage.com/120x600" mode=""></image>
-						<image class="image-9" src="http://dummyimage.com/120x600" mode=""></image>
-					</view>
+				<view v-if="listData.length > 2" class="loading">
+					<uni-load-more :status="loading" />
 				</view>
 			</view>
 			<view class="issue" @click="handleIssue">
@@ -99,10 +83,13 @@
 
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
+	import UniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
+	import { discover_list, discover_praise } from '@/common/api/api.js'
 	export default {
 		name: 'Discover',
 		components: {
-			XesNavbar
+			XesNavbar,
+			UniLoadMore
 		},
 		data() {
 			return {
@@ -122,7 +109,11 @@
 					}],
 					index: 0
 				},
-				height: 0
+				height: 0,
+				listData: [], // 数据列表
+				page: 1, // 页数
+				total: 1, // 总页数
+				loading: 'more'
 			}
 		},
 		onLoad() {
@@ -133,10 +124,74 @@
 				const tHeight = res.height
 				that.height = tHeight + 'px'
 			}).exec()
+			
+			const type = this.tabbar.index + 1
+			
+			this.toData(type)
+		},
+		// 页面分享
+		onShareAppMessage() {
+			this.shareData = JSON.stringify(this.shareData)
+			
+			return {
+				title: '发现',
+				path: '/pages/discover/detail'
+			}
+		},
+		// 上拉加载
+		onReachBottom() {
+			++this.page
+			// 如果当前页数大于总页数说明没有更多的数据了
+			if (this.page > this.total) {
+				this.page = this.total
+				this.loading = 'noMore'
+				return false
+			}
+			
+			this.loading = 'loading'
+			
+			discover_list({
+				type,
+				page: this.page
+			}).then(response => {
+				const res = response.data.data
+				this.listData = this.listData.concat(res.data)
+				this.loading = 'more'
+			})
 		},
 		methods: {
+			// 获取数据
+			toData(type) {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				discover_list({ 
+					type,
+					page: this.page
+				}).then(response => {
+					const res = response.data.data
+					this.listData = res.data
+					this.total = res.last_page
+					uni.hideLoading()
+				}).catch(error => {
+					uni.hideLoading()
+					this.listData = []
+				})
+			},
+			// 点赞 后端没有提供此字段
+			praise(id, flag) {
+				discover_praise({
+					id,
+					mode: flag
+				}).then(response => {
+					console.log(response)
+				})
+			},
+			// 切换卡
 			handleTabBarItem(id) {
 				this.tabbar.index = id
+				this.page = 1
+				this.toData(id + 1)
 			},
 			// 跳转到提问页
 			handleIssue() {
@@ -145,9 +200,9 @@
 				})
 			},
 			// 跳转到详细信息
-			toDetail() {
+			toDetail(id) {
 				uni.navigateTo({
-					url: '/pages/discover/detail'
+					url: '/pages/discover/detail?id=' + id
 				})
 			}
 		}

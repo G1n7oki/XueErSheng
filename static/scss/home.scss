@@ -508,6 +508,7 @@
 			
 			.item-wrap {
 				display: flex;
+				flex-wrap: wrap;
 				align-items: center;
 				margin-top: 24upx;
 				
@@ -522,6 +523,7 @@
 					font-weight: 500;
 					color: #606266;
 					margin-right: 16upx;
+					margin-bottom: 16upx;
 					
 					&.active {
 						color: #FA7935;
