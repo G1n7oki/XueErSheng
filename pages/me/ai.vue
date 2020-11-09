@@ -13,7 +13,7 @@
 				<view class="box">
 					<view class="total">
 						<view class="point">
-							150.0
+							{{ data.total }}
 						</view>
 						<view class="text">
 							总分值
@@ -21,7 +21,7 @@
 					</view>
 					<view class="professional">
 						<view class="name">
-							金融管理学本科
+							{{ data.professional }}
 						</view>
 						<navigator url="/pages/professional/professional" hover-class="none" class="choose">
 							<view class="text">
@@ -42,19 +42,19 @@
 				<view class="charts-area">
 					<view class="info">
 						<view class="text today">
-							30 <text>min</text>
+							{{ data.today }} <text>min</text>
 						</view>
 						<view class="text amount">
-							30 <text>道</text>
+							{{ data.amount }} <text>道</text>
 						</view>
 						<view class="text accuracy">
-							30 <text>%</text>
+							{{ data.accuracy }} <text>%</text>
 						</view>
 						<view class="text liveness">
-							30 <text>%</text>
+							{{ data.liveness }} <text>%</text>
 						</view>
 						<view class="text continuous">
-							30 <text>min</text>
+							{{ data.continuous }} <text>min</text>
 						</view>
 					</view>
 					<canvas canvas-id="canvasRadar" id="canvasRadar" class="charts" @click="touchLine"></canvas>
@@ -63,9 +63,9 @@
 			<!-- 巨幕 end -->
 			<!-- 用户信息 start -->
 			<view class="user-box">
-				<image class="avatar" src="http://dummyimage.com/136x136" mode=""></image>
+				<image class="avatar" :src="data.avatar" mode=""></image>
 				<view class="nickname">
-					草长莺飞小虫虫
+					{{ data.nickname }}
 				</view>
 				<view class="signature">
 					<image class="quotes" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/quotes-left.png" mode=""></image>
@@ -85,6 +85,7 @@
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import UniIcons from '@/components/uni-icons/uni-icons.vue'
 	import uCharts from '@/tools/uChart/u-charts.min.js'
+	import { ai } from '@/common/api/api.js'
 	export default {
 		name: 'AI',
 		components: {
@@ -99,30 +100,42 @@
 					categories: ['今日学习', '练题数量', '正确率', '活跃度', '连续学习'],
 					series: [{
 						name: '',
-						data: [30, 30, 30, 30, 30],
+						data: [],
 						color: '#CCD2FD',
 					}]
 				},
+				data: {
+					avatar: '',
+					nickname: '',
+					total: 0,
+					professional: '',
+					today: 0,
+					amount: 0,
+					accuracy: 0,
+					liveness: 0,
+					continuous: 0,
+					series: [0, 0, 0, 0, 0]
+				},
 				shareData: {
-					avatar: 'http://dummyimage.com/136x136',
-					nickname: '屌爆了',
-					total: '150.0',
-					professional: '金融管理学本科',
-					today: 30,
-					amount: 30,
-					accuracy: 30,
-					liveness: 30,
-					continuous: 30,
-					series: [30, 30, 30, 30, 30]
+					avatar: '',
+					nickname: '',
+					total: 0,
+					professional: '',
+					today: 0,
+					amount: 0,
+					accuracy: 0,
+					liveness: 0,
+					continuous: 0,
+					series: []
 				}
 			}
 		},
-		onLoad() {
-			this.showRadar('canvasRadar', this.chartData)
+		onShow() {
+			this.toData()
 		},
 		// 页面分享
 		onShareAppMessage() {
-			this.shareData = JSON.stringify(this.shareData)
+			this.shareData = JSON.stringify(this.data)
 			
 			return {
 				title: 'AI智能评测',
@@ -130,6 +143,38 @@
 			}
 		},
 		methods: {
+			async toData() {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				this.data.professional = uni.getStorageSync('crumbs')[2]
+				const data = await ai({ 
+					profession_id: uni.getStorageSync('profession_id')
+				})
+				const { 
+					avatars,
+					username,
+					active,
+					keep,
+					long,
+					num,
+					right
+				} = data.data.data
+				
+				this.data.avatar = avatars
+				this.data.nickname = username
+				this.data.today = long
+				this.data.amount = num
+				this.data.accuracy = right
+				this.data.liveness = active
+				this.data.continuous = keep
+				this.total = long + num + right + active + keep
+				this.chartData.data = [long, num, right, active, keep]
+				
+				this.showRadar('canvasRadar', this.chartData)
+				
+				uni.hideLoading()
+			},
 			showRadar(canvasId, chartData) {
 				new uCharts({
 					$this:this,
@@ -156,8 +201,7 @@
 						}
 					}
 				})
-			},
-			toJSON() {}
+			}
 		}
 	}
 </script>

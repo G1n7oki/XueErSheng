@@ -12,7 +12,7 @@
 		<!-- 播放器 start -->
 		<view class="live-area" id="video">
 			<view class="live-mask">
-				<view class="text">
+				<view class="text" v-if="login">
 					立即购买或激活课程，即可解锁观看 若已购买，请 <text @click="toLogin">登录</text>
 				</view>
 				<navigator class="button" :url="'/pages/live/review-play'">
@@ -236,6 +236,7 @@
 			<view class="advisory">
 				<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/zixun%402x.png" mode=""></image>
 				<view class="text">咨询</view>
+				<button class="button" hover-class="none" open-type="contact"></button>
 			</view>
 			<view class="button">
 				<text class="symbol">+</text>
@@ -250,6 +251,7 @@
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import Title from '@/components/title/Title.vue'
 	import UniRate from '@/components/uni-rate/uni-rate.vue'
+	import { live_package } from '@/common/api/api.js'
 	export default {
 		name: 'LiveDetail',
 		components: {
@@ -273,14 +275,30 @@
 					current: 0
 				}, // 切换卡参数
 				height: 0, // swiper的高度
+				login: false,
+				liveId: 0,
 				nodes: '<div>人工智能是目前最热门的学科之一，未来的发挥在那前景广阔。目前基于Python的人工智能学习如火如荼，为了迎接相关工作岗位的挑战，从现在起，学习Python编程和人工智能基础知识，可以为你的未来发展注入足够的能量。</div><div>本课程以Python简洁语法为基础，带你走进编程的世界。通过对工具的使用和了解，让你能够使用代码处理简单的数学问题，提升效率。最后学习机器中的线性回归预测和感知分类，帮助你进一步掌握机器学习的一般方法和步骤。</div>'
 			}
 		},
-		onLoad() {
+		onLoad(options) {
+			const that = this
 			// 屏幕的高度
 			const wHeight = uni.getSystemInfoSync()['windowHeight']
 			
 			this.calculate(wHeight)
+			
+			uni.getStorage({
+				key: 'token',
+				success(res) {
+					if (res.data) {
+						that.login = false
+					} else {
+						that.login = true
+					}
+				}
+			})
+			this.liveId = options.id
+			this.toData(options.id)
 		},
 		methods: {
 			// 点击选项卡
@@ -315,6 +333,9 @@
 				uni.navigateTo({
 					url: '/pages/login/index'
 				})
+			},
+			async toData(id) {
+				await live_package({id})
 			}
 		}
 	}

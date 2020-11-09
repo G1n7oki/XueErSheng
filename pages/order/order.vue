@@ -175,6 +175,7 @@
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import XesTextTabbar from '@/components/xes-text-tabbar/xes-text-tabbar.vue'
+	import { me_order } from '@/common/api/api.js'
 	export default {
 		name: 'Order',
 		components: {
@@ -211,8 +212,16 @@
 				const tHeight = res.height
 				that.height = wHeight - tHeight - statusBarHeight - 42 + 'px'
 			}).exec()
+			
+			this.toData()
 		},
 		methods: {
+			async toData() {
+				const order = await me_order({
+					status: this.tabbar.index
+				})
+				console.log(order)
+			},
 			chooseSwiper(e) {
 				this.tabbar.index = e.target.current
 			},

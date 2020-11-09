@@ -32,7 +32,7 @@
 					<uni-icons type="arrowright" size="20" color="#DEDEDE" />
 				</view>
 			</view>
-			<view class="list-item">
+			<view class="list-item" @click="toPage('/pages/set/address')">
 				<view class="name">
 					地址管理
 				</view>
@@ -81,13 +81,11 @@
 						title: '退出成功'
 					})
 					this.timer = setTimeout(() => {
-						uni.removeStorageSync()
+						uni.clearStorage()
 						uni.navigateTo({
 							url: '/pages/login/index'
 						})
 					}, 1500)
-				}).catch(error => {
-					
 				})
 			},
 			// 页面跳转

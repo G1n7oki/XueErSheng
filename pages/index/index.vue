@@ -223,7 +223,7 @@
 			/>
 		</view>
 		<!-- 筛选 star -->
-		<view class="filter-area" :class="{'active': filter === true}">
+		<view class="filter-area" :class="{'active': filter.flag === true}">
 			<view class="mask" @click="handleAffirm"></view>
 			<view class="content" :style="{'padding-top': top}">
 				<view class="title">
@@ -232,7 +232,13 @@
 				<view class="filter-cell">
 					<text>优惠/折扣</text>
 					<view class="item-wrap">
-						<view class="item" :class="{'active': cell.active === true}" v-for="cell in filterList.sale" :key="cell.key" @click="handleItem(cell.name)">
+						<view 
+							class="item"
+							:class="{'active': filter.sale === cell.key}"
+							v-for="cell in filterList.sale"
+							:key="cell.key"
+							@click="handleSaleItem(cell.key)"
+						>
 							{{ cell.name }}
 						</view>
 					</view>
@@ -240,7 +246,13 @@
 				<view class="filter-cell">
 					<text>上架时间</text>
 					<view class="item-wrap">
-						<view class="item" :class="{'active': cell.active === true}" v-for="cell in filterList.year" :key="cell" @click="handleItem(cell.name)">
+						<view 
+							class="item"
+							:class="{'active': cell === filter.year}"
+							v-for="cell in filterList.year"
+							:key="cell"
+							@click="handleYearItem(cell)"
+						>
 							{{ cell }}
 						</view>
 					</view>
@@ -288,7 +300,11 @@
 				selection: {}, // 精选课程
 				bannerList: [], // Banner列表
 				loading: 'more',
-				filter: true,
+				filter: { // 筛选相关
+					flag: false,
+					sale: 0,
+					year: ''
+				},
 				page: 1,
 				totalPage: 0,
 				major: '', // 专业名称
@@ -320,7 +336,6 @@
 			}
 			
 			this.toHome()
-			this.toFliter()
 		},
 		filters: {
 			formatType(value) {
@@ -340,23 +355,13 @@
 		},
 		methods: {
 			handleFilter () {
-				this.filter = true
+				this.filter.flag = true
 			},
 			handleAffirm () {
-				this.filter = false
+				this.filter.flag = false
 			},
 			handleItem (name) {
-				this.filterList.forEach((item) => {
-					item.item.findIndex((cell, indxe) => {
-						if (cell.name === name && cell.active === false) {
-							cell.active = true
-						} else if (cell.name === name && cell.active === true) {
-							cell.active = false
-						} else {
-							return
-						}
-					})
-				})
+				
 			},
 			// 选择专业切换
 			handleSwitch () {
@@ -396,56 +401,12 @@
 				})
 				const bannerData = banner.data.data
 				this.bannerList = bannerData.banner
-				uni.hideLoading()
-				
-				// home({
-				// 	profession_id: this.profession_id
-				// }).then(response => {
-				// 	const res = response.data.data
-				// 	this.story = res.article
-				// 	this.liveList = res.sol
-				// 	this.selection = res.handpick
-				// 	this.isButton = res.applyButton
-				// 	this.isPay = res.applyStaus
-				// }).catch(error => {
-				// 	uni.hideLoading()
-				// }).then(() => {
-				// 	this.toCourse()
-				// }).then(() => {
-				// 	this.toBanners()
-				// })
-			},
-			// 获取全部课程
-			// toCourse () {
-			// 	courses({
-			// 		profession_id: this.profession_id,
-			// 		page: this.page
-			// 	}).then(response => {
-			// 		const res = response.data
-			// 		this.courseList = res.data.data
-			// 		this.totalPage = res.data.last_page
-			// 	}).catch(error => {
-			// 		uni.hideLoading()
-			// 	})
-			// },
-			// // 获取Banner数据
-			// toBanners() {
-			// 	banners({ 
-			// 		profession_id: this.profession_id 
-			// 	}).then(response => {
-			// 		const res = response.data.data
-			// 		this.bannerList = res.banner
-			// 		uni.hideLoading()
-			// 	}).catch(error => {
-			// 		uni.hideLoading()
-			// 	})
-			// },
-			// 获取筛选数据
-			async toFliter() {
+				// 获取筛选数据
 				const filterData = await filter()
 				const { discount, year  } = filterData.data.data
 				this.filterList.sale = discount
 				this.filterList.year = year
+				uni.hideLoading()
 			},
 			// 点击缴费/支付按钮
 			handleMainBtn() {
@@ -456,6 +417,14 @@
 				uni.navigateTo({
 					url: '/pages/live/live-play'
 				})
+			},
+			// 点击折扣选项
+			handleSaleItem(key) {
+				this.filter.sale = key
+			},
+			// 点击年份按钮
+			handleYearItem(str) {
+				this.filter.year = str
 			}
 		},
 		onReachBottom() {

@@ -44,7 +44,7 @@
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import uButton from '@/components/u-button/uButton.vue'
-	import { seccode } from '@/common/api/api.js'
+	import { seccode, forgot } from '@/common/api/api.js'
 	import { isMobile } from '@/tools/verify/verify.js'
 	export default {
 		name: 'Forgot',
@@ -55,16 +55,18 @@
 		data() {
 			return {
 				src: 'https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/login/eyeclose%402x.png',
-				mobile: '',
-				password: '',
-				seccode: '',
+				mobile: '', // 手机号码
+				password: '', // 密码
+				seccode: '', // 验证码
 				type: 'password',
-				countdown: 0,
-				timer: null
+				countdown: 0, // 倒计时
+				timer: null, // 倒计时计时器
+				timer2: null, // 一次性计时器
 			}
 		},
 		onUnload() {
-			clear(this.timer)
+			clearInterval(this.timer)
+			clearTimeout(this.timer2)
 		},
 		methods: {
 			chooseType() {
@@ -102,11 +104,6 @@
 						icon: 'none',
 						title: '验证码已发送'
 					})
-				}).catch(error => {
-					uni.showToast({
-						icon: 'none',
-						title: error.data.message
-					})
 				})
 			},
 			// 登录
@@ -135,6 +132,23 @@
 					})
 					return false
 				}
+				
+				forgot({
+					phone: this.mobile,
+					code: this.seccode,
+					password: this.password
+				}).then(response => {
+					uni.showToast({
+						icon: 'none',
+						title: '修改成功'
+					})
+					
+					this.timer2 = setTimeout(() => {
+						uni.navigateTo({
+							url: '/pages/login/index'
+						})
+					}, 1500)
+				})
 			}
 		}
 	}

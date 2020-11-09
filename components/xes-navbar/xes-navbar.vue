@@ -8,7 +8,9 @@
 				<view class="navbar-arrow-image" v-if="isArrow && isArrowType === 'image'" @click="handleArrow">
 					<image class="image" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/fanhui%402x.png" mode=""></image>
 				</view>
-				<view class="navbar-arrow-line" :class="{'active': isArrowColor === 'white' }" v-if="isArrow && isArrowType === 'line'" @click="handleArrow"></view>
+				<view class="navbar-arrow-line" :class="{'active': isArrowColor === 'white' }" v-if="isArrow && isArrowType === 'line'" @click="handleArrow">
+					<uni-icons type="arrowleft" size="24" color="#000"></uni-icons>
+				</view>
 				<view 
 					v-if="isTitle"
 					class="navbar-title"
@@ -169,14 +171,10 @@
 			}
 			
 			.navbar-arrow-line {
-				width: 20upx;
-				height: 20upx;
 				position: absolute;
 				top: 50%;
 				left: 32upx;
-				border-bottom: 2px solid #000;
-				border-left: 2px solid #000;
-				transform: translateY(-50%) rotate(45deg);
+				transform: translateY(-50%);
 				
 				&.active {
 					border-bottom: 2px solid #fff;

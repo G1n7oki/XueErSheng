@@ -112,7 +112,7 @@
 					<view class="info">
 						上次未完成：第三章2Z20310建 设工程招标投第三章2Z20310建 设工程招标投第三章2Z20310建 设工程招标投
 					</view>
-					<button type="default">继续练题</button>
+					<button type="default" @click="handleContinue">继续练题</button>
 				</view>
 				<view class="list">
 					<view 
@@ -228,41 +228,27 @@
 		},
 		onLoad() {
 			this.treeList = uni.getStorageSync('crumbs')
-			
-			this.toQuestion()
+			this.toData()
 		},
 		methods: {
-			// 获取题库练习数据
-			toQuestion() {
+			async toData() {
 				uni.showLoading({
 					title: '加载中...'
 				})
-				question({ profession_id: uni.getStorageSync('profession_id') }).then(response => {
-					const res = response.data
-					this.questionData = res.data
-				}).catch(error => {
-					uni.hideLoading()
-					uni.showToast({
-						icon: 'none',
-						title: error.data.message
-					})
-				}).then(() => {
-					this.toRefine()
+				// 获取题库练习数据
+				const stats = await question({
+					profession_id: uni.getStorageSync('profession_id')
 				})
-			},
-			// 获取章节精练数据
-			toRefine() {
-				refine({ profession_id: uni.getStorageSync('profession_id') }).then(response => {
-					const res = response.data
-					this.topicList = res.data
-					uni.hideLoading()
-				}).catch(error => {
-					uni.hideLoading()
-					uni.showToast({
-						icon: 'none',
-						title: error.data.message
-					})
+				this.questionData = stats.data.data
+				// 获取章节精练数据
+				const chapter = await refine({
+					profession_id: uni.getStorageSync('profession_id')
 				})
+				chapter.data.data.map(item => {
+					item.isOpen = false
+				})
+				this.topicList = chapter.data.data
+				uni.hideLoading()
 			},
 			showCourseList(param) {
 				this.flag = param
@@ -290,7 +276,11 @@
 				uni.navigateTo({
 					url: '/pages/topics/set'
 				})
-			} 
+			} ,
+			// 继续练题
+			handleContinue() {
+				
+			}
 		}
 	}
 </script>

@@ -309,26 +309,31 @@
 				<view class="title">
 					领取优惠券
 				</view>
-				<view class="item">
+				<view 
+					class="item"
+					v-for="coupon in coupon.list"
+					:key="coupon.id"
+					@click="handleCouponItem(coupon.id, coupon.type)"
+				>
 					<view class="worth">
 						<view class="type">
-							满减券
+							{{ coupon.type === 1 ? '满减券' : '课程月卡' }}
 						</view>
 						<view class="text">
 							<text class="unit">￥</text>
-							15
+							{{ coupon.cut_money }}
 						</view>
 					</view>
 					<view class="explain">
 						<view class="title">
-							每满100使用
+							每满{{ coupon.need_money }}使用
 						</view>
 						<view class="date">
-							2019.04.05~2021.04.05
+							{{ coupon.valid_start }}~{{ coupon.valid_end }}
 						</view>
 					</view>
 				</view>
-				<view class="item">
+				<!-- <view class="item">
 					<view class="worth">
 						<view class="type">
 							随机立减券
@@ -372,7 +377,7 @@
 							2019.04.05~2021.04.05
 						</view>
 					</view>
-				</view>
+				</view> -->
 			</scroll-view>
 		</uni-popup>
 		<!-- 优惠券弹窗 end -->
@@ -389,7 +394,15 @@
 	import UniCountDown from '@/components/uni-countdown/uni-countdown.vue'
 	import UniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
 	import UniPopup from '@/components/uni-popup/uni-popup.vue'
-	import { course_info, course_chapter, course_evaluate } from '@/common/api/api.js'
+	import { 
+		course_info,
+		course_chapter,
+		course_evaluate,
+		course_coupon,
+		course_coupon_receive,
+		course_favorite_1,
+		course_favorite_2
+	} from '@/common/api/api.js'
 	import { msec2day } from '@/tools/util/util.js'
 	export default {
 		name: 'study-detail',
@@ -434,6 +447,10 @@
 					used: 'https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/study/shoucang-hover%402x.png',
 					flag: false,
 					url: 'https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/study/shoucang%402x.png'
+				},
+				// 课程优惠券
+				coupon: {
+					list: []
 				}
 			}
 		},
@@ -446,6 +463,8 @@
 			this.courseId = +options.id
 			
 			this.toData(this.courseId)
+			
+			// this.$refs.popup.open()
 		},
 		filters: {
 			formatId(value) {
@@ -511,6 +530,14 @@
 				this.evaluate.list = evaluateData.list_info.data
 				this.evaluate.total = evaluateData.list_info.total
 				this.evaluate.totalPage = evaluateData.list_info.last_page
+				// 课程优惠券列表
+				const coupon = await course_coupon({ id, type: 1 })
+				const { data } = coupon.data
+				data.map(item => {
+					item.valid_start = item.valid_start.substring(0, 10)
+					item.valid_end = item.valid_end.substring(0, 10)
+				})
+				this.coupon.list = data
 				uni.hideLoading()
 			},
 			// 上拉加载
@@ -576,22 +603,39 @@
 				})
 			},
 			// 点击收藏
-			handlefavorite() {
+			async handlefavorite() {
 				this.favorite.flag = !this.favorite.flag
 				if (this.favorite.flag) {
+					const used = course_favorite_1({
+						id: this.courseId,
+						type: 1,
+						papers_id: ''
+					})
 					this.favorite.url = this.favorite.used
 					uni.showToast({
 						icon: 'none',
 						title: '收藏成功'
 					})
 				} else {
+					const used = course_favorite_2({
+						id: this.courseId,
+						type: 1,
+						papers_id: ''
+					})
 					this.favorite.url = this.favorite.unused
 					uni.showToast({
 						icon: 'none',
 						title: '取消成功'
 					})
 				}
-				
+			},
+			// 领取优惠券
+			async handleCouponItem(id, type) {
+				const coupon = await course_coupon_receive({ id, type })
+				uni.showToast({
+					icon: 'none',
+					title: '领取成功'
+				})
 			}
 		}
 	}

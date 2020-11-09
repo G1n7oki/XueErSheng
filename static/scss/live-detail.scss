@@ -467,6 +467,7 @@
 	
 	.advisory {
 		text-align: center;
+		position: relative;
 		
 		.icon {
 			width: 40upx;
@@ -477,6 +478,15 @@
 			font-size: 24upx;
 			font-weight: 500;
 			color: #606266;
+		}
+		
+		.button {
+			width: 40upx;
+			height: 40upx;
+			background-color: transparent;
+			position: absolute;
+			top: 0;
+			left: 0;
 		}
 	}
 	

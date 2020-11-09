@@ -190,7 +190,18 @@
 			}
 		},
 		onShow() {
-			this.toUserinfo()
+			const that = this
+			uni.getStorage({
+				key: 'token',
+				success(res) {
+					if (res.data) {
+						that.login = true
+						that.toUserinfo()
+					} else {
+						that.login = false
+					}
+				}
+			})
 		},
 		methods: {
 			// 获取个人信息
@@ -200,12 +211,9 @@
 				})
 				userinfo().then(response => {
 					this.info = response.data.data
-					this.login = true
 					uni.hideLoading()
 				}).catch(error => {
 					uni.hideLoading()
-					this.login = false
-					showToast(error.data.message)
 				})
 			},
 			// 点击跳转登录页

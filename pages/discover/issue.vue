@@ -32,7 +32,6 @@
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import uButton from '@/components/u-button/uButton.vue'
 	import UniIcons from '@/components/uni-icons/uni-icons.vue'
-	import { discover_new } from '@/common/api/api.js'
 	import { baseUrl } from '@/common/config/config.js'
 	export default {
 		name: 'Issue',
@@ -85,6 +84,28 @@
 			},
 			handleIssue() {
 				const that = this
+				uni.getStorage({
+					key: 'token',
+					success(token) {
+						for(let i = 0; i < that.image.length; i++) {
+							uni.uploadFile({
+								url: baseUrl + 'article/new',
+								filePath: that.image[i],
+								name: 'image',
+								header: {
+									'X-Requested-With': 'XMLHttpRequest',
+									'token': token.data
+								},
+								formData: {
+									content: ''
+								},
+								success(res) {
+									
+								}
+							})
+						}
+					}
+				})
 			}
 		}
 	}

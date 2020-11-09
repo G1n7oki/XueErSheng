@@ -43,7 +43,7 @@ export const login = (data) => {
 // 忘记密码
 export const forgot = (data) => {
 	return http.request({
-		url: 'register',
+		url: 'reset',
 		method: 'POST',
 		data
 	})
@@ -176,6 +176,38 @@ export const study_evaluate = (data) => {
 		data
 	})
 }
+// 课程优惠券
+export const course_coupon = (data) => {
+	return http.request({
+		url: 'card/canlist',
+		method: 'GET',
+		data
+	})
+}
+// 领取课程优惠券
+export const course_coupon_receive = (data) => {
+	return http.request({
+		url: 'card/receive',
+		method: 'GET',
+		data
+	})
+}
+// 收藏课程
+export const course_favorite_1 = (data) => {
+	return http.request({
+		url: 'collect/add',
+		method: 'POST',
+		data
+	})
+}
+// 取消收藏
+export const course_favorite_2 = (data) => {
+	return http.request({
+		url: 'collect/remove',
+		method: 'POST',
+		data
+	})
+}
 /**
  * 以下为我的模块接口
  * */
@@ -183,6 +215,30 @@ export const study_evaluate = (data) => {
 export const userinfo = (data) => {
 	return http.request({
 		url: 'users/info',
+		method: 'GET',
+		data
+	})
+}
+// AI智能分析
+export const ai = (data) => {
+	return http.request({
+		url: 'users/ai',
+		method: 'GET',
+		data
+	})
+}
+// 我的班主任
+export const me_teacher = (data) => {
+	return http.request({
+		url: 'users/class_teacher',
+		method: 'GET',
+		data
+	})
+}
+// 我的订单
+export const me_order = (data) => {
+	return http.request({
+		url: 'users/order',
 		method: 'GET',
 		data
 	})
@@ -252,4 +308,40 @@ export const discover_comment = (data) => {
 		data
 	})
 }
-// 发现图片上传
+/**
+ * 以下为设置模块接口
+ * */
+ // 修改昵称
+ export const set_nickname = (data) => {
+ 	return http.request({
+ 		url: 'users/edit',
+ 		method: 'POST',
+ 		data
+ 	})
+ }
+	/**
+	* 以下为直播模块接口
+	* */
+	// 直播课包详情
+	export const live_package_detail = (data) => {
+		return http.request({
+			url: `live/${data}`,
+			method: 'GET'
+		})
+	}
+	// 直播课包目录
+	export const live_package = (data) => {
+		return http.request({
+			url: 'live/sol',
+			method: 'GET',
+			data
+		})
+	}
+	// 直播详情
+	export const live_detail = (data) => {
+		return http.request({
+			url: 'sol',
+			method: 'GET',
+			data
+		})
+	}

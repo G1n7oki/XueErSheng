@@ -21,6 +21,7 @@
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import uButton from '@/components/u-button/uButton.vue'
+	import { set_nickname } from '@/common/api/api.js'
 	export default {
 		name: 'Nickname',
 		components: {
@@ -29,8 +30,11 @@
 		},
 		data() {
 			return {
-				value: '学员_122100112'
+				value: ''
 			}
+		},
+		onLoad(options) {
+			this.value = options.nickname
 		},
 		methods: {
 			// 确认修改
@@ -42,7 +46,20 @@
 					})
 					return false
 				}
-				console.log(this.value)
+				uni.showLoading({
+					title: '修改中...'
+				})
+				set_nickname({
+					name: this.value
+				}).then(response => {
+					uni.showToast({
+						icon: 'none',
+						title: '修改成功'
+					})
+					uni.hideLoading()
+				}).catch(error => {
+					uni.hideLoading()
+				})
 			}
 		}
 	}

@@ -13,9 +13,9 @@
 		<!-- 巨幕 end -->
 		<!-- 班主任信息 start -->
 		<view class="info">
-			<image class="avatar" src="http://dummyimage.com/100x100" mode=""></image>
+			<image class="avatar" :src="teacher.head" mode=""></image>
 			<view class="name">
-				Dr. Bruce Fang 
+				{{ teacher.name }}
 			</view>
 			<view class="post">
 				班主任
@@ -29,7 +29,7 @@
 					电话
 				</view>
 				<view class="contact">
-					18870322365
+					{{ teacher.phone }}
 				</view>
 				<button class="button" @click="call">一键拨号</button>
 			</view>
@@ -38,7 +38,7 @@
 					微信号
 				</view>
 				<view class="contact">
-					brucefang
+					{{ teacher.wechat_id }}
 				</view>
 				<button class="button" @click="copy">复制微信</button>
 			</view>
@@ -47,7 +47,7 @@
 					联系地址
 				</view>
 				<view class="text">
-					江西省南昌市高新开发区紫阳大道1266号新力方2号楼
+					{{ teacher.address }}
 				</view>
 			</view>
 			<view class="item">
@@ -55,7 +55,7 @@
 					我的签名
 				</view>
 				<view class="text">
-					如果你无法简洁的表达你的想法，那只说明你还不够了解它。 
+					{{ teacher.signature }} 
 				</view>
 			</view>
 		</view>
@@ -65,16 +65,40 @@
 
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
+	import { me_teacher } from '@/common/api/api.js'
 	export default {
 		name: 'Teacher',
 		components: {
 			XesNavbar
 		},
+		data() {
+			return {
+				teacher: {
+					name: '', // 姓名
+					phone: '', // 电话
+					address: '', // 地址
+					signature: '', // 签名
+					wechat_id: '', // 微信号
+					head: '' // 头像
+				}
+			}
+		},
+		onLoad() {
+			this.toData()
+		},
 		methods: {
+			async toData() {
+				// 获取我的班主任信息
+				const teacher = await me_teacher({
+					profession_id: uni.getStorageSync('profession_id')
+				})
+				this.teacher = teacher.data.data
+			},
 			// 打电话
 			call() {
+				const that = this
 				uni.makePhoneCall({
-				   phoneNumber: '18870322365'
+				   phoneNumber: that.teacher.phone
 				})
 			},
 			// 复制
