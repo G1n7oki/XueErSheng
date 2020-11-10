@@ -40,9 +40,9 @@
 			<navigator class="item" url="/pages/topics/index">
 				<image src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/study/tikulianxi%402x.png" mode=""></image>
 			</navigator>
-			<view class="item">
+			<navigator class="item" url="/pages/issue/issue">
 				<image src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/study/wodewenda%402x.png" mode=""></image>
-			</view>
+			</navigator>
 		</view>
 		<!-- 练习/问答 end -->
 		<!-- 课程/直播课 start -->

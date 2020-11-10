@@ -11,60 +11,38 @@
 			<!-- 账号问题 start -->
 			<view class="block">
 				<title name="账号问题" />
-				<view class="item">
+				<view 
+					class="item"
+					v-for="(item, index) in account"
+					:key="item.id"
+				>
 					<uni-collapse>
-						<uni-collapse-item title="自考会不会比较好？" showAnimation="true">
+						<uni-collapse-item :title="item.title" showAnimation="true">
 							<view class="text">
-								包图网是上海包图网络科技有限公司旗下素材在线交易网站于2016年7月上线运营。主要服务是提供图片、视频、音频psd源文件等形式
+								{{ item.content }}
 							</view>
 						</uni-collapse-item>
 					</uni-collapse>
-					<view class="index">Q1</view>
-				</view>
-				<view class="item">
-					<uni-collapse>
-						<uni-collapse-item title="收不到短信验证码是怎么回事？" showAnimation="true">
-							<view class="text">
-								包图网是上海包图网络科技有限公司旗下素材在线交易网站于2016年7月上线运营。主要服务是提供图片、视频、音频psd源文件等形式
-							</view>
-						</uni-collapse-item>
-					</uni-collapse>
-					<view class="index">Q2</view>
-				</view>
-				<view class="item">
-					<uni-collapse>
-						<uni-collapse-item title="如何绑定手机/邮箱？" showAnimation="true">
-							<view class="text">
-								包图网是上海包图网络科技有限公司旗下素材在线交易网站于2016年7月上线运营。主要服务是提供图片、视频、音频psd源文件等形式
-							</view>
-						</uni-collapse-item>
-					</uni-collapse>
-					<view class="index">Q3</view>
-				</view>
-				<view class="item">
-					<uni-collapse>
-						<uni-collapse-item title="忘记密码，怎么找回呢？" showAnimation="true">
-							<view class="text">
-								包图网是上海包图网络科技有限公司旗下素材在线交易网站于2016年7月上线运营。主要服务是提供图片、视频、音频psd源文件等形式
-							</view>
-						</uni-collapse-item>
-					</uni-collapse>
-					<view class="index">Q4</view>
+					<view class="index">Q{{ index + 1 }}</view>
 				</view>
 			</view>
 			<!-- 账号问题 end -->
 			<!-- 其他问题 start -->
 			<view class="block">
 				<title name="其他问题" />
-				<view class="item">
+				<view 
+					class="item"
+					v-for="(item, index) in other"
+					:key="item.id"
+				>
 					<uni-collapse>
-						<uni-collapse-item title="自考会不会比较好？" showAnimation="true">
+						<uni-collapse-item :title="item.title" showAnimation="true">
 							<view class="text">
-								包图网是上海包图网络科技有限公司旗下素材在线交易网站于2016年7月上线运营。主要服务是提供图片、视频、音频psd源文件等形式
+								{{ item.content }}
 							</view>
 						</uni-collapse-item>
 					</uni-collapse>
-					<view class="index">Q1</view>
+					<view class="index">Q{{ index + 1 }}</view>
 				</view>
 			</view>
 			<!-- 其他问题 end -->
@@ -83,6 +61,7 @@
 	import Title from '@/components/title/Title.vue'
 	import UniCollapse from '@/components/uni-collapse/uni-collapse.vue'
 	import UniCollapseItem from '@/components/uni-collapse-item/uni-collapse-item.vue'
+	import { help } from '@/common/api/api.js'
 	export default {
 		name: 'Help',
 		components: {
@@ -91,7 +70,26 @@
 			UniCollapse,
 			UniCollapseItem
 		},
+		data() {
+			return {
+				account: [],
+				other: []
+			}
+		},
+		onLoad() {
+			this.toData()
+		},
 		methods: {
+			async toData() {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				const response = await help()
+				const { account, other } = response.data.data
+				this.account = account
+				this.other = other
+				uni.hideLoading()
+			},
 			toFeedback() {
 				uni.navigateTo({
 					url: '/pages/me/feedback'

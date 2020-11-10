@@ -40,25 +40,31 @@
 						</picker>
 					</view>
 				</view>
-				<view class="item" v-for="n in 6" :key="n">
+				<navigator
+					class="item"
+					v-for="hot in hots"
+					:key="hot.id"
+					:url="'/pages/issue/detail?id=' + hot.id"
+					hover-class="none"
+				>
 					<view class="crumbs">
 						自学考试 > 本科 > 金融学(新)02301K > 03709马克03709马克03709马克
 					</view>
 					<view class="title">
-						您好，马克思 | 认为“马克思主义”是洗脑，这本身是一种被洗脑的表现
+						{{ hot.title }}
 					</view>
 					<view class="source">
-						视频回复来源：中国青年网。“认为马克思主义是洗脑，这本身是一种洗脑的表现。”正确区分学习概论知识技能处视频回复来源：中国青年网。“认为马克思主义是洗脑，这本身是一种洗脑的表现。”正确区分学习概论知识技能处               
+						{{ hot.answer.username }}回复：{{ hot.answer.my_content }}               
 					</view>
 					<view class="bot">
 						<view class="praise-reply">
-							1240 赞同 · 21回复
+							{{ hot.admire }} 赞同 · {{ hot.reply }}回复
 						</view>
 						<view class="date">
-							2020.09.10
+							{{ hot.addtime }}
 						</view>
 					</view>
-				</view>
+				</navigator>
 			</view>
 			<!-- 热门问题 end -->
 			<!-- 我的提问 start -->
@@ -132,6 +138,7 @@
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import XesTextTabbar from '@/components/xes-text-tabbar/xes-text-tabbar.vue'
+	import { issue_hot } from '@/common/api/api.js'
 	export default {
 		name: 'Issue',
 		components: {
@@ -151,7 +158,7 @@
 						id: 2,
 						name: '我的回答'
 					}],
-					current: 2
+					current: 0
 				},
 				top: 0, // 选项卡定位值
 				type: {
@@ -166,7 +173,10 @@
 					range: ['科目', '自学考试', '成人高考'],
 					index: 0
 				}, // 科目选择器
-				filterTop: 0
+				filterTop: 0,
+				hots: [],
+				page: 1,
+				totalPage: 1
 			}
 		},
 		onLoad() {
@@ -175,8 +185,26 @@
 				this.top = navbar.height
 				this.filterTop = navbar.height + 52
 			}).exec()
+			
+			this.toData()
+		},
+		onReachBottom() {
+			
 		},
 		methods: {
+			async toData() {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				const response = await issue_hot({
+					profession_id: uni.getStorageSync('profession_id'),
+					page: this.page
+				})
+				const { data } = response.data.data
+				this.hots = data
+				uni.hideLoading()
+			},
+			// 切换卡
 			toId(id) {
 				this.tabbar.current = id
 			},

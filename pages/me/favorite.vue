@@ -8,7 +8,7 @@
 		/>
 		<!-- 导航栏 end -->
 		<!-- 空数据 start -->
-		<empty v-if="!show" />
+		<empty v-if="show" />
 		<!-- 空数据 end -->
 		<!-- 列表 start -->
 		<view v-else class="list">
@@ -18,7 +18,7 @@
 				:key="item.id"
 				@longpress="handleItem(index)"
 			>
-				<image class="image" :src="item.image" mode=""></image>
+				<image class="image" :src="item.cover" mode=""></image>
 				<view class="info">
 					<view class="name">
 						{{ item.title }}
@@ -34,6 +34,7 @@
 			<view class="tips">
 				长按可以删除
 			</view>
+			<uni-load-more v-if="favorite.length > 5" :status="loading" />
 		</view>
 		<!-- 列表 end -->
 	</view>
@@ -42,38 +43,60 @@
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import Empty from '@/components/empty/empty.vue'
-	import Json from '@/static/data.json'
+	import UniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
+	import { me_favorite } from '@/common/api/api.js'
 	export default {
 		name: 'Favorite',
 		components: {
 			XesNavbar,
-			Empty
+			Empty,
+			UniLoadMore
 		},
 		data() {
 			return {
 				favorite: [],
-				show: false
+				show: false,
+				loading: 'more',
+				page: 1,
+				totalPage: 1
 			}
 		},
 		onLoad() {
-			this.favorite = Json.favorite
-			
-			this.show = this.favorite.length > 0 ? true : false
+			this.toData()
 		},
-		onReachBottom() {
-			// 上拉加载
-			let len = this.favorite.length
-			const newData = {
-				id: ++len,
-				title: '我是新增的数据',
-				validity: 360,
-				price: 1000,
-				status: 1,
-				image: 'http://dummyimage.com/250x250'
+		// 上拉加载
+		async onReachBottom() {
+			this.loading = 'loading'
+			this.page++
+			if (this.page > this.totalPage) {
+				this.loading = 'noMore'
+				return false
 			}
-			this.favorite.push(newData)
+			const response = await me_favorite({
+				page: this.page
+			})
+			const { data } = response.data.data
+			data.map(item => {
+				item.validity = Math.floor(item.validity / 86400)
+			})
+			this.favorite = [...this.favorite, ...data]
+			this.loading = 'more'
 		},
 		methods: {
+			async toData() {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				const response = await me_favorite()
+				const { data, last_page } = response.data.data
+				data.map(item => {
+					item.validity = Math.floor(item.validity / 86400)
+				})
+				this.favorite = data
+				this.show = this.favorite.length <= 0 ? true : false
+				this.totalPage = last_page
+				uni.hideLoading()
+			},
 			// 长按删除
 			handleItem(index) {
 				const that = this
@@ -99,7 +122,7 @@
 	}
 
 	.list {
-		padding: 32upx;
+		padding: 32upx 32upx 0;
 		background-color: #F4F7F9;
 
 		.item {

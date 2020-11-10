@@ -25,6 +25,7 @@
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import uButton from '@/components/u-button/uButton.vue'
+	import { feedback } from '@/common/api/api.js'
 	export default {
 		name: 'Feedback',
 		components: {
@@ -38,14 +39,25 @@
 		},
 		methods: {
 			// 提交
-			handleSubmit() {
+			async handleSubmit() {
 				if (this.value === '') {
 					uni.showToast({
 						icon: 'none',
 						title: '至少写点东西吧!'
 					})
 					return false
-				} 
+				}
+				uni.showLoading({
+					title: '提交中...'
+				})
+				const response = await feedback({
+					msg: this.value
+				})
+				uni.hideLoading()
+				uni.showToast({
+					icon: 'none',
+					title: '提交成功'
+				})
 			}
 		}
 	}

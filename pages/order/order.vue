@@ -17,157 +17,51 @@
 		</view>
 		<!-- 切换卡 end -->
 		<!-- 列表 start -->
-		<swiper 
-			class="swiper"
-			:duration="500"
+		<scroll-view
+			class="scroll-view"
+			scroll-y="true"
 			:style="{height: height}"
-			:current="tabbar.index"
-			@change="chooseSwiper"
+			@scrolltolower="pullUpLoading"
 		>
-			<swiper-item>
-				<scroll-view class="scroll-view" scroll-y="true">
-					<view class="swiper-item" @click="handleItem">
-						<view class="image-info">
-							<image class="image" src="http://dummyimage.com/120x600" mode=""></image>
-							<view class="info">
-								<view class="info-title">
-									特许金融分析师(CFA三级)
-								</view>
-								<view class="info-date">
-									课程有效期还剩：360天
-								</view>
-								<view class="info-price">
-									542 <text>元</text>
-								</view>
-							</view>
+			<empty v-if="order.show" />
+			<view 
+				v-else
+				class="swiper-item"
+				v-for="order in order.list"
+				:key="order.id"
+			>
+				<view class="image-info">
+					<image class="image" :src="order.cover" mode=""></image>
+					<view class="info">
+						<view class="info-title">
+							{{ order.goods_name }}
 						</view>
-						<view class="bot">
-							<view class="status active">
-								待付款
-								<view class="date">
-									剩余 <text>1</text> 天 <text>23</text> 小时
-								</view>
-							</view>
-							<button type="default" hover-class="none">去支付</button>
+						<view class="info-date">
+							课程有效期还剩：{{ order.validity }}天
 						</view>
-					</view>
-					<view class="swiper-item">
-						<view class="image-info">
-							<image class="image" src="http://dummyimage.com/120x600" mode=""></image>
-							<view class="info">
-								<view class="info-title">
-									特许金融分析师(CFA三级)
-								</view>
-								<view class="info-date">
-									课程有效期还剩：360天
-								</view>
-								<view class="info-price">
-									542 <text>元</text>
-								</view>
-							</view>
+						<view class="info-price">
+							{{ order.real_amount }} <text>元</text>
 						</view>
-						<view class="bot">
-							<view class="status">
-								待付款
-							</view>
-							<button class="active" type="default" hover-class="none">去学习</button>
-						</view>
-					</view>
-					<view class="swiper-item">
-						<view class="image-info">
-							<image class="image" src="http://dummyimage.com/120x600" mode=""></image>
-							<view class="info">
-								<view class="info-title">
-									特许金融分析师(CFA三级)
-								</view>
-								<view class="info-date">
-									课程有效期还剩：360天
-								</view>
-								<view class="info-price">
-									542 <text>元</text>
-								</view>
-							</view>
-						</view>
-						<view class="bot">
-							<view class="status">
-								待付款
-							</view>
-							<button class="active" type="default" hover-class="none">去学习</button>
-						</view>
-					</view>
-					<view class="swiper-item">
-						<view class="image-info">
-							<image class="image" src="http://dummyimage.com/120x600" mode=""></image>
-							<view class="info">
-								<view class="info-title">
-									特许金融分析师(CFA三级)
-								</view>
-								<view class="info-date">
-									课程有效期还剩：360天
-								</view>
-								<view class="info-price">
-									542 <text>元</text>
-								</view>
-							</view>
-						</view>
-						<view class="bot">
-							<view class="status">
-								待付款
-							</view>
-							<button class="active" type="default" hover-class="none">去学习</button>
-						</view>
-					</view>
-				</scroll-view>
-			</swiper-item>
-			<swiper-item>
-				<view class="swiper-item">
-					<view class="image-info">
-						<image class="image" src="http://dummyimage.com/120x600" mode=""></image>
-						<view class="info">
-							<view class="info-title">
-								特许金融分析师(CFA三级)
-							</view>
-							<view class="info-date">
-								课程有效期还剩：360天
-							</view>
-							<view class="info-price">
-								542 <text>元</text>
-							</view>
-						</view>
-					</view>
-					<view class="bot">
-						<view class="status">
-							待付款
-						</view>
-						<button class="active" type="default" hover-class="none">去学习</button>
 					</view>
 				</view>
-			</swiper-item>
-			<swiper-item>
-				<view class="swiper-item">
-					<view class="image-info">
-						<image class="image" src="http://dummyimage.com/120x600" mode=""></image>
-						<view class="info">
-							<view class="info-title">
-								特许金融分析师(CFA三级)
-							</view>
-							<view class="info-date">
-								课程有效期还剩：360天
-							</view>
-							<view class="info-price">
-								542 <text>元</text>
-							</view>
+				<view class="bot">
+					<view class="status" :class="{'active': order.order_status === 0}">
+						{{ order.order_status === 0 ? '待付款' : '已付款' }}
+						<view class="date" v-if="order.order_status === 0">
+							剩余 <text>{{ order.day }}</text> 天 <text>{{ order.hour }}</text> 小时
 						</view>
 					</view>
-					<view class="bot">
-						<view class="status">
-							待付款
-						</view>
-						<button class="active" type="default" hover-class="none">去学习</button>
-					</view>
+					<button 
+						:class="{'active': order.order_status === 1 }"
+						hover-class="none"
+						@click="handleItem(order)"
+					>
+						{{ order.order_status === 0 ? '去支付' : '去学习' }}
+					</button>
 				</view>
-			</swiper-item>
-		</swiper>
+			</view>
+			<uni-load-more v-if="order.list.length > 5" :status="order.loading" />
+		</scroll-view>
 		<!-- 列表 end -->
 	</view>
 </template>
@@ -175,12 +69,16 @@
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import XesTextTabbar from '@/components/xes-text-tabbar/xes-text-tabbar.vue'
+	import UniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
+	import Empty from '@/components/empty/empty.vue'
 	import { me_order } from '@/common/api/api.js'
 	export default {
 		name: 'Order',
 		components: {
 			XesTextTabbar,
-			XesNavbar
+			XesNavbar,
+			UniLoadMore,
+			Empty
 		},
 		data() {
 			return {
@@ -197,7 +95,14 @@
 					}],
 					index: 0
 				},
-				height: 0
+				height: 0,
+				order: {
+					list: [],
+					page: 1,
+					totalPage: 1,
+					loading: 'more',
+					show: false
+				}
 			}
 		},
 		onLoad() {
@@ -217,21 +122,67 @@
 		},
 		methods: {
 			async toData() {
-				const order = await me_order({
-					status: this.tabbar.index
+				// 获取数据
+				uni.showLoading({
+					title: '加载中...'
 				})
-				console.log(order)
+				const order = await me_order({
+					status: this.tabbar.index,
+					page: this.order.page
+				})
+				const { data, last_page } = order.data.data
+				data.map(item => {
+					item.validity = Math.floor(item.validity / 86400)
+					item.day = Math.floor(item.wait / 86400)
+					item.hour = Math.floor(item.wait / (60 * 60)) - (item.day * 24)
+				})
+				this.order.list = data
+				this.order.show = this.order.list.length <= 0 ? true : false
+				this.order.totalPage = last_page
+				uni.hideLoading()
 			},
-			chooseSwiper(e) {
-				this.tabbar.index = e.target.current
-			},
+			// 切换卡
 			toId(id) {
 				this.tabbar.index = id
+				this.order.page = 1
+				this.order.list = []
+				this.toData()
 			},
-			handleItem() {
-				uni.navigateTo({
-					url: '/pages/order/information'
+			// 点击按钮
+			handleItem(order) {
+				if (order.order_status === 0) {
+					uni.navigateTo({
+						url: `/pages/order/unpaid?id=${order.goods_id}&type=${order.order_type}` 
+					})
+				} else if (order.order_status === 1) {
+					uni.navigateTo({
+						url: `/pages/study/detail?id=${order.goods_id}`
+					})
+				} else {
+					return false
+				}
+			},
+			// 上拉加载
+			async pullUpLoading() {
+				this.order.loading = 'loading'
+				const { totalPage } = this.order
+				const page = ++this.order.page 
+				if (page > totalPage) {
+					this.order.loading = 'noMore'
+					return false
+				}
+				const order = await me_order({
+					status: this.tabbar.index,
+					page: this.order.page
 				})
+				const { data } = order.data.data
+				data.map(item => {
+					item.validity = Math.floor(item.validity / 86400)
+					item.day = Math.floor(item.wait / 86400)
+					item.hour = Math.floor(item.wait / (60 * 60)) - (item.day * 24)
+				})
+				this.order.list = [...this.order.list, ...data]
+				this.order.loading = 'more'
 			}
 		}
 	}

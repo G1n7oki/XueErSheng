@@ -17,33 +17,36 @@
 			/>
 		</view>
 		<!-- 选项卡 end -->
+		<empty v-if="card.show"/>
 		<!-- 列表 start -->
-		<view class="list">
-			<view 
+		<view v-else class="list">
+			<view
 				class="item"
-				v-for="(item, index) in 10"
+				v-for="card in card.list"
+				:key="card.id"
 			>
-				<image class="stamp" :src="index % 2 === 0 ? dueUrl : usedUrl" mode=""></image>
+				<image class="stamp" :src="tabbar.current === 0 ? '' : tabbar.current === 1 ? usedUrl : dueUrl" mode=""></image>
 				<view class="worth">
 					<view class="type">
-						课程优惠券
+						{{ card.type === 1 ? '满减优惠券' : '课程月卡' }}
 					</view>
 					<view class="text">
-						<text class="unit">￥</text> 15
+						<text class="unit">￥</text>{{ card.cut_money }}
 					</view>
 				</view>
 				<view class="explain">
 					<view class="title">
-						满199减100
+						满{{ card.need_money }}减{{ card.cut_money }}
 					</view>
 					<view class="source">
-						签到获得
+						{{ card.get_type === 1 ? '积分兑换' : card.get_type === 2 ? '签到获得' : '领取获得' }}
 					</view>
 					<view class="date">
-						2019.04.05~2021.04.05
+						{{ card.valid_start }}~{{ card.valid_end }}
 					</view>
 				</view>
 			</view>
+			<uni-load-more v-if="card.list.length > 5" :status="card.loading" />
 		</view>
 		<!-- 列表 end -->
 	</view>
@@ -52,11 +55,15 @@
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import XesTextTabbar from '@/components/xes-text-tabbar/xes-text-tabbar.vue'
+	import UniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
+	import Empty from '@/components/empty/empty.vue'
+	import { me_card } from '@/common/api/api.js'
 	export default {
 		name: 'Card',
 		components: {
 			XesNavbar,
-			XesTextTabbar
+			XesTextTabbar,
+			Empty
 		},
 		data() {
 			return {
@@ -74,6 +81,13 @@
 					current: 0
 				},
 				top: 0, // tabbar的top值
+				card: {
+					list: [],
+					page: 1,
+					totalPage: 1,
+					show: false,
+					loading: 'more'
+				},
 				dueUrl: 'https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/yiguoqi%402x.png',
 				usedUrl: 'https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/yishiyong%402x.png'
 			}
@@ -83,10 +97,54 @@
 			navbar.select('#navbar').boundingClientRect(navbar => {
 				this.top = navbar.height
 			}).exec()
+			
+			this.toData()
+		},
+		// 上拉加载
+		async onReachBottom() {
+			this.card.loading = 'loading'
+			const { totalPage } = this.card
+			const page = ++this.card.page 
+			if (page > totalPage) {
+				this.card.loading = 'noMore'
+				return false
+			}
+			const card = await me_card({
+				page: this.card.page,
+				status: this.tabbar.current
+			})
+			const { data } = card.data.data
+			data.map(item => {
+				item.valid_start = item.valid_start.substring(0, 10)
+				item.valid_end = item.valid_end.substring(0, 10)
+			})
+			this.card.list = [...this.card.list, ...data]
+			this.card.loading = 'more'
 		},
 		methods: {
+			async toData() {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				const response = await me_card({
+					page: this.card.page,
+					status: this.tabbar.current
+				})
+				const { data, last_page } = response.data.data
+				data.map(item => {
+					item.valid_start = item.valid_start.substring(0, 10)
+					item.valid_end = item.valid_end.substring(0, 10)
+				})
+				this.card.list = data
+				this.card.show = this.card.list.length <= 0 ? true : false
+				this.card.totalPage = last_page
+				uni.hideLoading()
+			},
 			toId(id) {
 				this.tabbar.current = id
+				this.card.page = 1
+				this.card.list = []
+				this.toData()
 			}
 		}
 	}
@@ -107,7 +165,7 @@
 	// 列表
 	.list {
 		background-color: #F4F7F9;
-		padding: 40upx 35upx;
+		padding: 40upx 35upx 0;
 		margin-top: 104upx;
 		
 		.item {

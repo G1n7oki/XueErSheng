@@ -243,6 +243,38 @@ export const me_order = (data) => {
 		data
 	})
 }
+// 帮助与反馈
+export const help = (data) => {
+	return http.request({
+		url: 'help',
+		method: 'GET',
+		data
+	})
+}
+// 意见反馈
+export const feedback = (data) => {
+	return http.request({
+		url: 'feedback',
+		method: 'POST',
+		data
+	})
+}
+// 我的收藏
+export const me_favorite = (data) => {
+	return http.request({
+		url: 'users/collect',
+		method: 'GET',
+		data
+	})
+}
+// 我的卡包
+export const me_card = (data) => {
+	return http.request({
+		url: 'users/card',
+		method: 'GET',
+		data
+	})
+}
 /**
  * 以下为题库模块接口
  * */
@@ -341,6 +373,17 @@ export const discover_comment = (data) => {
 	export const live_detail = (data) => {
 		return http.request({
 			url: 'sol',
+			method: 'GET',
+			data
+		})
+	}
+	/**
+	* 以下为问答模块接口
+	* */
+	// 直播详情
+	export const issue_hot = (data) => {
+		return http.request({
+			url: 'hot',
 			method: 'GET',
 			data
 		})

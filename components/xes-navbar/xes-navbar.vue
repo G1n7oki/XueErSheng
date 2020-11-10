@@ -173,7 +173,7 @@
 			.navbar-arrow-line {
 				position: absolute;
 				top: 50%;
-				left: 32upx;
+				left: 16upx;
 				transform: translateY(-50%);
 				
 				&.active {
