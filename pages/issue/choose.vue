@@ -9,20 +9,38 @@
 		<!-- 导航栏 end -->
 		<!-- choose start -->
 		<view class="choose">
-			<picker class="picker" @change="selected($event, 'type')" :value="type.index" :range="type.range">
-					<view class="text">{{type.range[type.index]}}</view>
+			<picker
+				class="picker" 
+				:value="type.data[type.index].name"
+				:range="type.data"
+				range-key="name"
+				@change="selected($event, 'type')"
+			>
+					<view class="text">{{ type.data[type.index].name }}</view>
 					<view class="icon">
 						<uni-icons type="arrowdown" />
 					</view>
 			</picker>
-			<picker class="picker" @change="selected($event, 'specialty')" :value="specialty.index" :range="specialty.range">
-					<view class="text">{{specialty.range[specialty.index]}}</view>
+			<picker 
+				class="picker"
+				:value="specialty.data[specialty.index].name"
+				:range="specialty.data"
+				range-key="name"
+				@change="selected($event, 'specialty')"
+			>
+					<view class="text">{{specialty.data[specialty.index].name}}</view>
 					<view class="icon">
 						<uni-icons type="arrowdown" />
 					</view>
 			</picker>
-			<picker class="picker" @change="selected($event, 'subject')" :value="subject.index" :range="subject.range">
-					<view class="text">{{subject.range[subject.index]}}</view>
+			<picker 
+				class="picker"
+				:value="subject.data[subject.index].name"
+				:range="subject.data"
+				range-key="name"
+				@change="selected($event, 'subject')"
+			>
+					<view class="text">{{ subject.data[subject.index].name }}</view>
 					<view class="icon">
 						<uni-icons type="arrowdown" />
 					</view>
@@ -41,6 +59,7 @@
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import uButton from '@/components/u-button/uButton.vue'
 	import UniIcons from '@/components/uni-icons/uni-icons.vue'
+	import { professional } from '@/common/api/api.js'
 	export default {
 		name: 'Choose',
 		components: {
@@ -51,27 +70,57 @@
 		data() {
 			return {
 				type: {
-					range: ['选择学习类型', '自学考试', '成人高考'],
-					index: 0,
+					data: [{
+						id: 0,
+						name: '一级类目',
+						pid: 999
+					}],
+					index: 0
 				}, // 类型选择器
 				specialty: {
-					range: ['选择专业', '自学考试', '成人高考'],
+					data: [{
+						id: 0,
+						name: '二级类目',
+						pid: 999
+					}],
 					index: 0
 				}, // 专业选择器
 				subject: {
-					range: ['选择科目', '自学考试', '成人高考'],
+					data: [{
+						id: 0,
+						name: '三级类目',
+						pid: 999
+					}],
 					index: 0
 				}, // 科目选择器
+				professional: {
+					list: []
+				}
 			}
 		},
+		onLoad() {
+			this.toData()
+		},
 		methods: {
+			async toData() {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				// 获取专业数据
+				const professionalData = await professional()
+				this.professional.list = professionalData.data.data
+				this.professional.list.map(item => {
+					this.type.data.push(item)
+				})
+				uni.hideLoading()
+			},
 			// 下一步
 			handleNext() {
 				// 所有选择项为必选
 				if (this.type.index === 0) {
 					uni.showToast({
 						icon: 'none',
-						title: '请选择类型'
+						title: '请选择一级类目'
 					})
 					return false
 				}
@@ -79,7 +128,7 @@
 				if (this.specialty.index === 0) {
 					uni.showToast({
 						icon: 'none',
-						title: '请选择专业'
+						title: '请选择二级类目'
 					})
 					return false
 				}
@@ -87,7 +136,7 @@
 				if (this.subject.index === 0) {
 					uni.showToast({
 						icon: 'none',
-						title: '请选择科目'
+						title: '请选择三级类目'
 					})
 					return false
 				}
@@ -98,6 +147,43 @@
 			},
 			// 选择
 			selected(e, str) {
+				if (str === 'type' && e.target.value !== '0') {
+					// 向二级类目添加数据
+					this.specialty = {
+						data: [{
+							id: 0,
+							name: '二级类目',
+							pid: 999
+						}],
+						index: 0
+					}
+					this.subject = {
+						data: [{
+							id: 0,
+							name: '三级类目',
+							pid: 999
+						}],
+						index: 0
+					}
+					const newArray = this.professional.list[e.target.value - 1].sub
+					this.specialty.data = [...this.specialty.data, ...newArray]
+				} else if (str === 'specialty' && e.target.value !== '0') {
+					// 向三级类目添加数据
+					this.subject = {
+						data: [{
+							id: 0,
+							name: '三级类目',
+							pid: 999
+						}],
+						index: 0
+					}
+					const newArray = this.specialty.data[e.target.value].sub
+					this.subject.data = [...this.subject.data, ...newArray]
+				} else if (str === 'subject' && e.target.value !== '0') {
+					// do something
+				} else {
+					return false
+				}
 				this[str].index = e.target.value
 			}
 		}

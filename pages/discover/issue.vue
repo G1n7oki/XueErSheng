@@ -32,6 +32,7 @@
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import uButton from '@/components/u-button/uButton.vue'
 	import UniIcons from '@/components/uni-icons/uni-icons.vue'
+	import Ctpic from '@/tools/util/custom-picture.js'
 	import { baseUrl } from '@/common/config/config.js'
 	export default {
 		name: 'Issue',
@@ -43,7 +44,8 @@
 		data() {
 			return {
 				content: '',
-				image: []
+				image: [],
+				postImage: []
 			}
 		},
 		onLoad() {
@@ -82,30 +84,53 @@
 				const index = this.image.indexOf(item)
 				this.image.splice(index, 1)
 			},
-			handleIssue() {
+			// 点击提交
+			async handleIssue() {
 				const that = this
-				uni.getStorage({
-					key: 'token',
-					success(token) {
-						for(let i = 0; i < that.image.length; i++) {
-							uni.uploadFile({
-								url: baseUrl + 'article/new',
-								filePath: that.image[i],
-								name: 'image',
-								header: {
-									'X-Requested-With': 'XMLHttpRequest',
-									'token': token.data
-								},
-								formData: {
-									content: ''
-								},
-								success(res) {
-									
-								}
-							})
-						}
-					}
+				let image = []
+				const ctpic = new Ctpic()
+				
+				uni.showLoading({
+					title: '上传中...'
 				})
+				
+				for(let i = 0; i < that.image.length; i++) {
+					uni.uploadFile({
+						url: baseUrl + 'upload',
+						filePath: that.image[i],
+						name: 'image',
+						header: {
+							'X-Requested-With': 'XMLHttpRequest',
+							'Authorization': uni.getStorageSync('token')
+						},
+						formData: {
+							type: '1'
+						},
+						success(res) {
+							if(res.statusCode === 200) {
+								const data = JSON.parse(res.data)
+								that.postImage.push(data.data)
+								// 如果上传的文件长度等于应上传文件的长度则说明上传完毕
+								if (that.postImage.length === that.image.length) {
+									uni.hideLoading()
+								}
+							} else {
+								const data = JSON.parse(res.data)
+								uni.showToast({
+									icon: 'none',
+									title: data.message
+								})
+							}
+						},
+						fail(error) {
+							uni.showToast({
+								icon: 'none',
+								title: error.errMsg
+							})
+							uni.hideLoading()
+						}
+					})
+				}
 			}
 		}
 	}

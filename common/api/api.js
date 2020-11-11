@@ -380,7 +380,7 @@ export const discover_comment = (data) => {
 	/**
 	* 以下为问答模块接口
 	* */
-	// 直播详情
+	// 热门问题
 	export const issue_hot = (data) => {
 		return http.request({
 			url: 'hot',
@@ -388,3 +388,21 @@ export const discover_comment = (data) => {
 			data
 		})
 	}
+	// 我的提问
+	export const me_issue = (data) => {
+		return http.request({
+			url: 'users/faq',
+			method: 'GET',
+			data
+		})
+	}
+	// 我的回答
+	export const me_answer = (data) => {
+		return http.request({
+			url: 'users/answer',
+			method: 'GET',
+			data
+		})
+	}
+	
+	

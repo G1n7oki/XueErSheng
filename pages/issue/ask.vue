@@ -9,9 +9,7 @@
 		</xes-navbar>
 		<!-- 导航栏 end -->
 		<!-- 提示 start -->
-		<view class="tips">
-			写下您的问题
-		</view>
+		<input class="tips" type="text" value="" placeholder="写下您的问题" />
 		<!-- 提示 end -->
 		<!-- 文本框 start -->
 		<textarea  value="" placeholder="请简述您遇到的问题和困难点，便于老师针对难点进行 解答。" />
