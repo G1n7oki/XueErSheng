@@ -404,5 +404,59 @@ export const discover_comment = (data) => {
 			data
 		})
 	}
-	
-	
+	// 提问
+	export const ask = (data) => {
+		return http.request({
+			url: 'ask',
+			method: 'POST',
+			data
+		})
+	}
+	// 问题详情
+	export const issue_detail = (data) => {
+		return http.request({
+			url: 'faq/details',
+			method: 'GET',
+			data
+		})
+	}
+	// 详情的评论列表
+	export const issue_detail_comment = (data) => {
+		return http.request({
+			url: 'faq/details_replay',
+			method: 'GET',
+			data
+		})
+	}
+	// 二级评论列表
+	export const issue_detail_comment2 = (data) => {
+		return http.request({
+			url: 'faq/second_replay',
+			method: 'GET',
+			data
+		})
+	}
+	// 详情页的删除
+	export const issue_detail_remove = (data) => {
+		return http.request({
+			url: 'faq/remove_ask',
+			method: 'POST',
+			data
+		})
+	}
+	// 评论
+	export const issue_comment = (data) => {
+		return http.request({
+			url: 'faq/replay',
+			method: 'POST',
+			data
+		})
+	}
+	// 我的回答删除
+	export const issue_answer_remove = (data) => {
+		return http.request({
+			url: 'faq/remove_replay',
+			method: 'POST',
+			data
+		})
+	}

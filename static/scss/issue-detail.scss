@@ -58,7 +58,7 @@
 }
 // 评论
 .comment-area {
-	padding: 40upx 32upx 80upx;
+	padding: 40upx 32upx 130upx;
 	background-color: #fff;
 	margin-top: 20upx;
 	
@@ -144,60 +144,18 @@
 				color: #606266;
 				margin-top: 22upx;
 				
-				.reply {
-					color: #6DA1D9;
+				.dot {
 					margin-left: 16upx;
 				}
-			}
-			
-			.comment-list {
-				margin-top: 42upx;
-				padding: 24upx;
-				background-color: #F4F7F9;
-				border-radius: 20upx;
 				
-				.comment-list__item {
-					margin-bottom: 24upx;
-					
-					.comment-list__item--head {
-						display: flex;
-						align-items: center;
-						
-						.comment-list__item--head---avatar {
-							width: 40upx;
-							height: 40upx;
-							border-radius: 50%;
-							margin-right: 12upx;
-						}
-						
-						.comment-list__item--head---name {
-							font-size: 24upx;
-							font-weight: 500;
-							color: #606266;
-						}
-					}
-					
-					.comment-list__item--comment {
-						font-size: 28upx;
-						color: #303234;
-						margin-top: 24upx;
-						padding-left: 54upx;
-					}
-				}
-				
-				.fold {
-					display: flex;
-					align-items: center;
+				.reply {
+					margin-left: 16upx;
 					font-size: 24upx;
 					font-weight: 500;
-					color: #303234;
-					padding-left: 54upx;
-					
-					.arrow {
-						width: 14upx;
-						height: 10upx;
-						margin-left: 8upx;
-					}
+					color: #444444;
+					background-color: #EEEEEE;
+					border-radius: 20px;
+					padding: 10upx 27upx;
 				}
 			}
 		}
@@ -227,7 +185,7 @@
 		align-items: center;
 		
 		.input {
-			width: 480upx;
+			width: 650upx;
 			height: 72upx;
 			background-color: #F4F7F9;
 			border-radius: 36upx;
@@ -253,6 +211,159 @@
 				width: 24upx;
 				height: 24upx;
 				margin-right: 8upx;
+			}
+			
+			.number {
+				font-size: 24upx;
+				font-weight: 500;
+				color: #606266;
+				margin-left: 8upx;
+			}
+		}
+	}
+}
+// 弹窗
+.popup-inner {
+	border-radius: 30upx 30upx 0 0;
+	background-color: #fff;
+	overflow: hidden;
+	
+	.popup-inner-scroll {
+		height: 874upx;
+		padding-top: 100upx;
+		box-sizing: border-box;
+		position: relative;
+		
+		.title {
+			width: 100%;
+			height: 100upx;
+			line-height: 100upx;
+			text-align: center;
+			position: fixed;
+			top: 0;
+			left: 0;
+			
+			.icon {
+				position: absolute;
+				top: 50%;
+				left: 35upx;
+				transform: translateY(-50%);
+			}
+			
+			.text {
+				font-size: 28upx;
+				font-weight: bold;
+				color: #000000;
+			}
+		}
+		
+		.default, .list .item {
+			display: flex;
+			width: 100%;
+			box-sizing: border-box;
+			padding: 50upx 42upx;
+			border-bottom: 1px solid #DDDDDD;
+			
+			.avatar {
+				width: 80upx;
+				height: 80upx;
+				border-radius: 50%;
+			}
+			
+			.info {
+				flex: 1;
+				margin-left: 24upx;
+				
+				.username-praise {
+					display: flex;
+					justify-content: space-between;
+					
+					.username {
+						font-size: 28upx;
+						font-weight: 500;
+						color: #606266;
+					}
+					
+					.praise {
+						display: flex;
+						align-items: center;
+						
+						.icon {
+							width: 24upx;
+							height: 24upx;
+						}
+						
+						.number {
+							font-size: 24upx;
+							font-weight: 500;
+							color: #606266;
+							margin-left: 8upx;
+						}
+					}
+				}
+				
+				.content {
+					width: 520upx;
+					font-size: 28upx;
+					font-weight: bold;
+					color: #303133;
+					margin-top: 20upx;
+				}
+				
+				.time {
+					font-size: 24upx;
+					font-weight: 500;
+					color: #606266;
+					margin-top: 12upx;
+					
+					text {
+						color: #6CA0D9;
+						margin-left: 28upx;
+					}
+				}
+			}
+		}
+		
+		.list .item{
+			border-bottom: none;
+		}
+	}
+	
+	.popup-reply {
+		width: 100%;
+		box-sizing: border-box;
+		background-color: #fff;
+		padding: 0 24upx;
+		box-shadow: 0 0 18upx rgba(244, 247, 249, 1);
+		
+		.replying {
+			font-size: 24upx;
+			font-weight: 500;
+			color: #909399;
+			padding-top: 20upx;
+		}
+		
+		.input-area {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			
+			.input {
+				width: 650upx;
+				height: 72upx;
+				background-color: #F4F7F9;
+				border-radius: 36upx;
+				font-size: 28upx;
+				font-weight: 500;
+				color: #909399;
+				padding-left: 32upx;
+				box-sizing: border-box;
+				margin: 20upx 0;
+			}
+			
+			.send {
+				width: 30upx;
+				height: 30upx;
 			}
 		}
 	}

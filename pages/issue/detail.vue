@@ -13,14 +13,14 @@
 				自学考试 > 本科 > 金融学(新)02301K > 03709马克03709马克03709马克
 			</view>
 			<view class="title">
-				您好，马克思 | 认为“马克思主义”是洗脑，这本身是一种被洗脑的表现
+				{{ detail.title }}
 			</view>
 			<view class="bot">
 				<view class="praise-reply">
-					1240 赞同 · 21回复
+					{{ detail.admire }} 赞同 · {{ detail.reply }}回复
 				</view>
 				<view class="date">
-					2020.09.10  10:24:41
+					{{ detail.addtime }}
 				</view>
 			</view>
 			<image class="delete" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/issue/DEL%402x.png" mode="" @click="handleDelete"></image>
@@ -29,175 +29,336 @@
 		<!-- 评论 start -->
 		<view class="comment-area">
 			<view class="head">
-				<title name="全部评论(103)" />
+				<title :name="'全部评论(' + comment.total + ')'" />
 				<view class="filter">
 					<view class="cell active">最新</view>
 					<view class="line"></view>
 					<view class="cell">最热</view>
 				</view>
 			</view>
-			<view class="item">
+			<view 
+				class="item"
+				v-for="comment in comment.list"
+				:key="comment.id"
+			>
 				<image class="avatar" src="http://dummyimage.com/120x600" mode=""></image>
 				<view class="other">
 					<view class="name-zan">
 						<view class="name">
-							学员_122100112
+							{{ comment.username }}
 						</view>
 						<view class="zan">
 							<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/discover/xiaodianzan%402x.png" mode=""></image>
 							<view class="number">
-								12
+								{{ comment.admire }}
 							</view>
 						</view>
 					</view>
 					<view class="comment">
-						同时，我省还公布了艺术、体育类各批次文化录取控制线和专业合格线、资格线。
+						{{ comment.content }}
 					</view>
 					<view class="date-reply">
-						22小时前   <text class="reply" @click="handleReply('学员_122100112')">回复</text>
-					</view>
-					<view class="comment-list">
-						<view 
-							v-if="n <= flod"
-							class="comment-list__item"
-							v-for="n in 10"
-							:key="n"
-						>
-							<view class="comment-list__item--head">
-								<image class="comment-list__item--head---avatar" src="http://dummyimage.com/120x600" mode=""></image>
-								<view class="comment-list__item--head---name">
-									小星
-								</view>
-							</view>
-							<view class="comment-list__item--comment">
-								同时，我省还公布了艺术、体育类各批次文化录取控制线和专业合格线。
-							</view>
-						</view>
-						<view class="fold" @click="unfold">
-							{{ flod <= 1 ? '展开' : '收起' }}8条回复 <image class="arrow" :src="flod <= 1 ? flodUrl : unflodUrl" mode=""></image>
-						</view>
+						{{ comment.addtime }} <text class="dot"> · </text><text class="reply" @click="show(comment)">{{ comment.reply_num === 0 ? '' : comment.reply_num }}回复</text>
 					</view>
 				</view>
 			</view>
-			<view class="item">
-				<image class="avatar" src="http://dummyimage.com/120x600" mode=""></image>
-				<view class="other">
-					<view class="name-zan">
-						<view class="name">
-							学员_122100112
-						</view>
-						<view class="zan">
-							<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/discover/xiaodianzan%402x.png" mode=""></image>
-							<view class="number">
-								12
-							</view>
-						</view>
-					</view>
-					<view class="comment">
-						同时，我省还公布了艺术、体育类各批次文化录取控制线和专业合格线、资格线。
-					</view>
-					<view class="date-reply">
-						22小时前   <text class="reply" @click="handleReply('学员_122100112')">回复</text>
-					</view>
-					<view class="comment-list">
-						<view class="comment-list__item">
-							<view class="comment-list__item--head">
-								<image class="comment-list__item--head---avatar" src="http://dummyimage.com/120x600" mode=""></image>
-								<view class="comment-list__item--head---name">
-									小星
-								</view>
-							</view>
-							<view class="comment-list__item--comment">
-								同时，我省还公布了艺术、体育类各批次文化录取控制线和专业合格线。
-							</view>
-						</view>
-						<view class="comment-list__item">
-							<view class="comment-list__item--head">
-								<image class="comment-list__item--head---avatar" src="http://dummyimage.com/120x600" mode=""></image>
-								<view class="comment-list__item--head---name">
-									l略略略专家建议
-								</view>
-							</view>
-							<view class="comment-list__item--comment">
-								同时，我省还公布了艺术、体育类各批次文化录取控制线和专业合格线。
-							</view>
-						</view>
-					</view>
-				</view>
-			</view>
+			<uni-load-more v-if="loading.show" :status="loading.status" :iconSize="14" />
 		</view>
 		<!-- 评论 end -->
 		<!-- 回复 start -->
 		<view class="reply-area">
-			<view class="replying" v-if="replying">
-				正在回复{{ replying }}
-			</view>
 			<view class="input-area">
 				<input
 					class="input"
 					type="text"
-					v-model="comment"
+					v-model="comment.value"
 					confirm-type="send"
 					placeholder="发表您的看法"
 					@confirm="confirm"
 				/>
 				<image class="send" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/discover/fabiaojiantou%402x.png" mode="" @click="confirm"></image>
-				<view class="praise">
-					<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/discover/xiaodianzan%402x.png" mode=""></image>
-					20
-				</view>
 			</view>
 		</view>
 		<!-- 回复 end -->
+		<!-- 弹窗 start -->
+		<uni-popup ref="popup" type="bottom">
+			<view class="popup-inner">
+				<scroll-view 
+					class="popup-inner-scroll"
+					scroll-y="true"
+					@scrolltolower="pullUpLoading"
+				>
+					<view class="title">
+						<view class="icon" @click="hide">
+							<uni-icons type="closeempty" />
+						</view>
+						<view class="text">
+							回复详情
+						</view>
+					</view>
+					<view class="default">
+						<image class="avatar" src="http://dummyimage.com/400x400" mode=""></image>
+						<view class="info">
+							<view class="username-praise">
+								<view class="username">{{ comment2.default.username }}</view>
+								<view class="praise">
+									<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/discover/xiaodianzan%402x.png" mode=""></image>
+									<view class="number">{{ comment2.default.admire }}</view>
+								</view>
+							</view>
+							<view class="content">
+								{{ comment2.default.content }}
+							</view>
+							<view class="time">
+								{{ comment2.default.addtime }}
+							</view>
+						</view>
+					</view>
+					<view class="list">
+						<view 
+							class="item"
+							v-for="comment2 in comment2.list"
+							:key="comment2.id"
+						>
+							<image class="avatar" src="http://dummyimage.com/400x400" mode=""></image>
+							<view class="info">
+								<view class="username-praise">
+									<view class="username">{{ comment2.username }}</view>
+									<view class="praise">
+										<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/discover/xiaodianzan%402x.png" mode=""></image>
+										<view class="number">{{ comment2.admire }}</view>
+									</view>
+								</view>
+								<view class="content">
+									{{ comment2.content }}
+								</view>
+								<view class="time">
+									{{ comment2.addtime }} <!-- <text>回复</text> -->
+								</view>
+							</view>
+						</view>
+					</view>
+				</scroll-view>
+				<view class="popup-reply">
+					<view class="input-area">
+						<input
+							class="input"
+							type="text"
+							v-model="comment2.value"
+							confirm-type="send"
+							:placeholder="comment2.placeholder"
+							@confirm="confirm2"
+						/>
+						<image class="send" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/discover/fabiaojiantou%402x.png" mode="" @click="confirm2"></image>
+					</view>
+				</view>
+			</view>
+		</uni-popup>
+		<!-- 弹窗 end -->
 	</view>
 </template>
 
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import Title from '@/components/title/Title.vue'
+	import UniPopup from '@/components/uni-popup/uni-popup.vue'
+	import UniIcons from '@/components/uni-icons/uni-icons.vue'
+	import UniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
+	import { 
+		issue_detail,
+		issue_detail_remove,
+		issue_detail_comment,
+		issue_detail_comment2,
+		issue_comment
+		} from '@/common/api/api.js'
 	export default {
 		name: 'Detail',
 		components: {
 			XesNavbar,
-			Title
+			Title,
+			UniPopup,
+			UniIcons,
+			UniLoadMore
 		},
 		data() {
 			return {
-				comment: '',
-				flod: 1,
-				unflodUrl: 'https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/shangsou%402x.png',
-				flodUrl: 'https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/arrowdown.png',
-				replying: ''
+				id: 0,
+				detail: {},
+				comment: { // 一级评论相关
+					value: '',
+					list: [],
+					page: 1,
+					totalPage: 1,
+					total: 0
+				},
+				comment2: { // 二级评论相关
+					value: '',
+					list: [],
+					page: 1,
+					totalPage: 1,
+					default: {},
+					placeholder: ''
+				},
+				loading: { // 加载相关
+					show: false,
+					status: 'more'
+				}
 			}
 		},
+		onLoad(options) {
+			this.id = options.id
+			this.toData(options.id)
+		},
+		// 一级评论上拉加载
+		async onReachBottom() {
+			this.comment.page++
+			if (this.comment.page > this.comment.totalPage) {
+				this.loading.status = 'noMore'
+				return false
+			}
+			this.loading.status = 'loading'
+			
+			const response = await issue_detail_comment({
+				id: this.id,
+				page: this.comment.page
+			})
+			const { data } = response.data.data
+			data.map(item => {
+				item.addtime = item.addtime.substring(5, 16)
+			})
+			this.comment.list = [...this.comment.list, ...data]
+			
+			this.loading.status = 'more'
+		},
 		methods: {
-			// 点击发送按钮
-			confirm() {
-				this.comment = ''
-				this.replying = ''
+			// 获取一级评论数据列表
+			async toData(id) {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				// 详情信息
+				const detail = await issue_detail({ id })
+				this.detail = detail.data.data
+				// 评论信息
+				const comment = await issue_detail_comment({ id, page: 1 })
+				const { data, last_page, total } = comment.data.data
+				data.map(item => {
+					item.addtime = item.addtime.substring(5, 16)
+				})
+				this.comment.list = data
+				this.comment.totalPage = last_page
+				this.comment.total = total
+				this.loading.show = last_page > 1
+				uni.hideLoading()
 			},
-			// 展开折叠的评论
-			unfold() {
-				this.flod <= 1 ? this.flod = 10 : this.flod = 1
+			// 获取二级评论数据
+			async toData2(id) {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				const response = await issue_detail_comment2({ id, page: 1 })
+				const { data, last_page } = response.data.data
+				data.map(item => {
+					item.addtime = item.addtime.substring(5, 16)
+				})
+				this.comment2.list = data
+				this.comment2.totalPage = last_page
+				uni.hideLoading()
+			},
+			// 评论详情
+			async confirm() {
+				if (this.comment.value === '') {
+					return false
+				}
+				const response = await issue_comment({
+					id: this.id,
+					content: this.comment.value,
+					pid: ''
+				})
+				this.comment.list.unshift(response.data.data)
+				this.comment.value = ''
+				this.comment.total++
+				uni.showToast({
+					icon: 'none',
+					title: '评论成功'
+				})
+			},
+			// 评论详情里的评论
+			async confirm2() {
+				if (this.comment2.value === '') {
+					return false
+				}
+				
+				const response = await issue_comment({
+					id: this.id,
+					content: this.comment2.value,
+					pid: this.comment2.id
+				})
+				
+				this.comment2.list.unshift(response.data.data)
+				this.comment2.value = ''
+				
+				this.comment.list.map(item => {
+					if (item.id === this.comment2.id) {
+						item.reply_num++
+					}
+				})
+				
+				uni.showToast({
+					icon: 'none',
+					title: '评论成功'
+				})
+			},
+			// 二级评论上拉加载
+			async pullUpLoading() {
+				this.comment2.page++
+				if (this.comment2.page > this.comment2.totalPage) {
+					return false
+				}
+				
+				const response = await issue_detail_comment2({
+					id: this.comment2.id,
+					page: this.comment2.page
+				})
+				const { data } = response.data.data
+				data.map(item => {
+					item.addtime = item.addtime.substring(5, 16)
+				})
+				this.comment2.list = [...this.comment2.list, ...data]
 			},
 			// 删除评论
 			handleDelete() {
+				const that = this
 				uni.showModal({
 					title: '提示',
 					content: '确认删除此条问题?',
 					success(res) {
 						if (res.confirm) {
-							uni.showToast({
-								icon: 'none',
-								title: '删除成功'
+							issue_detail_remove({ id: that.id }).then(response => {
+								uni.showToast({
+									icon: 'none',
+									title: '删除成功'
+								})
+								
+								setTimeout(() => {
+									uni.navigateBack({
+										delta: 1
+									})
+								}, 1500)
 							})
 						}
 					}
 				})
 			},
-			// 点击回复
-			handleReply(str) {
-				this.replying = str
+			show(row) {
+				this.$refs.popup.open()
+				this.comment2.default = row
+				this.comment2.placeholder = '回复 ' + row.username
+				this.comment2.id = row.id
+				this.toData2(row.id)
+			},
+			hide() {
+				this.$refs.popup.close()
 			}
 		}
 	}

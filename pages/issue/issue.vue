@@ -117,9 +117,9 @@
 				<view 
 					class="item"
 					v-for="answer in list"
-					:key="answer.fa_id"
+					:key="answer.id"
 				>
-					<image class="delete" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/issue/DEL%402x.png" mode="" @click="handleDelete"></image>
+					<image class="delete" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/issue/DEL%402x.png" mode="" @click="handleDelete(answer)"></image>
 					<view class="userinfo">
 						<image class="avatar" :src="userinfo.avatars" mode=""></image>
 						<view class="name-date">
@@ -134,7 +134,7 @@
 					<view class="reply">
 						{{ answer.my_content }}
 					</view>
-					<navigator :url="'/pages/issue/detail?' + answer.fa_id" hover-class="none" class="bot">
+					<navigator :url="'/pages/issue/detail?' + answer.id" hover-class="none" class="bot">
 						<view class="bot-crumbs">
 							自学考试 > 本科 > 金融学(新)02301K > 03709037090370903709
 						</view>
@@ -166,7 +166,7 @@
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import XesTextTabbar from '@/components/xes-text-tabbar/xes-text-tabbar.vue'
 	import UniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
-	import { issue_hot, me_issue, me_answer, professional } from '@/common/api/api.js'
+	import { issue_hot, me_issue, me_answer, professional, issue_answer_remove } from '@/common/api/api.js'
 	export default {
 		name: 'Issue',
 		components: {
@@ -240,7 +240,6 @@
 			this.toData()
 		},
 		async onReachBottom() {
-			this.loading.status = 'loading'
 			this.page++
 			if (this.page > this.totalPage) {
 				this.loading.status = 'noMore'
@@ -386,15 +385,27 @@
 				this[str].index = e.target.value
 			},
 			// 删除
-			handleDelete() {
+			handleDelete(row) {
+				const that = this
+				
 				uni.showModal({
 					title: '提示',
 					content: '确定删除此条信息?',
 					success(res) {
 						if (res.confirm) {
-							uni.showToast({
-								icon: 'none',
-								title: '删除'
+							uni.showLoading({
+								title: '删除中...'
+							})
+							issue_answer_remove({ id: row.id }).then(response => {
+								const index = that.list.findIndex(item => {
+									return item.id === row.id
+								})
+								that.list.splice(index, 1)
+								uni.hideLoading()
+								uni.showToast({
+									icon: 'none',
+									title: '删除成功'
+								})
 							})
 						}
 					}

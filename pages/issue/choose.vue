@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<!-- 导航栏 start -->
-		<xes-navbar 
+		<xes-navbar
 			title="提问"
 			text-align="center"
 			:is-arrow="true"
@@ -94,7 +94,8 @@
 					index: 0
 				}, // 科目选择器
 				professional: {
-					list: []
+					list: [],
+					id: 0
 				}
 			}
 		},
@@ -142,7 +143,7 @@
 				}
 				
 				uni.navigateTo({
-					url: '/pages/issue/ask'
+					url: `/pages/issue/ask?id=${this.professional.id}`
 				})
 			},
 			// 选择
@@ -180,7 +181,7 @@
 					const newArray = this.specialty.data[e.target.value].sub
 					this.subject.data = [...this.subject.data, ...newArray]
 				} else if (str === 'subject' && e.target.value !== '0') {
-					// do something
+					this.professional.id = this.subject.data[e.target.value].id
 				} else {
 					return false
 				}
