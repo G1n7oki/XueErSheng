@@ -36,7 +36,15 @@
 			color: #303133;
 		}
 		
+		.image {
+			width: 200upx;
+			height: 200upx;
+		}
+		
 		.options {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
 			margin-top: 108upx;
 			
 			.option-cell {
@@ -185,7 +193,4 @@
 		width: 100%;
 		box-sizing: border-box;
 		padding: 0 32upx;
-		position: absolute;
-		left: 0;
-		bottom: 41upx;
 	}

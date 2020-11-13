@@ -8,6 +8,7 @@
 			<xes-tabbar
 				:current="current"
 				:total="total"
+				:list="issueList"
 			/>
 		</xes-navbar>
 		<!-- 导航栏 end -->
@@ -25,38 +26,40 @@
 				<scroll-view class="scroll-view" scroll-y="true" >
 					<view class="issue-title">
 						<view class="type">
-							{{ issue.type }}
+							{{ issue.question_type | formatType }}
 						</view>
 						<view class="score">
-							{{ issue.score }}分
+							{{ issue.pivot.score }}分
 						</view>
 					</view>
 					<view class="issue-topic">
-						<view class="name">
-							{{ issue.name }}
+						<view class="name" v-if="issue.content_type === 1">
+							{{ issue.content }}
 						</view>
+						<image v-else class="image" :src="issue.content" mode="" @click="preview(issue.content)"></image>
 						<view class="options">
 							<view 
 								class="option-cell"
 								v-for="(item, index) in issue.option"
-								:key="item.name"
-								@click="handleAnswer(index, item, issue)"
+								:key="item.id"
 							>
 								<!-- result 1未答 2正确 3错误 -->
 								<view 
 									class="option-cell__name"
 									:class="{'success': item.result === 2, 'error': item.result === 3}"
+									@click="handleAnswer(index, item, issue)"
 								>
-									{{ item.name }}
+									{{ item.abcd_order.toLocaleUpperCase() }}
 								</view>
-								<view class="option-cell__cotent">
+								<view v-if="item.content_type === 1" class="option-cell__cotent">
 									{{ item.content }}
 								</view>
+								<image v-else class="image" :src="item.content" mode="" @click="preview(item.content)"></image>
 							</view>
 						</view>
 						<view @click="handleConfirm(issue)">
 							<uButton
-								v-if="issue.type === '多选题'"
+								v-if="issue.question_type === 2"
 								text="确认答案"
 							/>
 						</view>
@@ -64,7 +67,7 @@
 					<view class="split-line" v-if="issue.analysis"></view>
 					<view class="analysis" v-if="issue.analysis && pattern !== 'exam'">
 						<view class="tips">
-							正确答案 <text class="success">{{ issue.correct }}</text> , 您的答案 <text class="result">{{ issue.result }}</text> , 用时{{ issue.count }}秒
+							正确答案 <text class="success">{{ issue.correct }}</text> , 您的答案 <text class="result">{{ issue.confirmList.join(',') }}</text> , 用时{{ issue.count }}秒
 						</view>
 						<view class="stat">
 							<view class="stat-title">
@@ -125,7 +128,7 @@
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import uButton from '@/components/u-button/uButton.vue'
 	import XesTabbar from '@/components/xes-tabbar/xes-tabbar.vue'
-	import { question } from '@/common/api/api.js'
+	import { practice } from '@/common/api/api.js'
 	import Json from '@/static/data.json'
 	export default {
 		name: 'Practice',
@@ -144,18 +147,12 @@
 				timer: null,
 				pattern: uni.getStorageSync('pattern') || 'exercise', // exercise 练习 self-study 自学 exam 考试
 				total: 0,
-				current: 1
+				current: 1,
+				// demo result: [{ id: 1, choose: id, status: 0代表错误 ，1代表正确,2半对 }]
+				result: []
 			}
 		},
-		onLoad() {
-			question({
-				profession_id: 44
-			}).then(response => {
-				console.log(response)
-			}).catch(error => {
-				
-			})
-			
+		onLoad(options) {
 			// 屏幕的高度
 			const wHeight = uni.getSystemInfoSync()['windowHeight']
 			// 获取手机状态栏高度
@@ -163,50 +160,68 @@
 			
 			this.height = wHeight - this.statusBarHeight - 44 + 'px'
 			
-			let list = Json.topics.issueList
-			
-			this.total = list.length
-			
 			// 计算每题的答题时间
 			this.timer = setInterval(() => {
 				this.count++
 			}, 1000)
 			
-			/**
-			 * 模式1: 自学模式 直接出现答案, 不可答题, 解析直接出现
-			 * 模式2: 考试模式 可重复答题, 一道题答完直接跳下一题
-			 * 模式3: 练习模式 一道题答完出现解析
-			 * 不同的模式需要不同的方法处理数据
-			 * */
-			 if (!this.pattern) {
-				 return
-			 }
-			 
-			 this.pattern === 'exercise' ? this.toExercisePattern(list) : this.pattern === 'self-study' ? this.toSelfStudyPattern(list) : this.toExamPattern(list)
+			this.toData(options.id)
+		},
+		filters: {
+			// 题目类别 1 单选 ，2 多选， 3判断，4主观: 直接出现答案
+			formatType(value) {
+				switch (value) {
+					case 1: 
+						return '单选'
+					case 2:
+						return '多选'
+					case 3:
+						return '判断'
+					case 4: 
+						return '主观'
+					default: 
+						return ''
+				}
+			}
 		},
 		methods: {
+			async toData(id) {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				const response = await practice({
+					paper_id: id
+				})
+				const { question } = response.data.data[0]
+				this.total = question.length
+				
+				/**
+				 * 模式1: 自学模式 直接出现答案, 不可答题, 解析直接出现
+				 * 模式2: 考试模式 可重复答题, 一道题答完直接跳下一题
+				 * 模式3: 练习模式 一道题答完出现解析
+				 * 不同的模式需要不同的方法处理数据
+				 * */
+				if (!this.pattern) {
+					return
+				}
+				 
+				this.pattern === 'exercise' ? this.toExercisePattern(question) : this.pattern === 'self-study' ? this.toSelfStudyPattern(question) : this.toExamPattern(question)
+				uni.hideLoading()
+			},
 			changeSwiper(event) {
 				this.current = event.detail.current + 1
 			},
 			// 练习模式的数据
 			toExercisePattern(list) {
 				list.forEach(item => {
-					let ids = []
 					item.analysis = false // 是否显示解析
 					item.count = 0 // 答题时间
-					item.correct = [] // 解析展示的答案
-					item.confirmList = [] // 多选题选择的答案
-					item.result = 0 // 0 为未答 1 为正确 2 为半对 3 为错误
+					item.confirmList = [] // 选择的答案
+					item.result = 4 // 0 错误 1 正确 2 半对 4 未答
 					
 					// 给儿子数组添加前端需要的字段
 					item.option.forEach(children => {
 						children.result = 1 // 每道题目选择后的高亮的结果
-						ids.push(children.id) // 整理children id的集合
-					})
-					
-					// 解析里展示的答案
-					item.answer.split(',').forEach(res => {
-						item.correct.push(item.option[ids.indexOf(res)].name)
 					})
 				})
 				
@@ -227,10 +242,10 @@
 					})
 					
 					// 解析里展示的答案
-					item.answer.split(',').forEach(res => {
-						item.correct.push(item.option[ids.indexOf(res)].name)
-						item.option[ids.indexOf(res)].result = 2
-					})
+					// item.answer.split(',').forEach(res => {
+					// 	item.correct.push(item.option[ids.indexOf(res)].abcd_order)
+					// 	item.option[ids.indexOf(res)].result = 2
+					// })
 				})
 				
 				this.issueList = list
@@ -239,7 +254,7 @@
 			toExamPattern(list) {
 				list.forEach(item => {
 					item.confirmList = []
-					item.result = 0 // 0 为未答 1 为正确 2 为半对 3 为错误
+					item.result = 4 // 0 为未答 1 为正确 2 为半对 3 为错误
 					// 给儿子数组添加前端需要的字段
 					item.option.forEach(children => {
 						children.result = 1 // 每道题目选择后的高亮的结果
@@ -273,7 +288,7 @@
 					return
 				}
 				
-				issue.type === '单选题' ? this.single(index, item, issue) : this.choice(index, item, issue)
+				issue.question_type === 1 ? this.single(index, item, issue) : this.choice(index, item, issue)
 			},
 			// 单选题
 			single(index, item, issue) {
@@ -283,12 +298,23 @@
 					})
 					issue.option[index].result = 2
 				} else {
-					issue.result = issue.option[index].name
-					issue.answer === item.id ? issue.option[index].result = 2 : issue.option[index].result = 3
-					issue.option[+issue.answer - 1].result = 2 // 展示正确答案
-					issue.analysis = true
+					// 是否选择正确
+					const result = issue.answer === item.id.toString()
+					// 高亮结果
+					issue.option[index].result = result ? 2 : 3
+					// 记录答题结果
+					issue.result = result ? 1 : 0
+					issue.confirmList.push(issue.option[index].abcd_order.toLocaleUpperCase())
+					this.result.push({
+						id: issue.id,
+						choose: item.id,
+						status: issue.result
+					})
+					// 记录时间
 					issue.count = this.count
 					this.count = 0
+					// 不可再答题并展示解析
+					issue.analysis = true
 				}
 			},
 			// 多选题
@@ -323,6 +349,14 @@
 			// 检测选择的答案是否在正确答案内
 			findOne(haystack, arr) {
 				return arr.every(item => haystack.indexOf(item) >= 0)
+			},
+			// 预览
+			preview (str) {
+				const url = []
+				url.push(str)
+				uni.previewImage({
+					urls: url
+				})
 			}
 		}
 	}

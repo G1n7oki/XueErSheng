@@ -8,8 +8,8 @@
 				<view class="navbar-arrow-image" v-if="isArrow && isArrowType === 'image'" @click="handleArrow">
 					<image class="image" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/fanhui%402x.png" mode=""></image>
 				</view>
-				<view class="navbar-arrow-line" :class="{'active': isArrowColor === 'white' }" v-if="isArrow && isArrowType === 'line'" @click="handleArrow">
-					<uni-icons type="arrowleft" size="24" color="#000"></uni-icons>
+				<view class="navbar-arrow-line" v-if="isArrow && isArrowType === 'line'" @click="handleArrow">
+					<uni-icons type="arrowleft" size="24" :color="isArrowColor"></uni-icons>
 				</view>
 				<view 
 					v-if="isTitle"
@@ -91,7 +91,7 @@
 			// 箭头颜色
 			isArrowColor: {
 				type: String,
-				default: 'black'
+				default: '#000'
 			},
 			// 是否需要空元素占位
 			isEmpty: {

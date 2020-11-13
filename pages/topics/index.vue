@@ -202,7 +202,6 @@
 	import Progress from '@/components/progress/progress.vue'
 	import UniTransition from '@/components/uni-transition/uni-transition.vue'
 	import { question, refine } from '@/common/api/api.js'
-	// import Json from '@/static/data.json'
 	export default {
 		name: 'Topics',
 		components: { 

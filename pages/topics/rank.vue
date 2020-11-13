@@ -13,14 +13,14 @@
 			<view class="side-1">
 				<view class="avatar-area">
 					<image class="crown" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/topics/yinguan%402x.png" mode=""></image>
-					<image class="avatar" src="http://dummyimage.com/240x400" mode=""></image>
+					<image class="avatar" :src="second.avatars" mode=""></image>
 				</view>
 				<view class="cylinder">
 					<view class="nickname">
-						南师精神
+						{{ second.username }}
 					</view>
 					<view class="score">
-						4054 <text>道</text>
+						{{ second.total_num }} <text>道</text>
 					</view>
 					<view class="rank">
 						2
@@ -30,14 +30,14 @@
 			<view class="center">
 				<view class="avatar-area">
 					<image class="crown" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/topics/huangguan%402x.png" mode=""></image>
-					<image class="avatar" src="http://dummyimage.com/240x400" mode=""></image>
+					<image class="avatar" :src="champion.avatars" mode=""></image>
 				</view>
 				<view class="cylinder">
 					<view class="nickname">
-						学尔升官方
+						{{ champion.username }}
 					</view>
 					<view class="score">
-						4054 <text>道</text>
+						{{ champion.total_num }} <text>道</text>
 					</view>
 					<view class="rank">
 						1
@@ -47,14 +47,14 @@
 			<view class="side-2">
 				<view class="avatar-area">
 					<image class="crown" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/topics/tongguan%402x.png" mode=""></image>
-					<image class="avatar" src="http://dummyimage.com/240x400" mode=""></image>
+					<image class="avatar" :src="third.avatars" mode=""></image>
 				</view>
 				<view class="cylinder">
 					<view class="nickname">
-						老酒哎学习
+						{{ third.username }}
 					</view>
 					<view class="score">
-						4054 <text>道</text>
+						{{ third.total_num }} <text>道</text>
 					</view>
 					<view class="rank">
 						3
@@ -65,16 +65,16 @@
 		<!-- 巨幕 end -->
 		<!-- rank-list start -->
 		<view class="rank-list">
-			<view class="item" v-for="(n, index) in 10" :key="index">
+			<view class="item" v-for="(item, index) in list" :key="list.id">
 				<view class="index">
-					94
+					{{ index + 4 }}
 				</view>
 				<view class="info">
-					<image class="avatar" src="http://dummyimage.com/300x250" mode=""></image>
-					<view class="name">学尔升官方客服</view>
+					<image class="avatar" :src="item.avatars" mode=""></image>
+					<view class="name">{{ item.username }}</view>
 				</view>
 				<view class="number">
-					1324 <text>道</text>
+					{{ item.total_num }} <text>道</text>
 				</view>
 			</view>
 		</view>
@@ -82,14 +82,14 @@
 		<!-- 我的排名 strat -->
 		<view class="me-rank">
 			<view class="index">
-				94
+				{{ me.rank }}
 			</view>
 			<view class="info">
-				<image class="avatar" src="http://dummyimage.com/300x250" mode=""></image>
-				<view class="name">学尔升官方客服</view>
+				<image class="avatar" :src="me.avatars" mode=""></image>
+				<view class="name">{{ me.username }}</view>
 			</view>
 			<view class="number">
-				1324 <text>道</text>
+				{{ me.total_num }} <text>道</text>
 			</view>
 		</view>
 		<!-- 我的排名 end -->
@@ -98,13 +98,61 @@
 
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
+	import { ranking } from '@/common/api/api.js'
 	export default {
 		name: 'Rank',
 		components: {
 			XesNavbar
 		},
 		data() {
-			return {}
+			return {
+				me: { // 我的信息
+					username: '',
+					rank: 0,
+					avatars: '',
+					total_num: 0
+				},
+				champion: { // 冠军
+					username: '',
+					avatars: '',
+					total_num: 0
+				},
+				second: { // 亚军
+					username: '',
+					avatars: '',
+					total_num: 0
+				},
+				third: { // 季军
+					username: '',
+					avatars: '',
+					total_num: 0
+				},
+				list: [] // 其他列表
+			}
+		},
+		onLoad() {
+			this.toData()
+		},
+		methods: {
+			async toData() {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				
+				const response = await ranking()
+				const { my, rank } = response.data.data
+				
+				this.me = my
+				
+				this.champion = rank[0]
+				this.second = rank[1]
+				this.third = rank[2]
+				
+				const list = rank.slice(3)
+				this.list = list
+				
+				uni.hideLoading()
+			}
 		}
 	}
 </script>

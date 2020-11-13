@@ -235,14 +235,6 @@ export const me_teacher = (data) => {
 		data
 	})
 }
-// 我的订单
-export const me_order = (data) => {
-	return http.request({
-		url: 'users/order',
-		method: 'GET',
-		data
-	})
-}
 // 帮助与反馈
 export const help = (data) => {
 	return http.request({
@@ -294,6 +286,30 @@ export const refine = (data) => {
 		data
 	})
 }
+// 试卷
+export const practice = (data) => {
+	return http.request({
+		url: 'paper',
+		method: 'POST',
+		data
+	})
+}
+// 排行榜
+export const ranking = (data) => {
+	return http.request({
+		url: 'ranking',
+		method: 'GET',
+		data
+	})
+}
+// 做题记录
+export const topics_record = (data) => {
+	return http.request({
+		url: 'question/record',
+		method: 'GET',
+		data
+	})
+}
 /**
  * 以下为订单模块接口
  * */
@@ -301,6 +317,14 @@ export const refine = (data) => {
 export const order_information = (data) => {
 	return http.request({
 		url: 'order/preview',
+		method: 'GET',
+		data
+	})
+}
+// 我的订单
+export const me_order = (data) => {
+	return http.request({
+		url: 'users/order',
 		method: 'GET',
 		data
 	})

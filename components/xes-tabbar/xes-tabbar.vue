@@ -43,9 +43,9 @@
 						提示
 					</view>
 					<view class="papers-dialog__inner--content">
-						亲, 还有39道题目未完成
+						亲, 还有{{ unfinished }}道题目未完成
 					</view>
-					<view class="papers-dialog__inner--item" @click="unfinished">
+					<view class="papers-dialog__inner--item" @click="handleUnfinished">
 						查看未完成的题目
 					</view>
 					<view class="papers-dialog__inner--item">
@@ -66,17 +66,17 @@
 				</view>
 				<view class="answer-sheet-tips">
 					<view class="finished">
-						已答：<text class="text">10</text>
+						已答：<text class="text">{{ finished }}</text>
 					</view>
 					<view class="unfinished">
-						未答：<text class="text">10</text>
+						未答：<text class="text">{{ unfinished }}</text>
 					</view>
 				</view>
 				<view class="answer-sheet-item">
 					<view 
 						class="item"
-						:class="{'active': index % 2 === 0}"
-						v-for="(item, index) in 30"
+						:class="{'active': item.analysis === true}"
+						v-for="(item, index) in list"
 						:key="index"
 					>
 						{{ index + 1}}
@@ -94,7 +94,7 @@
 				<view class="set-dialog" :style="{top: top}">
 					<view class="triangle"></view>
 					<view class="item-area">
-						<view class="item" @click="handleItem">
+						<!-- <view class="item" @click="handleItem">
 							<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/topics/yejianmoshi%402x.png" mode=""></image>
 							<view class="name">
 								夜间模式
@@ -105,7 +105,7 @@
 							<view class="name">
 								字体放大
 							</view>
-						</view>
+						</view> -->
 						<navigator url="/pages/topics/correction" hover-class="none" class="item">
 							<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/topics/jiucuo%402x.png" mode=""></image>
 							<view class="name">
@@ -143,7 +143,9 @@
 				timer: null,
 				count: 0,
 				isShowPapers: false,
-				top: 0
+				top: 0,
+				unfinished: 0,
+				finished: 0
 			}
 		},
 		created() {
@@ -161,6 +163,12 @@
 			total: {
 				type: Number,
 				default: 0
+			},
+			list: {
+				type: Array,
+				default: function () {
+					return []
+				}
 			}
 		},
 		methods: {
@@ -205,12 +213,24 @@
 				this.$refs[str].close()
 			},
 			// 点击查看未完成的题目
-			unfinished() {
+			handleUnfinished() {
 				this.$refs['papers-dialog'].close()
 				this.$refs['answer-dialog'].open()
 			},
 			handleItem() {
 				console.log('111')
+			}
+		},
+		watch: {
+			list(newValue) {
+				const finished = []
+				newValue.map(item => {
+					if (item.analysis) {
+						finished.push(item)
+					}
+				})
+				this.finished = finished.length
+				this.unfinished = newValue.length - this.finished
 			}
 		}
 	}

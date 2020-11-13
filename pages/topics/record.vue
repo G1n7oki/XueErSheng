@@ -21,7 +21,7 @@
 		<view class="list-data">
 			<view 
 				class="list-cell"
-				v-for="item in listData"
+				v-for="item in list"
 				:key="item.id"
 			>
 				<view class="date">
@@ -71,7 +71,8 @@
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import XesTextTabbar from '@/components/xes-text-tabbar/xes-text-tabbar.vue'
-	import Json from '@/static/data.json'
+	import { topics_record } from '@/common/api/api.js'
+	// import Json from '@/static/data.json'
 	export default {
 		name: 'TopicsRecord',
 		components: {
@@ -91,7 +92,7 @@
 					current: 0
 				},
 				top: 0, // tabbar的定位
-				listData: [] // 列表的数据
+				list: [] // 列表的数据
 			}
 		},
 		onLoad() {
@@ -101,12 +102,38 @@
 				this.top = navbar.height
 			}).exec()
 			
-			this.listData = Json.record.topics
+			// this.listData = Json.record.topics
+			this.toData()
 		},
 		onReachBottom() {
 			
 		},
 		methods: {
+			async toData() {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				const response = await topics_record({
+					type: this.tabbar.current + 1
+				})
+				const { data } = response.data
+				let list = []
+				// 处理数据
+				data.forEach(item => {
+					item.created_at = item.created_at.substring(0, 10)
+					if (list.length === 0) {
+						list.push({
+							date: item.created_at
+						})
+					} else {
+						console.log(list.indexOf(item.created_at))
+					}
+				})
+				
+				console.log(list)
+				// this.list = list
+				uni.hideLoading()
+			},
 			toId(id) {
 				this.tabbar.current = id
 			},
