@@ -64,8 +64,8 @@
 							/>
 						</view>
 					</view>
-					<view class="split-line" v-if="issue.analysis"></view>
-					<view class="analysis" v-if="issue.analysis && pattern !== 'exam'">
+					<view class="split-line" v-if="issue.choose"></view>
+					<view class="analysis" v-if="issue.choose && pattern !== 'exam'">
 						<view class="tips">
 							正确答案 <text class="success">{{ issue.correct }}</text> , 您的答案 <text class="result">{{ issue.confirmList.join(',') }}</text> , 用时{{ issue.count }}秒
 						</view>
@@ -190,10 +190,13 @@
 					title: '加载中...'
 				})
 				const response = await practice({
-					paper_id: id
+					paper_id: 1,
+					profession_id: 44,
+					type: 0,
+					exam_id: ''
 				})
-				const { question } = response.data.data[0]
-				this.total = question.length
+				const list = response.data.data
+				this.total = list.length
 				
 				/**
 				 * 模式1: 自学模式 直接出现答案, 不可答题, 解析直接出现
@@ -201,11 +204,11 @@
 				 * 模式3: 练习模式 一道题答完出现解析
 				 * 不同的模式需要不同的方法处理数据
 				 * */
-				if (!this.pattern) {
-					return
-				}
+				// if (!this.pattern) {
+				// 	return
+				// }
 				 
-				this.pattern === 'exercise' ? this.toExercisePattern(question) : this.pattern === 'self-study' ? this.toSelfStudyPattern(question) : this.toExamPattern(question)
+				this.pattern === 'exercise' ? this.toExercisePattern(list) : this.pattern === 'self-study' ? this.toSelfStudyPattern(list) : this.toExamPattern(list)
 				uni.hideLoading()
 			},
 			changeSwiper(event) {
@@ -214,7 +217,6 @@
 			// 练习模式的数据
 			toExercisePattern(list) {
 				list.forEach(item => {
-					item.analysis = false // 是否显示解析
 					item.count = 0 // 答题时间
 					item.confirmList = [] // 选择的答案
 					item.result = 4 // 0 错误 1 正确 2 半对 4 未答
@@ -231,7 +233,6 @@
 			toSelfStudyPattern(list) {
 				list.forEach(item => {
 					let ids = []
-					item.analysis = true // 是否显示解析
 					item.count = 0 // 答题时间
 					item.correct = [] // 解析展示的答案
 					
@@ -284,7 +285,7 @@
 			// 答题
 			handleAnswer(index, item, issue) {
 				// 是否可以答题
-				if (issue.analysis) {
+				if (issue.choose) {
 					return
 				}
 				
@@ -314,7 +315,7 @@
 					issue.count = this.count
 					this.count = 0
 					// 不可再答题并展示解析
-					issue.analysis = true
+					issue.choose = true
 				}
 			},
 			// 多选题

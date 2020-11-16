@@ -156,14 +156,14 @@
 					username,
 					active,
 					keep,
-					long,
+					long_time,
 					num,
 					right
 				} = data.data.data
 				
 				this.data.avatar = avatars
 				this.data.nickname = username
-				this.data.today = long
+				this.data.today = long_time
 				this.data.amount = num
 				this.data.accuracy = right
 				this.data.liveness = active

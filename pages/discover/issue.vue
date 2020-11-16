@@ -34,6 +34,7 @@
 	import UniIcons from '@/components/uni-icons/uni-icons.vue'
 	import Ctpic from '@/tools/util/custom-picture.js'
 	import { baseUrl } from '@/common/config/config.js'
+	import { discover_issue } from '@/common/api/api.js'
 	export default {
 		name: 'Issue',
 		components: {
@@ -85,10 +86,9 @@
 				this.image.splice(index, 1)
 			},
 			// 点击提交
-			async handleIssue() {
+			handleIssue() {
 				const that = this
 				let image = []
-				const ctpic = new Ctpic()
 				
 				uni.showLoading({
 					title: '上传中...'
@@ -110,9 +110,24 @@
 							if(res.statusCode === 200) {
 								const data = JSON.parse(res.data)
 								that.postImage.push(data.data)
-								// 如果上传的文件长度等于应上传文件的长度则说明上传完毕
+								// 两个接口存在异步关系所以需要判断这个接口在什么时机执行
 								if (that.postImage.length === that.image.length) {
-									uni.hideLoading()
+									discover_issue({
+										content: that.content,
+										device: 'mini',
+										image: that.postImage
+									}).then(response => {
+										uni.hideLoading()
+										uni.showToast({
+											icon: 'none',
+											title: '发布成功'
+										})
+										setTimeout(() => {
+											uni.navigateBack({
+												delta: 1
+											})
+										}, 1500)
+									})
 								}
 							} else {
 								const data = JSON.parse(res.data)
@@ -127,7 +142,6 @@
 								icon: 'none',
 								title: error.errMsg
 							})
-							uni.hideLoading()
 						}
 					})
 				}

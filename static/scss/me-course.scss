@@ -33,15 +33,12 @@
 	}
 }
 
-.swiper {
-	background-color: #F4F7F9;
-}
-
 .scroll-view {
 	height: 100%;
 	padding: 32upx;
 	box-sizing: border-box;
 	position: relative;
+	background-color: #F4F7F9;
 }
 
 .scroll-view__item {
@@ -49,6 +46,7 @@
 	background-color: #fff;
 	border-radius: 20upx;
 	padding: 32upx;
+	margin-bottom: 16upx;
 	
 	.image {
 		flex-shrink: 0;
@@ -89,6 +87,84 @@
 				font-weight: 500;
 				color: #606266;
 				margin-left: 18upx;
+			}
+		}
+	}
+}
+// 直播
+.live {
+	
+	.item {
+		display: flex;
+		padding: 24upx;
+		background-color: #fff;
+		border-radius: 10upx;
+		margin-bottom: 32upx;
+		
+		.avatar {
+			flex-shrink: 0;
+			width: 108upx;
+			height: 108upx;
+			border-radius: 50%;
+			overflow: hidden;
+		}
+		
+		.info {
+			width: 490upx;
+			margin-left: 31upx;
+			
+			.type-title {
+				font-size: 28upx;
+				font-weight: bold;
+				color: #303133;
+			}
+			
+			.bot {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-top: 10upx;
+				
+				.user-status {
+					
+					.user {
+						font-size: 24upx;
+						color: #303133;
+						font-weight: 500;
+					}
+					
+					.status {
+						font-size: 24upx;
+						font-weight: 500;
+						color: #606266;
+						margin-top: 10upx;
+						
+						image {
+							width: 18upx;
+							height: 22upx;
+							margin-left: 12upx;
+						}
+					}
+				}
+				
+				.button {
+					width: 156upx;
+					height: 56upx;
+					border-radius: 28upx;
+					line-height: 56upx;
+					font-size: 28upx;
+					font-weight: 500
+				}
+				
+				.button-1 {
+					background-color: #1283FF;
+					color: #FFFFFF;
+				}
+				
+				.button-2 {
+					background-color: #F4F7F9;
+					color: #909399;
+				}
 			}
 		}
 	}

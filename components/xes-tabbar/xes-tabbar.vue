@@ -48,7 +48,7 @@
 					<view class="papers-dialog__inner--item" @click="handleUnfinished">
 						查看未完成的题目
 					</view>
-					<view class="papers-dialog__inner--item">
+					<view class="papers-dialog__inner--item" @click="handleHand">
 						继续提交
 					</view>
 					<view class="papers-dialog__inner--item" @click="hide('papers-dialog')">
@@ -130,6 +130,7 @@
 <script>
 	import UniPopup from '@/components/uni-popup/uni-popup.vue'
 	import UniIcons from '@/components/uni-icons/uni-icons.vue'
+	import { topics_hand } from '@/common/api/api.js'
 	export default {
 		name: 'XrsTabbar',
 		components: {
@@ -219,13 +220,25 @@
 			},
 			handleItem() {
 				console.log('111')
+			},
+			// 交卷
+			async handleHand() {
+				const response = await topics_hand({
+					paper_id: '',
+					finish: 0,
+					profession_id: uni.getStorageSync('profession_id'),
+					total: this.total,
+					time: this.count,
+					exam_id: '',
+					answer_json: []
+				})
 			}
 		},
 		watch: {
 			list(newValue) {
 				const finished = []
 				newValue.map(item => {
-					if (item.analysis) {
+					if (item.choose) {
 						finished.push(item)
 					}
 				})

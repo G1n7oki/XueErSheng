@@ -48,7 +48,7 @@
 								<view class="number">
 									<text>{{ cell.total }}道题</text>
 									<text>
-										{{ tabbar.current === 0 ? '完成' : '' }}{{ cell.finish }}{{ tabbar.current === 0 ? '%' : '分' }}
+										{{ tabbar.current === 0 ? `完成${cell.finish}%` : `${cell.score}分` }}
 									</text>
 								</view>
 							</view>
@@ -105,9 +105,6 @@
 			// this.listData = Json.record.topics
 			this.toData()
 		},
-		onReachBottom() {
-			
-		},
 		methods: {
 			async toData() {
 				uni.showLoading({
@@ -117,25 +114,42 @@
 					type: this.tabbar.current + 1
 				})
 				const { data } = response.data
+				let temp = []
 				let list = []
 				// 处理数据
-				data.forEach(item => {
-					item.created_at = item.created_at.substring(0, 10)
-					if (list.length === 0) {
+				data.forEach((item, index) => {
+					const date = item.created_at.substring(0, 10)
+					const finish = Math.floor((item.total_num - item.not_done) / item.total_num * 100)
+					if (temp.indexOf(date) === -1) {
+						temp.push(date)
 						list.push({
-							date: item.created_at
+							date: date,
+							children: [{
+								id: item.paper_id,
+								title: '',
+								total: item.total_num,
+								finish: finish,
+								score: item.total_score
+							}]
 						})
 					} else {
-						console.log(list.indexOf(item.created_at))
+						const index = temp.indexOf(date)
+						list[index].children.push({
+							id: item.paper_id,
+							title: '',
+							total: item.total_num,
+							finish: finish,
+							score: item.total_score
+						})
 					}
 				})
 				
-				console.log(list)
-				// this.list = list
+				this.list = list
 				uni.hideLoading()
 			},
 			toId(id) {
 				this.tabbar.current = id
+				this.toData()
 			},
 			// 路由跳转
 			toUrl() {

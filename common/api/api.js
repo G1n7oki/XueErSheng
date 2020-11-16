@@ -310,6 +310,14 @@ export const topics_record = (data) => {
 		data
 	})
 }
+// 交卷
+export const topics_hand = (data) => {
+	return http.request({
+		url: 'complete',
+		method: 'POST',
+		data
+	})
+}
 /**
  * 以下为订单模块接口
  * */
@@ -361,6 +369,14 @@ export const discover_comment = (data) => {
 	return http.request({
 		url: 'article/comment',
 		method: 'GET',
+		data
+	})
+}
+// 发现-发布
+export const discover_issue = (data) => {
+	return http.request({
+		url: 'article/new',
+		method: 'POST',
 		data
 	})
 }

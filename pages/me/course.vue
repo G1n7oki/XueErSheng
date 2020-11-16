@@ -30,67 +30,81 @@
 			@change="changeSwiper"
 		>
 			<swiper-item>
-				<scroll-view class="scroll-view" scroll-y="true">
-					<empty v-if="courseList.length <= 0" />
-					<view
+				<empty v-if="course.show" />
+				<scroll-view 
+					v-else
+					class="scroll-view"
+					scroll-y="true"
+					@scrolltolower="pullUpLoading"
+				>
+					<navigator
 						class="scroll-view__item"
-						v-for="item in courseList"
-						:key="item.id"
+						v-for="course in course.list"
+						:key="course.id"
+						hover-class="none"
+						:url="'/pages/study/detail?id=' + course.id"
 					>
-						<image class="image" src="http://dummyimage.com/180x150" mode=""></image>
+						<image class="image" :src="course.cover" mode=""></image>
 						<view class="info">
 							<view class="name">
-								童哲校长-新手股民必备技能童哲校长-新手股民必备技能
+								{{ course.title }}
 							</view>
 							<view class="indate">
-								课程有效期还剩：360天
+								{{ course.validity < 0 ? '已过期' : `课程有效期还剩：${course.validity}天` }}
 							</view>
 							<view class="bot">
 								<view class="progress">
 									<Progress 
 										:show-info="false"
 										:stroke-width="3"
-										:percent="60"
+										:percent="course.progress"
 									/>
 								</view>
 								<view class="text">
-									学习进度 90%
+									学习进度 {{ course.progress }}%
 								</view>
 							</view>
 						</view>
-					</view>
+					</navigator>
+					<uni-load-more v-if="course.totalPage > 1" :status="course.loading" />
 				</scroll-view>
 			</swiper-item>
 			<swiper-item>
-				<scroll-view class="scroll-view" scroll-y="true">
-					<empty v-if="liveList.length <= 0" />
-					<view 
-						class="scroll-view__item"
-						v-for="item in liveList"
-						:key="item.id"
+				<empty v-if="live.show" />
+				<scroll-view 
+					class="scroll-view live"
+					scroll-y="true"
+				>
+					<view
+						class="item" 
+						v-for="live in live.list"
+						:key="live.id"
 					>
-						<image class="image" src="http://dummyimage.com/180x150" mode=""></image>
+						<image class="avatar" :src="live.banner" mode=""></image>
 						<view class="info">
-							<view class="name">
-								童哲校长-新手股民必备技能童哲校长-新手股民必备技能
-							</view>
-							<view class="indate">
-								课程有效期还剩：360天
+							<view class="type-title">
+								{{ live.title }}
 							</view>
 							<view class="bot">
-								<view class="progress">
-									<Progress 
-										:show-info="false"
-										:stroke-width="3"
-										:percent="60"
-									/>
+								<view class="user-status">
+									<view class="user">
+										{{ live.name }}
+									</view>
+									<view class="status">
+										{{ live.isPlay === 1 ? '正在直播' : live.start_time + '-' + live.end_time }}
+										<image v-if="live.isPlay === 1" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/live.gif" mode=""></image>
+									</view>
 								</view>
-								<view class="text">
-									学习进度 90%
-								</view>
+								<button v-if="live.isPlay === 1" class="button button-1">
+									进入直播
+								</button>
+								<button v-else class="button button-2">
+									已预约
+								</button>
 							</view>
 						</view>
 					</view>
+					<uni-load-more v-if="live.totalPage > 1" :status="live.loading" />
 				</scroll-view>
 			</swiper-item>
 		</swiper>
@@ -102,14 +116,15 @@
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import Progress from '@/components/progress/progress.vue'
 	import Empty from '@/components/empty/empty.vue'
+	import UniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
 	import { me_course, me_live } from '@/common/api/api.js'
-	import { showToast } from '@/tools/util/util.js'
 	export default {
 		name: 'MeCourse',
 		components: {
 			XesNavbar,
 			Progress,
-			Empty
+			Empty,
+			UniLoadMore
 		},
 		data() {
 			return {
@@ -124,8 +139,20 @@
 					index: 0
 				},
 				height: 0,
-				courseList: [],
-				liveList: []
+				course: {
+					list: [],
+					page: 1,
+					totalPage: 1,
+					show: false,
+					loading: 'more'
+				},
+				live: {
+					list: [],
+					page: 1,
+					totalPage: 1,
+					show: false,
+					loading: 'more'
+				}
 			}
 		},
 		onLoad() {
@@ -155,24 +182,47 @@
 					title: '加载中...'
 				})
 				// 我的课程数据
-				const course = await me_course()
-				console.log(course)
-				if (course.statusCode === 200) {
-					this.courseList = course.data.data
-				} else {
-					showToast(course.data.message)
-					uni.hideLoading()
-					return false
-				}
+				const course = await me_course({
+					page: 1
+				})
+				this.course.list = course.data.data.data
+				this.course.totalPage = course.data.data.last_page
+				this.course.show = this.course.list.length <= 0 ? true : false
 				// 我的直播课数据
-				const live = await me_live()
-				console.log(live)
-				if (live.statusCode === 200) {
-					this.liveList = course.data.data
-				} else {
-					showToast(live.data.message)
-				}
+				const live = await me_live({
+					page: 1
+				})
+				this.live.list = live.data.data.list.data
+				this.live.totalPage = live.data.data.list.last_page
+				this.live.show = this.live.list.length <= 0 ? true : false
 				uni.hideLoading()
+			},
+			async pullUpLoading() {
+				if (this.tabbar.index === 0) {
+					this.course.page++
+					if (this.course.page > this.course.totalPage) {
+						this.course.loading = 'noMore'
+						return false
+					}
+					this.course.loading = 'loading'
+					const course = await me_course({
+						page: this.course.page
+					})
+					this.course.list = [...this.course.list, ...course.data.data.data]
+					this.course.loading = 'more'
+				} else {
+					this.live.page++
+					if (this.live.page > this.live.totalPage) {
+						this.live.loading = 'noMore'
+						return false
+					}
+					this.live.loading = 'loading'
+					const live = await me_course({
+						page: this.live.page
+					})
+					this.live.list = [...this.live.list, ...live.data.data.list.data]
+					this.live.loading = 'more'
+				}
 			}
 		}
 	}

@@ -109,7 +109,7 @@
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
-		}, { // 错误/收藏
+		}, { // 错题/收藏
 			"path": "pages/topics/wrong",
 			"style": {
 				"navigationBarTitleText": "",

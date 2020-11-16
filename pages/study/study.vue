@@ -115,7 +115,7 @@
 						<empty v-if="live.show" />
 						<view v-else class="live live-area">
 							<view class="live-list">
-								<view 
+								<view
 									class="item" 
 									v-for="live in live.list"
 									:key="live.id"
