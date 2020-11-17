@@ -75,7 +75,7 @@
 				<view class="answer-sheet-item">
 					<view 
 						class="item"
-						:class="{'active': item.analysis === true}"
+						:class="{'active': item.choose === true}"
 						v-for="(item, index) in list"
 						:key="index"
 					>

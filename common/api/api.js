@@ -417,6 +417,22 @@ export const discover_issue = (data) => {
 			data
 		})
 	}
+	// 直播/预告
+	export const live_advance = (data) => {
+		return http.request({
+			url: 'live/notice',
+			method: 'GET',
+			data
+		})
+	}
+	// 预约直播
+	export const advance = (data) => {
+		return http.request({
+			url: 'subscribe',
+			method: 'POST',
+			data
+		})
+	}
 	/**
 	* 以下为问答模块接口
 	* */

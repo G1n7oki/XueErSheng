@@ -9,104 +9,151 @@
 		<!-- 导航栏 end -->
 		<view class="inner">
 			<!-- 直播/预告卡片 start -->
-			<view class="item">
-				<view class="tips">
+			<view
+				class="item"
+				v-for="item in list"
+				:key="item.sol_id"
+			>
+				<view class="tips" v-if="item.is_play === 1">
 					LIVE
 				</view>
-				<image class="image" src="http://dummyimage.com/180x180" mode=""></image>
+				<image class="image" :src="item.image"></image>
 				<view class="info">
 					<view class="title">
-						金融管理本科专业解读全金融管理本科专业解读全
+						{{ item.title }}
 					</view>
 					<view class="user">
-						马正涛 <text>市政</text>
+						{{ item.name }} <!-- <text>市政</text> '2020.10.10 18:00-20:00'-->
 					</view>
 					<view class="status">
-						正在直播
+						{{ item.is_play === 1 ? '正在直播' : `${item.start_time} -${item.end_time}` }}
 					</view>
 					<view class="watch">
-						正在观看50人
+						{{ item.is_play === 1 ? `正在观看人数${Math.floor(Math.random() * 50 + 50)}` : `已预约${item.subscribe_num}人` }}
 					</view>
 				</view>
-				<button 
+				<button
+					v-if="item.is_play === 1"
 					class="button button-1"
 					hover-class="none"
 					type="default"
-					@click="handleBtn"
+					@click="toLivePlay(item.sol_id)"
 				>
 					正在直播
 				</button>
-			</view>
-			<!-- 直播/预告卡片 end -->
-			<view class="item">
-				<view class="tips">
-					LIVE
-				</view>
-				<image class="image" src="http://dummyimage.com/180x180" mode=""></image>
-				<view class="info">
-					<view class="title">
-						金融管理本科专业解读全金融管理本科专业解读全
-					</view>
-					<view class="user">
-						马正涛 <text>市政</text>
-					</view>
-					<view class="status">
-						2020.10.10   18:00-20:00
-					</view>
-					<view class="watch">
-						已预约50人
-					</view>
-				</view>
-				<button 
+				<button
+					v-else-if="item.subscribe === 0"
 					class="button button-2"
 					hover-class="none"
 					type="default"
-					@click="handleBtn"
+					@click="handleAdvance(item)"
 				>
 					立即预约
 				</button>
-			</view>
-			<view class="item">
-				<image class="image" src="http://dummyimage.com/180x180" mode=""></image>
-				<view class="info">
-					<view class="title">
-						金融管理本科专业解读全金融管理本科专业解读全
-					</view>
-					<view class="user">
-						马正涛 <text>市政</text>
-					</view>
-					<view class="status">
-						2020.10.10   18:00-20:00
-					</view>
-					<view class="watch">
-						已预约50人
-					</view>
-				</view>
-				<button 
+				<button
+					v-else
 					class="button button-3"
 					hover-class="none"
 					type="default"
-					@click="handleBtn"
 				>
 					已预约
 				</button>
 			</view>
+			<!-- 直播/预告卡片 end -->
+			<uni-load-more
+				v-if="totalPage > 1"
+				:status="loading"
+				:iconSize="14"
+			/>
 		</view>
 	</view>
 </template>
 
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
+	import Empty from '@/components/empty/empty.vue'
+	import UniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
+	import { live_advance, advance } from '@/common/api/api.js'
 	export default {
 		name: 'Live',
 		components: {
-			XesNavbar
+			XesNavbar,
+			Empty,
+			UniLoadMore
+		},
+		data() {
+			return {
+				page: 1,
+				totalPage: 1,
+				loading: 'more',
+				show: false,
+				list: []
+			}
+		},
+		onLoad() {
+			this.toData()
+		},
+		async onReachBottom() {
+			this.page++
+			if (this.page > this.totalPage) {
+				this.loading = 'noMore'
+				return false
+			}
+			this.loading = 'loading'
+			const response = await live_advance({
+				profession_id: uni.getStorageSync('profession_id'),
+				page: this.page
+			})
+			const { data } = response.data.data
+			data.forEach(item => {
+				item.start_time = item.start_time.substring(0, 16)
+				item.end_time = item.end_time.substring(10, 16)
+			})
+			this.list = [...this.list, ...data]
+			this.loading = 'more'
 		},
 		methods: {
-			handleBtn() {
-				uni.navigateTo({
-					url: '/pages/live/live-play'
+			// 获取数据
+			async toData() {
+				uni.showLoading({
+					title: '加载中...'
 				})
+				const response = await live_advance({
+					profession_id: uni.getStorageSync('profession_id'),
+					page: 1
+				})
+				const { data, last_page } = response.data.data
+				data.forEach(item => {
+					item.start_time = item.start_time.substring(0, 16)
+					item.end_time = item.end_time.substring(10, 16)
+				})
+				this.list = data
+				this.totalPage = last_page
+				
+				uni.hideLoading()
+			},
+			toLivePlay(id) {
+				uni.navigateTo({
+					url: '/pages/live/live-play?id=' + id
+				})
+			},
+			async handleAdvance(item) {
+				uni.showLoading({
+					title: '预约中...'
+				})
+				
+				const response = await advance({
+					id: item.sol_id
+				})
+				
+				uni.hideLoading()
+				
+				uni.showToast({
+					icon: 'none',
+					title: '预约成功'
+				})
+				
+				item.subscribe = 1
 			}
 		}
 	}

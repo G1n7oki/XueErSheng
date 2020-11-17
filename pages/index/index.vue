@@ -130,9 +130,9 @@
 								</view>
 							</view>
 							<view class="status">
-								<button v-if="item.is_play === 1" class="button-1" @click="toLivePlay">正在直播</button>
+								<button v-if="item.is_play === 1" class="button-1" @click="toLivePlay(item.sol_id)">正在直播</button>
 								<button v-else-if="item.is_play === 2" class="button-2">直播回放</button>
-								<button v-else-if="item.is_play === 0 && item.subscribe === 0" class="button-3">立即预约</button>
+								<button v-else-if="item.is_play === 0 && item.subscribe === 0" class="button-3" @click="handleAdvance(item)">立即预约</button>
 								<button v-else class="button-4">已预约</button>
 							</view>
 						</view>
@@ -173,7 +173,15 @@
 				</view>
 				<view class="control">
 					<view class="item">
-						<text>排序</text>
+						<picker
+							class="picker" 
+							:value="sort.data[sort.current].name"
+							:range="sort.data"
+							range-key="name"
+							@change="selected($event, 'sort')"
+						>
+								<view class="text">{{ sort.data[sort.current].name }}</view>
+						</picker>
 						<image class="arrow" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/arrowdown.png" mode=""></image>
 					</view>
 					<view class="item">
@@ -181,7 +189,15 @@
 						<image class="arrow" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/arrowdown.png" mode=""></image>
 					</view>
 					<view class="item">
-						<text>班型</text>
+						<picker
+							class="picker" 
+							:value="classType.data[classType.current].name"
+							:range="classType.data"
+							range-key="name"
+							@change="selected($event, 'classType')"
+						>
+								<view class="text">{{ classType.data[classType.current].name }}</view>
+						</picker>
 						<image class="arrow" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/arrowdown.png" mode=""></image>
 					</view>
 					<view class="item" @click="handleFilter">
@@ -260,9 +276,9 @@
 				<view class="filter-cell">
 					<text>价格区间</text>
 					<view class="item-wrap">
-						<input class="item" type="text" placeholder="最低价" />
+						<input class="item" v-model="min" type="text" placeholder="最低价" />
 						<view class="line"></view>
-						<input class="item" type="text" placeholder="最高价" />
+						<input class="item" v-model="max" type="text" placeholder="最高价" />
 					</view>
 				</view>
 				<view class="button-group">
@@ -280,7 +296,13 @@
 	import ViewMore from '@/components/view-more/ViewMore.vue'
 	import Title from '@/components/title/Title.vue'
 	import UniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
-	import { home, courses, banners, filter } from '@/common/api/api.js'
+	import { 
+		home,
+		courses,
+		banners,
+		filter,
+		advance
+	} from '@/common/api/api.js'
 	export default {
 		components: {
 			ViewMore,
@@ -314,6 +336,43 @@
 				filterList: {
 					sale: [],
 					year: []
+				},
+				max: '', // 最大价格
+				min: '', // 最小价格
+				sort: {
+					data: [{
+						id: 0,
+						name: '排序'
+					}, {
+						id: 1,
+						name: '价格降序'
+					}, {
+						id: 2,
+						name: '价格升序'
+					}, {
+						id: 3,
+						name: '购买人数'
+					}],
+					current: 0
+				},
+				classType: {
+					data: [{
+						id: 0,
+						name: '班型'
+					}, {
+						id: 1,
+						name: '全科'
+					}, {
+						id: 2,
+						name: '冲刺'
+					}, {
+						id: 3,
+						name: '密训'
+					}, {
+						id: 4,
+						name: '精讲'
+					}],
+					current: 0
 				}
 			}
 		},
@@ -358,10 +417,8 @@
 				this.filter.flag = true
 			},
 			handleAffirm () {
+				this.toCoures()
 				this.filter.flag = false
-			},
-			handleItem (name) {
-				
 			},
 			// 选择专业切换
 			handleSwitch () {
@@ -390,11 +447,11 @@
 				// 获取全部课程
 				const course = await courses({
 					profession_id: this.profession_id,
-					page: this.page
+					page: 1
 				})
 				const courseData = course.data.data
-				this.courseList = courseData.data.data
-				this.totalPage = courseData.data.last_page
+				this.courseList = courseData.data
+				this.totalPage = courseData.last_page
 				// 获取Banner数据
 				const banner = await banners({
 					profession_id: this.profession_id 
@@ -403,7 +460,7 @@
 				this.bannerList = bannerData.banner
 				// 获取筛选数据
 				const filterData = await filter()
-				const { discount, year  } = filterData.data.data
+				const { discount, year } = filterData.data.data
 				this.filterList.sale = discount
 				this.filterList.year = year
 				uni.hideLoading()
@@ -413,9 +470,9 @@
 				this.isPay === 9 ? this.navigate('/pages/plan/detail') : this.isPay === 0 ? this.navigate('/pages/order/information') : ''
 			},
 			// 跳转直播播放页
-			toLivePlay() {
+			toLivePlay(id) {
 				uni.navigateTo({
-					url: '/pages/live/live-play'
+					url: '/pages/live/live-play?id=' + id
 				})
 			},
 			// 点击折扣选项
@@ -425,6 +482,46 @@
 			// 点击年份按钮
 			handleYearItem(str) {
 				this.filter.year = str
+			},
+			// picker
+			selected(e, str) {
+				this[str].current = e.target.value
+				this.toCoures()
+			},
+			async toCoures() {
+				this.page = 1
+				this.loading = 'more'
+				const response = await courses({
+					profession_id: uni.getStorageSync('profession_id'),
+					page: 1,
+					sort: this.sort.data[this.sort.current].id,
+					year: this.filter.year,
+					discount: this.filter.sale,
+					max: this.max,
+					min: this.min
+				})
+				const { data, last_page } = response.data.data
+				this.courseList = data
+				this.totalPage = last_page
+			},
+			// 预约
+			async handleAdvance(item) {
+				uni.showLoading({
+					title: '预约中...'
+				})
+				
+				const response = await advance({
+					id: item.sol_id
+				})
+				
+				uni.hideLoading()
+				
+				uni.showToast({
+					icon: 'none',
+					title: '预约成功'
+				})
+				
+				item.subscribe = 1
 			}
 		},
 		onReachBottom() {
@@ -441,7 +538,11 @@
 			courses({
 				profession_id: uni.getStorageSync('profession_id'),
 				page: this.page,
-				sort: this.sort
+				sort: this.sort,
+				year: this.filter.year,
+				discount: this.filter.sale,
+				max: this.max,
+				min: this.min
 			}).then(response => {
 				const res = response.data
 				this.courseList = this.courseList.concat(res.data.data)

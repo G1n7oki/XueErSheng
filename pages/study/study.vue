@@ -191,13 +191,13 @@
 		<!-- 课程/直播课 end -->
 		<!-- 上次观看 start -->
 		<view v-if="close" class="last-watch">
-			<image class="image" src="http://dummyimage.com/120x600" mode=""></image>
+			<image class="image" :src="last.video_cover" mode=""></image>
 			<view class="info">
 				<view class="text">
 					上次观看：
 				</view>
 				<view class="name">
-					童哲校长-新手股民必备技能童哲校长-新手股民必备技能
+					{{ last.title }}
 				</view>
 			</view>
 			<image class="close" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/close.png" mode="" @click="handleClose"></image>
@@ -247,7 +247,11 @@
 				series: [], // 7天的观看时间
 				today: 0, // 今日学习
 				total: 0, // 累计学习
-				keep: 0 // 连续学习
+				keep: 0, // 连续学习
+				last: { // 上次观看
+					title: '',
+					video_cover: ''
+				}
 			}
 		},
 		onLoad() {
@@ -271,9 +275,6 @@
 		methods: {
 			// 获取统计数据
 			toStats() {
-				uni.showLoading({
-					title: '加载中...'
-				})
 				study_stats().then(response => {
 					const res = response.data.data
 					res.top_record.map(item => {
@@ -287,12 +288,12 @@
 					
 					this.close = res.last.length > 0 ? true : false
 					
+					this.last = res.last[0]
+					
 					this.cWidth = uni.upx2px(630)
 					this.cHeight = uni.upx2px(308)
 					this.showLine('canvasLine')
-					uni.hideLoading()
 				}).catch(error => {
-					uni.hideLoading()
 					uni.showToast({
 						icon: 'none',
 						title: error.data.message

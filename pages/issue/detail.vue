@@ -23,7 +23,7 @@
 					{{ detail.addtime }}
 				</view>
 			</view>
-			<image class="delete" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/issue/DEL%402x.png" mode="" @click="handleDelete"></image>
+			<image v-if="detail.is_can === 1" class="delete" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/issue/DEL%402x.png" mode="" @click="handleDelete"></image>
 		</view>
 		<!-- 详情 end -->
 		<!-- 评论 start -->
@@ -31,9 +31,9 @@
 			<view class="head">
 				<title :name="'全部评论(' + comment.total + ')'" />
 				<view class="filter">
-					<view class="cell active">最新</view>
+					<view class="cell" :class="{'active': type === 'new'}" @click="handleCell('new')">最新</view>
 					<view class="line"></view>
-					<view class="cell">最热</view>
+					<view class="cell" :class="{'active': type === 'hot'}" @click="handleCell('hot')">最热</view>
 				</view>
 			</view>
 			<view 
@@ -41,7 +41,7 @@
 				v-for="comment in comment.list"
 				:key="comment.id"
 			>
-				<image class="avatar" src="http://dummyimage.com/120x600" mode=""></image>
+				<image class="avatar" :src="comment.avatars" mode=""></image>
 				<view class="other">
 					<view class="name-zan">
 						<view class="name">
@@ -97,7 +97,7 @@
 						</view>
 					</view>
 					<view class="default">
-						<image class="avatar" src="http://dummyimage.com/400x400" mode=""></image>
+						<image class="avatar" :src="comment2.default.avatars" mode=""></image>
 						<view class="info">
 							<view class="username-praise">
 								<view class="username">{{ comment2.default.username }}</view>
@@ -120,7 +120,7 @@
 							v-for="comment2 in comment2.list"
 							:key="comment2.id"
 						>
-							<image class="avatar" src="http://dummyimage.com/400x400" mode=""></image>
+							<image class="avatar" :src="comment2.avatars" mode=""></image>
 							<view class="info">
 								<view class="username-praise">
 									<view class="username">{{ comment2.username }}</view>
@@ -202,7 +202,8 @@
 				loading: { // 加载相关
 					show: false,
 					status: 'more'
-				}
+				},
+				type: 'new'
 			}
 		},
 		onLoad(options) {
@@ -220,7 +221,8 @@
 			
 			const response = await issue_detail_comment({
 				id: this.id,
-				page: this.comment.page
+				page: this.comment.page,
+				type: this.type
 			})
 			const { data } = response.data.data
 			data.map(item => {
@@ -240,7 +242,7 @@
 				const detail = await issue_detail({ id })
 				this.detail = detail.data.data
 				// 评论信息
-				const comment = await issue_detail_comment({ id, page: 1 })
+				const comment = await issue_detail_comment({ id, page: 1, type: this.type })
 				const { data, last_page, total } = comment.data.data
 				data.map(item => {
 					item.addtime = item.addtime.substring(5, 16)
@@ -359,6 +361,12 @@
 			},
 			hide() {
 				this.$refs.popup.close()
+			},
+			// 筛选
+			handleCell(str) {
+				this.comment.page = 1
+				this.type = str
+				this.toData(this.id)
 			}
 		}
 	}

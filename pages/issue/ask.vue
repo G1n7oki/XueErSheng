@@ -138,6 +138,27 @@
 							if(res.statusCode === 200) {
 								const data = JSON.parse(res.data)
 								that.postImage.push(data.data)
+								// 两个接口存在异步关系所以需要判断这个接口在什么时机执行
+								if (that.postImage.length === that.image.length) {
+									ask({
+										content: this.content,
+										image: that.postImage,
+										title: this.title,
+										profession_id: this.id,
+										device: 'mini'
+									}).then(response => {
+										uni.hideLoading()
+										
+										uni.showToast({
+											icon: 'none',
+											title: '发布成功'
+										})
+										
+										this.content = ''
+										this.title = ''
+										this.image = []
+									})
+								}
 							} else {
 								const data = JSON.parse(res.data)
 								uni.showToast({
@@ -151,25 +172,6 @@
 						}
 					})
 				}
-				
-				const response = await ask({
-					content: this.content,
-					image: this.image,
-					title: this.title,
-					profession_id: this.id,
-					device: 'mini'
-				})
-				
-				uni.showToast({
-					icon: 'none',
-					title: '提交成功'
-				})
-				
-				uni.hideLoading()
-				
-				this.content = ''
-				this.title = ''
-				this.image = []
 			}
 		}
 	}
