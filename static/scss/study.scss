@@ -126,6 +126,7 @@
 			.image {
 				width: 212upx;
 				height: 136upx;
+				border-radius: 10upx;
 			}
 			
 			.info {
@@ -186,6 +187,14 @@
 					overflow: hidden;
 				}
 				
+				.avatar1 {
+					flex-shrink: 0;
+					width: 212rpx;
+					height: 136rpx;
+					overflow: hidden;
+					border-radius: 10upx;
+				}
+				
 				.info {
 					width: 490upx;
 					margin-left: 31upx;
@@ -194,6 +203,10 @@
 						font-size: 28upx;
 						font-weight: bold;
 						color: #303133;
+						width: 396rpx;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
 					}
 					
 					.bot {
@@ -241,6 +254,11 @@
 						.button-2 {
 							background-color: #F4F7F9;
 							color: #909399;
+						}
+						
+						.button-3 {
+							background-color: #EEEEEE;
+							color: #1283FF;
 						}
 					}
 				}

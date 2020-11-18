@@ -42,9 +42,9 @@
 						</view>
 					</view>
 				</view>
-				<button v-if="isButton" type="default" :class="{'active': isPay !== 9}" @click="handleMainBtn">
+				<!-- <button v-if="isButton" type="default" :class="{'active': isPay !== 9}" @click="handleMainBtn">
 					{{ isPay === 0 ? '立即缴费' : isPay === 1 ? '已缴费' : '我要报名' }}
-				</button>
+				</button> -->
 			</view>
 			<view class="bot">
 				<view class="crumbs-area">
@@ -145,9 +145,9 @@
 				<view class="top">
 					<title name="精选课程" />
 				</view>
-				<view class="course" style="margin-top: 32upx;">
+				<navigator :url="'/pages/study/detail?id=' + selection.id" hover-class="none" class="course" style="margin-top: 32upx;">
 					<view class="tips">
-						{{ selection.category | formatType }}
+						{{ selection.category_name }}
 					</view>
 					<image :src="selection.cover" mode=""></image>
 					<view class="info">
@@ -163,7 +163,7 @@
 							</view>
 						</view>
 					</view>
-				</view>
+				</navigator>
 			</view>
 			<!-- 精选课程end -->
 			<!-- 全部课程start -->
@@ -175,17 +175,25 @@
 					<view class="item">
 						<picker
 							class="picker" 
-							:value="sort.data[sort.current].name"
+							:value="sort.data[sort.current].value"
 							:range="sort.data"
-							range-key="name"
+							range-key="value"
 							@change="selected($event, 'sort')"
 						>
-								<view class="text">{{ sort.data[sort.current].name }}</view>
+								<view class="text">{{ sort.data[sort.current].value }}</view>
 						</picker>
 						<image class="arrow" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/arrowdown.png" mode=""></image>
 					</view>
 					<view class="item">
-						<text>科目</text>
+						<picker
+							class="picker" 
+							:value="subject.data[subject.current].name"
+							:range="subject.data"
+							range-key="name"
+							@change="selected($event, 'subject')"
+						>
+								<view class="text">{{ subject.data[subject.current].name }}</view>
+						</picker>
 						<image class="arrow" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/arrowdown.png" mode=""></image>
 					</view>
 					<view class="item">
@@ -201,7 +209,7 @@
 						<image class="arrow" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/arrowdown.png" mode=""></image>
 					</view>
 					<view class="item" @click="handleFilter">
-						<text>筛选</text>
+						<text class="text">筛选</text>
 						<image class="filter" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/filter.png" mode=""></image>
 					</view>
 				</view>
@@ -234,6 +242,7 @@
 			</view>
 			<!-- 全部课程end -->
 			<uni-load-more
+				v-if="totalPage > 1"
 				:status="loading"
 				:iconSize="14"
 			/>
@@ -282,7 +291,7 @@
 					</view>
 				</view>
 				<view class="button-group">
-					<button class="reset" type="default">重置</button>
+					<button class="reset" type="default" @click="handleReset">重置</button>
 					<button class="affirm" type="default" @click="handleAffirm">确定</button>
 				</view>
 			</view>
@@ -340,37 +349,20 @@
 				max: '', // 最大价格
 				min: '', // 最小价格
 				sort: {
-					data: [{
-						id: 0,
-						name: '排序'
-					}, {
-						id: 1,
-						name: '价格降序'
-					}, {
-						id: 2,
-						name: '价格升序'
-					}, {
-						id: 3,
-						name: '购买人数'
-					}],
+					data: [],
 					current: 0
 				},
 				classType: {
 					data: [{
 						id: 0,
 						name: '班型'
-					}, {
-						id: 1,
-						name: '全科'
-					}, {
-						id: 2,
-						name: '冲刺'
-					}, {
-						id: 3,
-						name: '密训'
-					}, {
-						id: 4,
-						name: '精讲'
+					}],
+					current: 0
+				},
+				subject: {
+					data: [{
+						id: 0,
+						name: '科目'
 					}],
 					current: 0
 				}
@@ -394,31 +386,26 @@
 				this.major = this.treeList[2]
 			}
 			
+			this.page = 1
+			
 			this.toHome()
 		},
-		filters: {
-			formatType(value) {
-				switch (value) {
-					case 1:
-						return '全科'
-					case 2:
-						return '冲刺'
-					case 3:
-						return '密训'
-					case 4:
-						return '精讲'
-					default:
-						return ''
-				}
-			}
-		},
 		methods: {
+			// 显示筛选
 			handleFilter () {
 				this.filter.flag = true
 			},
+			// 确认筛选
 			handleAffirm () {
 				this.toCoures()
 				this.filter.flag = false
+			},
+			// 点击重置
+			handleReset() {
+				this.filter.year = ''
+				this.filter.sale = ''
+				this.min = ''
+				this.max = ''
 			},
 			// 选择专业切换
 			handleSwitch () {
@@ -449,9 +436,12 @@
 					profession_id: this.profession_id,
 					page: 1
 				})
-				const courseData = course.data.data
-				this.courseList = courseData.data
-				this.totalPage = courseData.last_page
+				const { list_info, category, direction, sort } = course.data.data
+				this.sort.data = sort
+				this.subject.data = [...this.subject.data, ...direction]
+				this.classType.data = [...this.classType.data, ...category]
+				this.courseList = list_info.data
+				this.totalPage = list_info.last_page
 				// 获取Banner数据
 				const banner = await banners({
 					profession_id: this.profession_id 
@@ -493,16 +483,18 @@
 				this.loading = 'more'
 				const response = await courses({
 					profession_id: uni.getStorageSync('profession_id'),
-					page: 1,
-					sort: this.sort.data[this.sort.current].id,
+					page: this.page,
+					sort: this.sort.data[this.sort.current].key,
 					year: this.filter.year,
 					discount: this.filter.sale,
 					max: this.max,
-					min: this.min
+					min: this.min,
+					direction: this.subject.data[this.subject.current].id,
+					category: this.classType.data[this.classType.current].id
 				})
-				const { data, last_page } = response.data.data
-				this.courseList = data
-				this.totalPage = last_page
+				const { list_info } = response.data.data
+				this.courseList = list_info.data
+				this.totalPage = list_info.last_page
 			},
 			// 预约
 			async handleAdvance(item) {
@@ -538,14 +530,16 @@
 			courses({
 				profession_id: uni.getStorageSync('profession_id'),
 				page: this.page,
-				sort: this.sort,
+				sort: this.sort.data[this.sort.current].key,
 				year: this.filter.year,
 				discount: this.filter.sale,
 				max: this.max,
-				min: this.min
+				min: this.min,
+				direction: this.subject.data[this.subject.current].id,
+				category: this.classType.data[this.classType.current].id
 			}).then(response => {
-				const res = response.data
-				this.courseList = this.courseList.concat(res.data.data)
+				const res = response.data.data
+				this.courseList = this.courseList.concat(res.list_info.data)
 				this.loading = 'more'
 			}).catch(error => {
 				uni.showToast({

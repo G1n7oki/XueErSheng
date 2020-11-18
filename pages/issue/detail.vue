@@ -9,9 +9,9 @@
 		<!-- 导航栏 end -->
 		<!-- 详情 start -->
 		<view class="detail">
-			<view class="crumbs">
+			<!-- <view class="crumbs">
 				自学考试 > 本科 > 金融学(新)02301K > 03709马克03709马克03709马克
-			</view>
+			</view> -->
 			<view class="title">
 				{{ detail.title }}
 			</view>

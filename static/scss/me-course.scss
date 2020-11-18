@@ -103,10 +103,10 @@
 		
 		.avatar {
 			flex-shrink: 0;
-			width: 108upx;
-			height: 108upx;
-			border-radius: 50%;
+			width: 212rpx;
+			height: 136rpx;
 			overflow: hidden;
+			border-radius: 10upx;
 		}
 		
 		.info {
@@ -117,6 +117,10 @@
 				font-size: 28upx;
 				font-weight: bold;
 				color: #303133;
+				width: 396rpx;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
 			}
 			
 			.bot {

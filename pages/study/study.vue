@@ -82,11 +82,8 @@
 									<view class="name">
 										{{ course.title }}
 									</view>
-									<view v-if="course.validity > 0" class="validity">
-										课程有效期还剩：{{ course.validity }}天
-									</view>
-									<view v-else class="validity">
-										已过期
+									<view class="validity">
+										{{ course.validity < 0 ? '已过期' : `课程有效期${course.validity }天` }}
 									</view>
 									<view class="bot">
 										<view class="progress">
@@ -131,16 +128,15 @@
 													{{ live.name }}
 												</view>
 												<view class="status">
-													{{ live.isPlay === 1 ? '正在直播' : live.start_time + '-' + live.end_time }}
-													<image v-if="live.isPlay === 1" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/live.gif" mode=""></image>
+													{{ live.is_play === 1 ? '正在直播' : live.start_time + '-' + live.end_time }}
+													<image v-if="live.is_play === 1" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/live.gif" mode=""></image>
 												</view>
 											</view>
-											<button v-if="live.isPlay === 1" class="button button-1">
+											<button v-if="live.is_play === 1" class="button button-1" @click="toLivePlay(live.live_id)">
 												进入直播
 											</button>
-											<button v-else class="button button-2">
-												已预约
-											</button>
+											<button v-else-if="live.is_play === 0 && live.subscribe === 0" class="button button-3" @click="handleAdvance(live)">立即预约</button>
+											<button v-else class="button button-2">已预约</button>
 										</view>
 									</view>
 								</view>
@@ -153,32 +149,26 @@
 								<image class="image" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/study/right%402x.png" mode=""></image>
 							</view>
 							<view class="live-list">
-								<view class="live-list">
-									<view 
-										class="item" 
-										v-for="history in live.history"
-										:key="history.id"
-									>
-										<image class="avatar" :src="history.banner" mode=""></image>
-										<view class="info">
-											<view class="type-title">
-												<view class="title">
-													{{ history.title }}
+								<view
+									class="item" 
+									v-for="history in live.history"
+									:key="history.id"
+								>
+									<image class="avatar1" :src="history.banner" mode=""></image>
+									<view class="info">
+										<view class="type-title">
+											{{ history.title }}
+										</view>
+										<view class="bot">
+											<view class="user-status">
+												<view class="user">
+													{{ history.validity < 0 ? '已过期' : `课程有效期${history.validity}天` }}
+												</view>
+												<view class="status">
+													共{{ history.count }}课时
 												</view>
 											</view>
-											<view class="bot">
-												<view class="user-status">
-													<view class="user">
-														{{ history.user }}
-													</view>
-													<view class="status">
-														共30课时
-													</view>
-												</view>
-												<button class="button button-1" type="default">
-													开始学习
-												</button>
-											</view>
+											<button class="button button-1" @click="toLiveDetail(history.id)">开始学习</button>
 										</view>
 									</view>
 								</view>
@@ -210,7 +200,7 @@
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import Progress from '@/components/progress/progress.vue'
 	import Empty from '@/components/empty/empty.vue'
-	import { study_stats, me_course, me_live } from '@/common/api/api.js'
+	import { study_stats, me_course, me_live, advance } from '@/common/api/api.js'
 	import uCharts from '@/tools/uChart/u-charts.min.js'
 	import json from '@/static/data.json'
 	let canvasLine = null
@@ -345,6 +335,12 @@
 					})
 				})
 			},
+			// 跳转到直播详情
+			toLiveDetail(id) {
+				uni.navigateTo({
+					url: '/pages/live/detail?id=' + id
+				})
+			},
 			showLine(canvasId) {
 				canvasLine = new uCharts({
 					$this: that,
@@ -454,6 +450,31 @@
 						})
 					})
 				}
+			},
+			// 预约
+			async handleAdvance(item) {
+				uni.showLoading({
+					title: '预约中...'
+				})
+				
+				const response = await advance({
+					id: item.sol_id
+				})
+				
+				uni.hideLoading()
+				
+				uni.showToast({
+					icon: 'none',
+					title: '预约成功'
+				})
+				
+				item.subscribe = 1
+			},
+			// 跳转到直播播放页
+			toLivePlay(id) {
+				uni.navigateTo({
+					url: '/pages/live/live-play?id=' + id
+				})
 			}
 		}
 	}

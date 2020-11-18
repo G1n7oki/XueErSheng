@@ -88,19 +88,13 @@
 							<view class="bot">
 								<view class="user-status">
 									<view class="user">
-										{{ live.name }}
+										{{ live.validity < 0 ? '已过期' : `课程有效期${live.validity}天` }}
 									</view>
 									<view class="status">
-										{{ live.isPlay === 1 ? '正在直播' : live.start_time + '-' + live.end_time }}
-										<image v-if="live.isPlay === 1" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/live.gif" mode=""></image>
+										共{{ live.count }}课时
 									</view>
 								</view>
-								<button v-if="live.isPlay === 1" class="button button-1">
-									进入直播
-								</button>
-								<button v-else class="button button-2">
-									已预约
-								</button>
+								<button class="button button-1" @click="toLiveDetail(live.id)">开始学习</button>
 							</view>
 						</view>
 					</view>
@@ -197,6 +191,7 @@
 				this.live.show = this.live.list.length <= 0 ? true : false
 				uni.hideLoading()
 			},
+			// 上拉加载
 			async pullUpLoading() {
 				if (this.tabbar.index === 0) {
 					this.course.page++
@@ -223,6 +218,12 @@
 					this.live.list = [...this.live.list, ...live.data.data.list.data]
 					this.live.loading = 'more'
 				}
+			},
+			// 跳转到直播详情
+			toLiveDetail(id) {
+				uni.navigateTo({
+					url: '/pages/live/detail?id=' + id
+				})
 			}
 		}
 	}

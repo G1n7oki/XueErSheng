@@ -21,7 +21,7 @@
 				<view class="content" v-if="login">
 					<navigator url="/pages/me/card" hover-class="none" class="item">
 						<view class="number">
-							25
+							{{ info.card_num }}
 						</view>
 						<view class="text">
 							卡包
@@ -30,7 +30,7 @@
 					<view class="line"></view>
 					<navigator url="/pages/me/recharge" hover-class="none" class="item">
 						<view class="number">
-							628
+							{{ info.money }}
 						</view>
 						<view class="text">
 							学币
@@ -39,7 +39,7 @@
 					<view class="line"></view>
 					<navigator url="/pages/integral/integral" hover-class="none" class="item">
 						<view class="number">
-							221
+							{{ info.coin }}
 						</view>
 						<view class="text">
 							积分
@@ -184,7 +184,12 @@
 		data() {
 			return {
 				info: {
-					avatars: 'https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/tou%402x.png'
+					avatars: 'https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/tou%402x.png',
+					username: '',
+					login_tel: '',
+					card_num: 0,
+					money: 0,
+					coin: 0
 				},
 				login: false
 			}

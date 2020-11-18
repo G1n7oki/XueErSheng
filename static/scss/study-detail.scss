@@ -136,7 +136,6 @@
 		
 		.info {
 			padding: 44upx 33upx 48upx 33upx;
-			border-bottom: 1px solid #DEDEDE;
 			
 			.top {
 				display: flex;
@@ -209,7 +208,9 @@
 		.coupon {
 			display: flex;
 			justify-content: space-between;
+			align-items: center;
 			padding: 22upx 32upx;
+			border-top: 1px solid #DEDEDE;
 			
 			.text {
 				font-size: 28upx;

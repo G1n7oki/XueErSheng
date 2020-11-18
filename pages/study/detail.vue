@@ -14,14 +14,14 @@
 				class="video"
 				id="video"
 				poster="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1604557737&di=6ac45f974c280ed5c9e2420884bcc4e1&src=http://h.hiphotos.baidu.com/zhidao/pic/item/0dd7912397dda144dac4acc9b2b7d0a20df486f8.jpg"
-				src="http://ivi.bupt.edu.cn/hls/cctv1hd.m3u8"
+				src=""
 				@play="play"
 				controls
 			></video>
 		</view>
 		<!-- video end -->
 		<!-- 优惠券 start -->
-		<view class="discount" id="discount">
+		<view v-if="info.count_down > 0 && !info.have" class="discount" id="discount">
 			<view class="left">
 				<image class="sale" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/study/xianhitehui%402x.png" mode=""></image>
 				<view class="price-time">
@@ -42,7 +42,13 @@
 				<view class="text">
 					剩
 				</view>
-				<uni-countdown color="#D82A13" :day="1" :hour="23" :minute="14" :second="24" />
+				<uni-countdown 
+					color="#D82A13"
+					:day="info.days"
+					:hour="info.hours"
+					:minute="info.minutes"
+					:second="info.seconds"
+				/>
 				<view class="text">
 					恢复原价
 				</view>
@@ -66,7 +72,7 @@
 		</view>
 		<!-- tabBar end -->
 		<!-- swiepr start -->
-		<swiper class="swiper" :current="tabBarIndex" :style="{height: height + 'px'}" :duration="500" @change="handleSwiper">
+		<swiper class="swiper" :current="tabBarIndex" :style="{height: info.count_down > 0 && !info.have ? height - 52 + 'px' : height + 'px'}" :duration="500" @change="handleSwiper">
 			<!-- info start -->
 			<swiper-item class="swiper-item">
 				<scroll-view scroll-y="true" class="detail" >
@@ -84,7 +90,7 @@
 							</view>
 							<view class="score">
 								<view class="num">
-									5.0
+									{{ info.mark }}
 								</view>
 								<view class="text">
 									评分
@@ -106,7 +112,7 @@
 							</navigator>
 						</view>
 					</view>
-					<view class="coupon">
+					<view class="coupon" v-if="info.card > 0">
 						<view class="text">
 							您有优惠券可领取
 						</view>
@@ -164,7 +170,7 @@
 										试看
 									</view>
 									<image v-else-if="watch && video.active" class="status-3" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/live.gif" mode=""></image>
-									<image v-else src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/bofang%402x.png" mode=""></image>
+									<image v-else class="status-4" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/bofang%402x.png" mode=""></image>
 								</view>
 							</view>
 						</uni-collapse-item>
@@ -192,7 +198,7 @@
 								<view class="line"></view>
 								<view class="point">
 									<view class="number">
-										4.6
+										{{ evaluate.mark }}
 									</view>
 									<view class="unit">
 										评分
@@ -257,7 +263,7 @@
 		</swiper>
 		<!-- swiper end -->
 		<!-- fixed start -->
-		<view class="fiexd" v-if="tabBarIndex === 0">
+		<view class="fiexd" v-if="tabBarIndex === 0 && !info.have">
 			<view class="left">
 				<view class="price-time">
 					<view class="price">
@@ -403,7 +409,6 @@
 		course_favorite_1,
 		course_favorite_2
 	} from '@/common/api/api.js'
-	import { msec2day } from '@/tools/util/util.js'
 	export default {
 		name: 'study-detail',
 		components: {
@@ -431,21 +436,28 @@
 				tabBarIndex: 0, // 显示滑块的索引
 				height: 0, //scroll-view的高度
 				courseId: 0, // 课程的id
-				info: {}, // 课程详情
+				info: { // 课程详情
+					title: '',
+					validity: 0,
+					video_num: 0,
+					mark: 0,
+					
+				},
 				chapterList: [], // 课程章节
 				evaluate: {
 					list: [], // 评价列表
 					total: 0, // 总评论数
 					page: 1, // 当前页数
 					totalPage: 0, // 总页数
-					loading: 'more' // loading状态
+					loading: 'more', // loading状态
+					mark: ''
 				},
 				watch: false, // 观看权限
 				poster: '', // 封面
 				favorite: {
 					unused: 'https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/study/shoucang%402x.png',
 					used: 'https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/study/shoucang-hover%402x.png',
-					flag: false,
+					flag: 0,
 					url: 'https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/study/shoucang%402x.png'
 				},
 				// 课程优惠券
@@ -458,11 +470,11 @@
 			// 屏幕的高度
 			const wHeight = uni.getSystemInfoSync()['windowHeight']
 			
-			this.calculate(wHeight)
-			
 			this.courseId = +options.id
 			
 			this.toData(this.courseId)
+			
+			this.calculate(wHeight)
 			
 			// this.$refs.popup.open()
 		},
@@ -492,15 +504,11 @@
 				video.select('#video').boundingClientRect(video => {
 					this.height = height - video.height
 				}).exec()
-				// 计算后的高度减去简略介绍的高度
-				const discount = uni.createSelectorQuery().in(this)
-				discount.select('#discount').boundingClientRect(discount => {
-					this.height = this.height - discount.height
-				}).exec()
+				
 				// 计算后的高度减去选项卡的高度
 				const tabbar = uni.createSelectorQuery().in(this)
 				tabbar.select('#tabbar').boundingClientRect(tabbar => {
-					this.height = this.height - tabbar.height - 10
+					this.height = this.height - tabbar.height
 				}).exec()
 			},
 			async toData(id) {
@@ -510,26 +518,33 @@
 				// 获取课程详情数据
 				const info = await course_info(id)
 				const infoData = info.data.data
-				infoData.validity = msec2day(infoData.validity)
+				const { count_down, validity } = infoData
+				infoData.days = parseInt(count_down / 60 / 60 / 24) // 计算天数
+				infoData.hours = parseInt(count_down / 60 / 60 % 24) // 计算小时数
+				infoData.minutes = parseInt(count_down / 60 % 60) // 计算分数
+				infoData.seconds = parseInt(count_down % 60) // 计算秒数
+				infoData.validity = parseInt(validity / 60 / 60 / 24) // 计算有效期
 				this.info = infoData
+				this.favorite.flag = infoData.collect
 				
 				// 获取课程章节数据
-				// const chapter = await course_chapter({ id })
-				// const chapterData = chapter.data.data
-				// this.watch = chapterData.watch
-				// this.poster = chapterData.chapter[0].video[0].video_cover
-				// this.chapterList = chapterData.chapter
+				const chapter = await course_chapter({ id })
+				const chapterData = chapter.data.data
+				this.watch = chapterData.watch
+				this.poster = chapterData.chapter[0].video[0].video_cover
+				this.chapterList = chapterData.chapter
 				
 				// 获取评价数据
 				const evaluate = await course_evaluate({ id })
 				const evaluateData = evaluate.data.data
 				// 格式化时间格式
-				evaluateData.list_info.data.map(item => {
-					item.add_time = item.add_time.substring(0, 10)
-				})
+				// evaluateData.list_info.data.map(item => {
+				// 	item.add_time = item.add_time.substring(0, 10)
+				// })
 				this.evaluate.list = evaluateData.list_info.data
 				this.evaluate.total = evaluateData.list_info.total
 				this.evaluate.totalPage = evaluateData.list_info.last_page
+				this.evaluate.mark = evaluateData.mark
 				// 课程优惠券列表
 				const coupon = await course_coupon({ id, type: 1 })
 				const { data } = coupon.data
