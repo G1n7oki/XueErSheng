@@ -208,6 +208,14 @@ export const course_favorite_2 = (data) => {
 		data
 	})
 }
+// 获取播放链接
+export const course_url = (data) => {
+	return http.request({
+		url: 'url',
+		method: 'POST',
+		data
+	})
+}
 /**
  * 以下为我的模块接口
  * */

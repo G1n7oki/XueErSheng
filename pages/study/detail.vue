@@ -13,9 +13,10 @@
 			<video 
 				class="video"
 				id="video"
-				poster="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1604557737&di=6ac45f974c280ed5c9e2420884bcc4e1&src=http://h.hiphotos.baidu.com/zhidao/pic/item/0dd7912397dda144dac4acc9b2b7d0a20df486f8.jpg"
-				src=""
+				:poster="video.image"
+				:src="video.url"
 				@play="play"
+				@timeupdate="timeupdate"
 				controls
 			></video>
 		</view>
@@ -99,8 +100,8 @@
 						</view>
 						<view class="control">
 							<view class="item" @click="handlefavorite">
-								<image :src="favorite.url" mode=""></image>
-								<view class="text">收藏</view>
+								<image :src="favorite.flag ? favorite.used : favorite.unused" mode=""></image>
+								<view class="text">{{ favorite.flag ? '已收藏' : '收藏' }}</view>
 							</view>
 							<view class="item" @click="handleNotes">
 								<image src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/study/jinagyi%402x.png" mode=""></image>
@@ -144,7 +145,7 @@
 				<scroll-view scroll-y="true" class="catalog" >
 					<uni-collapse
 						v-for="(chapter, index) in chapterList"
-						:key="chapter.id"
+						:key="chapter.name"
 					>
 						<uni-collapse-item
 							:number="index + 1 | formatId"
@@ -158,19 +159,19 @@
 									:key="video.id"
 								>
 									<view class="info">
-										<view class="name">
+										<view class="name" :class="{'active': video.live === true, 'hover': video.active === true}">
 											{{ video.name }}
 										</view>
 										<view class="time">
 											{{ video.duration }}
 										</view>
 									</view>
-									<image v-if="!watch && video.try === 0" class="status-1" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/suo%402x.png" mode=""></image>
-									<view v-else-if="!watch && video.try === 1" class="status-2" @click="preview">
+									<image v-if="!watch && video.is_try === 0" class="status-1" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/suo%402x.png" mode=""></image>
+									<view v-else-if="!watch && video.is_try === 1" class="status-2" @click="handlePlay(video)">
 										试看
 									</view>
-									<image v-else-if="watch && video.active" class="status-3" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/live.gif" mode=""></image>
-									<image v-else class="status-4" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/bofang%402x.png" mode=""></image>
+									<image v-else-if="watch && video.live" class="status-3" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/live.gif" mode=""></image>
+									<image v-else class="status-4" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/bofang%402x.png" mode="" @click="handlePlay(video)"></image>
 								</view>
 							</view>
 						</uni-collapse-item>
@@ -192,7 +193,7 @@
 								:size="16"
 								:margin="5"
 								:allowHalf="true"
-								:value="4.6"
+								:value="evaluate.mark"
 							/>
 							<view class="line-point">
 								<view class="line"></view>
@@ -284,7 +285,7 @@
 					</view>
 				</view>
 				<view class="icons">
-					<view class="icons-cell">
+					<view class="icons-cell" @click="toChapter">
 						<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/study/shiting%402x.png" mode=""></image>
 						<view class="text">
 							试听
@@ -407,7 +408,8 @@
 		course_coupon,
 		course_coupon_receive,
 		course_favorite_1,
-		course_favorite_2
+		course_favorite_2,
+		course_url
 	} from '@/common/api/api.js'
 	export default {
 		name: 'study-detail',
@@ -457,13 +459,20 @@
 				favorite: {
 					unused: 'https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/study/shoucang%402x.png',
 					used: 'https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/study/shoucang-hover%402x.png',
-					flag: 0,
-					url: 'https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/study/shoucang%402x.png'
+					flag: 0
 				},
 				// 课程优惠券
 				coupon: {
 					list: []
-				}
+				},
+				// 播放链接
+				video: {
+					url: '',
+					image: '',
+					try: 0
+				},
+				// 上次播放的链接
+				last: {}
 			}
 		},
 		onLoad(options) {
@@ -531,8 +540,21 @@
 				const chapter = await course_chapter({ id })
 				const chapterData = chapter.data.data
 				this.watch = chapterData.watch
-				this.poster = chapterData.chapter[0].video[0].video_cover
 				this.chapterList = chapterData.chapter
+				
+				// 第一条视频数据
+				const item = chapterData.chapter[0].video[0]
+				
+				// 第一次进来获取视频数据
+				const once = await course_url({
+					video_id: item.aliyun_id
+				})
+				const { m3u8_url, video_cover } = once.data.data
+				this.video.url = m3u8_url
+				this.video.image = video_cover
+				item.live = true
+				item.active = true
+				this.last = item
 				
 				// 获取评价数据
 				const evaluate = await course_evaluate({ id })
@@ -574,7 +596,7 @@
 			play() {
 				const that = this
 				const video = uni.createVideoContext('video')
-				if (!this.watch) {
+				if (!this.watch && this.video.try !== 1) {
 					uni.showModal({
 						title: '提示',
 						content: '您没有权限观看, 是否购买?',
@@ -589,9 +611,28 @@
 					video.pause()
 				}
 			},
-			// 预览
-			preview() {
-				
+			// 点击章节播放按钮
+			async handlePlay(parms) {
+				// 每次点击播放重置一下当前的播放链接
+				this.video = {
+					url: '',
+					iamge: ''
+				}
+				this.last.live = false
+				const video = uni.createVideoContext('video')
+				const response = await course_url({
+					video_id: parms.aliyun_id
+				})
+				const { m3u8_url, video_cover} = response.data.data
+				this.video.url = m3u8_url
+				this.video.image = video_cover
+				this.video.try = parms.is_try
+				setTimeout(() => {
+					video.play()
+				}, 500)
+				parms.live = true
+				parms.active = true
+				this.last = parms
 			},
 			// 领取优惠券
 			handleGet() {
@@ -619,30 +660,28 @@
 			},
 			// 点击收藏
 			async handlefavorite() {
-				this.favorite.flag = !this.favorite.flag
 				if (this.favorite.flag) {
-					const used = course_favorite_1({
+					const used = await course_favorite_2({
 						id: this.courseId,
 						type: 1,
 						papers_id: ''
 					})
-					this.favorite.url = this.favorite.used
-					uni.showToast({
-						icon: 'none',
-						title: '收藏成功'
-					})
-				} else {
-					const used = course_favorite_2({
-						id: this.courseId,
-						type: 1,
-						papers_id: ''
-					})
-					this.favorite.url = this.favorite.unused
 					uni.showToast({
 						icon: 'none',
 						title: '取消成功'
 					})
+				} else {
+					const used = await course_favorite_1({
+						id: this.courseId,
+						type: 1,
+						papers_id: ''
+					})
+					uni.showToast({
+						icon: 'none',
+						title: '收藏成功'
+					})
 				}
+				this.favorite.flag = !this.favorite.flag
 			},
 			// 领取优惠券
 			async handleCouponItem(id, type) {
@@ -651,6 +690,13 @@
 					icon: 'none',
 					title: '领取成功'
 				})
+			},
+			// 获取进度
+			timeupdate(e) {
+				// console.log(parseInt(e.detail.currentTime))
+			},
+			toChapter() {
+				this.tabBarIndex = 1
 			}
 		}
 	}

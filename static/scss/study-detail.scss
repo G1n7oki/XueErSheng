@@ -264,13 +264,12 @@
 						font-size: 28upx;
 						font-weight: 500;
 						color: #303234;
-						
-						&.active {
-							color: #1384FF;
-						}
 						// 播放终止后的颜色
 						&.hover {
 							color: #888;
+						}
+						&.active {
+							color: #1384FF;
 						}
 					}
 					
