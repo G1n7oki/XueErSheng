@@ -441,6 +441,22 @@ export const discover_issue = (data) => {
 			data
 		})
 	}
+	// 直播回顾
+	export const live_review = (data) => {
+		return http.request({
+			url: 'live/review',
+			method: 'GET',
+			data
+		})
+	}
+	// 获取科目
+	export const live_subject = (data) => {
+		return http.request({
+			url: 'direction',
+			method: 'GET',
+			data
+		})
+	}
 	/**
 	* 以下为问答模块接口
 	* */

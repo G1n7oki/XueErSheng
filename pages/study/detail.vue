@@ -326,14 +326,22 @@
 						<view class="type">
 							{{ coupon.type === 1 ? '满减券' : '课程月卡' }}
 						</view>
-						<view class="text">
+						<view class="text" v-if="coupon.type === 1">
 							<text class="unit">￥</text>
 							{{ coupon.cut_money }}
+						</view>
+						<view class="text active" v-else>
+							<view>
+								课程
+							</view>
+							<view>
+								月卡
+							</view>
 						</view>
 					</view>
 					<view class="explain">
 						<view class="title">
-							每满{{ coupon.need_money }}使用
+							{{ coupon.type === 1 ? `每满${ coupon.need_money }使用` : '1个月使用期限' }}
 						</view>
 						<view class="date">
 							{{ coupon.valid_start }}~{{ coupon.valid_end }}
@@ -626,7 +634,7 @@
 				const { m3u8_url, video_cover} = response.data.data
 				this.video.url = m3u8_url
 				this.video.image = video_cover
-				this.video.try = parms.is_try
+				this.video.try = is_try 
 				setTimeout(() => {
 					video.play()
 				}, 500)

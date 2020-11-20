@@ -7,130 +7,186 @@
 			text-align="center"
 		/>
 		<!-- 导航栏 end -->
-		<!-- 选项卡 start -->
-		<view id="tabBar">
-			<XesTextTabbar
-				:list="tabbar.list"
-				:current="tabbar.current"
-				@postId="toId"
+		<!-- 数据列表 start -->
+		<view class="list">
+			<navigator
+				:url="'/pages/live/detail?id=' + live_id"
+				class="item"
+				hover-class="none"
+				v-for="item in list"
+				:key="item.id"
+			>
+				<view class="banner">
+					<image class="image" :src="item.banner" mode=""></image>
+				</view>
+				<view class="info">
+					<view class="info-title">
+						{{ item.title }}
+					</view>
+					<view class="space-between">
+						<view class="left">
+							<view class="user">
+								<image class="avatar" :src="item.image" mode=""></image>
+								<view class="name">{{ item.name }}</view>
+							</view>
+							<view class="time-number">
+								正在学习 {{ item.buy_num }} 人 <text class="time">共{{ item.sol_num }}课时</text>
+							</view>
+						</view>
+						<button class="button" hover-class="none">开始学习</button>
+					</view>
+				</view>
+			</navigator>
+			<uni-load-more
+				v-if="totalPage > 1"
+				:status="loading"
+				:iconSize="14"
 			/>
 		</view>
-		<!-- 选项卡 end -->
-		<!-- 数据列表 start -->
-		<swiper
-			class="swiper"
-			:style="{height: height}"
-			:duration="500"
-			:current="tabbar.current"
-			@change="chooseSwiper"
-		>
-			<swiper-item v-for="(n, index) in 4" :key="index">
-				<scroll-view class="scroll-view" scroll-y="true" >
-					<navigator 
-						url="/pages/live/detail"
-						class="item"
-						v-for="item in listData"
-						:key="item.id"
-					>
-						<view class="banner">
-							<image class="image" :src="item.avatar" mode=""></image>
-						</view>
-						<view class="info">
-							<view class="info-title">
-								{{ item.title }}
-							</view>
-							<view class="space-between">
-								<view class="left">
-									<view class="user">
-										<image class="avatar" :src="item.avatar" mode=""></image>
-										<view class="name">{{ item.title }}</view>
-										<view class="post">{{ item.post }}</view>
-									</view>
-									<view class="time-number">
-										正在学习 {{ item.people }} 人 <text class="time">共{{ item.hour }}课时</text>
-									</view>
-								</view>
-								<button class="button" hover-class="none" @click="start">开始学习</button>
-							</view>
-						</view>
-					</navigator>
-				</scroll-view>
-			</swiper-item>
-		</swiper>
 		<!-- 数据列表 end -->
 	</view>
 </template>
 
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
-	import XesTextTabbar from '@/components/xes-text-tabbar/xes-text-tabbar.vue'
-	import Json from '@/static/data.json'
+	import UniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
+	import { live_review } from '@/common/api/api.js'
 	export default {
 		name: 'Review',
 		components: {
 			XesNavbar,
-			XesTextTabbar
+			UniLoadMore
 		},
 		data() {
 			return {
-				tabbar: {
-					list: [{
-						id: 0,
-						name: '全部'
-					}, {
-						id: 1,
-						name: '语文'
-					}, {
-						id: 2,
-						name: '历史'
-					}, {
-						id: 3,
-						name: '政治'
-					}],
-					current: 0
-				},
-				height: 0 ,// swiper的高度
-				listData: [] // 模拟的数据
+				list: [],
+				loading: 'more',
+				page: 1,
+				totalPage: 1
 			}
 		},
 		onLoad() {
-			const that = this
-			// 屏幕的高度
-			const wHeight = uni.getSystemInfoSync()['windowHeight']
-			// 获取手机状态栏高度
-			const statusBarHeight = uni.getSystemInfoSync()['statusBarHeight']
-			// tabBar的高度
-			const query = uni.createSelectorQuery().in(this)
-			query.select('#tabBar').boundingClientRect(res => {
-				const tHeight = res.height
-				that.height = wHeight - tHeight - statusBarHeight - 42 + 'px'
-			}).exec()
-			
-			this.listData = Json.review
-			
-			uni.login({
-				provider: 'weixin',
-				success(res) {
-					console.log(res)
-				}
+			this.toData()
+		},
+		async onReachBottom() {
+			this.page++
+			if (this.page > this.totalPage) {
+				this.loading = 'noMore'
+				return false
+			}
+			this.loading = 'loading'
+			const response = await live_review({
+				profession_id: uni.getStorageSync('profession_id'),
+				page: this.page
 			})
+			const { data } = response.data.data
+			this.list = [...this.list, data]
+			this.loading = 'more'
 		},
 		methods: {
-			toId(i) {
-				this.tabbar.current = i
-			},
-			chooseSwiper(e) {
-				this.tabbar.current = e.target.current
-			},
-			start() {
-				uni.navigateTo({
-					url: '/pages/course/review'
+			async toData() {
+				const response = await live_review({
+					profession_id: uni.getStorageSync('profession_id'),
+					page: 1
 				})
+				const { data, last_page } = response.data.data
+				this.list = data
+				this.totalPage = last_page
 			}
 		}
 	}
 </script>
 
 <style lang="scss">
-	@import '~@/static/scss/review.scss'
+	.list {
+		background-color: #F4F7F9;
+		box-sizing: border-box;
+		padding: 32upx 40upx;
+		
+		.item {
+			border-radius: 20upx;
+			overflow: hidden;
+			margin-bottom: 40upx;
+			background-color: #fff;
+			
+			.banner {
+				width: 686upx;
+				height: 300upx;
+				overflow: hidden;
+				
+				.image {
+					width: 100%;
+					height: 100%;
+					float: left;
+				}
+			}
+			
+			.info {
+				padding: 32upx;
+				background-color: #fff;
+				
+				.info-title {
+					font-size: 28upx;
+					font-weight: bold;
+					color: #303133;
+					margin-bottom: 24upx;
+				}
+				
+				.space-between {
+					display: flex;
+					align-items: center;
+					justify-content: space-between;
+					
+					.left {
+						
+						.user {
+							display: flex;
+							align-items: center;
+							
+							.avatar {
+								width: 40upx;
+								height: 40upx;
+								border-radius: 50%;
+							}
+							
+							.name {
+								font-size: 24upx;
+								font-weight: 500;
+								color: #303133;
+								margin: 0 18upx;
+							}
+							
+							.post {
+								font-size: 24upx;
+								font-weight: 500;
+								color: #909399;
+							}
+						}
+						
+						.time-number {
+							font-size: 24upx;
+							font-weight: 500;
+							color: #606266;
+							margin-top: 24upx;
+							
+							.time {
+								margin-left: 32upx;
+							}
+						}
+					}
+					
+					.button {
+						width: 168upx;
+						height: 64upx;
+						background-color: #1283FF;
+						border-radius: 32upx;
+						font-size: 28upx;
+						font-weight: 500;
+						color: #FFFFFF;
+						line-height: 64upx;
+					}
+				}
+			}
+		}
+	}
 </style>

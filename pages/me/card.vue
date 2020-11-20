@@ -30,13 +30,22 @@
 					<view class="type">
 						{{ card.type === 1 ? '满减优惠券' : '课程月卡' }}
 					</view>
-					<view class="text">
-						<text class="unit">￥</text>{{ card.cut_money }}
+					<view class="text" v-if="coupon.type === 1">
+						<text class="unit">￥</text>
+						{{ coupon.cut_money }}
+					</view>
+					<view class="text active" v-else>
+						<view>
+							课程
+						</view>
+						<view>
+							月卡
+						</view>
 					</view>
 				</view>
 				<view class="explain">
 					<view class="title">
-						满{{ card.need_money }}减{{ card.cut_money }}
+						{{ coupon.type === 1 ? `每满${ coupon.need_money }使用` : '1个月使用期限' }}
 					</view>
 					<view class="source">
 						{{ card.get_type === 1 ? '积分兑换' : card.get_type === 2 ? '签到获得' : '领取获得' }}
