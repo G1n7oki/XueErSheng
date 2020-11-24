@@ -10,7 +10,7 @@
 		<!-- 数据列表 start -->
 		<view class="list">
 			<navigator
-				:url="'/pages/live/detail?id=' + live_id"
+				:url="'/pages/live/detail?id=' + item.live_id"
 				class="item"
 				hover-class="none"
 				v-for="item in list"

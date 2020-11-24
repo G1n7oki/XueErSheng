@@ -399,10 +399,26 @@ export const discover_issue = (data) => {
  		data
  	})
  }
+ // 地址列表
+ export const address_list = (data) => {
+ 	return http.request({
+ 		url: 'users/address',
+ 		method: 'GET',
+ 		data
+ 	})
+ }
+ // 增加/修改地址
+ export const set_address = (data) => {
+ 	return http.request({
+ 		url: 'users/edit_address',
+ 		method: 'POST',
+ 		data
+ 	})
+ }
 	/**
 	* 以下为直播模块接口
 	* */
-	// 直播课包详情
+	// 滑块的详情已经课包价格信息
 	export const live_package_detail = (data) => {
 		return http.request({
 			url: `live/${data}`,
@@ -417,7 +433,7 @@ export const discover_issue = (data) => {
 			data
 		})
 	}
-	// 直播详情
+	// 直播视频下方简略信息 已弃用
 	export const live_detail = (data) => {
 		return http.request({
 			url: 'sol',
@@ -536,6 +552,25 @@ export const discover_issue = (data) => {
 	export const issue_answer_remove = (data) => {
 		return http.request({
 			url: 'faq/remove_replay',
+			method: 'POST',
+			data
+		})
+	}
+	/**
+	* 以下为聊天室模块接口
+	* */
+	// 加入聊天室
+	export const join_chat = (data) => {
+		return http.request({
+			url: 'chat',
+			method: 'POST',
+			data
+		})
+	}
+	// 发送消息
+	export const send_message = (data) => {
+		return http.request({
+			url: 'send',
 			method: 'POST',
 			data
 		})

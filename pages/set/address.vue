@@ -9,21 +9,21 @@
 		<!-- 导航栏 end -->
 		<!-- 地址列表 start -->
 		<view class="address-list">
-			<view class="item" v-for="n in 3" :key="n">
+			<view class="item" v-for="item in list" :key="item.id">
 				<view class="info">
 					<view class="user-mobile-tips">
 						<view class="username">
-							周礼远
+							{{ item.name }}
 						</view>
 						<view class="mobile">
-							18870322365
+							{{ item.phone }}
 						</view>
-						<view class="tips" v-if="n === 0">
+						<view class="tips" v-if="item.is_default === 1">
 							默认
 						</view>
 					</view>
 					<view class="address">
-						江西省南昌市高新区紫阳大道3303号云中城B座3905
+						{{ item.province }}{{ item.full_address }}
 					</view>
 				</view>
 				<view class="edit">
@@ -47,6 +47,7 @@
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import UniIcons from '@/components/uni-icons/uni-icons.vue'
+	import { address_list } from '@/common/api/api.js'
 	export default {
 		name: 'Address',
 		components: {
@@ -55,7 +56,20 @@
 		},
 		data() {
 			return {
-				
+				list: []
+			}
+		},
+		onLoad() {
+			this.toData()
+		},
+		methods: {
+			async toData() {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				const response = await address_list()
+				this.list = response.data.data
+				uni.hideLoading()
 			}
 		}
 	}

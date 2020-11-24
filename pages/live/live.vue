@@ -29,7 +29,7 @@
 						{{ item.is_play === 1 ? '正在直播' : `${item.start_time} -${item.end_time}` }}
 					</view>
 					<view class="watch">
-						{{ item.is_play === 1 ? `正在观看人数${Math.floor(Math.random() * 50 + 50)}` : `已预约${item.subscribe_num}人` }}
+						{{ item.is_play === 1 ? `正在观看人数${item.watch_num}` : `已预约${item.subscribe_num}人` }}
 					</view>
 				</view>
 				<button

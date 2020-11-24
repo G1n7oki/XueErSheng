@@ -13,9 +13,9 @@
 			<video 
 				class="video" 
 				id="video" 
-				src="http://ivi.bupt.edu.cn/hls/cctv5phd.m3u8" 
+				:src="url"
+				:poster="image"
 				controls
-				poster="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602737528008&di=69cc1ca9e06a7b3e9b47755147bee8b2&imgtype=0&src=http%3A%2F%2Fimg1.imgtn.bdimg.com%2Fit%2Fu%3D259364631%2C2307942273%26fm%3D214%26gp%3D0.jpg"
 			>
 			</video>
 		</view>
@@ -25,11 +25,11 @@
 			<view class="brief">
 				<view class="title-hour">
 					<view class="brief-title">
-						权威直播2019年汉语言文学-本科 导学直播课
+						{{ title }}
 					</view>
-					<view class="brief-hour">
+					<!-- <view class="brief-hour">
 						共18课时
-					</view>
+					</view> -->
 				</view>
 				<navigator class="button" url="">
 					课程详情
@@ -56,7 +56,44 @@
 			:duration="500"
 		>
 			<swiper-item>
-				<view class="swiper-item"></view>
+				<scroll-view 
+					scroll-y="true"
+					class="scroll-view"
+					:scroll-into-view="last"
+				>
+					<view class="online">
+						{{ num }}人在线
+					</view>
+					<view 
+						class="list"
+						:id="'message' + index"
+						v-for="(item, index) in list"
+						:key="index"
+					>
+						<view class="item" v-if="item.uid !== uid">
+							<image class="avatar" :src="item.avatar" mode=""></image>
+							<view class="name-content">
+								<view class="name">
+									{{ item.username }}
+								</view>
+								<view class="content">
+									{{ item.message }}
+								</view>
+							</view>
+						</view>
+						<view class="self" v-else>
+							<view class="name-content">
+								<view class="name">
+									{{ item.username }}
+								</view>
+								<view class="content">
+									{{ item.message }}
+								</view>
+							</view>
+							<image class="avatar" :src="item.avatar" mode=""></image>
+						</view>
+					</view>
+				</scroll-view>
 			</swiper-item>
 			<swiper-item>
 				<view class="swiper-item"></view>
@@ -65,8 +102,8 @@
 		<!-- 滚动区域 end -->
 		<!-- 输入框 start -->
 		<view class="input-area" v-if="tabbar.current === 0">
-			<input class="input" type="text" value="" placeholder="请来说几句吧" />
-			<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/discover/fabiaojiantou%402x.png" mode=""></image>
+			<input class="input" type="text" v-model="message" placeholder="请来说几句吧" />
+			<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/discover/fabiaojiantou%402x.png" mode="" @click="confirm"></image>
 		</view>
 		<!-- 输入框 end -->
 	</view>
@@ -75,6 +112,7 @@
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import XesTextTabbar from '@/components/xes-text-tabbar/xes-text-tabbar.vue'
+	import { join_chat, send_message, userinfo } from '@/common/api/api.js'
 	export default {
 		name: 'LivePlay',
 		components: {
@@ -93,16 +131,90 @@
 					}],
 					current: 0
 				},
-				height: 0 // swiper的高度
+				height: 0, // swiper的高度
+				url: '', // 直播链接
+				image: '', // 封面图
+				title: '', // 直播标题
+				id: 0, // 直播id
+				message: '', // 发送的消息
+				list: [], // 消息列表
+				uid: 0, // 用户id
+				last: '', // 最后一条数据
+				num: 0 // 观看人数
 			}
 		},
-		onLoad() {
+		onLoad(options) {
+			this.url = options.url
+			this.title = options.title
+			this.id = options.id
+			this.iamge = options.image
+			this.num = +options.num
 			// 屏幕的高度
 			const wHeight = uni.getSystemInfoSync()['windowHeight']
 			
 			this.calculate(wHeight)
+			
+			this.toUserInfo()
+			this.toSocket()
+		},
+		onUnload() {
+			uni.closeSocket()
 		},
 		methods: {
+			// 长链接
+			toSocket() {
+				const that = this
+				let client_id = ''
+				// 创建Socket链接
+				uni.connectSocket({
+					 url: 'ws://api.mdedu.cn/wss'
+				})
+				// 接收服务端发来的消息
+				uni.onSocketMessage(function (res) {
+					console.log(res)
+					const type = JSON.parse(res.data).type
+					if (type === 'init') { // 加入聊天室
+						client_id = JSON.parse(res.data).client_id
+						join_chat({
+							client_id: client_id,
+							sol_id: that.id
+						}).then(response => {
+							that.num = that.num + 1
+						})
+					} else if (type === 'message') { // 展示消息
+						const item = JSON.parse(res.data)
+						that.list.push({
+							uid: item.uid,
+							avatar: item.image,
+							message: item.message,
+							username: item.username
+						})
+						that.num = item.num
+						// scroll-view 滚动到底部
+						that.last = 'message' + (that.list.length - 1)
+					} else { // 心跳
+						return 
+					}
+				})
+			},
+			// 获取用户信息
+			async toUserInfo() {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				const user = await userinfo()
+				const { id } = user.data.data
+				this.uid = id
+				uni.hideLoading()
+			},
+			// 发送消息
+			async confirm() {
+				const response = await send_message({
+					sol_id: this.id,
+					message: this.message
+				})
+				this.message = ''
+			},
 			// 接受子组件传来的参数
 			toId(id) {
 				this.tabbar.current = id

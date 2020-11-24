@@ -134,7 +134,7 @@
 					<view class="reply">
 						{{ answer.my_content }}
 					</view>
-					<navigator :url="'/pages/issue/detail?' + answer.id" hover-class="none" class="bot">
+					<navigator :url="'/pages/issue/detail?id=' + answer.fa_id" hover-class="none" class="bot">
 						<view class="bot-crumbs">
 							自学考试 > 本科 > 金融学(新)02301K > 03709037090370903709
 						</view>

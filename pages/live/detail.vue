@@ -15,27 +15,27 @@
 				<view class="text" v-if="login">
 					立即购买或激活课程，即可解锁观看 若已购买，请 <text @click="toLogin">登录</text>
 				</view>
-				<navigator class="button" :url="'/pages/live/review-play'">
+				<view class="button">
 					开始学习
-				</navigator>
+				</view>
 			</view>
 		</view>
 		<!-- 播放器 end -->
 		<!-- 简略信息 start -->
 		<view class="brief-info" id="brief">
 			<view class="title">
-				直播：2019年汉语言文学-本科导学直播课
+				{{ detail.title }}
 			</view>
 			<view class="bot">
-				<view class="user">
+				<!-- <view class="user">
 					<image class="avatar" src="" mode=""></image>
 					<view class="name">杨明波</view>
 					<view class="post">江西省高级教师</view>
-				</view>
+				</view> -->
 				<view class="number">
-					<view class="watch">观看人数:50人</view>
+					<view class="watch">购买人数:{{ detail.buy_num }}人</view>
 					<view class="line">|</view>
-					<view class="hour">共18课时</view>
+					<view class="hour">共{{ detail.sol_num }}课时</view>
 				</view>
 			</view>
 		</view>
@@ -68,16 +68,8 @@
 			<swiper-item>
 				<scroll-view class="scroll-view" scroll-y="true" >
 					<view class="detail">
-						<Title name="课程介绍" color="#1384FF" />
-						<view class="text">
-							人工智能是目前最热门的学科之一，未来的发挥在那前景广阔。目前基于Python的人工智能学习如火如荼，为了迎接相关工作岗位的挑战，从现在起，学习Python编程和人工智能基础知识，可以为你的未来发展注入足够的能量。
-							本课程以Python简洁语法为基础，带你走进编程的世界。通过对工具的使用和了解，让你能够使用代码处理简单的数学问题，提升效率。最后学习机器中的线性回归预测和感知分类，帮助你进一步掌握机器学习的一般方法和步骤。                            
-						</view>
-						<view class="prominent">
-							<Title name="课程亮点" color="#1384FF" />
-							<view class="rich-text">
-								<rich-text :nodes="nodes"></rich-text>
-							</view>
+						<view class="rich-text">
+							<rich-text :nodes="detail.details.replace(/\<img/gi, '<img style=max-width:100%;height:auto')"></rich-text>
 						</view>
 					</view>
 				</scroll-view>
@@ -87,40 +79,26 @@
 			<swiper-item>
 				<scroll-view class="scroll-view" scroll-y="true" >
 					<view class="catalog">
-						<view class="item">
+						<view
+							class="item"
+							v-for="(item, index) in catalog"
+							:key="item.id"
+							@click="handleCatalogItem(item)"
+						>
 							<view class="date">
-								<view class="text">08.20</view>
+								<view class="text">{{ item.start_time.substring(5, 10) }}</view>
 								<view class="dot"></view>
 							</view>
 							<view class="content">
-								<view class="line"></view>
+								<view class="line" v-if="index + 1 !== catalog.length"></view>
 								<view class="box">
-									<view class="tips">回顾</view>
-									<text class="box-text">权威直播:2019年汉语言文学-本科导学直播课</text>
+									<view class="tips">{{ item.is_play === 0 ? '预告' : item.is_play === 1 ? '直播' : '回顾' }}</view>
+									<text class="box-text">{{ item.title }}</text>
 									<view class="name">
-										杨明波 <text>市政</text>
+										{{ item.name }} <!-- <text>市政</text> -->
 									</view>
 									<view class="box-watch">
-										80 人在线
-									</view>
-								</view>
-							</view>
-						</view>
-						<view class="item">
-							<view class="date">
-								<view class="text">08.20</view>
-								<view class="dot"></view>
-							</view>
-							<view class="content">
-								<!-- <view class="line hide"></view> -->
-								<view class="box">
-									<view class="tips">回顾</view>
-									<text class="box-text">权威直播:2019年汉语言文学-本科导学直播课</text>
-									<view class="name">
-										杨明波 <text>市政</text>
-									</view>
-									<view class="box-watch">
-										80 人在线
+										{{ item.is_play === 0 ? item.start_time : item.is_play === 1 ? `${item.watch_num}人在线` : `${item.reviw_num}播放` }}
 									</view>
 								</view>
 							</view>
@@ -218,19 +196,19 @@
 		</swiper>
 		<!-- 滑块区域 end -->
 		<!-- fixed start -->
-		<view class="fixed-area" v-if="tabbar.current === 0">
+		<view class="fixed-area" v-if="tabbar.current === 0 && detail.is_buy === 0">
 			<view class="price-info">
 				<view class="price">
 					<view class="present">
-						542 <text>元</text>
+						{{ detail.price }} <text>元</text>
 					</view>
 					<view class="original">
-						<text class="num">680</text>
+						<text class="num">{{ detail.virtual_price }}</text>
 						<text class="unit">元</text>
 					</view>
 				</view>
 				<view class="number">
-					已有200人购买
+					已有{{ detail.buy_num }}人购买
 				</view>
 			</view>
 			<view class="advisory">
@@ -238,7 +216,7 @@
 				<view class="text">咨询</view>
 				<button class="button" hover-class="none" open-type="contact"></button>
 			</view>
-			<view class="button">
+			<view class="button" @click="toOrderInfo">
 				<text class="symbol">+</text>
 				<text class="text">加入学习</text>
 			</view>
@@ -251,7 +229,7 @@
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import Title from '@/components/title/Title.vue'
 	import UniRate from '@/components/uni-rate/uni-rate.vue'
-	import { live_package } from '@/common/api/api.js'
+	import { live_package_detail, live_package } from '@/common/api/api.js'
 	export default {
 		name: 'LiveDetail',
 		components: {
@@ -276,8 +254,16 @@
 				}, // 切换卡参数
 				height: 0, // swiper的高度
 				login: false,
-				liveId: 0,
-				nodes: '<div>人工智能是目前最热门的学科之一，未来的发挥在那前景广阔。目前基于Python的人工智能学习如火如荼，为了迎接相关工作岗位的挑战，从现在起，学习Python编程和人工智能基础知识，可以为你的未来发展注入足够的能量。</div><div>本课程以Python简洁语法为基础，带你走进编程的世界。通过对工具的使用和了解，让你能够使用代码处理简单的数学问题，提升效率。最后学习机器中的线性回归预测和感知分类，帮助你进一步掌握机器学习的一般方法和步骤。</div>'
+				id: 0,
+				nodes: '<div>人工智能是目前最热门的学科之一，未来的发挥在那前景广阔。目前基于Python的人工智能学习如火如荼，为了迎接相关工作岗位的挑战，从现在起，学习Python编程和人工智能基础知识，可以为你的未来发展注入足够的能量。</div><div>本课程以Python简洁语法为基础，带你走进编程的世界。通过对工具的使用和了解，让你能够使用代码处理简单的数学问题，提升效率。最后学习机器中的线性回归预测和感知分类，帮助你进一步掌握机器学习的一般方法和步骤。</div>',
+				detail: { // 直播详情
+					title: '',
+					buy_num: 0,
+					sol_num: 0,
+					details: '',
+					price: 0
+				},
+				catalog: []
 			}
 		},
 		onLoad(options) {
@@ -297,7 +283,7 @@
 					}
 				}
 			})
-			this.liveId = options.id
+			this.id = options.id
 			this.toData(options.id)
 		},
 		methods: {
@@ -335,7 +321,43 @@
 				})
 			},
 			async toData(id) {
-				await live_package({id})
+				uni.showLoading({
+					title: '加载中...'
+				})
+				// 获取详情信息
+				const detail = await live_package_detail(id)
+				this.detail = detail.data.data
+				// 获取直播课包目录
+				const catalog = await live_package({ id })
+				this.catalog = catalog.data.data
+				uni.hideLoading()
+			},
+			toOrderInfo() {
+				uni.navigateTo({
+					url: '/pages/order/information?id=' + this.id + '&type=2'
+				})
+			},
+			handleCatalogItem(raw) {
+				const { is_buy } = this.detail
+				// if (is_buy < 1) {
+				// 	uni.showToast({
+				// 		icon: 'none',
+				// 		title: '您还没有购买该直播课包'
+				// 	})
+				// 	return false
+				// }
+				const { is_play, url, title, sol_id, image, watch_num } = raw
+				if (is_play === 0) {
+					return false
+				} else if (is_play === 1) {
+					uni.navigateTo({
+						url: `/pages/live/live-play?num=${watch_num}&id=${sol_id}&title=${title}&url=${url}&image=${image}`
+					})
+				} else {
+					uni.navigateTo({
+						url: '/pages/live/review-play'
+					})
+				}
 			}
 		}
 	}

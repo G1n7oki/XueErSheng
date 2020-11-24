@@ -45,11 +45,11 @@
 			<view class="name">
 				设为默认地址
 			</view>
-			<switch class="switch" color="#1283FF"/>
+			<switch class="switch" color="#1283FF" @change="change"/>
 		</view>
 		<!-- 设为默认地址 end -->
 		<!-- 按钮 start -->
-		<view class="button">
+		<view class="button" @click="hanleComplete">
 			<u-button text="完成" />
 		</view>
 		<!-- 按钮 end -->
@@ -60,6 +60,8 @@
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import UniIcons from '@/components/uni-icons/uni-icons.vue'
 	import uButton from '@/components/u-button/uButton.vue'
+	import { isMobile } from '@/tools/verify/verify.js'
+	import { set_address } from '@/common/api/api.js'
 	export default {
 		name: 'Edit',
 		components: {
@@ -69,15 +71,59 @@
 		},
 		data() {
 			return {
+				id: undefined,
 				username: '', // 用户姓名
 				mobile: '', // 电话
 				range: '江西省 南昌市 青山湖区', // 省市区
-				address: '' // 详细地址
+				address: '', // 详细地址
+				flag: 0
 			}
 		},
 		methods: {
 			chooseRegion(e) {
 				this.range = e.detail.value.join(' ')
+			},
+			change(e) {
+				this.flag = Number(e.detail.value)
+			},
+			// 点击完成
+			async hanleComplete() {
+				if (this.username === '') {
+					uni.showToast({
+						icon: 'none',
+						title: '请填写收货人姓名'
+					})
+					return false
+				}
+				
+				if (!isMobile(this.mobile)) {
+					uni.showToast({
+						icon: 'none',
+						title: '请填写正确的手机号码'
+					})
+					return false
+				}
+				
+				if (this.address === '') {
+					uni.showToast({
+						icon: 'none',
+						title: '请填写详细地址'
+					})
+					return false
+				}
+				
+				const response = await set_address({
+					name: this.username,
+					phone: this.mobile,
+					province: this.range,
+					full_address: this.address,
+					is_default: this.flag
+				})
+				
+				uni.showToast({
+					icon: 'none',
+					title: '添加成功'
+				})
 			}
 		}
 	}

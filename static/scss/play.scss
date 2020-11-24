@@ -131,6 +131,86 @@
 .scroll-view {
 	height: 100%;
 	background-color: #eee;
+	box-sizing: border-box;
+	padding: 20upx 32upx 120upx;
+	
+	.online {
+		font-size: 20upx;
+		font-weight: 500;
+		color: #909399;
+		text-align: right;
+		margin-bottom: 20upx;
+	}
+	
+	.item {
+		display: flex;
+		margin-bottom: 40upx;
+		
+		.avatar {
+			width: 80upx;
+			height: 80upx;
+			border-radius: 50%;
+			background-color: #fff;
+		}
+		
+		.name-content {
+			margin-left: 24upx;
+			
+			.name {
+				font-size: 24upx;
+				font-weight: 500;
+				color: #606266;
+			}
+			
+			.content {
+				max-width: 490upx;
+				font-size: 28upx;
+				font-weight: 500;
+				color: #303133;
+				background-color: #fff;
+				padding: 20upx 35upx;
+				border-radius: 12px;
+				margin-top: 8upx;
+				box-sizing: border-box;
+			}
+		}
+	}
+	
+	.self {
+		display: flex;
+		justify-content: flex-end;
+		margin-bottom: 40upx;
+		
+		.avatar {
+			width: 80upx;
+			height: 80upx;
+			border-radius: 50%;
+			background-color: #fff;
+		}
+		
+		.name-content {
+			margin-right: 24upx;
+			
+			.name {
+				font-size: 24upx;
+				font-weight: 500;
+				color: #606266;
+				text-align: right;
+			}
+			
+			.content {
+				max-width: 490upx;
+				font-size: 28upx;
+				font-weight: 500;
+				color: #FEFEFE;
+				background-color: #1283FF;
+				padding: 20upx 35upx;
+				border-radius: 12px;
+				margin-top: 8upx;
+				box-sizing: border-box;
+			}
+		}
+	}
 }
 
 .introduce {
@@ -206,6 +286,7 @@
 	box-sizing: border-box;
 	padding: 0 32upx;
 	box-shadow: 0 0 18upx rgba(244, 247, 249, 1);
+	background-color: #fff;
 	
 	.input {
 		width: 600upx;

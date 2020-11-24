@@ -49,7 +49,7 @@
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import uButton from '@/components/u-button/uButton.vue'
-	import { seccode } from '@/common/api/api.js'
+	import { seccode, forgot } from '@/common/api/api.js'
 	import { isMobile } from '@/tools/verify/verify.js'
 	export default {
 		name: 'Modify',
@@ -59,17 +59,22 @@
 		},
 		data() {
 			return {
-				src: '/static/image/login/eyeclose.png',
 				mobile: '', // 电话号码
 				seccode: '', // 验证码
 				password: '', // 密码
 				confirm: '', // 确认密码
 				type: 'password',
 				countdown: 0, // 倒计时
+				timer: null,
+				timer2: null
 			}
 		},
 		onLoad(options) {
 			this.mobile = options.mobile
+		},
+		onUnload() {
+			clearInterval(this.timer)
+			clearTimeout(this.timer2)
 		},
 		methods: {
 			chooseType() {
@@ -134,6 +139,23 @@
 					})
 					return false
 				}
+				
+				forgot({
+					phone: this.mobile,
+					code: this.seccode,
+					password: this.password
+				}).then(response => {
+					uni.showToast({
+						icon: 'none',
+						title: '修改成功'
+					})
+					
+					this.timer2 = setTimeout(() => {
+						uni.navigateTo({
+							url: '/pages/login/index'
+						})
+					}, 1500)
+				})
 			}
 		}
 	}
