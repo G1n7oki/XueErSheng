@@ -15,6 +15,24 @@
 		height: 422upx;
 		float: left;
 	}
+	
+	.video-mask {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		height: 422upx;
+		position: absolute;
+		top: 0;
+		left: 0;
+		background-color: rgba(0, 0, 0, .4);
+		
+		.text {
+			font-size: 32upx;
+			font-weight: 500;
+			color: #FFFFFF;
+		}
+	}
 }
 // 课程信息
 .course-info {
@@ -134,6 +152,11 @@
 	box-sizing: border-box;
 	padding: 20upx 32upx 120upx;
 	
+	&.review {
+		background-color: #fff;
+		padding-bottom: 20upx;
+	}
+	
 	.online {
 		font-size: 20upx;
 		font-weight: 500;
@@ -236,6 +259,7 @@
 
 .note {
 	padding: 40upx 0;
+	background-color: #fff;
 	
 	.item {
 		display: flex;

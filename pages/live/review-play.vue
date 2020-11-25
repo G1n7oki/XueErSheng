@@ -13,9 +13,10 @@
 			<video 
 				class="video" 
 				id="video" 
-				src="http://ivi.bupt.edu.cn/hls/cctv5phd.m3u8" 
+				:src="url" 
 				controls
-				poster="http://dummyimage.com/750x422"
+				autoplay
+				:poster="image"
 			>
 			</video>
 		</view>
@@ -25,43 +26,39 @@
 			<view class="brief">
 				<view class="title-hour">
 					<view class="brief-title">
-						权威直播2019年汉语言文学-本科 导学直播课
+						{{ detail.title }}
 					</view>
 					<view class="brief-hour">
-						共18课时
+						共{{ detail.sol_num }}课时
 					</view>
 				</view>
-				<navigator class="button" url="">
+				<navigator class="button" open-type="navigateBack">
 					课程详情
 				</navigator>
 			</view>
-			<scroll-view class="list" scroll-x="true">
-				<view class="item">
+			<scroll-view 
+				class="list"
+				scroll-x="true"
+				:scroll-into-view="view"
+			>
+				<view
+					class="item"
+					:id="'item' + index"
+					v-for="(item, index) in catalog"
+					:key="item.id"
+					@click="handleCatalogItem(item)"
+				>
 					<view class="icon-title">
-						<view class="icon">回顾</view>
+						<view class="icon">{{ item.is_play === 0 ? '预告' : item.is_play === 1 ? '直播' : '回顾' }}</view>
 						<view class="item-title">
-							权威直播:2019年汉语言文学-本科导学直播课
+							{{ item.title }}
 						</view>
 					</view>
 					<view class="user">
-						杨明波 <text>市政</text>
+						{{ item.name }} <!-- <text>市政</text> -->
 					</view>
 					<view class="play">
-						320 播放
-					</view>
-				</view>
-				<view class="item">
-					<view class="icon-title">
-						<view class="icon">回顾</view>
-						<view class="item-title">
-							权威直播:2019年汉语言文学-本科导学直播课
-						</view>
-					</view>
-					<view class="user">
-						杨明波 <text>市政</text>
-					</view>
-					<view class="play">
-						08.20  18:00-20:00
+						{{ item.is_play === 0 ? item.start_time : item.is_play === 1 ? `${item.watch_num}人在线` : `${item.reviw_num}播放` }}
 					</view>
 				</view>
 			</scroll-view>
@@ -71,7 +68,7 @@
 		<view class="split-line"></view>
 		<!-- 分割线 end -->
 		<!-- 切换卡 start -->
-		<view id="tabbar">
+		<view id="tabbar" style="border-bottom: 1px solid #DEDEDE;">
 			<xes-text-tabbar
 				:list="tabbar.list"
 				:current="tabbar.current"
@@ -87,18 +84,9 @@
 		>
 			<swiper-item>
 				<!-- 课程介绍 start -->
-				<scroll-view scroll-y="true" class="scroll-view">
-					<view class="introduce">
-						<title name="课程介绍" color="#1384FF" />
-						<view class="text">
-							人工智能是目前最热门的学科之一，未来的发挥在那前景广阔。目前基于Python的人工智能学习如火如荼，为了迎接相关工作岗位的挑战，从现在起，学习Python编程和人工智能基础知识，可以为你的未来发展注入足够的能量。本课程以Python简洁语法为基础，带你走进编程的世界。通过对工具的使用和了解，让你能够使用代码处理简单的数学问题，提升效率。最后学习机器中的线性回归预测和感知分类，帮助你进一步掌握机器学习的一般方法和步骤。                           
-						</view>
-					</view>
-					<view class="prominent">
-						<title name="课程亮点" color="#1384FF" />
-						<view class="rich-text">
-							<rich-text :nodes="nodes"></rich-text>
-						</view>
+				<scroll-view scroll-y="true" class="scroll-view review">
+					<view class="rich-text">
+						<rich-text :nodes="detail.details.replace(/\<img/gi, '<img style=max-width:100%;height:auto')"></rich-text>
 					</view>
 				</scroll-view>
 				<!-- 课程介绍 end -->
@@ -139,6 +127,7 @@
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import XesTextTabbar from '@/components/xes-text-tabbar/xes-text-tabbar.vue'
 	import Title from '@/components/title/Title.vue'
+	import { live_package_detail, live_package, live_detail, course_url } from '@/common/api/api.js'
 	export default {
 		name: 'ReviewPlay',
 		components: {
@@ -156,19 +145,55 @@
 						id: 1,
 						name: '课程讲义'
 					}],
-					current: 1
+					current: 0
 				},
 				height: 0, // swiper的高度
-				nodes: '<div>人工智能是目前最热门的学科之一，未来的发挥在那前景广阔。目前基于Python的人工智能学习如火如荼，为了迎接相关工作岗位的挑战，从现在起，学习Python编程和人工智能基础知识，可以为你的未来发展注入足够的能量。</div><div>本课程以Python简洁语法为基础，带你走进编程的世界。通过对工具的使用和了解，让你能够使用代码处理简单的数学问题，提升效率。最后学习机器中的线性回归预测和感知分类，帮助你进一步掌握机器学习的一般方法和步骤。</div>'
+				detail: {
+					title: '',
+					buy_num: 0,
+					sol_num: 0,
+					details: '',
+					price: 0
+				},
+				catalog: [],
+				url: '', // 播放链接
+				image: '', // 封面图
+				view: '' // 滚动条滚动的位置
 			}
 		},
-		onLoad() {
+		onLoad(options) {
 			// 屏幕的高度
 			const wHeight = uni.getSystemInfoSync()['windowHeight']
 			
 			this.calculate(wHeight)
+			
+			this.toData(options.id, options.sol, +options.index)
+			
 		},
 		methods: {
+			// 获取数据
+			async toData(id, sol, index) {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				console.log(index)
+				// 获取课包信息
+				const detail = await live_package_detail(id)
+				this.detail = detail.data.data
+				// 获取直播课包目录
+				const catalog = await live_package({ id })
+				this.catalog = catalog.data.data
+				this.view = `item${index}`
+				// 获取当前视频信息
+				const current = await live_detail({ id: sol })
+				const { review_video_id } = current.data.data
+				// 获取当前视频播放链接
+				const url = await course_url({ video_id: review_video_id })
+				const { m3u8_url, video_cover } = url.data.data
+				this.url = m3u8_url
+				this.image = video_cover
+				uni.hideLoading()
+			},
 			// 接受子组件传来的参数
 			toId(id) {
 				this.tabbar.current = id
@@ -185,6 +210,30 @@
 				tabbar.select('#tabbar').boundingClientRect(tabbar => {
 					this.height = this.height - tabbar.height
 				}).exec()
+			},
+			// 点击目录子元素
+			async handleCatalogItem(raw) {
+				const { sol_id, is_play } = raw
+				if (is_play === 2) {
+					this.url = ''
+					this.image = ''
+					uni.showLoading({
+						title: '加载中...'
+					})
+					// 获取当前视频信息
+					const current = await live_detail({ id: sol_id })
+					const { review_video_id } = current.data.data
+					// 获取当前视频播放链接
+					const url = await course_url({ video_id: review_video_id })
+					const { m3u8_url, video_cover } = url.data.data
+					this.url = m3u8_url
+					this.image = video_cover
+					uni.hideLoading()
+				} else {
+					uni.navigateTo({
+						url: `/pages/live/live-play?id=${sol_id}`
+					})
+				}
 			},
 			// 下载讲义
 			handleDownload() {

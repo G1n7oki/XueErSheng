@@ -326,6 +326,14 @@ export const topics_hand = (data) => {
 		data
 	})
 }
+// 错题收藏
+export const topics_wrong = (data) => {
+	return http.request({
+		url: 'question/wrong',
+		method: 'GET',
+		data
+	})
+}
 /**
  * 以下为订单模块接口
  * */
@@ -433,7 +441,7 @@ export const discover_issue = (data) => {
 			data
 		})
 	}
-	// 直播视频下方简略信息 已弃用
+	// 单条直播信息查询
 	export const live_detail = (data) => {
 		return http.request({
 			url: 'sol',

@@ -14,10 +14,14 @@
 				class="video" 
 				id="video" 
 				:src="url"
-				:poster="image"
 				controls
+				autoplay
 			>
 			</video>
+			<view class="video-mask" v-if="isPlay !== 1">
+				<view v-if="isPlay === 2" class="text">直播已结束</view>
+				<view v-if="isPlay === 0" class="text">直播暂未开始</view>
+			</view>
 		</view>
 		<!-- 播放器 end -->
 		<!-- 课程信息 start -->
@@ -27,11 +31,11 @@
 					<view class="brief-title">
 						{{ title }}
 					</view>
-					<!-- <view class="brief-hour">
-						共18课时
-					</view> -->
+					<view class="brief-hour">
+						{{ start.substring(5, 16) }}-{{ end.substring(11, 16) }}
+					</view>
 				</view>
-				<navigator class="button" url="">
+				<navigator class="button" open-type="navigateBack">
 					课程详情
 				</navigator>
 			</view>
@@ -112,7 +116,7 @@
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import XesTextTabbar from '@/components/xes-text-tabbar/xes-text-tabbar.vue'
-	import { join_chat, send_message, userinfo } from '@/common/api/api.js'
+	import { join_chat, send_message, userinfo, live_detail  } from '@/common/api/api.js'
 	export default {
 		name: 'LivePlay',
 		components: {
@@ -133,36 +137,50 @@
 				},
 				height: 0, // swiper的高度
 				url: '', // 直播链接
-				image: '', // 封面图
 				title: '', // 直播标题
 				id: 0, // 直播id
 				message: '', // 发送的消息
 				list: [], // 消息列表
 				uid: 0, // 用户id
 				last: '', // 最后一条数据
-				num: 0 // 观看人数
+				num: 0, // 观看人数
+				isPlay: 0, // 直播状态
+				start: '', // 开始时间
+				end: '' // 结束时间
 			}
 		},
 		onLoad(options) {
-			this.url = options.url
-			this.title = options.title
 			this.id = options.id
-			this.iamge = options.image
-			this.num = +options.num
 			// 屏幕的高度
 			const wHeight = uni.getSystemInfoSync()['windowHeight']
 			
 			this.calculate(wHeight)
 			
-			this.toUserInfo()
-			this.toSocket()
+			this.toData(+options.id)
 		},
 		onUnload() {
 			uni.closeSocket()
 		},
 		methods: {
-			// 长链接
-			toSocket() {
+			async toData(id) {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				// 获取直播信息
+				const detail = await live_detail({
+					id
+				})
+				const { title, url, is_play, watch_num, start_time, end_time } = detail.data.data
+				this.title = title
+				this.url = url
+				this.isPlay = is_play
+				this.num = watch_num
+				this.start = start_time
+				this.end = end_time
+				// 获取用户信息
+				const user = await userinfo()
+				this.uid = user.data.data.id
+				// 长链接
 				const that = this
 				let client_id = ''
 				// 创建Socket链接
@@ -171,7 +189,6 @@
 				})
 				// 接收服务端发来的消息
 				uni.onSocketMessage(function (res) {
-					console.log(res)
 					const type = JSON.parse(res.data).type
 					if (type === 'init') { // 加入聊天室
 						client_id = JSON.parse(res.data).client_id
@@ -196,15 +213,6 @@
 						return 
 					}
 				})
-			},
-			// 获取用户信息
-			async toUserInfo() {
-				uni.showLoading({
-					title: '加载中...'
-				})
-				const user = await userinfo()
-				const { id } = user.data.data
-				this.uid = id
 				uni.hideLoading()
 			},
 			// 发送消息

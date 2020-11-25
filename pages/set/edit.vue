@@ -45,7 +45,7 @@
 			<view class="name">
 				设为默认地址
 			</view>
-			<switch class="switch" color="#1283FF" @change="change"/>
+			<switch :checked="flag" class="switch" color="#1283FF" @change="change"/>
 		</view>
 		<!-- 设为默认地址 end -->
 		<!-- 按钮 start -->
@@ -78,6 +78,18 @@
 				address: '', // 详细地址
 				flag: 0
 			}
+		},
+		onLoad(options) {
+			if (Object.keys(options).length === 0) {
+				return false
+			}
+			const data = JSON.parse(options.data)
+			this.id = data.id
+			this.username = data.name
+			this.mobile = data.phone
+			this.range = data.province
+			this.address = data.full_address
+			this.flag = data.is_default
 		},
 		methods: {
 			chooseRegion(e) {
@@ -113,6 +125,7 @@
 				}
 				
 				const response = await set_address({
+					id: this.id,
 					name: this.username,
 					phone: this.mobile,
 					province: this.range,
@@ -120,10 +133,17 @@
 					is_default: this.flag
 				})
 				
-				uni.showToast({
-					icon: 'none',
-					title: '添加成功'
-				})
+				if (this.id) {
+					uni.showToast({
+						icon: 'none',
+						title: '编辑成功'
+					})
+				} else {
+					uni.showToast({
+						icon: 'none',
+						title: '添加成功'
+					})
+				}
 			}
 		}
 	}

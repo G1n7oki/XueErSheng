@@ -83,7 +83,7 @@
 							class="item"
 							v-for="(item, index) in catalog"
 							:key="item.id"
-							@click="handleCatalogItem(item)"
+							@click="handleCatalogItem(item, index)"
 						>
 							<view class="date">
 								<view class="text">{{ item.start_time.substring(5, 10) }}</view>
@@ -255,7 +255,6 @@
 				height: 0, // swiper的高度
 				login: false,
 				id: 0,
-				nodes: '<div>人工智能是目前最热门的学科之一，未来的发挥在那前景广阔。目前基于Python的人工智能学习如火如荼，为了迎接相关工作岗位的挑战，从现在起，学习Python编程和人工智能基础知识，可以为你的未来发展注入足够的能量。</div><div>本课程以Python简洁语法为基础，带你走进编程的世界。通过对工具的使用和了解，让你能够使用代码处理简单的数学问题，提升效率。最后学习机器中的线性回归预测和感知分类，帮助你进一步掌握机器学习的一般方法和步骤。</div>',
 				detail: { // 直播详情
 					title: '',
 					buy_num: 0,
@@ -337,7 +336,7 @@
 					url: '/pages/order/information?id=' + this.id + '&type=2'
 				})
 			},
-			handleCatalogItem(raw) {
+			handleCatalogItem(raw, index) {
 				const { is_buy } = this.detail
 				// if (is_buy < 1) {
 				// 	uni.showToast({
@@ -346,16 +345,14 @@
 				// 	})
 				// 	return false
 				// }
-				const { is_play, url, title, sol_id, image, watch_num } = raw
-				if (is_play === 0) {
-					return false
-				} else if (is_play === 1) {
+				const { is_play, sol_id } = raw
+				if (is_play === 2) {
 					uni.navigateTo({
-						url: `/pages/live/live-play?num=${watch_num}&id=${sol_id}&title=${title}&url=${url}&image=${image}`
+						url: `/pages/live/review-play?id=${this.id}&sol=${sol_id}$index=${index}`
 					})
 				} else {
 					uni.navigateTo({
-						url: '/pages/live/review-play'
+						url: `/pages/live/live-play?id=${sol_id}`
 					})
 				}
 			}

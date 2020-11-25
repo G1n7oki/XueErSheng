@@ -122,20 +122,8 @@
 						</view>
 					</view>
 					<view class="split-line"></view>
-					<view class="recommend">
-						<Title name="课程介绍" color="#1283FF" />
-						<view class="text">
-							{{ info.intro }}
-						</view>
-					</view>
 					<view class="prominent">
-						<view class="title-area">
-							<Title name="课程亮点" color="#1283FF" />
-						</view>
-						<!-- <rich-text :nodes="info.detail"></rich-text> -->
-						<view class="rich-text">
-							{{ info.details }}
-						</view>
+						<rich-text class="rich-text" :nodes="info.intro.replace(/\<img/gi, '<img style=max-width:100%;height:auto')"></rich-text>
 					</view>
 				</scroll-view>
 			</swiper-item>
@@ -451,7 +439,7 @@
 					validity: 0,
 					video_num: 0,
 					mark: 0,
-					
+					intro: ''
 				},
 				chapterList: [], // 课程章节
 				evaluate: {
@@ -492,8 +480,6 @@
 			this.toData(this.courseId)
 			
 			this.calculate(wHeight)
-			
-			// this.$refs.popup.open()
 		},
 		filters: {
 			formatId(value) {
@@ -711,5 +697,5 @@
 </script>
 
 <style lang="scss">
-	@import '../../static/scss/study-detail.scss'
+	@import '~@/static/scss/study-detail.scss'
 </style>

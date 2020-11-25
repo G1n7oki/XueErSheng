@@ -23,10 +23,10 @@
 						</view>
 					</view>
 					<view class="address">
-						{{ item.province }}{{ item.full_address }}
+						{{ `${item.province} ${item.full_address}` }}
 					</view>
 				</view>
-				<view class="edit">
+				<view class="edit" @click="handleEdit(item)">
 					编辑
 				</view>
 			</view>
@@ -59,7 +59,7 @@
 				list: []
 			}
 		},
-		onLoad() {
+		onShow() {
 			this.toData()
 		},
 		methods: {
@@ -70,6 +70,13 @@
 				const response = await address_list()
 				this.list = response.data.data
 				uni.hideLoading()
+			},
+			// 点击编辑
+			handleEdit(raw) {
+				const data = JSON.stringify(raw)
+				uni.navigateTo({
+					url: `/pages/set/edit?data=${data}`
+				})
 			}
 		}
 	}

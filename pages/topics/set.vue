@@ -37,9 +37,6 @@
 			<view class="filter">
 				<view class="title-content">
 					<title name="题型筛选" />
-					<view class="content">
-						答案直接显示
-					</view>
 				</view>
 				<view class="item-area">
 					<view 
@@ -113,6 +110,27 @@
 					current: 0
 				}
 			}
+		},
+		onLoad() {
+			const pattern = uni.getStorageSync('pattern')
+			const filter = uni.getStorageSync('filter')
+			// 模式
+			switch (pattern) {
+				case 'exercise': 
+					this.pattern.current = 0
+					break
+				case 'exam':
+					this.pattern.current = 1
+					break
+				case 'self-study':
+					this.pattern.current = 2
+					break
+				default:
+					this.pattern.current = 0
+					break
+			}
+			// 题型
+			this.filter.current = filter
 		},
 		methods: {
 			handlePattern(id) {

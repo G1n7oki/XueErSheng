@@ -18,12 +18,13 @@
 		</view>
 		<!-- 切换卡 end -->
 		<!-- 列表数据 start -->
-		<view class="list-data" :class="{'active': tabbar.current === 0}">
-			<empty v-if="listData.length <= 0" />
+		<empty v-if="listData.length <= 0" />
+		<view v-else class="list-data">
 			<view class="pattern" v-if="tabbar.current === 0">
 				<switch 
 					class="switch"
 					color="#1283FF"
+					:checked="pattern"
 					@change="patternSwitch"
 				/>
 				<view class="text">
@@ -40,33 +41,29 @@
 						{{ item.title }}
 					</view>
 					<view v-if="tabbar.current === 0" class="number">
-						错{{ item.number }}道题
+						错{{ item.count }}道题
 					</view>
 					<view v-else class="number">
-						{{ item.number }}道
+						{{ item.count }}道
 					</view>
 				</view>
 				<button 
 					class="button"
 					:class="{'active': tabbar.current === 1}"
-					@click="handleAgain"
+					@click="handleAgain(item)"
 				>
-					重做
+					{{ tabbar.current === 0 && !pattern ? '重做' : '查看' }}
 				</button>
 			</view>
 			<!-- loading start -->
 			<uni-load-more 
+				v-if="totalPage > 1"
 				:status="loading"
 				:iconSize="14"
 			/>
 			<!-- loading end -->
 		</view>
 		<!-- 列表数据 end -->
-		<!-- 按钮 start -->
-		<view class="fixed-button" v-if="tabbar.current === 0 && listData.length > 0">
-			<button class="button">练习全部错题</button>
-		</view>
-		<!-- 按钮 end -->
 	</view>
 </template>
 
@@ -75,7 +72,7 @@
 	import XesTextTabbar from '@/components/xes-text-tabbar/xes-text-tabbar.vue'
 	import Empty from '@/components/empty/empty.vue'
 	import UniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
-	import Json from '@/static/data.json'
+	import { topics_wrong } from '@/common/api/api.js'
 	export default {
 		name: 'Wrong',
 		components: {
@@ -98,7 +95,10 @@
 				},
 				top: 0, // tabbar的定位
 				listData: [], // 列表数据
-				loading: 'more' // 上拉加载的状态
+				loading: 'more', // 上拉加载的状态
+				page: 1,
+				totalPage: 1,
+				pattern: false
 			}
 		},
 		onLoad() {
@@ -108,27 +108,62 @@
 				this.top = navbar.height
 			}).exec()
 			
-			this.listData = Json.wrong
+			const pattern = uni.getStorageSync('pattern')
+			this.pattern = pattern === 'self-study' ? true : false
+			
+			this.toData()
 		},
-		onReachBottom() {
-			this.loading = 'loading'
-			setTimeout(() => {
+		async onReachBottom() {
+			this.page++
+			if (this.page > this.totalPage) {
 				this.loading = 'noMore'
-			}, 1500)
+				return false
+			}
+			this.loading = 'loading'
+			const response = await topics_wrong({
+				type: this.tabbar.current + 1,
+				page: this.page
+			})
+			this.loading = 'more'
 		},
 		methods: {
+			async toData() {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				const response = await topics_wrong({
+					type: this.tabbar.current + 1,
+					page: this.page
+				})
+				const { data, last_page } = response.data.data
+				this.listData = data
+				this.totalPage = last_page
+				uni.hideLoading()
+			},
 			toId(id) {
 				this.tabbar.current = id
+				this.page = 1
+				this.listData = []
+				this.toData()
 			},
 			// 开启背题模式
-			patternSwitch() {
-				uni.setStorageSync('pattern', 'self-study')
+			patternSwitch(e) {
+				e.detail.value ? uni.setStorageSync('pattern', 'self-study') : uni.setStorageSync('pattern', 'exercise')
+				this.pattern = e.detail.value
 			},
 			// 点击重做
-			handleAgain() {
-				uni.navigateTo({
-					url: '/pages/topics/practice'
-				})
+			handleAgain(raw) {
+				const { exam_id, paper_id } = raw
+				if (this.tabbar.current === 0) { // 如果是从错题进入到练题需要多传一个参数调用别的接口
+					uni.navigateTo({
+						url: `/pages/topics/practice?exam=${exam_id}&paper=${paper_id}`
+					})
+				} else { // 如果是从收藏进入到练题则需要把模式切换为练习
+					uni.setStorageSync('pattern', 'self-study')
+					uni.navigateTo({
+						url: `/pages/topics/practice?paper=${paper_id}`
+					})
+				}
 			}
 		}
 	}

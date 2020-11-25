@@ -8,17 +8,19 @@
 			:is-title-icon="true"
 		/>
 		<!-- choose course start -->
-		<view class="courseList" v-if="flag" :style="{ top: statusBarHeight + 42 + 'px' }">
-			<view class="item" @click="handleCourseListItem('语文')">
-				语文
+		<scroll-view 
+			v-if="flag"
+			class="courseList"
+			scroll-y
+		>
+			<view 
+				v-for="item in subject"
+				:key="item.id"
+				class="item"
+				@click="handleCourseListItem(item.id)">
+				{{ item.name }}
 			</view>
-			<view class="item" @click="handleCourseListItem('语文')">
-				数学
-			</view>
-			<view class="item" @click="handleCourseListItem('语文')">
-				英语
-			</view>
-		</view>
+		</scroll-view>
 		<!-- choose course end -->
 		<view class="inner">
 			<!-- stat start -->
@@ -108,9 +110,9 @@
 					<Title name="章节精练" />
 					<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/topics/setting.png" mode="" @click="toSet"></image>
 				</view>
-				<view class="unfinished" v-if="questionData.not_complete">
+				<view class="unfinished" v-if="questionData.not_complete.title">
 					<view class="info">
-						上次未完成：第三章2Z20310建 设工程招标投第三章2Z20310建 设工程招标投第三章2Z20310建 设工程招标投
+						上次未完成：{{ questionData.not_complete.title }}
 					</view>
 					<button type="default" @click="handleContinue">继续练题</button>
 				</view>
@@ -201,7 +203,7 @@
 	import Title from '@/components/title/Title.vue'
 	import Progress from '@/components/progress/progress.vue'
 	import UniTransition from '@/components/uni-transition/uni-transition.vue'
-	import { question, refine } from '@/common/api/api.js'
+	import { question, refine, live_subject } from '@/common/api/api.js'
 	export default {
 		name: 'Topics',
 		components: { 
@@ -221,8 +223,10 @@
 				questionData: {
 					today: 0,
 					amount: 0,
-					accuracy: 0
-				}
+					accuracy: 0,
+					not_complete: {}
+				},
+				subject: []
 			}
 		},
 		onLoad() {
@@ -234,6 +238,11 @@
 				uni.showLoading({
 					title: '加载中...'
 				})
+				// 获取科目数据
+				const subject = await live_subject({
+					profession_id: uni.getStorageSync('profession_id')
+				})
+				this.subject = subject.data.data
 				// 获取题库练习数据
 				const stats = await question({
 					profession_id: uni.getStorageSync('profession_id')
@@ -243,9 +252,7 @@
 				const chapter = await refine({
 					profession_id: uni.getStorageSync('profession_id')
 				})
-				chapter.data.data.map(item => {
-					item.isOpen = false
-				})
+				console.log(chapter)
 				this.topicList = chapter.data.data
 				uni.hideLoading()
 			},
@@ -278,12 +285,15 @@
 			} ,
 			// 继续练题
 			handleContinue() {
-				
+				const { paper_id } = this.questionData.not_complete
+				uni.navigateTo({
+					url: `/pages/topics/practice?paper=${paper_id}`
+				})
 			}
 		}
 	}
 </script>
 
 <style lang="scss">
-	@import '../../static/scss/topics.scss'
+	@import '~@/static/scss/topics.scss'
 </style>
