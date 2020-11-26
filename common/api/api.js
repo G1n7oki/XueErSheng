@@ -384,7 +384,7 @@ export const discover_detail = (data) => {
 export const discover_comment = (data) => {
 	return http.request({
 		url: 'article/comment',
-		method: 'GET',
+		method: 'POST',
 		data
 	})
 }
@@ -392,6 +392,30 @@ export const discover_comment = (data) => {
 export const discover_issue = (data) => {
 	return http.request({
 		url: 'article/new',
+		method: 'POST',
+		data
+	})
+}
+// 发现-评论列表
+export const discover_comment_list = (data) => {
+	return http.request({
+		url: 'article/comment_list',
+		method: 'GET',
+		data
+	})
+}
+// 发现-二级评论列表
+export const discover_second_list = (data) => {
+	return http.request({
+		url: 'article/second_list',
+		method: 'GET',
+		data
+	})
+}
+// 发现-文章评论-点赞
+export const discover_comment_admire = (data) => {
+	return http.request({
+		url: 'article/comment_admire',
 		method: 'POST',
 		data
 	})

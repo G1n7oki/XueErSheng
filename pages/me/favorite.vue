@@ -16,7 +16,7 @@
 				class="item"
 				v-for="(item, index) in favorite"
 				:key="item.id"
-				@longpress="handleItem(index)"
+				@longpress="handleItem(index, item.id)"
 			>
 				<image class="image" :src="item.cover" mode=""></image>
 				<view class="info">
@@ -44,7 +44,7 @@
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import Empty from '@/components/empty/empty.vue'
 	import UniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
-	import { me_favorite } from '@/common/api/api.js'
+	import { me_favorite, course_favorite_2 } from '@/common/api/api.js'
 	export default {
 		name: 'Favorite',
 		components: {
@@ -98,13 +98,24 @@
 				uni.hideLoading()
 			},
 			// 长按删除
-			handleItem(index) {
+			handleItem(index, id) {
 				const that = this
 				uni.showModal({
 					title: '提示',
 					content: '确定删除此条记录吗?',
 					success(res) {
-						res.confirm ? that.removeListItem(index) : console.log('取消')
+						if (res.confirm) {
+							course_favorite_2({
+								id,
+								type: '1'
+							}).then(response => {
+								uni.showToast({
+									icon: 'none',
+									title: '删除成功'
+								})
+								that.removeListItem(index)
+							})
+						}
 					}
 				})
 			},

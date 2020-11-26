@@ -21,26 +21,27 @@
 				</view>
 			</view>
 			<!-- tabbar end -->
-			<view class="list" :style="{'margin-top': height}">
+			<empty v-if="listData.length <= 0" />
+			<view v-else class="list" :style="{'margin-top': height}">
 				<view class="item" 
 					v-for="item in listData"
 					:key="item.id"
 				>
 					<view class="info">
-						<image class="avatar" src="http://dummyimage.com/120x600" mode=""></image>
+						<image class="avatar" :src="item.avatars" mode=""></image>
 						<view class="name-date">
 							<view class="name">
 								{{ item.username }}
 							</view>
 							<view class="date">
-								8月22日
+								{{ item.created_at.substring(5, 10) }}
 							</view>
 						</view>
 					</view>
 					<view class="content">
-						{{ item.content }}
+						{{  tabbar.index === 1 ? item.content : item.title }}
 					</view>
-					<view class="original" @click="toDetail(item.id)">
+					<view v-if="tabbar.index !== 1" class="original" @click="toDetail(item.id)">
 						查看原文
 					</view>
 					<view class="images">
@@ -48,7 +49,7 @@
 							v-for="image in item.image"
 							:key="image.id"
 							:class="[image.length > 0 ? 'image-2' : 'image-1']"
-							:src="image.image_url"
+							:src="item.imagehost + image.image_url"
 							mode=""
 						>
 						</image>
@@ -58,20 +59,20 @@
 							{{ item.click }}阅读
 						</view>
 						<view class="icons">
-							<view class="icon-cell" @click="praise(item.id)">
+							<view class="icon-cell" @click="praise(item)">
 								<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/discover/dianzan%402x.png" mode=""></image>
 								<text class="number">{{ item.admire }}</text>
 							</view>
 							<view class="icon-cell">
 								<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/discover/pinglun%402x.png" mode=""></image>
-								<text class="number">18</text>
+								<text class="number">{{ item.comment }}</text>
 							</view>
 							<button class="button" open-type="share"></button>
 						</view>
 					</view>
 				</view>
-				<view v-if="listData.length > 2" class="loading">
-					<uni-load-more :status="loading" />
+				<view v-if="total> 1" class="loading">
+					<uni-load-more :status="loading" :iconSize="14" />
 				</view>
 			</view>
 			<view class="issue" @click="handleIssue">
@@ -84,12 +85,14 @@
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import UniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
+	import Empty from '@/components/empty/empty.vue'
 	import { discover_list, discover_praise } from '@/common/api/api.js'
 	export default {
 		name: 'Discover',
 		components: {
 			XesNavbar,
-			UniLoadMore
+			UniLoadMore,
+			Empty
 		},
 		data() {
 			return {
@@ -151,7 +154,7 @@
 			this.loading = 'loading'
 			
 			discover_list({
-				type,
+				type: this.tabbar.index + 1,
 				page: this.page
 			}).then(response => {
 				const res = response.data.data
@@ -179,18 +182,38 @@
 				})
 			},
 			// 点赞 后端没有提供此字段
-			praise(id, flag) {
-				discover_praise({
-					id,
-					mode: flag
-				}).then(response => {
-					console.log(response)
-				})
+			praise(raw) {
+				if (raw.is_admire) {
+					discover_praise({
+						id: raw.id,
+						mode: 2
+					}).then(response => {
+						uni.showToast({
+							icon: 'none',
+							title: '取消成功'
+						})
+						raw.admire = raw.admire - 1
+						raw.is_admire = 0
+					})
+				} else {
+					discover_praise({
+						id: raw.id,
+						mode: 1
+					}).then(response => {
+						uni.showToast({
+							icon: 'none',
+							title: '点赞成功'
+						})
+						raw.admire = raw.admire + 1
+						raw.is_admire = 1
+					})
+				}
 			},
 			// 切换卡
 			handleTabBarItem(id) {
 				this.tabbar.index = id
 				this.page = 1
+				this.listData = []
 				this.toData(id + 1)
 			},
 			// 跳转到提问页

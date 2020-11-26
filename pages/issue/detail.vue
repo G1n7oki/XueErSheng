@@ -86,6 +86,8 @@
 				<scroll-view 
 					class="popup-inner-scroll"
 					scroll-y="true"
+					:scroll-top="top"
+					@scroll="scroll"
 					@scrolltolower="pullUpLoading"
 				>
 					<view class="title">
@@ -203,7 +205,8 @@
 					show: false,
 					status: 'more'
 				},
-				type: 'new'
+				type: 'new',
+				top: 0
 			}
 		},
 		onLoad(options) {
@@ -280,9 +283,9 @@
 				this.comment.list.unshift(response.data.data)
 				this.comment.value = ''
 				this.comment.total++
-				uni.showToast({
-					icon: 'none',
-					title: '评论成功'
+				uni.pageScrollTo({
+					scrollTop: 0,
+					duration: 300
 				})
 			},
 			// 评论详情里的评论
@@ -299,17 +302,14 @@
 				
 				this.comment2.list.unshift(response.data.data)
 				this.comment2.value = ''
+				this.top = 0
 				
-				this.comment.list.map(item => {
-					if (item.id === this.comment2.id) {
-						item.reply_num++
-					}
-				})
-				
-				uni.showToast({
-					icon: 'none',
-					title: '评论成功'
-				})
+				// this.comment.list.map(item => {
+				// 	if (item.id === this.comment2.id) {
+				// 		item.reply_num++
+				// 	}
+				// })
+				++this.comment2.default.reply_num
 			},
 			// 二级评论上拉加载
 			async pullUpLoading() {
@@ -367,6 +367,9 @@
 				this.comment.page = 1
 				this.type = str
 				this.toData(this.id)
+			},
+			scroll(e) {
+				this.top = e.detail.scrollTop
 			}
 		}
 	}

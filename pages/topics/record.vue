@@ -117,7 +117,7 @@
 				let temp = []
 				let list = []
 				// 处理数据
-				data.forEach((item, index) => {
+				data.forEach((item) => {
 					const date = item.created_at.substring(0, 10)
 					const finish = Math.floor((item.total_num - item.not_done) / item.total_num * 100)
 					if (temp.indexOf(date) === -1) {
@@ -126,7 +126,7 @@
 							date: date,
 							children: [{
 								id: item.paper_id,
-								title: '',
+								title: item.title,
 								total: item.total_num,
 								finish: finish,
 								score: item.total_score
@@ -136,7 +136,7 @@
 						const index = temp.indexOf(date)
 						list[index].children.push({
 							id: item.paper_id,
-							title: '',
+							title: item.title,
 							total: item.total_num,
 							finish: finish,
 							score: item.total_score

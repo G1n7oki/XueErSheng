@@ -1,5 +1,21 @@
 .top-half-part {
 	padding: 0 32upx;
+	
+	.praise {
+		margin-top: 71upx;
+		text-align: center;
+		
+		.icon {
+			width: 52upx;
+			height: 52upx;
+		}
+		
+		.number {
+			font-size: 28upx;
+			font-weight: 500;
+			color: #606266;
+		}
+	}
 }
 
 .detail-title {
@@ -48,22 +64,6 @@
 			font-weight: 500;
 			color: #606266;
 		}
-	}
-}
-
-.praise {
-	margin-top: 71upx;
-	text-align: center;
-	
-	.icon {
-		width: 52upx;
-		height: 52upx;
-	}
-	
-	.number {
-		font-size: 28upx;
-		font-weight: 500;
-		color: #606266;
 	}
 }
 
