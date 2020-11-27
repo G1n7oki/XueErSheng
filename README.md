@@ -1,6 +1,6 @@
 # XueErSheng
 
-一款在线教育小程序
+一款在UniApp打造的线教育小程序
 
 ## Issue
 
