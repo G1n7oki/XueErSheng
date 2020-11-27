@@ -324,7 +324,7 @@
 				} else {
 					// 高亮选择后的答案
 					confirm.forEach(item => {
-						console.log(item)
+						
 					})
 					issue.isOpen = true
 				}
