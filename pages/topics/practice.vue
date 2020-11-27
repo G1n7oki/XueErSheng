@@ -29,7 +29,7 @@
 							{{ issue.question_type | formatType }}
 						</view>
 						<view class="score">
-							{{ issue.pivot.score }}分
+							{{ issue.score }}分
 						</view>
 					</view>
 					<view class="issue-topic">
@@ -47,7 +47,7 @@
 								<view 
 									class="option-cell__name"
 									:class="{'success': item.result === 2, 'error': item.result === 3}"
-									@click="handleAnswer(index, item, issue)"
+									@click="handleAnswer(item, issue)"
 								>
 									{{ item.abcd_order.toLocaleUpperCase() }}
 								</view>
@@ -64,12 +64,12 @@
 							/>
 						</view>
 					</view>
-					<view class="split-line" v-if="issue.choose"></view>
-					<view class="analysis" v-if="issue.choose && pattern !== 'exam'">
+					<view class="split-line" v-if="issue.isOpen"></view>
+					<view class="analysis" v-if="issue.isOpen && pattern !== 'exam'">
 						<view class="tips">
-							正确答案 <text class="success">{{ issue.correct }}</text> , 您的答案 <text class="result">{{ issue.confirmList.join(',') }}</text> , 用时{{ issue.count }}秒
+							正确答案 <text class="success">{{ issue.answer_cn }}</text> , 您的答案 <text class="result"></text> , 用时{{ issue.count }}秒
 						</view>
-						<view class="stat">
+						<!-- <view class="stat">
 							<view class="stat-title">
 								统计
 							</view>
@@ -104,17 +104,17 @@
 									</view>
 								</view>
 							</view>
-						</view>
+						</view> -->
 						<view class="resolve">
 							<view class="resolve-title">
 								解析
 							</view>
 							<view class="resolve-text">
-								在行车荷载作用下，水凝混凝土路面的力学特性为弯沉变形较大，拉弯拉强度小
+								{{ issue.parse }}
 							</view>
 						</view>
 					</view>
-					<view v-if="!issue.analysis && pattern === 'exercise'" class="button" @click="checkAnalysis(issue)">
+					<view v-if="!issue.isOpen && pattern === 'exercise'" class="button" @click="handleIsOpen(issue)">
 						<uButton text="查看解析" />
 					</view>
 				</scroll-view>
@@ -128,8 +128,7 @@
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import uButton from '@/components/u-button/uButton.vue'
 	import XesTabbar from '@/components/xes-tabbar/xes-tabbar.vue'
-	import { practice } from '@/common/api/api.js'
-	import Json from '@/static/data.json'
+	import { paper_list, error_reform, topics_practice } from '@/common/api/api.js'
 	export default {
 		name: 'Practice',
 		components: {
@@ -142,7 +141,7 @@
 				isShowPapers: false,
 				wHeight: 0,
 				height: 0,
-				issueList: [],
+				issueList: [], // 题目列表
 				count: 0,
 				timer: null,
 				pattern: uni.getStorageSync('pattern') || 'exercise', // exercise 练习 self-study 自学 exam 考试
@@ -153,6 +152,7 @@
 			}
 		},
 		onLoad(options) {
+			console.log(options)
 			// 屏幕的高度
 			const wHeight = uni.getSystemInfoSync()['windowHeight']
 			// 获取手机状态栏高度
@@ -160,12 +160,13 @@
 			
 			this.height = wHeight - this.statusBarHeight - 44 + 'px'
 			
-			// 计算每题的答题时间
-			this.timer = setInterval(() => {
-				this.count++
-			}, 1000)
-			
-			this.toData(options.id)
+			if (options.exam) {
+				this.toErrorData(options.exam, options.paper)
+			} else if (!options.exam && !options.paper) {
+				this.toDailyPracticeData()
+			} else {
+				this.toData(options.paper)
+			}
 		},
 		filters: {
 			// 题目类别 1 单选 ，2 多选， 3判断，4主观: 直接出现答案
@@ -211,134 +212,128 @@
 				this.pattern === 'exercise' ? this.toExercisePattern(list) : this.pattern === 'self-study' ? this.toSelfStudyPattern(list) : this.toExamPattern(list)
 				uni.hideLoading()
 			},
+			// 获取每日一练数据
+			async toDailyPracticeData() {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				// 获取每日一练id
+				const pid = await topics_practice({
+					profession_id: uni.getStorageSync('profession_id')
+				})
+				const { id } = pid.data.data
+				// 获取试卷内容
+				const paper = await paper_list({
+					paper_id: id,
+					profession_id: uni.getStorageSync('profession_id'),
+					type: 0
+				})
+				const list = paper.data.data
+				this.total = list.length
+				if (this.pattern === 'exercise') {
+					this.toExerciseData(list)
+				}
+				uni.hideLoading()
+			},
+			// 获取错题重做数据
+			async toErrorData(exam, paper) {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				const response = await error_reform({
+					exam_id: exam,
+					paper_id: paper
+				})
+				// 需要区分当前是那种模式
+				if (this.pattern === 'exercise') { // 练习模式
+					this.toExerciseData(response.data.data)
+				}
+				uni.hideLoading()
+			},
 			changeSwiper(event) {
 				this.current = event.detail.current + 1
 			},
-			// 练习模式的数据
-			toExercisePattern(list) {
+			// 整理练习模式的数据
+			toExerciseData(list) {
 				list.forEach(item => {
+					item.isOpen = false // 增加是否展示解析
+					item.confirm = [] // 选择的答案
 					item.count = 0 // 答题时间
-					item.confirmList = [] // 选择的答案
-					item.result = 4 // 0 错误 1 正确 2 半对 4 未答
-					
-					// 给儿子数组添加前端需要的字段
-					item.option.forEach(children => {
-						children.result = 1 // 每道题目选择后的高亮的结果
+					// 给每个答案做一个标记
+					item.option.forEach(option => {
+						option.result = 1
 					})
 				})
-				
-				this.issueList = list
-			},
-			// 自学模式的数据
-			toSelfStudyPattern(list) {
-				list.forEach(item => {
-					let ids = []
-					item.count = 0 // 答题时间
-					item.correct = [] // 解析展示的答案
-					
-					// 给儿子数组添加前端需要的字段
-					item.option.forEach(children => {
-						children.result = 1 // 每道题目选择后的高亮的结果
-						ids.push(children.id) // 整理children id的集合
-					})
-					
-					// 解析里展示的答案
-					// item.answer.split(',').forEach(res => {
-					// 	item.correct.push(item.option[ids.indexOf(res)].abcd_order)
-					// 	item.option[ids.indexOf(res)].result = 2
-					// })
-				})
-				
-				this.issueList = list
-			},
-			// 考试模式的数据
-			toExamPattern(list) {
-				list.forEach(item => {
-					item.confirmList = []
-					item.result = 4 // 0 为未答 1 为正确 2 为半对 3 为错误
-					// 给儿子数组添加前端需要的字段
-					item.option.forEach(children => {
-						children.result = 1 // 每道题目选择后的高亮的结果
-					})
-				})
-				
 				this.issueList = list
 			},
 			// 查看解析
-			checkAnalysis(issue) {
-				const result = issue.answer.split(',')
-				let options = []
-				
-				issue.option.forEach(item => {
-					options.push(item.id)
-				})
-				// 展示正确答案
-				result.forEach((item, index) => {
-					if(options.indexOf(item) !== -1) {
-						const index = options.indexOf(item)
-						issue.option[index].result = 2
-					}
-				})
-				
-				issue.analysis = true
+			handleIsOpen(raw) {
+				raw.isOpen = true
 			},
 			// 答题
-			handleAnswer(index, item, issue) {
+			handleAnswer(item, issue) {
 				// 是否可以答题
-				if (issue.choose) {
+				if (issue.isOpen) {
 					return
 				}
-				
-				issue.question_type === 1 ? this.single(index, item, issue) : this.choice(index, item, issue)
+				// 判断是走单选还是多选的逻辑
+				issue.question_type === 1 ? this.single(item, issue) : this.choice(item, issue)
 			},
 			// 单选题
-			single(index, item, issue) {
+			single(item, issue) {
+				// 这里需要判断是哪种模式
 				if (this.pattern === 'exam') {
-					issue.option.forEach(item => {
-						item.result = 1
-					})
-					issue.option[index].result = 2
+					
 				} else {
 					// 是否选择正确
 					const result = issue.answer === item.id.toString()
 					// 高亮结果
-					issue.option[index].result = result ? 2 : 3
-					// 记录答题结果
-					issue.result = result ? 1 : 0
-					issue.confirmList.push(issue.option[index].abcd_order.toLocaleUpperCase())
+					item.result = result ? 2 : 3
+					// 记录时间
+					// issue.count = this.count
+					// this.count = 0
+					// 记录选择的答案 用于展示到解析
+					// issue.confirm.push(item.abcd_order.toLocaleUpperCase())
+					// 不可再答题
+					issue.isOpen = true
+					// 答题记录
 					this.result.push({
 						id: issue.id,
 						choose: item.id,
-						status: issue.result
+						status: result ? 1 : 0
 					})
-					// 记录时间
-					issue.count = this.count
-					this.count = 0
-					// 不可再答题并展示解析
-					issue.choose = true
 				}
 			},
 			// 多选题
-			choice(index, item, issue) {
-				if (issue.confirmList.indexOf(item.id) === -1) {
-					issue.confirmList.push(item.id)
-					issue.option[index].result = 2
+			choice(item, issue) {
+				if (issue.confirm.indexOf(item.id) === -1) {
+					issue.confirm.push(item.id)
+					item.result = 2
 				} else {
-					let idx = issue.confirmList.indexOf(item.id)
-					issue.confirmList.splice(idx, 1)
-					issue.option[index].result = 1
+					let idx = issue.confirm.indexOf(item.id)
+					issue.confirm.splice(idx, 1)
+					item.result = 1
 				}
 			},
 			// 多选确认
 			handleConfirm(issue) {
 				const answer = issue.answer.split(',')
-				const { confirmList } = issue
+				const { confirm } = issue
+				if (this.pattern === 'exam') {
+					
+				} else {
+					// 高亮选择后的答案
+					confirm.forEach(item => {
+						console.log(item)
+					})
+					issue.isOpen = true
+				}
 				// 判断答题结果为那种类型
-				if (!this.findOne(answer, confirmList)) {
+				if (!this.findOne(answer, confirm)) {
 					issue.result = 3
 					console.log('错误')
 				} else {
-					if (confirmList.length < answer.length) { // 如果选择答案的长度小于标准答案则为半对
+					if (confirm.length < answer.length) { // 如果选择答案的长度小于标准答案则为半对
 						issue.result = 2
 						console.log('半对')
 					} else { // 否则为全对
@@ -364,5 +359,5 @@
 </script>
 
 <style lang="scss">
-	@import '../../static/scss/practice.scss'
+	@import '~@/static/scss/practice.scss'
 </style>

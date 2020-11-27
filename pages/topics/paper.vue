@@ -16,11 +16,13 @@
 		<!-- 选择器 end -->
 		<!-- 滚动区域 start -->
 		<scroll-view class="scroll-view" scroll-y="true" :style="{ height: height }">
-			<view class="inner">
+			<empty v-if="paperList.length <= 0" />
+			<view v-else class="inner">
 				<view
 					class="item"
 					v-for="paper in paperList"
 					:key="paper.id"
+					@click="handleItem(paper)"
 				>
 					<view class="item-year">
 						{{ paper.year }}年
@@ -28,9 +30,9 @@
 					<view class="item-title" v-if="paper.title">
 						{{ paper.title }}
 					</view>
-					<view class="item-content" :class="{'active': paper.title === ''}">
+					<!-- <view class="item-content" :class="{'active': paper.title === ''}">
 						{{ paper.content }}
-					</view>
+					</view> -->
 					<view class="item-bot">
 						<view class="item-num">
 							做过 <text>{{ paper.num }}</text> 次 
@@ -49,68 +51,22 @@
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import UniIcons from '@/components/uni-icons/uni-icons.vue'
+	import Empty from '@/components/empty/empty.vue'
+	import { topics_paper, filter } from '@/common/api/api.js'
 	export default {
 		name: 'Paper',
 		components: {
 			XesNavbar,
-			UniIcons
+			UniIcons,
+			Empty
 		},
 		data() {
 			return {
 				title: '', // 页面标题
-				range: ['请选择试卷年份', '中国', '美国', '巴西', '日本'], // 选择的数据
+				range: ['请选择试卷年份'], // 选择的数据
 				index: 0, // 当前选择的索引
 				height: 0, // 滚动区域的高度
-				paperList: [{
-					id: 1,
-					year: '2020',
-					title: '二级建造师',
-					content: '建筑实务',
-					num: '14',
-					score: '91'
-				}, {
-					id: 2,
-					year: '2020',
-					title: '二级建造师',
-					content: '建筑实务',
-					num: '14',
-					score: '91'
-				}, {
-					id: 3,
-					year: '2020',
-					title: '二级建造师',
-					content: '建筑实务',
-					num: '14',
-					score: '91'
-				}, {
-					id: 4,
-					year: '2020',
-					title: '二级建造师',
-					content: '建筑实务',
-					num: '14',
-					score: '91'
-				}, {
-					id: 5,
-					year: '2020',
-					title: '二级建造师',
-					content: '建筑实务',
-					num: '14',
-					score: '91'
-				}, {
-					id: 6,
-					year: '2020',
-					title: '二级建造师',
-					content: '建筑实务',
-					num: '14',
-					score: '91'
-				}, {
-					id: 7,
-					year: '2020',
-					title: '',
-					content: '二级建造师建设工程法规及相关知识白皮卷三',
-					num: '14',
-					score: '91'
-				}] // 试卷列表
+				paperList: [] // 试卷列表
 			}
 		},
 		onLoad(options) {
@@ -127,11 +83,44 @@
 			navbar.select('#navbar').boundingClientRect(res => {
 				that.height = that.height - res.height + 'px'
 			}).exec()
+			
+			this.toData()
 		},
 		methods: {
+			async toData() {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				// 获取列表数据
+				const list = await topics_paper({
+					profession_id: uni.getStorageSync('profession_id'),
+					type: this.title === '历年真题' ? 1 : 2
+				})
+				this.paperList = list.data.data
+				// 获取筛选数据
+				const years = await filter()
+				const { year } = years.data.data
+				this.range = [...this.range, ...year]
+				uni.hideLoading()
+			},
 			// 选择年份
-			chooseYear(e) {
+			async chooseYear(e) {
+				uni.showLoading({
+					title: '加载中...'
+				})
 				this.index = +e.target.value
+				const list = await topics_paper({
+					profession_id: uni.getStorageSync('profession_id'),
+					type: this.title === '历年真题' ? 1 : 2,
+					year: this.index === 0 ? '' : this.range[this.index]
+				})
+				this.paperList = list.data.data
+				uni.hideLoading()
+			},
+			handleItem(raw) {
+				uni.navigateTo({
+					url: `/pages/topics/practice?paper=${raw.id}`
+				})
 			}
 		}
 	}

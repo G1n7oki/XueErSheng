@@ -138,16 +138,16 @@
 								<view class="progress">
 									<Progress
 										:strokeWidth="3"
-										:percent="topic.correct / topic.total * 100"
+										:percent="parseInt(topic.user_do / topic.count * 100)"
 										:show-info="false"
 									/>
 								</view>
 								<view class="result-1">
-									{{ topic.correct }} / {{ topic.total }}
+									{{ topic.user_do }} / {{ topic.count }}
 								</view>
 								<view class="line"></view>
 								<view class="result-2">
-									正确率{{ topic.accuracy }}%
+									正确率{{ parseInt(topic.right / topic.count * 100) }}%
 								</view>
 							</view>
 						</view>
@@ -158,31 +158,31 @@
 								<view class="contet-info">
 									<view 
 										class="info"
-										v-for="(item, index) in topic.children"
+										v-for="(item, index) in topic.sub"
 										:key="item.id"
 									>
-										<view class="split-line" v-if="index + 1 !== topic.children.length"></view>
+										<view class="split-line" v-if="index + 1 !== topic.sub.length"></view>
 										<view class="top">
 											<view class="dot"></view>
 											<view class="name">
 												{{ item.name }}
 											</view>
-											<button type="default">做题</button>
+											<button type="default" @click="hanleTodo(item.paper_id)">做题</button>
 										</view>
 										<view class="bot">
 											<view class="progress">
 												<Progress
 													:strokeWidth="3"
-													:percent="item.correct / item.total *100"
+													:percent="parseInt(item.user_do / item.count *100)"
 													:show-info="false"
 												/>
 											</view>
 											<view class="result-1">
-												{{ item.correct }} / {{ item.total }}
+												{{ item.user_do }} / {{ item.count }}
 											</view>
 											<view class="line"></view>
 											<view class="result-2">
-												正确率{{ item.accuracy }}%
+												正确率{{ parseInt(item.right / item.count * 100) }}%
 											</view>
 										</view>
 									</view>
@@ -252,7 +252,9 @@
 				const chapter = await refine({
 					profession_id: uni.getStorageSync('profession_id')
 				})
-				console.log(chapter)
+				chapter.data.data.forEach(item => {
+					item.isOpen = false
+				})
 				this.topicList = chapter.data.data
 				uni.hideLoading()
 			},
@@ -288,6 +290,11 @@
 				const { paper_id } = this.questionData.not_complete
 				uni.navigateTo({
 					url: `/pages/topics/practice?paper=${paper_id}`
+				})
+			},
+			hanleTodo(id) {
+				uni.navigateTo({
+					url: `/pages/topics/practice?paper=${id}`
 				})
 			}
 		}

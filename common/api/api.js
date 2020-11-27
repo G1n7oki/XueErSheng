@@ -295,7 +295,7 @@ export const refine = (data) => {
 	})
 }
 // 试卷
-export const practice = (data) => {
+export const paper_list = (data) => {
 	return http.request({
 		url: 'paper',
 		method: 'POST',
@@ -330,6 +330,30 @@ export const topics_hand = (data) => {
 export const topics_wrong = (data) => {
 	return http.request({
 		url: 'question/wrong',
+		method: 'GET',
+		data
+	})
+}
+// 历年真题/模拟试卷
+export const topics_paper = (data) => {
+	return http.request({
+		url: 'paper/lists',
+		method: 'GET',
+		data
+	})
+}
+// 错题重做
+export const error_reform = (data) => {
+	return http.request({
+		url: 'question/wrong_content',
+		method: 'GET',
+		data
+	})
+}
+// 每日一练
+export const topics_practice = (data) => {
+	return http.request({
+		url: 'practice',
 		method: 'GET',
 		data
 	})
@@ -450,7 +474,7 @@ export const discover_comment_admire = (data) => {
 	/**
 	* 以下为直播模块接口
 	* */
-	// 滑块的详情已经课包价格信息
+	// 滑块的详情以及课包价格信息
 	export const live_package_detail = (data) => {
 		return http.request({
 			url: `live/${data}`,
