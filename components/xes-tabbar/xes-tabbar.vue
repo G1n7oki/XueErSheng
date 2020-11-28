@@ -75,7 +75,7 @@
 				<view class="answer-sheet-item">
 					<view 
 						class="item"
-						:class="{'active': item.choose === true}"
+						:class="{'active': item.confirm.length > 0}"
 						v-for="(item, index) in list"
 						:key="index"
 					>
@@ -84,7 +84,7 @@
 				</view>
 			</scroll-view>
 			<view class="answer-sheet-button">
-				<view class="inner">提交练习</view>
+				<view class="inner" @click="handleHand">提交练习</view>
 			</view>
 		</uni-popup>
 		<!-- 答题卡 end -->
@@ -106,18 +106,22 @@
 								字体放大
 							</view>
 						</view> -->
-						<navigator url="/pages/topics/correction" hover-class="none" class="item">
+						<navigator
+							:url="'/pages/topics/correction?id=' + list[current].id"
+							hover-class="none"
+							class="item"
+						>
 							<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/topics/jiucuo%402x.png" mode=""></image>
 							<view class="name">
 								题目纠错
 							</view>
 						</navigator>
-						<view class="item">
+						<navigator url="/pages/issue/issue" class="item">
 							<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/topics/tiwen%402x.png" mode=""></image>
 							<view class="name">
 								我要提问
 							</view>
-						</view>
+						</navigator>
 					</view>
 				</view>
 			</view>
@@ -157,19 +161,34 @@
 			this.top = statusBarHeight + 36 + 'px'
 		},
 		props: {
+			// 当前题目
 			current: {
 				type: Number,
 				default: 0
 			},
+			// 题目总数
 			total: {
 				type: Number,
 				default: 0
 			},
+			// 题目数据
 			list: {
 				type: Array,
 				default: function () {
 					return []
 				}
+			},
+			// 答题结果
+			result: {
+				type: Array,
+				default: function () {
+					return []
+				}
+			},
+			// 卷子id
+			pid: {
+				type: Number,
+				default: 0
 			}
 		},
 		methods: {
@@ -224,13 +243,13 @@
 			// 交卷
 			async handleHand() {
 				const response = await topics_hand({
-					paper_id: '',
+					paper_id: this.pid,
 					finish: 0,
 					profession_id: uni.getStorageSync('profession_id'),
 					total: this.total,
 					time: this.count,
 					exam_id: '',
-					answer_json: []
+					answer_json: this.result
 				})
 			}
 		},
@@ -238,7 +257,7 @@
 			list(newValue) {
 				const finished = []
 				newValue.map(item => {
-					if (item.choose) {
+					if (item.confirm.length > 0) {
 						finished.push(item)
 					}
 				})

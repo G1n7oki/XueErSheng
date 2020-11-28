@@ -6,9 +6,11 @@
 			is-title="false"
 		>
 			<xes-tabbar
+				:paper="pid"
 				:current="current"
 				:total="total"
 				:list="issueList"
+				:result="result"
 			/>
 		</xes-navbar>
 		<!-- 导航栏 end -->
@@ -67,7 +69,7 @@
 					<view class="split-line" v-if="issue.isOpen"></view>
 					<view class="analysis" v-if="issue.isOpen && pattern !== 'exam'">
 						<view class="tips">
-							正确答案 <text class="success">{{ issue.answer_cn }}</text> , 您的答案 <text class="result"></text> , 用时{{ issue.count }}秒
+							正确答案 <text class="success">{{ issue.answer_cn }}</text> , 您的答案 <text class="result">{{ issue.confirm.join(',') }}</text> , 用时{{ issue.count }}秒
 						</view>
 						<!-- <view class="stat">
 							<view class="stat-title">
@@ -148,7 +150,9 @@
 				total: 0,
 				current: 1,
 				// demo result: [{ id: 1, choose: id, status: 0代表错误 ，1代表正确,2半对 }]
-				result: []
+				result: [], // 答题结果
+				pid: '', // 卷子id
+				eid: '' // 继续做题id
 			}
 		},
 		onLoad(options) {
@@ -222,6 +226,7 @@
 					profession_id: uni.getStorageSync('profession_id')
 				})
 				const { id } = pid.data.data
+				this.pid = id
 				// 获取试卷内容
 				const paper = await paper_list({
 					paper_id: id,
@@ -250,7 +255,16 @@
 				}
 				uni.hideLoading()
 			},
+			// 记录答题时间
+			clock() {
+				this.timer = setInterval(() => {
+					this.count++
+				}, 1000)
+			},
 			changeSwiper(event) {
+				clearInterval(this.timer)
+				this.count = 1
+				this.clock()
 				this.current = event.detail.current + 1
 			},
 			// 整理练习模式的数据
@@ -265,9 +279,13 @@
 					})
 				})
 				this.issueList = list
+				this.clock()
 			},
 			// 查看解析
 			handleIsOpen(raw) {
+				clearInterval(this.timer)
+				raw.count = this.count
+				this.count = 1
 				raw.isOpen = true
 			},
 			// 答题
@@ -281,6 +299,7 @@
 			},
 			// 单选题
 			single(item, issue) {
+				clearInterval(this.timer)
 				// 这里需要判断是哪种模式
 				if (this.pattern === 'exam') {
 					
@@ -290,10 +309,10 @@
 					// 高亮结果
 					item.result = result ? 2 : 3
 					// 记录时间
-					// issue.count = this.count
-					// this.count = 0
+					issue.count = this.count
+					this.count = 1
 					// 记录选择的答案 用于展示到解析
-					// issue.confirm.push(item.abcd_order.toLocaleUpperCase())
+					issue.confirm.push(item.abcd_order.toLocaleUpperCase())
 					// 不可再答题
 					issue.isOpen = true
 					// 答题记录
@@ -307,7 +326,7 @@
 			// 多选题
 			choice(item, issue) {
 				if (issue.confirm.indexOf(item.id) === -1) {
-					issue.confirm.push(item.id)
+					issue.confirm.push(item.abcd_order)
 					item.result = 2
 				} else {
 					let idx = issue.confirm.indexOf(item.id)
@@ -317,28 +336,60 @@
 			},
 			// 多选确认
 			handleConfirm(issue) {
+				clearInterval(this.timer)
+				// 是否可以答题
+				if (issue.isOpen) {
+					return
+				}
+				
 				const answer = issue.answer.split(',')
-				const { confirm } = issue
+				const { confirm, option } = issue
+				
+				const choose = [] // 存储选择后的临时变量
+				const ids = []
+				option.forEach(item => {
+					if (confirm.indexOf(item.abcd_order) !== -1) {
+						choose.push(item)
+						ids.push(item.id)
+					}
+				})
+				
 				if (this.pattern === 'exam') {
 					
 				} else {
 					// 高亮选择后的答案
-					confirm.forEach(item => {
-						
+					choose.forEach(item => {
+						if (answer.indexOf(item.abcd_order) === -1) {
+							item.result = 3
+						}
 					})
+					// 记录时间
+					issue.count = this.count
+					this.count = 1
+					// 不可再答题
 					issue.isOpen = true
 				}
+				
 				// 判断答题结果为那种类型
 				if (!this.findOne(answer, confirm)) {
-					issue.result = 3
-					console.log('错误')
+					this.result.push({
+						id: issue.id,
+						choose: ids.join(','),
+						status: 0
+					})
 				} else {
 					if (confirm.length < answer.length) { // 如果选择答案的长度小于标准答案则为半对
-						issue.result = 2
-						console.log('半对')
+						this.result.push({
+							id: issue.id,
+							choose: ids.join(','),
+							status: 2
+						})
 					} else { // 否则为全对
-						issue.result = 1
-						console.log('正确')
+						this.result.push({
+							id: issue.id,
+							choose: ids.join(','),
+							status: 1
+						})
 					}
 				}
 			},

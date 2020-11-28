@@ -38,6 +38,7 @@
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import uButton from '@/components/u-button/uButton.vue'
+	import { topics_correct } from '@/common/api/api.js'
 	export default {
 		name: 'Correction',
 		components: {
@@ -48,37 +49,51 @@
 			return {
 				items: [{
 					id: 0,
-					value: '答案有问题',
+					value: '1',
 					name: '答案有问题'
 				}, {
 					id: 1,
-					value: '答案与解析不符',
+					value: '2',
 					name: '答案与解析不符'
 				}, {
 					id: 2,
-					value: '有错别字',
+					value: '3',
 					name: '有错别字'
 				}, {
 					id: 3,
-					value: '选项有问题',
+					value: '4',
 					name: '选项有问题'
 				}, {
 					id: 4,
-					value: '其他',
+					value: '5',
 					name: '其他'
 				}], // 多选框数据
 				value: [], // 多选框选择后的内容
-				text: '' // 多行输入框文本
+				text: '', // 多行输入框文本
+				id: '' // 题目id
 			}
+		},
+		onLoad(options) {
+			this.id = options.id
 		},
 		methods: {
 			checkboxChange(e) {
-				console.log(e)
 				this.value = e.detail.value
 			},
-			confirm() {
-				console.log(this.value)
-				console.log(this.text)
+			async confirm() {
+				uni.showLoading({
+					title: '提交中...'
+				})
+				const resposne = await topics_correct({
+					id: this.id,
+					type: this.value.join(','),
+					content: this.text
+				})
+				uni.hideLoading()
+				uni.showToast({
+					icon: 'none',
+					title: '提交成功'
+				})
 			}
 		}
 	}

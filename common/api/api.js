@@ -358,6 +358,14 @@ export const topics_practice = (data) => {
 		data
 	})
 }
+// 题目纠错
+export const topics_correct = (data) => {
+	return http.request({
+		url: 'question/correction',
+		method: 'POST',
+		data
+	})
+}
 /**
  * 以下为订单模块接口
  * */
