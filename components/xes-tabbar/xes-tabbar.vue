@@ -75,7 +75,7 @@
 				<view class="answer-sheet-item">
 					<view 
 						class="item"
-						:class="{'active': item.confirm.length > 0}"
+						:class="{'active': item.choose}"
 						v-for="(item, index) in list"
 						:key="index"
 					>
@@ -150,7 +150,10 @@
 				isShowPapers: false,
 				top: 0,
 				unfinished: 0,
-				finished: 0
+				finished: 0,
+				jsonData: {
+					data: []
+				}
 			}
 		},
 		created() {
@@ -237,11 +240,21 @@
 				this.$refs['papers-dialog'].close()
 				this.$refs['answer-dialog'].open()
 			},
-			handleItem() {
-				console.log('111')
-			},
+			handleItem() { },
 			// 交卷
 			async handleHand() {
+				const pattern = uni.getStorageSync('pattern')
+				
+				if (pattern === 'self-study') {
+					uni.showToast({
+						icon: 'none',
+						title: '自学模式不可以提交'
+					})
+					return false
+				}
+				
+				this.jsonData.data = this.result
+				
 				const response = await topics_hand({
 					paper_id: this.pid,
 					finish: 0,
@@ -249,7 +262,14 @@
 					total: this.total,
 					time: this.count,
 					exam_id: '',
-					answer_json: this.result
+					answer_json: JSON.stringify(this.jsonData)
+				})
+				
+				return false
+				
+				uni.setStorageSync('result', this.list)
+				uni.navigateTo({
+					url: `/pages/topics/result?count=${this.count}`
 				})
 			}
 		},
@@ -257,7 +277,7 @@
 			list(newValue) {
 				const finished = []
 				newValue.map(item => {
-					if (item.confirm.length > 0) {
+					if (item.choose) {
 						finished.push(item)
 					}
 				})

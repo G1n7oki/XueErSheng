@@ -17,25 +17,25 @@
 			<view class="top">
 				<view class="info">
 					<view class="name">
-						市政公用工程项目施工进度管理第一章节练习
+						{{ name }}
 					</view>
 					<view class="time">
-						用时:1小时2分26秒
+						用时:{{ time }}
 					</view>
 				</view>
 				<view class="progress">
 					<progress
 						type="circle"
-						:percent="80"
+						:percent="accuracy"
 						:show-info="false"
 						:stroke-width="8"
 					/>
 					<view class="score-area">
 						<view class="score">
-							64 <text>分</text>
+							{{ score }} <text>分</text>
 						</view>
 						<view class="total">
-							总分100
+							总分{{ totalScore }}
 						</view>
 					</view>
 				</view>
@@ -43,7 +43,7 @@
 			<view class="bot">
 				<view class="item">
 					<view class="number">
-						50
+						{{ total }}
 					</view>
 					<view class="name">
 						总题数
@@ -51,7 +51,7 @@
 				</view>
 				<view class="item">
 					<view class="number">
-						40
+						{{ isRight }}
 					</view>
 					<view class="name">
 						做对
@@ -59,7 +59,7 @@
 				</view>
 				<view class="item">
 					<view class="number">
-						4
+						{{ isError }}
 					</view>
 					<view class="name">
 						做错
@@ -67,7 +67,7 @@
 				</view>
 				<view class="item">
 					<view class="number">
-						6
+						{{ unfinished }}
 					</view>
 					<view class="name">
 						未做
@@ -75,7 +75,7 @@
 				</view>
 				<view class="item">
 					<view class="number">
-						80%
+						{{ accuracy }}
 					</view>
 					<view class="name">
 						正确率
@@ -116,46 +116,66 @@
 			<!-- 答题卡提示 end -->
 			<view class="issue">
 				<view class="issue-title">
-					<view class="name">简答题</view>
-					<view class="amount">共10题</view>
+					<view class="name">单选题</view>
+					<view class="amount">共{{ single.length }}题</view>
 				</view>
-				<view class="issue-item">
-					<view class="item item-1">1</view>
-					<view class="item item-2">2</view>
-					<view class="item item-3">3</view>
-					<view class="item item-4">4</view>
-					<view class="item item-1">5</view>
-					<view class="item item-1">6</view>
-					<view class="item item-1">7</view>
-					<view class="item item-1">8</view>
-					<view class="item item-1">9</view>
-					<view class="item item-1">10</view>
+				<view class="issue-item" v-if="single.length > 0">
+					<view
+						class="item"
+						:class="[item.isRight === 0 ? 'item-2' : item.isRight === 1 ? 'item-1' : item.isRight === 2 ? 'item-3' : 'item-4']"
+						v-for="(item, index) in single"
+						:key="item.id"
+					>{{ index + 1 }}</view>
+				</view>
+			</view>
+			<view class="issue">
+				<view class="issue-title">
+					<view class="name">多选题</view>
+					<view class="amount">共{{ multiple.length }}题</view>
+				</view>
+				<view class="issue-item" v-if="multiple.length > 0">
+					<view
+						class="item"
+						:class="[item.isRight === 0 ? 'item-2' : item.isRight === 1 ? 'item-1' : item.isRight === 2 ? 'item-3' : 'item-4']"
+						v-for="(item, index) in multiple"
+						:key="item.id"
+					>{{ index + 1 }}</view>
 				</view>
 			</view>
 			<view class="issue">
 				<view class="issue-title">
 					<view class="name">判断题</view>
-					<view class="amount">共10题</view>
+					<view class="amount">共{{ judge.length }}题</view>
 				</view>
-				<view class="issue-item">
-					<view class="item item-1">1</view>
-					<view class="item item-2">2</view>
-					<view class="item item-3">3</view>
-					<view class="item item-4">4</view>
-					<view class="item item-1">5</view>
-					<view class="item item-1">6</view>
-					<view class="item item-1">7</view>
-					<view class="item item-1">8</view>
-					<view class="item item-1">9</view>
-					<view class="item item-1">10</view>
+				<view class="issue-item" v-if="judge.length > 0">
+					<view
+						class="item"
+						:class="[item.isRight === 0 ? 'item-2' : item.isRight === 1 ? 'item-1' : item.isRight === 2 ? 'item-3' : 'item-4']"
+						v-for="(item, index) in judge"
+						:key="item.id"
+					>{{ index + 1 }}</view>
+				</view>
+			</view>
+			<view class="issue">
+				<view class="issue-title">
+					<view class="name">主观题</view>
+					<view class="amount">共{{ subjective.length }}题</view>
+				</view>
+				<view class="issue-item" v-if="subjective.length > 0">
+					<view
+						class="item"
+						:class="[item.isRight === 0 ? 'item-2' : item.isRight === 1 ? 'item-1' : item.isRight === 2 ? 'item-3' : 'item-4']"
+						v-for="(item, index) in subjective"
+						:key="item.id"
+					>{{ index + 1 }}</view>
 				</view>
 			</view>
 		</scroll-view>
 		<!-- 答题卡 end -->
 		<!-- 按钮组 start -->
 		<view class="button-group" id="button-group">
-			<button class="again" hover-class="none">再做一次</button>
-			<button class="answer" hover-class="none">查看答案</button>
+			<button class="again" hover-class="none" @click="handleAglin">再做一次</button>
+			<button class="answer" hover-class="none" @click="handleAnswer">查看答案</button>
 		</view>
 		<!-- 按钮组 end -->
 	</view>
@@ -172,10 +192,25 @@
 		},
 		data() {
 			return {
-				height: 0
+				height: 0,
+				result: uni.getStorageSync('result') || [],
+				single: [], // 单选题
+				multiple: [], // 多选题
+				judge: [], // 判断题
+				subjective: [], // 主观题
+				finished: 0, // 完成的
+				unfinished: 0, // 未完成的
+				total: 0, // 总题数
+				isRight: 0, // 做对的
+				isError: 0, // 做错的
+				accuracy: 0, // 正确率
+				score: 0, // 得分
+				totalScore: 0, // 总分
+				time: '', // 做题时间
+				name: uni.getStorageSync('crumbs')[2] || ''
 			}
 		},
-		onLoad() {
+		onLoad(options) {
 			let that = this
 			// 屏幕的高度
 			const wHeight = uni.getSystemInfoSync()['windowHeight']
@@ -195,9 +230,67 @@
 				that.height = that.height - res.height * 2
 			}).exec()
 			
+			this.result.forEach(item => {
+				// 总分
+				this.totalScore = this.totalScore + +item.score
+				// 判断结果为哪种类型
+				if (item.isRight === 0 || item.isRight === 2) { // 如果错误半对都视为错误
+					this.isError++
+				} else if (this.isRight === 1) {
+					this.isRight++
+					this.score = this.score + +item.score
+				} else {
+					this.unfinished++
+				}
+				// 数据拆分
+				switch (item.question_type) {
+					case 1:
+						this.single.push(item)
+						break
+					case 2:
+						this.multiple.push(item)
+						break
+					case 3:
+						this.judge.push(item)
+						break
+					case 4:
+						this.subjective.push(item)
+						break
+					default:
+						break
+				}
+			})
+			// 总数
+			this.total = this.result.length
+			// 正确率
+			this.accuracy = parseInt(this.isRight / this.total) * 100 + '%'
+			// 做题时间
+			this.time = this.formatSeconds(+options.count)
 		},
 		methods: {
-			
+			formatSeconds(value) {
+				let result = parseInt(value)
+				let h = Math.floor(result / 3600) < 10 ? '0' + Math.floor(result / 3600) : Math.floor(result / 3600)
+				let m = Math.floor((result / 60 % 60)) < 10 ? '0' + Math.floor((result / 60 % 60)) : Math.floor((result / 60 % 60))
+				let s = Math.floor((result % 60)) < 10 ? '0' + Math.floor((result % 60)) : Math.floor((result % 60))
+		 
+				let res = ''
+				if(h !== '00') res += `${h}时`
+				if(m !== '00') res += `${m}分`
+				res += `${s}秒`
+				return res
+			},
+			handleAglin() {
+				uni.reLaunch({
+					url: '/pages/topics/practice'
+				})
+			},
+			handleAnswer() {
+				uni.setStorageSync('pattern', 'self-study')
+				uni.reLaunch({
+					url: '/pages/topics/practice'
+				})
+			}
 		}
 	}
 </script>

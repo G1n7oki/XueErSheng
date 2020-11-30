@@ -634,22 +634,8 @@
 			},
 			// 点击讲义
 			handleNotes() {
-				uni.downloadFile({
-				  url: 'http://www.windriver.com.cn/downloads/pdfviewer/web/viewer.aspx?pdfurl=/downloads/files/WP_Medical_Device_Safety_Through_Software.pdf',
-				  success: function (res) {
-						console.log(res)
-				    var filePath = res.tempFilePath
-				    uni.openDocument({
-				      filePath: filePath,
-				      success: function (res) {
-								console.log(res)
-				        console.log('打开文档成功')
-				      },
-							fail(error) {
-								console.log(error)
-							}
-				    })
-				  }
+				uni.navigateTo({
+					url: '/pages/study/notes'
 				})
 			},
 			// 点击收藏

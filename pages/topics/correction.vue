@@ -9,14 +9,14 @@
 		<!-- 导航栏 end -->
 		<!-- 选项 start -->
 		<view class="checkbox-group">
-			<checkbox-group @change="checkboxChange">
+			<radio-group @change="checkboxChange">
 				<label 
 					v-for="item in items"
 					:key="item.id"
 				>
 					<checkbox :value="item.value" />{{ item.name }}
 				</label>
-			</checkbox-group>
+			</radio-group>
 		</view>
 		<!-- 选项 end -->
 		<!-- 多行输入框 start -->
@@ -78,6 +78,7 @@
 		},
 		methods: {
 			checkboxChange(e) {
+				console.log(e)
 				this.value = e.detail.value
 			},
 			async confirm() {
@@ -86,7 +87,7 @@
 				})
 				const resposne = await topics_correct({
 					id: this.id,
-					type: this.value.join(','),
+					type: this.value,
 					content: this.text
 				})
 				uni.hideLoading()

@@ -93,18 +93,22 @@
 		padding: 64upx 32upx 0;
 		
 		.tips {
+			display: flex;
 			font-size: 32upx;
 			font-weight: bold;
 			color: #303133;
 			
-			.success {
-				color: #1283FF;
-				margin: 0 10upx;
-			}
-			
-			.result {
-				color: #FA7935;
-				margin: 0 10upx;
+			.item {
+				
+				.success {
+					color: #1283FF;
+					margin: 0 10upx;
+				}
+				
+				.result {
+					color: #FA7935;
+					margin: 0 10upx;
+				}
 			}
 		}
 		

@@ -6,7 +6,7 @@
 			is-title="false"
 		>
 			<xes-tabbar
-				:paper="pid"
+				:pid="pid"
 				:current="current"
 				:total="total"
 				:list="issueList"
@@ -61,7 +61,7 @@
 						</view>
 						<view @click="handleConfirm(issue)">
 							<uButton
-								v-if="issue.question_type === 2"
+								v-if="issue.question_type === 2 && !issue.isOpen"
 								text="确认答案"
 							/>
 						</view>
@@ -69,7 +69,15 @@
 					<view class="split-line" v-if="issue.isOpen"></view>
 					<view class="analysis" v-if="issue.isOpen && pattern !== 'exam'">
 						<view class="tips">
-							正确答案 <text class="success">{{ issue.answer_cn }}</text> , 您的答案 <text class="result">{{ issue.confirm.join(',') }}</text> , 用时{{ issue.count }}秒
+							<view class="item">
+								正确答案 <text class="success">{{ issue.answer_cn }}</text>
+							</view>
+							 <view class="item" v-if="issue.choose">
+							 	, 您的答案 <text class="result">{{ issue.choose }}</text>
+							 </view>
+							 <view class="item" v-if="issue.count > 0">
+							 	, 用时{{ issue.count }}秒
+							 </view>
 						</view>
 						<!-- <view class="stat">
 							<view class="stat-title">
@@ -152,11 +160,11 @@
 				// demo result: [{ id: 1, choose: id, status: 0代表错误 ，1代表正确,2半对 }]
 				result: [], // 答题结果
 				pid: '', // 卷子id
-				eid: '' // 继续做题id
+				eid: '' ,// 继续做题id,
+				choose: []
 			}
 		},
 		onLoad(options) {
-			console.log(options)
 			// 屏幕的高度
 			const wHeight = uni.getSystemInfoSync()['windowHeight']
 			// 获取手机状态栏高度
@@ -237,6 +245,10 @@
 				this.total = list.length
 				if (this.pattern === 'exercise') {
 					this.toExerciseData(list)
+				} else if (this.pattern === 'self-study') {
+					this.toSelfStudyData(list)
+				} else {
+					this.toExamData(list)
 				}
 				uni.hideLoading()
 			},
@@ -265,6 +277,7 @@
 				clearInterval(this.timer)
 				this.count = 1
 				this.clock()
+				this.choose = []
 				this.current = event.detail.current + 1
 			},
 			// 整理练习模式的数据
@@ -273,6 +286,7 @@
 					item.isOpen = false // 增加是否展示解析
 					item.confirm = [] // 选择的答案
 					item.count = 0 // 答题时间
+					item.isRight = 3 // 是否正确
 					// 给每个答案做一个标记
 					item.option.forEach(option => {
 						option.result = 1
@@ -280,6 +294,39 @@
 				})
 				this.issueList = list
 				this.clock()
+			},
+			// 整理自学模式的数据
+			toSelfStudyData(list) {
+				list.forEach(item => {
+					item.isOpen = true // 增加是否展示解析
+					item.confirm = [] // 选择的答案
+					item.count = 0 // 答题时间
+					// 渲染正确答案
+					const answer = item.answer.split(',')
+					item.option.forEach(option => {
+						if (answer.indexOf(option.id) !== -1) {
+							option.result = 2
+						} else {
+							option.result = 1
+						}
+					})
+				})
+				
+				this.issueList = list
+			},
+			// 整理考试模式的数据
+			toExamData(list) {
+				list.forEach(item => {
+					item.isOpen = false // 增加是否展示解析
+					item.confirm = [] // 选择的答案
+					item.count = 0 // 答题时间
+					item.isRight = 3 // 是否正确
+					// 给每个答案做一个标记
+					item.option.forEach(option => {
+						option.result = 1
+					})
+				})
+				this.issueList = list
 			},
 			// 查看解析
 			handleIsOpen(raw) {
@@ -300,37 +347,84 @@
 			// 单选题
 			single(item, issue) {
 				clearInterval(this.timer)
+				// 是否选择正确
+				const result = issue.answer === item.id.toString()
 				// 这里需要判断是哪种模式
 				if (this.pattern === 'exam') {
-					
+					// 重置选择结果
+					issue.option.forEach(option => {
+						option.result = 1
+					})
+					item.result = 2
+					// 记录已经选择
+					issue.choose = item.abcd_order.toLocaleUpperCase()
+					issue.isRight = result ? 1 : 0
+					// 是否是第一次答题
+					if (this.result.length <= 0) {
+						this.result.push({
+							id: issue.id,
+							choose: item.id,
+							status: result ? 1 : 0,
+							score: issue.score
+						})
+					} else {
+						let isHave = false
+						let current = 0
+						this.result.forEach((result, index) => {
+							if (result.id === issue.id) {
+								current = index
+								isHave = true
+							}
+						})
+						
+						if (isHave) { // 如果当前题目已经存在则为修改
+							this.result[current] = {
+								id: issue.id,
+								choose: item.id,
+								status: result ? 1 : 0,
+								score: issue.score
+							}
+						} else { // 否则为增加
+							this.result.push({
+								id: issue.id,
+								choose: item.id,
+								status: result ? 1 : 0,
+								score: issue.score
+							})
+						}
+					}
 				} else {
-					// 是否选择正确
-					const result = issue.answer === item.id.toString()
 					// 高亮结果
 					item.result = result ? 2 : 3
 					// 记录时间
 					issue.count = this.count
 					this.count = 1
 					// 记录选择的答案 用于展示到解析
-					issue.confirm.push(item.abcd_order.toLocaleUpperCase())
+					issue.choose = item.abcd_order.toLocaleUpperCase()
+					issue.isRight = result ? 1 : 0
 					// 不可再答题
 					issue.isOpen = true
 					// 答题记录
 					this.result.push({
 						id: issue.id,
 						choose: item.id,
-						status: result ? 1 : 0
+						status: result ? 1 : 0,
+						score: issue.score
 					})
 				}
 			},
 			// 多选题
 			choice(item, issue) {
 				if (issue.confirm.indexOf(item.id) === -1) {
-					issue.confirm.push(item.abcd_order)
+					issue.confirm.push(item.id)
+					this.choose.push(item.abcd_order.toUpperCase())
+					issue.choose = this.choose.join(',')
 					item.result = 2
 				} else {
 					let idx = issue.confirm.indexOf(item.id)
 					issue.confirm.splice(idx, 1)
+					this.choose.splice(idx, 1)
+					issue.choose = this.choose.join(',')
 					item.result = 1
 				}
 			},
@@ -348,15 +442,13 @@
 				const choose = [] // 存储选择后的临时变量
 				const ids = []
 				option.forEach(item => {
-					if (confirm.indexOf(item.abcd_order) !== -1) {
+					if (confirm.indexOf(item.id) !== -1) {
 						choose.push(item)
 						ids.push(item.id)
 					}
 				})
-				
-				if (this.pattern === 'exam') {
-					
-				} else {
+				// 练习模式下需要高亮选择的答案
+				if (this.pattern !== 'exam') {
 					// 高亮选择后的答案
 					choose.forEach(item => {
 						if (answer.indexOf(item.abcd_order) === -1) {
@@ -368,28 +460,50 @@
 					this.count = 1
 					// 不可再答题
 					issue.isOpen = true
-				}
-				
-				// 判断答题结果为那种类型
-				if (!this.findOne(answer, confirm)) {
+					// 记录答题结果
 					this.result.push({
 						id: issue.id,
 						choose: ids.join(','),
-						status: 0
+						status: this.resultType(answer, confirm, issue),
+						score: issue.score
 					})
 				} else {
-					if (confirm.length < answer.length) { // 如果选择答案的长度小于标准答案则为半对
+					// 判断答题结果为那种类型
+					this.resultType(answer, confirm, issue)
+					
+					if (this.result.length <= 0) {
+						// 记录
 						this.result.push({
 							id: issue.id,
 							choose: ids.join(','),
-							status: 2
+							status: this.resultType(answer, confirm, issue),
+							score: issue.score
 						})
-					} else { // 否则为全对
-						this.result.push({
-							id: issue.id,
-							choose: ids.join(','),
-							status: 1
+					} else {
+						let isHave = false
+						let current = 0
+						this.result.forEach((result, index) => {
+							if (result.id === issue.id) {
+								current = index
+								isHave = true
+							}
 						})
+						
+						if (isHave) { // 如果当前题目已经存在则为修改
+							this.result[current] = {
+								id: issue.id,
+								choose: ids.join(','),
+								status: this.resultType(answer, confirm, issue),
+								score: issue.score
+							}
+						} else { // 否则为增加
+							this.result.push({
+								id: issue.id,
+								choose: ids.join(','),
+								status: this.resultType(answer, confirm, issue),
+								score: issue.score
+							})
+						}
 					}
 				}
 			},
@@ -404,6 +518,24 @@
 				uni.previewImage({
 					urls: url
 				})
+			},
+			// 结果类型
+			resultType(answer, confirm, issue) {
+				let result = 0
+				// 判断答题结果为那种类型
+				if (!this.findOne(answer, confirm)) {
+					result = 0
+					issue.isRight = 0
+				} else {
+					if (confirm.length < answer.length) { // 如果选择答案的长度小于标准答案则为半对
+						result = 2
+						issue.isRight = 0
+					} else { // 否则为全对
+						result = 1
+						issue.isRight = 0
+					}
+				}
+				return result
 			}
 		}
 	}

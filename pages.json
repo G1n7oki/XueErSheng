@@ -67,6 +67,12 @@
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
+		}, { // 学习讲义
+			"path": "pages/study/notes",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
 		}, { // 题库首页
 			"path": "pages/topics/index",
 			"style": {

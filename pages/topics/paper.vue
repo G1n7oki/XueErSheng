@@ -35,10 +35,10 @@
 					</view> -->
 					<view class="item-bot">
 						<view class="item-num">
-							做过 <text>{{ paper.num }}</text> 次 
+							做过 <text>{{ paper.total }}</text> 次 
 						</view>
 						<view class="item-score">
-							上次得分<text>{{ paper.score }}</text>分
+							上次得分<text>{{ paper.last_source }}</text>分
 						</view>
 					</view>
 				</view>
