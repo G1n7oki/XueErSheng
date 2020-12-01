@@ -141,10 +141,10 @@
 								// 两个接口存在异步关系所以需要判断这个接口在什么时机执行
 								if (that.postImage.length === that.image.length) {
 									ask({
-										content: this.content,
+										content: that.content,
 										image: that.postImage,
-										title: this.title,
-										profession_id: this.id,
+										title: that.title,
+										profession_id: that.id,
 										device: 'mini'
 									}).then(response => {
 										uni.hideLoading()
@@ -154,9 +154,11 @@
 											title: '发布成功'
 										})
 										
-										this.content = ''
-										this.title = ''
-										this.image = []
+										setTimeout(() => {
+											uni.navigateBack({
+												delta: 2
+											})
+										}, 1500)
 									})
 								}
 							} else {

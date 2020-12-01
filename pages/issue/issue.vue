@@ -72,7 +72,7 @@
 						{{ hot.title }}
 					</view>
 					<view class="source">
-						{{ hot.answer.username }}回复：{{ hot.answer.my_content }}               
+						{{ hot.content }}             
 					</view>
 					<view class="bot">
 						<view class="praise-reply">
@@ -87,10 +87,12 @@
 			<!-- 热门问题 end -->
 			<!-- 我的提问 start -->
 			<view class="question" v-else-if="tabbar.current === 1">
-				<view 
+				<navigator 
 					class="item"
 					v-for="issue in list"
 					:key="issue.id"
+					:url="'/pages/issue/detail?id=' + issue.id"
+					hover-class="none"
 				>
 					<view class="crumbs">
 						自学考试 > 本科 > 金融学(新)02301K > 03709马克03709马克03709马克
@@ -99,7 +101,7 @@
 						{{ issue.title }}
 					</view>
 					<view class="source">
-						{{ issue.answer.username }}回复：{{ issue.answer.my_content }}  
+						{{ issue.content }} 
 					</view>
 					<view class="bot">
 						<view class="praise-reply">
@@ -109,7 +111,7 @@
 							{{ issue.addtime }}
 						</view>
 					</view>
-				</view>
+				</navigator>
 			</view>
 			<!-- 我的提问 end -->
 			<!-- 我的回答 start -->
@@ -187,7 +189,7 @@
 						id: 2,
 						name: '我的回答'
 					}],
-					current: 2
+					current: 0
 				},
 				top: 0, // 选项卡定位值
 				type: {

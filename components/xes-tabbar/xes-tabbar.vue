@@ -190,8 +190,13 @@
 			},
 			// 卷子id
 			pid: {
-				type: Number,
-				default: 0
+				type: [Number, String],
+				default: ''
+			},
+			// 
+			eid: {
+				type: [Number, String],
+				default: ''
 			}
 		},
 		methods: {
@@ -243,6 +248,7 @@
 			handleItem() { },
 			// 交卷
 			async handleHand() {
+				
 				const pattern = uni.getStorageSync('pattern')
 				
 				if (pattern === 'self-study') {
@@ -255,21 +261,32 @@
 				
 				this.jsonData.data = this.result
 				
+				if (this.result.length <= 0) {
+					
+					uni.showToast({
+						icon: 'none',
+						title: '您还未答题'
+					})
+					
+					return false
+				}
+				
 				const response = await topics_hand({
 					paper_id: this.pid,
-					finish: 0,
+					finish: this.finished.length === this.total ? 1 : 0,
 					profession_id: uni.getStorageSync('profession_id'),
 					total: this.total,
 					time: this.count,
-					exam_id: '',
+					exam_id: this.eid,
 					answer_json: JSON.stringify(this.jsonData)
 				})
 				
-				return false
+				this.$refs['papers-dialog'].close()
+				this.$refs['answer-dialog'].close()
 				
 				uni.setStorageSync('result', this.list)
 				uni.navigateTo({
-					url: `/pages/topics/result?count=${this.count}`
+					url: `/pages/topics/result?count=${this.count}&paper=${this.pid}&exam=${this.eid}`
 				})
 			}
 		},

@@ -4,12 +4,19 @@
 		<xes-navbar 
 			title="欢迎来到学尔升"
 			text-align="center"
-			background-color="#F4F7F9"
+			background-color="#fff"
 			id="navbar"
 		/>
 		<!-- 导航栏 end -->
 		<!-- banner start -->
-		<swiper :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000">
+		<swiper 
+			class="swiper"
+			:indicator-dots="true"
+			:autoplay="true"
+			:interval="3000"
+			:duration="1000"
+			indicator-active-color="#fff"
+		>
 			<swiper-item
 				v-for="banner in bannerList"
 				:key="banner.id"
@@ -91,9 +98,9 @@
 		<view class="line-body">
 			<!-- 上进故事start -->
 			<view class="block" v-if="story">
-				<view class="top" style="margin-top: 0;">
+				<view class="top">
 					<title name="上进故事" />
-					<view-more 
+					<view-more
 						:url="'/pages/discover/discover?id='+ story.id"
 						open-type="switchTab"
 					/>
@@ -365,7 +372,8 @@
 						name: '科目'
 					}],
 					current: 0
-				}
+				},
+				mr0: 'margin-top: 0'
 			}
 		},
 		onLoad() {
@@ -424,7 +432,7 @@
 					title: '加载中...'
 				})
 				// 获取首页数据
-				const homes = await home({ profession_id: this.profession_id })
+				const homes = await home({ profession_id: uni.getStorageSync('profession_id') || 44 })
 				const homeData = homes.data.data
 				this.story = homeData.article
 				this.liveList = homeData.sol
@@ -433,7 +441,7 @@
 				this.isPay = homeData.applyStaus
 				// 获取全部课程
 				const course = await courses({
-					profession_id: this.profession_id,
+					profession_id: uni.getStorageSync('profession_id') || 44,
 					page: 1
 				})
 				const { list_info, category, direction, sort } = course.data.data
@@ -444,7 +452,7 @@
 				this.totalPage = list_info.last_page
 				// 获取Banner数据
 				const banner = await banners({
-					profession_id: this.profession_id 
+					profession_id: uni.getStorageSync('profession_id') || 44
 				})
 				const bannerData = banner.data.data
 				this.bannerList = bannerData.banner
@@ -482,7 +490,7 @@
 				this.page = 1
 				this.loading = 'more'
 				const response = await courses({
-					profession_id: uni.getStorageSync('profession_id'),
+					profession_id: uni.getStorageSync('profession_id') || 44,
 					page: this.page,
 					sort: this.sort.data[this.sort.current].key,
 					year: this.filter.year,
@@ -528,7 +536,7 @@
 			this.loading = 'loading'
 			
 			courses({
-				profession_id: uni.getStorageSync('profession_id'),
+				profession_id: uni.getStorageSync('profession_id') || 44,
 				page: this.page,
 				sort: this.sort.data[this.sort.current].key,
 				year: this.filter.year,

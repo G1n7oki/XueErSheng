@@ -9,6 +9,7 @@
 			text-align="center"
 			background-color="transparent"
 			id="navbar"
+			:delta="2"
 		/>
 		<!-- 导航栏 end -->
 		<image class="placeholder" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/topics/datijieguo%402x.png" mode=""></image>
@@ -207,10 +208,15 @@
 				score: 0, // 得分
 				totalScore: 0, // 总分
 				time: '', // 做题时间
-				name: uni.getStorageSync('crumbs')[2] || ''
+				name: uni.getStorageSync('crumbs')[2] || '',
+				pid: '', // 试卷id
+				eid: ''
 			}
 		},
 		onLoad(options) {
+			this.pid = options.paper
+			this.eid = options.exam
+			
 			let that = this
 			// 屏幕的高度
 			const wHeight = uni.getSystemInfoSync()['windowHeight']
@@ -281,14 +287,26 @@
 				return res
 			},
 			handleAglin() {
-				uni.reLaunch({
-					url: '/pages/topics/practice'
+				const pages = getCurrentPages()
+				const prevPage = pages[pages.length - 2]
+				const info = prevPage.data
+				info.pid = info.pid
+				info.eid = info.eid
+				info.current = 1
+				uni.navigateBack({
+					delta: 1
 				})
 			},
 			handleAnswer() {
 				uni.setStorageSync('pattern', 'self-study')
-				uni.reLaunch({
-					url: '/pages/topics/practice'
+				const pages = getCurrentPages()
+				const prevPage = pages[pages.length - 2]
+				const info = prevPage.data
+				info.pid = info.pid
+				info.eid = info.eid
+				info.current = 1
+				uni.navigateBack({
+					delta: 1
 				})
 			}
 		}

@@ -1,18 +1,29 @@
+.swiper {
+	margin-top: 40upx;
+}
+
+.container {
+	background-color: #F4F7F9;
+}
+
 .banner {
+	width: 686upx;
+	margin: 0 auto;
 	
 	image {
-		width: 100%;
-		height: 360upx;
+		width: 686upx;
+		height: 300upx;
+		border-radius: 18upx;
 	}
 }
 
 .main {
+	width: 686upx;
+	box-sizing: border-box;
 	background-color: #fff;
-	border-radius: 20upx 20upx 0px 0px;
+	border-radius: 20upx;
 	padding: 48upx 32upx 27upx;
-	margin-top: -20upx;
-	position: relative;
-	z-index: 2;
+	margin: 32upx auto 48upx;
 	
 	.top {
 		display: flex;
@@ -149,15 +160,19 @@
 
 .line-body {
 	background-color: #F4F7F9;
-	padding: 66upx 32upx 0;
+	padding: 0 32upx;
 	
 	.block {
+		margin-bottom: 32upx;
+		
+		&:nth-last-child(1) {
+			margin-bottom: 0;
+		}
 		
 		.top {
 			display: flex;
 			justify-content: space-between;
 			align-items: flex-end;
-			margin-top: 48upx;
 		}
 		
 		.story {
@@ -306,6 +321,7 @@
 			image {
 				width: 100%;
 				height: 260upx;
+				border-radius: 20upx 20upx 0 0;
 			}
 			
 			.info {

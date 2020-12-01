@@ -110,6 +110,11 @@
 			isTitle: {
 				type: Boolean,
 				default: true
+			},
+			// 返回的页数
+			delta: {
+				type: Number,
+				default: 1
 			}
 		},
 		data() {
@@ -127,7 +132,7 @@
 			// 点击返回回到上一页
 			handleArrow() {
 				uni.navigateBack({
-					delta: 1
+					delta: this.delta
 				})
 			},
 			// 控制是否显示课程列表

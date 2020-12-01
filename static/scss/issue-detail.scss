@@ -28,6 +28,27 @@
 		margin-top: 26upx;
 	}
 	
+	.content {
+		margin-top: 26upx;
+		font-size: 24upx;
+		color: #606266;
+	}
+	
+	.image-wrap {
+		display: flex;
+		margin-top: 26upx;
+		
+		.image {
+			width: 150upx;
+			height: 150upx;
+			margin-right: 40upx;
+			
+			&:nth-last-child(1) {
+				margin-right: 0;
+			}
+		}
+	}
+	
 	.bot {
 		display: flex;
 		justify-content: space-between;

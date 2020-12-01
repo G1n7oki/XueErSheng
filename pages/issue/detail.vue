@@ -9,11 +9,24 @@
 		<!-- 导航栏 end -->
 		<!-- 详情 start -->
 		<view class="detail">
-			<!-- <view class="crumbs">
-				自学考试 > 本科 > 金融学(新)02301K > 03709马克03709马克03709马克
-			</view> -->
+			<view class="crumbs">
+				自学考试 > 本科 > 金融学(新)02301K
+			</view>
 			<view class="title">
 				{{ detail.title }}
+			</view>
+			<view class="content">
+				{{ detail.content }}
+			</view>
+			<view class="image-wrap">
+				<image 
+					class="image"
+					v-for="item in detail.img"
+					:key="item"
+					:src="item"
+					mode=""
+					@click="handlePreview(item, detail.img)"
+				></image>
 			</view>
 			<view class="bot">
 				<view class="praise-reply">
@@ -370,6 +383,13 @@
 			},
 			scroll(e) {
 				this.top = e.detail.scrollTop
+			},
+			// 预览
+			handlePreview(item, arr) {
+				uni.previewImage({
+					current: item,
+					urls: arr
+				})
 			}
 		}
 	}

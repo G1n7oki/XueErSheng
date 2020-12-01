@@ -87,7 +87,7 @@
 			<view class="actual">
 				实际支付 <text class="price">200</text> <text class="unit">元</text>
 			</view>
-			<button type="default" hover-class="none">去支付</button>
+			<button type="default" hover-class="none" @click="handlePay">去支付</button>
 		</view>
 		<!-- 固定定位 end -->
 	</view>
@@ -96,7 +96,7 @@
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import UniIcons from '@/components/uni-icons/uni-icons.vue'
-	import { order_information } from '@/common/api/api.js'
+	import { order_information, order_create, order_pay } from '@/common/api/api.js'
 	export default {
 		name: 'Information',
 		components: {
@@ -105,26 +105,57 @@
 		},
 		data() {
 			return {
-				infoData: {}
+				infoData: {
+					cover: '',
+					title: ''
+				},
+				type: 0, // 订单类型
+				id: 0, // 商品id
 			}
 		},
 		onLoad(options) {
-			this.toOrderInfo(+options.id, options.type)
+			this.type = options.type
+			this.id = options.id
+			this.toData(+options.id, options.type)
 		},
 		methods: {
-			toOrderInfo(id, type) {
-				order_information({ 
+			async toData(id, type) {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				// 订单信息预览
+				const response = await order_information({
 					id,
 					order_type: type
-				}).then(response => {
-					const res = response.data
-					this.infoData = res.data.info
-				}).catch(error => {
-					uni.showToast({
-						icon: 'none',
-						title: error.data.message
-					})
 				})
+				const { info } = response.data.data
+				this.infoData = info
+				uni.hideLoading()
+			},
+			async handlePay() {
+				let code = ''
+				// 创建订单
+				const create = await order_create({
+					order_type: this.type,
+					id: this.id,
+					card_id: ''
+				})
+				const { order_num } = create.data.data
+				// 获取微信code
+				await uni.login({
+					provider: 'weixin',
+					success(res) {
+						code = res.code
+					}
+				})
+				// 支付
+				const pay = await order_pay({
+					order_num: order_num,
+					type: 'js',
+					code: code
+				})
+				
+				console.log(pay)
 			}
 		}
 	}

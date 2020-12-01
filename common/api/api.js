@@ -385,6 +385,22 @@ export const me_order = (data) => {
 		data
 	})
 }
+// 创建订单
+export const order_create = (data) => {
+	return http.request({
+		url: 'order/create',
+		method: 'POST',
+		data
+	})
+}
+// 订单支付
+export const order_pay = (data) => {
+	return http.request({
+		url: 'pay',
+		method: 'POST',
+		data
+	})
+}
 /**
  * 以下为发现模块接口
  * */

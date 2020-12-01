@@ -7,6 +7,7 @@
 		>
 			<xes-tabbar
 				:pid="pid"
+				:eid="eid"
 				:current="current"
 				:total="total"
 				:list="issueList"
@@ -173,11 +174,25 @@
 			this.height = wHeight - this.statusBarHeight - 44 + 'px'
 			
 			if (options.exam) {
+				this.pid = options.paper
+				this.eid = options.exam
 				this.toErrorData(options.exam, options.paper)
 			} else if (!options.exam && !options.paper) {
 				this.toDailyPracticeData()
 			} else {
-				this.toData(options.paper)
+				this.pid = options.paper
+				this.toData(+options.paper)
+			}
+		},
+		onShow() {
+			if (this.pid && this.eid) {
+				this.issueList = []
+				this.toErrorData(this.eid, this.pid)
+			} else if (this.pid) {
+				this.issueList = []
+				this.toData(this.pid)
+			} else {
+				return false
 			}
 		},
 		filters: {
@@ -198,30 +213,24 @@
 			}
 		},
 		methods: {
-			async toData(id) {
+			async toData(paper) {
 				uni.showLoading({
 					title: '加载中...'
 				})
-				const response = await practice({
-					paper_id: 1,
-					profession_id: 44,
-					type: 0,
-					exam_id: ''
+				const response = await paper_list({
+					paper_id: paper,
+					profession_id: uni.getStorageSync('profession_id'),
+					pattern: uni.getStorageSync('filter') || 0
 				})
 				const list = response.data.data
 				this.total = list.length
-				
-				/**
-				 * 模式1: 自学模式 直接出现答案, 不可答题, 解析直接出现
-				 * 模式2: 考试模式 可重复答题, 一道题答完直接跳下一题
-				 * 模式3: 练习模式 一道题答完出现解析
-				 * 不同的模式需要不同的方法处理数据
-				 * */
-				// if (!this.pattern) {
-				// 	return
-				// }
-				 
-				this.pattern === 'exercise' ? this.toExercisePattern(list) : this.pattern === 'self-study' ? this.toSelfStudyPattern(list) : this.toExamPattern(list)
+				if (this.pattern === 'exercise') {
+					this.toExerciseData(list)
+				} else if (this.pattern === 'self-study') {
+					this.toSelfStudyData(list)
+				} else {
+					this.toExamData(list)
+				}
 				uni.hideLoading()
 			},
 			// 获取每日一练数据
@@ -239,7 +248,7 @@
 				const paper = await paper_list({
 					paper_id: id,
 					profession_id: uni.getStorageSync('profession_id'),
-					type: 0
+					pattern: uni.getStorageSync('filter') || 0
 				})
 				const list = paper.data.data
 				this.total = list.length
@@ -259,11 +268,18 @@
 				})
 				const response = await error_reform({
 					exam_id: exam,
-					paper_id: paper
+					paper_id: paper,
+					pattern: uni.getStorageSync('filter') || 0
 				})
+				const list = response.data.data
+				this.total = list.length
 				// 需要区分当前是那种模式
-				if (this.pattern === 'exercise') { // 练习模式
-					this.toExerciseData(response.data.data)
+				if (this.pattern === 'exercise') {
+					this.toExerciseData(list)
+				} else if (this.pattern === 'self-study') {
+					this.toSelfStudyData(list)
+				} else {
+					this.toExamData(list)
 				}
 				uni.hideLoading()
 			},
@@ -301,15 +317,28 @@
 					item.isOpen = true // 增加是否展示解析
 					item.confirm = [] // 选择的答案
 					item.count = 0 // 答题时间
+					let ids = []
 					// 渲染正确答案
 					const answer = item.answer.split(',')
 					item.option.forEach(option => {
+						ids.push(option.id)
 						if (answer.indexOf(option.id) !== -1) {
 							option.result = 2
 						} else {
 							option.result = 1
 						}
 					})
+					
+					if (item.choose !== null) {
+						// 展示已经选择的答案
+						item.choose = item.choose.split(',') // 已选择的答案
+						item.choose.forEach((choose, index) => {
+							if (ids.indexOf(+choose) !== -1) {
+								item.confirm.push(item.option[index].abcd_order.toUpperCase())
+							}
+						})
+						item.choose = item.confirm.join(',')
+					}
 				})
 				
 				this.issueList = list
