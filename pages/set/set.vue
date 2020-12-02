@@ -32,14 +32,14 @@
 					<uni-icons type="arrowright" size="20" color="#DEDEDE" />
 				</view>
 			</view>
-			<view class="list-item" @click="toPage('/pages/set/address')">
+			<!-- <view class="list-item" @click="toPage('/pages/set/address')">
 				<view class="name">
 					地址管理
 				</view>
 				<view class="icon">
 					<uni-icons type="arrowright" size="20" color="#DEDEDE" />
 				</view>
-			</view>
+			</view> -->
 		</view>
 		<!-- 账号设置/地址管理 end -->
 		<!-- 退出登录 start -->

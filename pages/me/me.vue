@@ -15,9 +15,9 @@
 						</view>
 					</view>
 				</view>
-				<navigator url="/pages/me/sign" hover-class="none" class="tips">
+				<!-- <navigator url="/pages/me/sign" hover-class="none" class="tips">
 					签到领福利
-				</navigator>
+				</navigator> -->
 				<view class="content" v-if="login">
 					<navigator url="/pages/me/card" hover-class="none" class="item">
 						<view class="number">
@@ -28,7 +28,7 @@
 						</view>
 					</navigator>
 					<view class="line"></view>
-					<navigator url="/pages/me/recharge" hover-class="none" class="item">
+					<navigator url="" hover-class="none" class="item">
 						<view class="number">
 							{{ info.money }}
 						</view>
@@ -37,7 +37,7 @@
 						</view>
 					</navigator>
 					<view class="line"></view>
-					<navigator url="/pages/integral/integral" hover-class="none" class="item">
+					<navigator url="" hover-class="none" class="item">
 						<view class="number">
 							{{ info.coin }}
 						</view>
@@ -121,13 +121,14 @@
 					icon="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/wodeshoucang%402x.png"
 					name="我的收藏"
 					url="/pages/me/favorite"
+					:is-border="false"
 				/>
-				<list-item
+				<!-- <list-item
 					icon="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/wodedingdan%402x.png"
 					name="积分商城"
 					url="/pages/integral/integral"
 					:is-border="false"
-				/>
+				/> -->
 			</view>
 			<!-- 列表1 end -->
 			<!-- 列表2 start -->
@@ -141,13 +142,14 @@
 					icon="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/guanyuwomen%402x.png"
 					name="关于我们"
 					url="/pages/me/about"
+					:is-border="false"
 				/>
-				<list-item
+				<!-- <list-item
 					icon="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/duihuanjindu%402x.png"
 					name="兑换码核销"
 					url="/pages/me/exchange"
 					:is-border="false"
-				/>
+				/> -->
 			</view>
 			<!-- 列表2 end -->
 			<!-- 列表3 start -->

@@ -38,7 +38,7 @@
 		},
 		methods: {
 			// 确认修改
-			confirm() {
+			async confirm() {
 				if (this.value === '') {
 					uni.showToast({
 						icon: 'none',
@@ -46,19 +46,14 @@
 					})
 					return false
 				}
-				uni.showLoading({
-					title: '修改中...'
-				})
-				set_nickname({
+				
+				const response = await set_nickname({
 					name: this.value
-				}).then(response => {
-					uni.showToast({
-						icon: 'none',
-						title: '修改成功'
-					})
-					uni.hideLoading()
-				}).catch(error => {
-					uni.hideLoading()
+				})
+				
+				uni.showToast({
+					icon: 'none',
+					title: '修改成功'
 				})
 			}
 		}

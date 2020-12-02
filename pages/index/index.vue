@@ -49,9 +49,9 @@
 						</view>
 					</view>
 				</view>
-				<!-- <button v-if="isButton" type="default" :class="{'active': isPay !== 9}" @click="handleMainBtn">
+				<button v-if="isButton" type="default" :class="{'active': isPay !== 9}" @click="handleMainBtn">
 					{{ isPay === 0 ? '立即缴费' : isPay === 1 ? '已缴费' : '我要报名' }}
-				</button> -->
+				</button>
 			</view>
 			<view class="bot">
 				<view class="crumbs-area">
@@ -81,7 +81,7 @@
 					</view>
 					<view class="icon-cell" @click="navigate('/pages/live/review', 0)">
 						<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/home/zhibiohuigu@2x.png" mode=""></image>
-						<text class="name">直播回顾</text>
+						<text class="name">播放回顾</text>
 					</view>
 					<view class="icon-cell" @click="navigate('/pages/me/course')">
 						<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/home/wodekecheng@2x.png" mode=""></image>
@@ -101,17 +101,19 @@
 				<view class="top">
 					<title name="上进故事" />
 					<view-more
-						:url="'/pages/discover/discover?id='+ story.id"
+						url="/pages/discover/discover"
 						open-type="switchTab"
 					/>
 				</view>
-				<image class="story" :src="story.preview" mode=""></image>
+				<navigator :url="'/pages/discover/detail?id=' + story.id" hover-class="none">
+					<image class="story" :src="story.preview" mode=""></image>
+				</navigator>
 			</view>
 			<!-- 上进故事end -->
-			<!-- 直播预告start -->
+			<!-- 播放预告start -->
 			<view class="block">
 				<view class="top">
-					<title name="直播 · 预告" />
+					<title name="播放 · 预告" />
 					<view-more url="/pages/live/live" />
 				</view>
 				<view class="live">
@@ -137,8 +139,8 @@
 								</view>
 							</view>
 							<view class="status">
-								<button v-if="item.is_play === 1" class="button-1" @click="toLivePlay(item.sol_id)">正在直播</button>
-								<button v-else-if="item.is_play === 2" class="button-2">直播回放</button>
+								<button v-if="item.is_play === 1" class="button-1" @click="toLivePlay(item.sol_id)">正在播放</button>
+								<!-- <button v-else-if="item.is_play === 2" class="button-2">播放回放</button> -->
 								<button v-else-if="item.is_play === 0 && item.subscribe === 0" class="button-3" @click="handleAdvance(item)">立即预约</button>
 								<button v-else class="button-4">已预约</button>
 							</view>
@@ -146,7 +148,7 @@
 					</view>
 				</view>
 			</view>
-			<!-- 直播预告end -->
+			<!-- 播放预告end -->
 			<!-- 精选课程start -->
 			<view class="block">
 				<view class="top">
@@ -333,7 +335,7 @@
 				isPay: 0, // 支付状态
 				treeList: [], // 面包屑
 				story: {}, // 上进故事
-				liveList: [], // 直播预告
+				liveList: [], // 播放预告
 				courseList: [], // 全部课程
 				selection: {}, // 精选课程
 				bannerList: [], // Banner列表
@@ -465,9 +467,9 @@
 			},
 			// 点击缴费/支付按钮
 			handleMainBtn() {
-				this.isPay === 9 ? this.navigate('/pages/plan/detail') : this.isPay === 0 ? this.navigate('/pages/order/information') : ''
+				this.isPay === 9 ? this.navigate('/pages/plan/select') : this.isPay === 0 ? this.navigate('/pages/order/information') : ''
 			},
-			// 跳转直播播放页
+			// 跳转播放播放页
 			toLivePlay(id) {
 				uni.navigateTo({
 					url: '/pages/live/live-play?id=' + id

@@ -118,13 +118,7 @@
 				font-size: 28upx;
 				font-weight: 500;
 				color: #303234;
-				margin-right: 6upx;
-			}
-			
-			.icon {
-				width: 32upx;
-				height: 32upx;
-				margin-left: 14upx;
+				margin-right: 24upx;
 			}
 		}
 	}
@@ -172,5 +166,122 @@
 		font-size: 32upx;
 		font-weight: 500;
 		color: #FEFEFE;
+	}
+}
+
+wx-checkbox .wx-checkbox-input {
+	width: 32upx;
+	height: 32upx;
+	border-radius: 50%;
+}
+
+wx-checkbox .wx-checkbox-input.wx-checkbox-input-checked {
+	background-color: #1283FF;
+	border: 1px solid #1283FF;
+	color: #fff !important;
+}
+
+wx-checkbox .wx-checkbox-input.wx-checkbox-input-checked:before {
+	font-size: 30upx;
+}
+
+// 优惠券
+.coupon-popup {
+	width: 750upx;
+	height: 750upx;
+	background-color: #fff;
+	box-sizing: border-box;
+	padding-top: 34upx;
+	
+	.title {
+		font-size: 32upx;
+		font-weight: bold;
+		color: #303133;
+		text-align: center;
+	}
+	
+	.item {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		width: 684upx;
+		height: 192upx;
+		margin: 50upx auto;
+		background: url('https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/study/coupon.png') 0 0 no-repeat;
+		background-size: 684upx 192upx;
+		box-sizing: border-box;
+		padding: 0 145upx 0 30upx;
+		
+		.worth {
+			display: flex;
+			align-items: center;
+			position: relative;
+			z-index: 2;
+			
+			.type {
+				display: flex;
+				align-items: center;
+				width: 42upx;
+				height: 134upx;
+				background-color: rgba(255, 211, 45, .68);
+				font-size: 22upx;
+				font-weight: 500;
+				color: #C6272A;
+				text-align: center;
+				line-height: 24upx;
+				box-sizing: border-box;
+				border-radius: 6upx;
+			}
+			
+			.text {
+				font-size: 100upx;
+				font-family: DIN;
+				font-weight: bold;
+				color: #C7282B;
+				margin-left: 16upx;
+				
+				&.active {
+					font-size: 54upx;
+					margin-left: 58upx;
+				}
+				
+				.unit {
+					color: #E76262;
+					font-size: 30upx;
+				}
+			}
+		}
+		
+		.explain {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			align-items: center;
+			height: 110upx;
+			
+			.title {
+				font-size: 28upx;
+				color: #C6272A;
+			}
+			
+			.source {
+				font-size: 24upx;
+				font-weight: 500;
+				color: #C6272A;
+				margin: 12upx 0;
+			}
+			
+			.date {
+				width: 190upx;
+				height: 30upx;
+				background-color: rgba(198, 39, 42, .68);
+				border-radius: 15upx;
+				font-size: 15upx;
+				font-family: DIN;
+				color: #FFFFFF;
+				text-align: center;
+				line-height: 30upx;
+			}
+		}
 	}
 }

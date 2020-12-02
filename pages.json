@@ -259,6 +259,12 @@
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
+		}, { // 选择报考类型
+			"path": "pages/plan/select",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
 		}, { // 计划详情
 			"path": "pages/plan/detail",
 			"style": {

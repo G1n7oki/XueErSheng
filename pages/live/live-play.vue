@@ -35,7 +35,7 @@
 						{{ start.substring(5, 16) }}-{{ end.substring(11, 16) }}
 					</view>
 				</view>
-				<navigator class="button" open-type="navigateBack">
+				<navigator :url="'/pages/live/detail?id='+ id" class="button">
 					课程详情
 				</navigator>
 			</view>

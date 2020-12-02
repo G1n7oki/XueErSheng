@@ -38,6 +38,9 @@
 				show: false
 			}
 		},
+		onLoad(options) {
+			
+		},
 		methods: {
 			call() {
 				uni.makePhoneCall({

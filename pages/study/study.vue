@@ -52,7 +52,7 @@
 					<text>我的课程</text>
 				</view>
 				<view class="item" @click="handleTabItem(1)">
-					<text>我的直播课</text>
+					<text>我的播放课</text>
 				</view>
 				<view class="line" :class="{'active': tabIndex === 1}"></view>
 			</view>
