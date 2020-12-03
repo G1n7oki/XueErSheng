@@ -10,7 +10,7 @@
 		<!-- 详情 start -->
 		<view class="detail">
 			<view class="crumbs">
-				自学考试 > 本科 > 金融学(新)02301K
+				{{ detail.crumbs }}
 			</view>
 			<view class="title">
 				{{ detail.title }}
@@ -30,7 +30,7 @@
 			</view>
 			<view class="bot">
 				<view class="praise-reply">
-					{{ detail.admire }} 赞同 · {{ detail.reply }}回复
+					提问人: {{ detail.username }}
 				</view>
 				<view class="date">
 					{{ detail.addtime }}
@@ -60,7 +60,7 @@
 						<view class="name">
 							{{ comment.username }}
 						</view>
-						<view class="zan">
+						<view class="zan" @click="handlePraise(comment)">
 							<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/discover/xiaodianzan%402x.png" mode=""></image>
 							<view class="number">
 								{{ comment.admire }}
@@ -139,7 +139,7 @@
 							<view class="info">
 								<view class="username-praise">
 									<view class="username">{{ comment2.username }}</view>
-									<view class="praise">
+									<view class="praise" @click="handlePraise(comment2)">
 										<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/discover/xiaodianzan%402x.png" mode=""></image>
 										<view class="number">{{ comment2.admire }}</view>
 									</view>
@@ -184,7 +184,8 @@
 		issue_detail_remove,
 		issue_detail_comment,
 		issue_detail_comment2,
-		issue_comment
+		issue_comment,
+		issue_comment_admire
 		} from '@/common/api/api.js'
 	export default {
 		name: 'Detail',
@@ -312,7 +313,7 @@
 					content: this.comment2.value,
 					pid: this.comment2.id
 				})
-				
+				console.log(response)
 				this.comment2.list.unshift(response.data.data)
 				this.comment2.value = ''
 				this.top = 0
@@ -390,6 +391,20 @@
 					current: item,
 					urls: arr
 				})
+			},
+			// 点赞
+			async handlePraise(raw) {
+				const reponse = await issue_comment_admire({
+					id: raw.id,
+					mode: 1
+				})
+				
+				uni.showToast({
+					icon: 'none',
+					title: '点赞成功'
+				})
+				
+				raw.admire++
 			}
 		}
 	}

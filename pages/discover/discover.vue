@@ -55,8 +55,8 @@
 						</image>
 					</view>
 					<view class="bot">
-						<view class="read" v-if="tabbar.index !== 1">
-							{{ item.click }}阅读
+						<view class="read">
+							{{ tabbar.index === 1 ? '' : `${item.click}阅读` }}
 						</view>
 						<view class="icons">
 							<view class="icon-cell" @click="praise(item)">
@@ -194,9 +194,6 @@
 			}
 		},
 		onLoad(options) {
-			console.log(options)
-			this.tabbar.index = +options.index
-			
 			const that = this
 			// tabBar的高度
 			const query = uni.createSelectorQuery().in(this)

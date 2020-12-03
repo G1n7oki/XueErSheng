@@ -19,6 +19,10 @@
 				@timeupdate="timeupdate"
 				controls
 			></video>
+			<view class="cover" v-if="!playing">
+				<image class="image" :src="video.image" mode=""></image>
+				<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/plays%402x.png" mode="" @click="play()"></image>
+			</view>
 		</view>
 		<!-- video end -->
 		<!-- 优惠券 start -->
@@ -155,11 +159,11 @@
 										</view>
 									</view>
 									<image v-if="!watch && video.is_try === 0" class="status-1" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/suo%402x.png" mode=""></image>
-									<view v-else-if="!watch && video.is_try === 1" class="status-2" @click="handlePlay(video)">
+									<view v-else-if="!watch && video.is_try === 1" class="status-2" @click="handlePlay(video, chapter)">
 										试看
 									</view>
 									<image v-else-if="watch && video.live" class="status-3" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/live.gif" mode=""></image>
-									<image v-else class="status-4" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/bofang%402x.png" mode="" @click="handlePlay(video)"></image>
+									<image v-else class="status-4" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/bofang%402x.png" mode="" @click="handlePlay(video, chapter)"></image>
 								</view>
 							</view>
 						</uni-collapse-item>
@@ -405,7 +409,8 @@
 		course_coupon_receive,
 		course_favorite_1,
 		course_favorite_2,
-		course_url
+		course_url,
+		study_save
 	} from '@/common/api/api.js'
 	export default {
 		name: 'study-detail',
@@ -468,7 +473,15 @@
 					try: 0
 				},
 				// 上次播放的链接
-				last: {}
+				last: {},
+				playing: false,
+				timer: null,
+				save: {
+					video: 0, // 视频id
+					course: 0, // 课程id
+					chapter: 0, // 章节id
+					progress: 0, // 进度
+				}
 			}
 		},
 		onLoad(options) {
@@ -480,6 +493,12 @@
 			this.toData(this.courseId)
 			
 			this.calculate(wHeight)
+		},
+		onHide() {
+			clearInterval(this.timer)
+		},
+		onUnload() {
+			clearInterval(this.timer)
 		},
 		filters: {
 			formatId(value) {
@@ -522,11 +541,15 @@
 				const info = await course_info(id)
 				const infoData = info.data.data
 				const { count_down, validity } = infoData
+				// 记录课程id
+				this.save.course = infoData.id
+				// 格式化时间
 				infoData.days = parseInt(count_down / 60 / 60 / 24) // 计算天数
 				infoData.hours = parseInt(count_down / 60 / 60 % 24) // 计算小时数
 				infoData.minutes = parseInt(count_down / 60 % 60) // 计算分数
 				infoData.seconds = parseInt(count_down % 60) // 计算秒数
 				infoData.validity = parseInt(validity / 60 / 60 / 24) // 计算有效期
+				
 				this.info = infoData
 				this.favorite.flag = infoData.collect
 				
@@ -535,9 +558,9 @@
 				const chapterData = chapter.data.data
 				this.watch = chapterData.watch
 				this.chapterList = chapterData.chapter
-				
 				// 第一条视频数据
 				const item = chapterData.chapter[0].video[0]
+				this.save.chapter = chapterData.chapter[0].id
 				
 				// 第一次进来获取视频数据
 				const once = await course_url({
@@ -588,6 +611,7 @@
 			},
 			// 播放视频
 			play() {
+				this.playing = false
 				const that = this
 				const video = uni.createVideoContext('video')
 				if (!this.watch && this.video.try !== 1) {
@@ -603,10 +627,23 @@
 						}
 					})
 					video.pause()
+				} else {
+					this.playing = true
+					const { video, course, chapter } = this.save
+					this.timer = setInterval(() => {
+						study_save({
+							video_id: video,
+							courses_id: course,
+							chapters_id: chapter,
+							progress: this.save.progress
+						}).then(response => {})
+					}, 30000)
 				}
 			},
 			// 点击章节播放按钮
-			async handlePlay(parms) {
+			async handlePlay(parms, chapter) {
+				this.save.chapter = chapter.id
+				this.save.video = parms.id
 				// 每次点击播放重置一下当前的播放链接
 				this.video = {
 					url: '',
@@ -617,10 +654,10 @@
 				const response = await course_url({
 					video_id: parms.aliyun_id
 				})
-				const { m3u8_url, video_cover} = response.data.data
+				const { m3u8_url, video_cover } = response.data.data
 				this.video.url = m3u8_url
 				this.video.image = video_cover
-				this.video.try = is_try 
+				this.video.try = parms.is_try 
 				setTimeout(() => {
 					video.play()
 				}, 500)
@@ -635,7 +672,7 @@
 			// 点击讲义
 			handleNotes() {
 				uni.navigateTo({
-					url: '/pages/study/notes'
+					url: `/pages/study/notes?id=${this.courseId}`
 				})
 			},
 			// 点击收藏
@@ -673,7 +710,7 @@
 			},
 			// 获取进度
 			timeupdate(e) {
-				// console.log(parseInt(e.detail.currentTime))
+				this.save.progress = parseInt(e.detail.currentTime)
 			},
 			toChapter() {
 				this.tabBarIndex = 1

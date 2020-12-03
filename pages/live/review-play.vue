@@ -93,25 +93,19 @@
 			</swiper-item>
 			<swiper-item>
 				<!-- 课程讲义 start -->
-				<scroll-view scroll-y="true" class="scroll-view note">
-					<view class="item">
+				<scroll-view 
+					scroll-y="true"
+					class="scroll-view note"
+				>
+					<view 
+						class="item"
+						v-for="item in handout"
+						:key="item.id"
+						@click="handleHandout(item.src)"
+					>
 						<view class="info">
 							<view class="name">
-								建设工程基本法律知识相关知识学习导建设工程基本法律知识相关知识学习导
-							</view>
-							<view class="size">
-								50.2M
-							</view>
-						</view>
-						<!-- <image class="icon" src="" mode="" @click="handleDownload"></image> -->
-					</view>
-					<view class="item">
-						<view class="info">
-							<view class="name">
-								建设工程基本法律知识相关知识学习导建设工程基本法律知识相关知识学习导
-							</view>
-							<view class="size">
-								50.2M
+								{{ item.file_name }}
 							</view>
 						</view>
 					</view>
@@ -127,7 +121,13 @@
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import XesTextTabbar from '@/components/xes-text-tabbar/xes-text-tabbar.vue'
 	import Title from '@/components/title/Title.vue'
-	import { live_package_detail, live_package, live_detail, course_url } from '@/common/api/api.js'
+	import { 
+		live_package_detail,
+		live_package,
+		live_detail,
+		course_url,
+		live_handout_list
+	} from '@/common/api/api.js'
 	export default {
 		name: 'ReviewPlay',
 		components: {
@@ -158,7 +158,8 @@
 				catalog: [],
 				url: '', // 播放链接
 				image: '', // 封面图
-				view: '' // 滚动条滚动的位置
+				view: '', // 滚动条滚动的位置
+				handout: []
 			}
 		},
 		onLoad(options) {
@@ -176,7 +177,6 @@
 				uni.showLoading({
 					title: '加载中...'
 				})
-				console.log(index)
 				// 获取课包信息
 				const detail = await live_package_detail(id)
 				this.detail = detail.data.data
@@ -187,6 +187,10 @@
 				// 获取当前视频信息
 				const current = await live_detail({ id: sol })
 				const { review_video_id } = current.data.data
+				// 讲义列表
+				const handout = await live_handout_list({ live_id: id })
+				this.handout = handout.data.data
+				console.log(this.handout)
 				// 获取当前视频播放链接
 				const url = await course_url({ video_id: review_video_id })
 				const { m3u8_url, video_cover } = url.data.data
@@ -236,8 +240,30 @@
 				}
 			},
 			// 下载讲义
-			handleDownload() {
-				console.log('需要后端提供下载地址')
+			handleHandout(src) {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				
+				uni.downloadFile({
+				  url: src,
+				  success: function (res) {
+				    const filePath = res.tempFilePath
+				    uni.openDocument({
+				      filePath: filePath,
+				      success: function (res) {
+								console.log(res)
+								uni.hideLoading()
+				      },
+							fail(error) {
+								uni.showToast({
+									icon: 'none',
+									title: error
+								})
+							}
+				    })
+				  }
+				})
 			}
 		}
 	}

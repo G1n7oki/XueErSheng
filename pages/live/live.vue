@@ -2,7 +2,7 @@
 	<view class="container">
 		<!-- 导航栏 start -->
 		<xes-navbar 
-			title="直播 · 预告"
+			title="播放 · 预告"
 			:is-arrow="true"
 			text-align="center"
 		/>

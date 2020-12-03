@@ -12,6 +12,7 @@
 				:total="total"
 				:list="issueList"
 				:result="result"
+				:again="again"
 			/>
 		</xes-navbar>
 		<!-- 导航栏 end -->
@@ -162,7 +163,8 @@
 				result: [], // 答题结果
 				pid: '', // 卷子id
 				eid: '' ,// 继续做题id,
-				choose: []
+				choose: [],
+				again: false
 			}
 		},
 		onLoad(options) {
@@ -187,13 +189,18 @@
 		onShow() {
 			if (this.pid && this.eid) {
 				this.issueList = []
+				this.again = true
 				this.toErrorData(this.eid, this.pid)
 			} else if (this.pid) {
 				this.issueList = []
+				this.again = true
 				this.toData(this.pid)
 			} else {
 				return false
 			}
+		},
+		onHide() {
+			this.current = 1
 		},
 		filters: {
 			// 题目类别 1 单选 ，2 多选， 3判断，4主观: 直接出现答案

@@ -9,8 +9,13 @@
 		<!-- 导航栏 end -->
 		<!-- 列表 start -->
 		<view class="list">
-			<view class="item" @click="handleItem">
-				大开杀戒发圣诞节阿斯蒂芬撒大家发生了登记法律时代峻峰萨拉的房间啊
+			<view 
+				class="item"
+				v-for="item in list"
+				:key="item.id"
+				@click="handleItem(item.src)"
+			>
+				{{ item.file_name }}
 			</view>
 		</view>
 		<!-- 列表 end -->
@@ -19,18 +24,37 @@
 
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
+	import { course_handout } from '@/common/api/api.js'
 	export default {
 		name: 'Notes',
 		components: {
 			XesNavbar
 		},
+		data() {
+			return {
+				list: []
+			}
+		},
+		onLoad(options) {
+			this.toData(options.id)
+		},
 		methods: {
-			handleItem() {
+			async toData(id) {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				const response = await course_handout({
+					course_id: id
+				})
+				this.list = response.data.data
+				uni.hideLoading()
+			},
+			handleItem(src) {
 				uni.showLoading({
 					title: '加载中...'
 				})
 				uni.downloadFile({
-				  url: 'https://mdxes.oss-cn-shanghai.aliyuncs.com/handout/ArchLinux%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E6%B5%81%E7%A8%8B%E6%93%8D%E4%BD%9C%E6%89%8B%E5%86%8Cv1.3.pdf',
+				  url: src,
 				  success: function (res) {
 				    var filePath = res.tempFilePath
 				    uni.openDocument({
@@ -66,6 +90,7 @@
 			padding: 36upx 32upx;
 			border-radius: 20upx;
 			background-color: #fff;
+			margin-bottom: 32upx;
 		}
 	}
 </style>

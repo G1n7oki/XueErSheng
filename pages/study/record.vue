@@ -34,9 +34,9 @@
 									{{ cell.name }}
 								</view>
 								<view class="time">
-									已观看 {{ cell.time }}
+									已观看 {{ cell.minutes }}:{{ cell.seconds }} 分
 								</view>
-								<navigator url="" hover-class="none" class="button">
+								<navigator :url="'/pages/study/detail?id=' + cell.cid" hover-class="none" class="button">
 									播放
 								</navigator>
 							</view>
@@ -66,8 +66,42 @@
 		},
 		methods: {
 			async toData() {
+				uni.showLoading({
+					title: '加载中...'
+				})
 				const response = await study_record()
-				console.log(response)
+				const { data } = response.data
+				let temp = []
+				let list = []
+				data.forEach(item => {
+					const date = item.day_time.substring(0, 10)
+					if (temp.indexOf(date) === -1) {
+						temp.push(date)
+						list.push({
+							date,
+							children: [{
+								id: item.id,
+								cid: item.courses_id,
+								name: item.name,
+								image: item.cover,
+								minutes: parseInt(item.progress / 60 % 60),
+								seconds: parseInt(item.progress % 60)
+							}]
+						})
+					} else {
+						const index = temp.indexOf(date)
+						list[index].children.push({
+							id: item.id,
+							cid: item.courses_id,
+							name: item.name,
+							image: item.cover,
+							minutes: parseInt(item.progress / 60 % 60),
+							seconds: parseInt(item.progress % 60)
+						})
+					}
+				})
+				this.list = list
+				uni.hideLoading()
 			}
 		}
 	}

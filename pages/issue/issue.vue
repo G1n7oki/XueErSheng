@@ -66,7 +66,7 @@
 					hover-class="none"
 				>
 					<view class="crumbs">
-						自学考试 > 本科 > 金融学(新)02301K > 03709马克03709马克03709马克
+						{{ hot.crumbs }}
 					</view>
 					<view class="title">
 						{{ hot.title }}
@@ -95,7 +95,7 @@
 					hover-class="none"
 				>
 					<view class="crumbs">
-						自学考试 > 本科 > 金融学(新)02301K > 03709马克03709马克03709马克
+						{{ issue.crumbs }}
 					</view>
 					<view class="title">
 						{{ issue.title }}
@@ -148,9 +148,9 @@
 							<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/arrowdown.png" mode=""></image>
 						</view>
 					</navigator>
-					<view class="praise">
+					<view class="praise" @click="handlePraise(answer)">
 						<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/discover/xiaodianzan%402x.png" mode=""></image>
-						12
+						{{ answer.count }}
 					</view>
 				</view>
 			</view>
@@ -168,7 +168,14 @@
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import XesTextTabbar from '@/components/xes-text-tabbar/xes-text-tabbar.vue'
 	import UniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
-	import { issue_hot, me_issue, me_answer, professional, issue_answer_remove } from '@/common/api/api.js'
+	import { 
+		issue_hot,
+		me_issue,
+		me_answer,
+		professional,
+		issue_answer_remove,
+		issue_admire
+	} from '@/common/api/api.js'
 	export default {
 		name: 'Issue',
 		components: {
@@ -412,6 +419,17 @@
 						}
 					}
 				})
+			},
+			async handlePraise(raw) {
+				const response = await issue_admire({
+					id: raw.id,
+					mode: 1
+				})
+				uni.showToast({
+					icon: 'none',
+					title: '点赞成功'
+				})
+				raw.count++
 			}
 		}
 	}

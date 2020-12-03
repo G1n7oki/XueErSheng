@@ -100,7 +100,22 @@
 				</scroll-view>
 			</swiper-item>
 			<swiper-item>
-				<view class="swiper-item"></view>
+				<!-- 课程讲义 start -->
+				<scroll-view 
+					scroll-y="true"
+					class="scroll-view note"
+					v-for="item in handout"
+					:key="item.id"
+				>
+					<view class="item" @click="handleHandout(item.src)">
+						<view class="info">
+							<view class="name">
+								{{ item.file_name }}
+							</view>
+						</view>
+					</view>
+				</scroll-view>
+				<!-- 课程讲义 end -->
 			</swiper-item>
 		</swiper>
 		<!-- 滚动区域 end -->
@@ -116,7 +131,13 @@
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import XesTextTabbar from '@/components/xes-text-tabbar/xes-text-tabbar.vue'
-	import { join_chat, send_message, userinfo, live_detail  } from '@/common/api/api.js'
+	import { 
+		join_chat,
+		send_message,
+		userinfo,
+		live_detail,
+		live_handout
+	} from '@/common/api/api.js'
 	export default {
 		name: 'LivePlay',
 		components: {
@@ -146,7 +167,8 @@
 				num: 0, // 观看人数
 				isPlay: 0, // 直播状态
 				start: '', // 开始时间
-				end: '' // 结束时间
+				end: '', // 结束时间
+				handout: []
 			}
 		},
 		onLoad(options) {
@@ -213,6 +235,11 @@
 						return 
 					}
 				})
+				
+				const handout = await live_handout({
+					sol_id: this.id
+				})
+				this.handout = handout.data.data
 				uni.hideLoading()
 			},
 			// 发送消息
@@ -238,6 +265,32 @@
 				tabbar.select('#tabbar').boundingClientRect(tabbar => {
 					this.height = this.height - tabbar.height
 				}).exec()
+			},
+			// 查看讲义
+			handleHandout(src) {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				
+				uni.downloadFile({
+				  url: src,
+				  success: function (res) {
+				    const filePath = res.tempFilePath
+				    uni.openDocument({
+				      filePath: filePath,
+				      success: function (res) {
+								console.log(res)
+								uni.hideLoading()
+				      },
+							fail(error) {
+								uni.showToast({
+									icon: 'none',
+									title: error
+								})
+							}
+				    })
+				  }
+				})
 			}
 		}
 	}

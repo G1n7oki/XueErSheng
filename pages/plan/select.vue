@@ -2,7 +2,7 @@
 	<view class="container">
 		<!-- 导航栏 start -->
 		<xes-navbar
-			title="订单信息"
+			title="报考类型"
 			textAlign="center"
 			backgroundColor="transparent"
 			is-arrow-color="#fff"

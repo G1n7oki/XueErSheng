@@ -193,10 +193,15 @@
 				type: [Number, String],
 				default: ''
 			},
-			// 
+			// eid
 			eid: {
 				type: [Number, String],
 				default: ''
+			},
+			// 是否为再次做题
+			again: {
+				type: Boolean,
+				default: false
 			}
 		},
 		methods: {
@@ -292,6 +297,7 @@
 		},
 		watch: {
 			list(newValue) {
+				console.log(newValue)
 				const finished = []
 				newValue.map(item => {
 					if (item.choose) {
@@ -300,6 +306,9 @@
 				})
 				this.finished = finished.length
 				this.unfinished = newValue.length - this.finished
+			},
+			again(newValue) {
+				console.log(newValue)
 			}
 		}
 	}

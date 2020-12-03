@@ -95,7 +95,7 @@
 		</view>
 		<!-- 报读须知 end -->
 		<!-- 按钮 start -->
-		<button class="button" hover-class="none" @click="next">下一步</button>
+		<button class="button" hover-class="none" @click="next">提交信息</button>
 		<!-- 按钮 end -->
 	</view>
 </template>

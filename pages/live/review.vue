@@ -2,7 +2,7 @@
 	<view class="container">
 		<!-- 导航栏 start -->
 		<xes-navbar
-			title="直播回顾"
+			title="播放回顾"
 			:is-arrow="true"
 			text-align="center"
 		/>

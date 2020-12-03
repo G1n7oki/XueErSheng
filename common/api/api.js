@@ -168,6 +168,14 @@ export const study_record = (data) => {
 		data
 	})
 }
+// 记录学习记录
+export const study_save = (data) => {
+	return http.request({
+		url: 'saveRecord',
+		method: 'POST',
+		data
+	})
+}
 // 课程评价
 export const study_evaluate = (data) => {
 	return http.request({
@@ -213,6 +221,14 @@ export const course_url = (data) => {
 	return http.request({
 		url: 'url',
 		method: 'POST',
+		data
+	})
+}
+// 课程讲义
+export const course_handout = (data) => {
+	return http.request({
+		url: 'courses/handout',
+		method: 'GET',
 		data
 	})
 }
@@ -553,6 +569,22 @@ export const discover_comment_admire = (data) => {
 			data
 		})
 	}
+	// 直播讲义列表 - 单条
+	export const live_handout = (data) => {
+		return http.request({
+			url: 'sol/handout',
+			method: 'GET',
+			data
+		})
+	}
+	// 直播课包讲义
+	export const live_handout_list = (data) => {
+		return http.request({
+			url: 'live/handout',
+			method: 'GET',
+			data
+		})
+	}
 	/**
 	* 以下为问答模块接口
 	* */
@@ -632,6 +664,22 @@ export const discover_comment_admire = (data) => {
 	export const issue_answer_remove = (data) => {
 		return http.request({
 			url: 'faq/remove_replay',
+			method: 'POST',
+			data
+		})
+	}
+	// 问答点赞
+	export const issue_admire = (data) => {
+		return http.request({
+			url: 'faq/admire',
+			method: 'POST',
+			data
+		})
+	}
+	// 问答评论点赞
+	export const issue_comment_admire = (data) => {
+		return http.request({
+			url: 'faq/comment_admire',
 			method: 'POST',
 			data
 		})
