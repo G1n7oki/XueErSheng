@@ -102,6 +102,7 @@
 
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
+	import { plan_affirm } from '@/common/api/api.js'
 	export default {
 		name: 'Affirm',
 		components: {
@@ -121,10 +122,37 @@
 			}
 		},
 		methods: {
-			next() {
-				uni.navigateTo({
-					url: '/pages/plan/success'
+			async next() {
+				uni.showLoading({
+					title: '信息提交中...'
 				})
+				
+				const response = await plan_affirm({
+					name: '胡图图',
+					idno: '110101199003072375',
+					profession_id: uni.getStorageSync('profession_id'),
+					sex: '1',
+					apply_type: '1',
+					year: '2021',
+					school: '1',
+					level: '1',
+					major: '1',
+					city: '南昌',
+					counties: '青山湖'
+				})
+				
+				uni.hideLoading()
+				
+				uni.showToast({
+					icon: 'none',
+					title: '提交成功'
+				})
+				
+				setTimeout(() => {
+					uni.navigateTo({
+						url: '/pages/plan/success'
+					})
+				}, 1500)
 			}
 		}
 	}

@@ -291,6 +291,14 @@ export const me_card = (data) => {
 		data
 	})
 }
+// 成绩单
+export const me_transcript = (data) => {
+	return http.request({
+		url: 'users/report_cards',
+		method: 'GET',
+		data
+	})
+}
 /**
  * 以下为题库模块接口
  * */
@@ -699,6 +707,17 @@ export const discover_comment_admire = (data) => {
 	export const send_message = (data) => {
 		return http.request({
 			url: 'send',
+			method: 'POST',
+			data
+		})
+	}
+	/**
+	* 以下为筑梦计划模块接口
+	* */
+	// 确认信息
+	export const plan_affirm = (data) => {
+		return http.request({
+			url: 'users/enroll',
 			method: 'POST',
 			data
 		})

@@ -226,6 +226,11 @@
 					color: #C7282B;
 					margin-left: 16upx;
 					
+					&.active {
+						font-size: 54upx;
+						margin-left: 58upx;
+					}
+					
 					.unit {
 						color: #E76262;
 						font-size: 30upx;

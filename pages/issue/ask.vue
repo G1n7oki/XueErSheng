@@ -59,11 +59,13 @@
 				content: '',
 				image: [],
 				postImage: [],
-				id: 0
+				id: 0,
+				crumbs: ''
 			}
 		},
 		onLoad(options) {
 			this.id = options.id
+			this.crumbs = options.crumbs
 		},
 		methods: {
 			// 选择图片
@@ -99,7 +101,7 @@
 				this.image.splice(index, 1)
 			},
 			// 提交
-			async handleIssue() {
+			handleIssue() {
 				if (this.title === '') {
 					uni.showToast({
 						icon: 'none',
@@ -118,62 +120,75 @@
 				
 				const that = this
 				
-				uni.showLoading({
-					title: '提交中...'
-				})
-				
-				for(let i = 0; i < that.image.length; i++) {
-					uni.uploadFile({
-						url: baseUrl + 'upload',
-						filePath: that.image[i],
-						name: 'image',
-						header: {
-							'X-Requested-With': 'XMLHttpRequest',
-							'Authorization': uni.getStorageSync('token')
-						},
-						formData: {
-							type: '2'
-						},
-						success(res) {
-							if(res.statusCode === 200) {
-								const data = JSON.parse(res.data)
-								that.postImage.push(data.data)
-								// 两个接口存在异步关系所以需要判断这个接口在什么时机执行
-								if (that.postImage.length === that.image.length) {
-									ask({
-										content: that.content,
-										image: that.postImage,
-										title: that.title,
-										profession_id: that.id,
-										device: 'mini'
-									}).then(response => {
-										uni.hideLoading()
-										
-										uni.showToast({
-											icon: 'none',
-											title: '发布成功'
-										})
-										
-										setTimeout(() => {
-											uni.navigateBack({
-												delta: 2
-											})
-										}, 1500)
+				if (that.image.length <= 0) {
+					uni.showLoading({
+						title: '提交中...'
+					})
+					
+					this.submit()
+					
+				} else {
+					uni.showLoading({
+						title: '提交中...'
+					})
+					
+					for(let i = 0; i < that.image.length; i++) {
+						uni.uploadFile({
+							url: baseUrl + 'upload',
+							filePath: that.image[i],
+							name: 'image',
+							header: {
+								'X-Requested-With': 'XMLHttpRequest',
+								'Authorization': uni.getStorageSync('token')
+							},
+							formData: {
+								type: '2'
+							},
+							success(res) {
+								if(res.statusCode === 200) {
+									const data = JSON.parse(res.data)
+									that.postImage.push(data.data)
+									// 两个接口存在异步关系所以需要判断这个接口在什么时机执行
+									if (that.postImage.length === that.image.length) {
+										that.submit()
+									}
+								} else {
+									const data = JSON.parse(res.data)
+									uni.showToast({
+										icon: 'none',
+										title: data.message
 									})
 								}
-							} else {
-								const data = JSON.parse(res.data)
-								uni.showToast({
-									icon: 'none',
-									title: data.message
-								})
+							},
+							fail(error) {
+								console.log(error)
 							}
-						},
-						fail(error) {
-							console.log(error)
-						}
-					})
+						})
+					}
 				}
+			},
+			submit() {
+				const that = this
+				ask({
+					content: that.content,
+					image: that.postImage,
+					title: that.title,
+					profession_id: that.id,
+					crumbs: that.crumbs,
+					device: 'mini'
+				}).then(response => {
+					uni.hideLoading()
+					
+					uni.showToast({
+						icon: 'none',
+						title: '发布成功'
+					})
+					setTimeout(() => {
+						uni.navigateBack({
+							delta: 2
+						})
+					}, 1500)
+				})
 			}
 		}
 	}

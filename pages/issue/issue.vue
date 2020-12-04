@@ -21,7 +21,8 @@
 		</view>
 		<!-- 切换卡 end -->
 		<!-- 内容区域 start -->
-		<view class="content">
+		<empty v-if="list.length <= 0" />
+		<view class="content" v-else>
 			<!-- 热门问题 start -->
 			<view class="hot" v-if="tabbar.current === 0">
 				<view class="filter-area" :style="{top: filterTop + 'px'}">
@@ -76,7 +77,7 @@
 					</view>
 					<view class="bot">
 						<view class="praise-reply">
-							{{ hot.admire }} 赞同 · {{ hot.reply }}回复
+							{{ hot.admire }} 赞同 · {{ hot.answer_num }}回复
 						</view>
 						<view class="date">
 							{{ hot.addtime }}
@@ -105,7 +106,7 @@
 					</view>
 					<view class="bot">
 						<view class="praise-reply">
-							{{ issue.admire }} 赞同 · {{ issue.reply }}回复
+							{{ issue.admire }} 赞同 · {{ issue.answer_num }}回复
 						</view>
 						<view class="date">
 							{{ issue.addtime }}
@@ -138,7 +139,7 @@
 					</view>
 					<navigator :url="'/pages/issue/detail?id=' + answer.fa_id" hover-class="none" class="bot">
 						<view class="bot-crumbs">
-							自学考试 > 本科 > 金融学(新)02301K > 03709037090370903709
+							{{ answer.crumbs }}
 						</view>
 						<view class="bot-title">
 							{{ answer.title }}
@@ -150,12 +151,12 @@
 					</navigator>
 					<view class="praise" @click="handlePraise(answer)">
 						<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/discover/xiaodianzan%402x.png" mode=""></image>
-						{{ answer.count }}
+						{{ answer.admire }}
 					</view>
 				</view>
 			</view>
 			<!-- 我的回答 end -->
-			<uni-load-more v-if="loading.show" :status="loading.status" :iconSize="14" />
+			<uni-load-more v-if="totalPage > 1" :status="loading.status" :iconSize="14" />
 		</view>
 		<!-- 内容区域 end -->
 		<!-- 提问 start -->
@@ -168,6 +169,7 @@
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import XesTextTabbar from '@/components/xes-text-tabbar/xes-text-tabbar.vue'
 	import UniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
+	import Empty from '@/components/empty/empty.vue'
 	import { 
 		issue_hot,
 		me_issue,
@@ -181,7 +183,8 @@
 		components: {
 			XesNavbar,
 			XesTextTabbar,
-			UniLoadMore
+			UniLoadMore,
+			Empty
 		},
 		data() {
 			return {
@@ -235,16 +238,22 @@
 					show: false,
 					status: 'more'
 				},
-				
 				userinfo: {}
 			}
 		},
-		onLoad() {
+		onShow() {
 			const navbar = uni.createSelectorQuery().in(this)
 			navbar.select('#navbar').boundingClientRect(navbar => {
 				this.top = navbar.height
 				this.filterTop = navbar.height + 52
 			}).exec()
+			
+			this.page = 1
+			
+			uni.pageScrollTo({
+				scrollTop: 0,
+				duration: 300
+			})
 			
 			this.toData()
 		},
@@ -299,14 +308,12 @@
 					const { data, last_page } = hot.data.data
 					this.list = data
 					this.totalPage = last_page
-					this.loading.show = this.list.length > 5 ? true : false
 				} else if (this.tabbar.current === 1) {
 					// 获取我的提问
 					const issue = await me_issue()
 					const { data, last_page } = issue.data.data
 					this.list = data
 					this.totalPage = last_page
-					this.loading.show = this.list.length > 5 ? true : false
 				} else if (this.tabbar.current === 2) {
 					// 获取我的回答
 					const answer = await me_answer()
@@ -314,7 +321,6 @@
 					this.userinfo = user
 					this.list = list.data
 					this.totalPage = list.last_page
-					this.loading.show = this.list.length > 5 ? true : false
 				} else {
 					return false
 				}
@@ -328,6 +334,7 @@
 					duration: 300
 				})
 				this.page = 1
+				this.list = []
 				this.loading.status = 'more'
 				this.toData()
 			},
@@ -429,7 +436,7 @@
 					icon: 'none',
 					title: '点赞成功'
 				})
-				raw.count++
+				raw.admire++
 			}
 		}
 	}

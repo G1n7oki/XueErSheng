@@ -130,6 +130,7 @@
 					break
 			}
 			// 题型
+			console.log(filter)
 			this.filter.current = filter
 		},
 		methods: {

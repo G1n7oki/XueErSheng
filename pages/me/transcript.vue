@@ -10,13 +10,13 @@
 		<!-- 成绩卡 start -->
 		<view class="card">
 			<view class="university">
-				<image class="logo" src="http://dummyimage.com/160x160" mode=""></image>
+				<image class="logo" :src="image" mode=""></image>
 				<view class="professional">
-					工商企业管理
+					{{ name }}
 				</view>
 			</view>
 			<image class="line" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/line.png" mode=""></image>
-			<view class="info">
+			<scroll-view class="info" scroll-y>
 				<view class="tips">
 					<view class="item">
 						代码
@@ -29,30 +29,19 @@
 					</view>
 				</view>
 				<view class="content">
-					<view class="cell">
+					<view class="cell" v-for="item in list" :key="item.id">
 						<view class="item">
-							00152
+							{{ item.cours_code }}
 						</view>
 						<view class="item">
-							南大国际贸易理论与实务
+							{{ item.title }}
 						</view>
 						<view class="item">
-							80
-						</view>
-					</view>
-					<view class="cell">
-						<view class="item">
-							00152
-						</view>
-						<view class="item">
-							经管本科
-						</view>
-						<view class="item">
-							80
+							{{ item.point }}
 						</view>
 					</view>
 				</view>
-			</view>
+			</scroll-view>
 		</view>
 		<!-- 成绩卡 end -->
 	</view>
@@ -60,10 +49,37 @@
 
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
+	import { me_transcript } from '@/common/api/api.js'
 	export default {
 		name: 'Transcript',
 		components: {
 			XesNavbar
+		},
+		data() {
+			return {
+				list: [],
+				name: '', // 专业名称
+				image: '' // 学校logo
+			}
+		},
+		onLoad() {
+			this.toData()
+		},
+		methods: {
+			async toData() {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				const response = await me_transcript({
+					profession_id: uni.getStorageSync('profession_id')
+				})
+				this.list = response.data.data
+				if (this.list.length > 0) {
+					this.name = this.list[0].name
+					this.image = this.list[0].image
+				}
+				uni.hideLoading()
+			}
 		}
 	}
 </script>
@@ -121,7 +137,9 @@
 		}
 		
 		.info {
+			height: 490upx;
 			padding: 0 74upx;
+			box-sizing: border-box;
 			
 			.tips {
 				display: flex;

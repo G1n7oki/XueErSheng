@@ -42,19 +42,19 @@
 				<view class="charts-area">
 					<view class="info">
 						<view class="text today">
-							{{ data.today }} <text>min</text>
+							{{ data.today }} <!-- <text>min</text> -->
 						</view>
 						<view class="text amount">
-							{{ data.amount }} <text>道</text>
+							{{ data.amount }} <!-- <text>道</text> -->
 						</view>
 						<view class="text accuracy">
-							{{ data.accuracy }} <text>%</text>
+							{{ data.accuracy }} <!-- <text>%</text> -->
 						</view>
 						<view class="text liveness">
-							{{ data.liveness }} <text>%</text>
+							{{ data.liveness }} <!-- <text>%</text> -->
 						</view>
 						<view class="text continuous">
-							{{ data.continuous }} <text>min</text>
+							{{ data.continuous }} <!-- <text>min</text> -->
 						</view>
 					</view>
 					<canvas canvas-id="canvasRadar" id="canvasRadar" class="charts" @click="touchLine"></canvas>
@@ -168,8 +168,8 @@
 				this.data.accuracy = right
 				this.data.liveness = active
 				this.data.continuous = keep
-				this.total = long + num + right + active + keep
-				this.chartData.data = [long, num, right, active, keep]
+				this.data.total = long_time + num + right + active + keep
+				this.chartData.data = [long_time, num, right, active, keep]
 				
 				this.showRadar('canvasRadar', this.chartData)
 				

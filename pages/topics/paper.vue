@@ -66,11 +66,13 @@
 				range: ['请选择试卷年份'], // 选择的数据
 				index: 0, // 当前选择的索引
 				height: 0, // 滚动区域的高度
-				paperList: [] // 试卷列表
+				paperList: [], // 试卷列表
+				id: '' // 科目id
 			}
 		},
 		onLoad(options) {
 			const that = this
+			this.id = options.id
 			this.title = options.title
 			// 屏幕的高度
 			const wHeight = uni.getSystemInfoSync()['windowHeight']
@@ -93,7 +95,7 @@
 				})
 				// 获取列表数据
 				const list = await topics_paper({
-					profession_id: uni.getStorageSync('profession_id'),
+					profession_id: this.id,
 					type: this.title === '历年真题' ? 1 : 2
 				})
 				this.paperList = list.data.data
@@ -110,7 +112,7 @@
 				})
 				this.index = +e.target.value
 				const list = await topics_paper({
-					profession_id: uni.getStorageSync('profession_id'),
+					profession_id: this.id,
 					type: this.title === '历年真题' ? 1 : 2,
 					year: this.index === 0 ? '' : this.range[this.index]
 				})

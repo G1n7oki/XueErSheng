@@ -12,7 +12,7 @@
 				:total="total"
 				:list="issueList"
 				:result="result"
-				:again="again"
+				:total-count="totalCount"
 			/>
 		</xes-navbar>
 		<!-- 导航栏 end -->
@@ -156,6 +156,7 @@
 				issueList: [], // 题目列表
 				count: 0,
 				timer: null,
+				timer2: null,
 				pattern: uni.getStorageSync('pattern') || 'exercise', // exercise 练习 self-study 自学 exam 考试
 				total: 0,
 				current: 1,
@@ -164,7 +165,7 @@
 				pid: '', // 卷子id
 				eid: '' ,// 继续做题id,
 				choose: [],
-				again: false
+				totalCount: 0
 			}
 		},
 		onLoad(options) {
@@ -185,15 +186,19 @@
 				this.pid = options.paper
 				this.toData(+options.paper)
 			}
+			
+			this.timer2 = setInterval(() => {
+				this.totalCount++
+			}, 1000)
 		},
 		onShow() {
 			if (this.pid && this.eid) {
 				this.issueList = []
-				this.again = true
+				this.totalCount = 0
 				this.toErrorData(this.eid, this.pid)
 			} else if (this.pid) {
 				this.issueList = []
-				this.again = true
+				this.totalCount = 0
 				this.toData(this.pid)
 			} else {
 				return false
@@ -201,6 +206,9 @@
 		},
 		onHide() {
 			this.current = 1
+		},
+		onUnload() {
+			clearInterval(this.timer2)
 		},
 		filters: {
 			// 题目类别 1 单选 ，2 多选， 3判断，4主观: 直接出现答案

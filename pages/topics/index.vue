@@ -2,7 +2,7 @@
 	<view class="container">
 		<xes-navbar 
 			is-arrow="true"
-			:title="treeList[2]"
+			:title="title"
 			:margin="60"
 			@showCourseList="showCourseList"
 			:is-title-icon="true"
@@ -17,7 +17,7 @@
 				v-for="item in subject"
 				:key="item.id"
 				class="item"
-				@click="handleCourseListItem(item.id)">
+				@click="handleCourseListItem(item)">
 				{{ item.name }}
 			</view>
 		</scroll-view>
@@ -85,11 +85,11 @@
 					</navigator>
 				</view>
 				<view class="bot">
-					<navigator url="/pages/topics/paper?title=历年真题" class="item" hover-class="none">
+					<navigator :url="'/pages/topics/paper?title=历年真题&id=' + id" class="item" hover-class="none">
 						<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/topics/linianzhenti%402x.png" mode=""></image>
 						<text class="text">历年真题</text>
 					</navigator>
-					<navigator url="/pages/topics/paper?title=模拟试卷" class="item" hover-class="none">
+					<navigator :url="'/pages/topics/paper?title=模拟试卷&id=' + id" class="item" hover-class="none">
 						<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/topics/monishijuan%402x.png" mode=""></image>
 						<text class="text">模拟试卷</text>
 					</navigator>
@@ -226,7 +226,9 @@
 					accuracy: 0,
 					not_complete: {}
 				},
-				subject: []
+				subject: [],
+				title: '', // 科目标题
+				id: '' // 科目id
 			}
 		},
 		onLoad() {
@@ -243,6 +245,8 @@
 					profession_id: uni.getStorageSync('profession_id')
 				})
 				this.subject = subject.data.data
+				this.title = subject.data.data[0].name
+				this.id = subject.data.data[0].id
 				// 获取题库练习数据
 				const stats = await question({
 					profession_id: uni.getStorageSync('profession_id')
@@ -250,7 +254,7 @@
 				this.questionData = stats.data.data
 				// 获取章节精练数据
 				const chapter = await refine({
-					profession_id: uni.getStorageSync('profession_id')
+					profession_id: this.id
 				})
 				chapter.data.data.forEach(item => {
 					item.isOpen = false
@@ -262,8 +266,25 @@
 				this.flag = param
 			},
 			// 点击子学科
-			handleCourseListItem(str) {
-				// console.log(str)
+			async handleCourseListItem(raw) {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				this.title = raw.name
+				this.id = raw.id
+				this.flag = false
+				
+				// 获取章节精练数据
+				const chapter = await refine({
+					profession_id: raw.id
+				})
+				chapter.data.data.forEach(item => {
+					item.isOpen = false
+				})
+				this.topicList = chapter.data.data
+				uni.hideLoading()
+				
+				uni.hideLoading()
 			},
 			// 点击切换专业
 			toProfessional() {

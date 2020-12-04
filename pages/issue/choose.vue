@@ -96,7 +96,8 @@
 				professional: {
 					list: [],
 					id: 0
-				}
+				},
+				crumbs: []
 			}
 		},
 		onLoad() {
@@ -142,13 +143,15 @@
 					return false
 				}
 				
+				const crumbs = this.crumbs.join(' > ')
 				uni.navigateTo({
-					url: `/pages/issue/ask?id=${this.professional.id}`
+					url: `/pages/issue/ask?id=${this.professional.id}&crumbs=${crumbs}`
 				})
 			},
 			// 选择
 			selected(e, str) {
 				if (str === 'type' && e.target.value !== '0') {
+					this.crumbs[0] = this.type.data[e.target.value].name
 					// 向二级类目添加数据
 					this.specialty = {
 						data: [{
@@ -169,6 +172,7 @@
 					const newArray = this.professional.list[e.target.value - 1].sub
 					this.specialty.data = [...this.specialty.data, ...newArray]
 				} else if (str === 'specialty' && e.target.value !== '0') {
+					this.crumbs[1] = this.specialty.data[e.target.value].name
 					// 向三级类目添加数据
 					this.subject = {
 						data: [{
@@ -181,6 +185,7 @@
 					const newArray = this.specialty.data[e.target.value].sub
 					this.subject.data = [...this.subject.data, ...newArray]
 				} else if (str === 'subject' && e.target.value !== '0') {
+					this.crumbs[2] = this.subject.data[e.target.value].name
 					this.professional.id = this.subject.data[e.target.value].id
 				} else {
 					return false

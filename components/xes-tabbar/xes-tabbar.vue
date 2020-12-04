@@ -146,7 +146,6 @@
 				minute: '00',
 				second: '00',
 				timer: null,
-				count: 0,
 				isShowPapers: false,
 				top: 0,
 				unfinished: 0,
@@ -158,7 +157,6 @@
 		},
 		created() {
 			this.start()
-			
 			const statusBarHeight = uni.getSystemInfoSync()['statusBarHeight']
 			
 			this.top = statusBarHeight + 36 + 'px'
@@ -198,10 +196,10 @@
 				type: [Number, String],
 				default: ''
 			},
-			// 是否为再次做题
-			again: {
-				type: Boolean,
-				default: false
+			// 总时间
+			totalCount: {
+				type: Number,
+				default: 0
 			}
 		},
 		methods: {
@@ -215,11 +213,10 @@
 			// 开始计时
 			start() {
 				this.timer = setInterval(() => {
-					this.count++
 					// 设置秒
-					this.second = this.fillZero(this.count % 60)
+					this.second = this.fillZero(this.totalCount % 60)
 					// 设置分
-					this.minute = this.fillZero(parseInt(this.count / 60) % 60)
+					this.minute = this.fillZero(parseInt(this.totalCount / 60) % 60)
 				}, 1000)
 			},
 			// 暂停计时
@@ -281,7 +278,7 @@
 					finish: this.finished.length === this.total ? 1 : 0,
 					profession_id: uni.getStorageSync('profession_id'),
 					total: this.total,
-					time: this.count,
+					time: this.totalCount,
 					exam_id: this.eid,
 					answer_json: JSON.stringify(this.jsonData)
 				})
@@ -291,13 +288,12 @@
 				
 				uni.setStorageSync('result', this.list)
 				uni.navigateTo({
-					url: `/pages/topics/result?count=${this.count}&paper=${this.pid}&exam=${this.eid}`
+					url: `/pages/topics/result?count=${this.totalCount}&paper=${this.pid}&exam=${this.eid}`
 				})
 			}
 		},
 		watch: {
-			list(newValue) {
-				console.log(newValue)
+			list(oldValue, newValue) {
 				const finished = []
 				newValue.map(item => {
 					if (item.choose) {
@@ -306,9 +302,6 @@
 				})
 				this.finished = finished.length
 				this.unfinished = newValue.length - this.finished
-			},
-			again(newValue) {
-				console.log(newValue)
 			}
 		}
 	}

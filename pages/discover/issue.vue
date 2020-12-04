@@ -49,9 +49,6 @@
 				postImage: []
 			}
 		},
-		onLoad() {
-			
-		},
 		methods: {
 			// 选择图片
 			chooseImage() {
@@ -90,61 +87,74 @@
 				const that = this
 				let image = []
 				
-				uni.showLoading({
-					title: '上传中...'
-				})
-				
-				for(let i = 0; i < that.image.length; i++) {
-					uni.uploadFile({
-						url: baseUrl + 'upload',
-						filePath: that.image[i],
-						name: 'image',
-						header: {
-							'X-Requested-With': 'XMLHttpRequest',
-							'Authorization': uni.getStorageSync('token')
-						},
-						formData: {
-							type: '1'
-						},
-						success(res) {
-							if(res.statusCode === 200) {
-								const data = JSON.parse(res.data)
-								that.postImage.push(data.data)
-								// 两个接口存在异步关系所以需要判断这个接口在什么时机执行
-								if (that.postImage.length === that.image.length) {
-									discover_issue({
-										content: that.content,
-										device: 'mini',
-										image: that.postImage
-									}).then(response => {
-										uni.hideLoading()
-										uni.showToast({
-											icon: 'none',
-											title: '发布成功'
-										})
-										setTimeout(() => {
-											uni.navigateBack({
-												delta: 1
-											})
-										}, 1500)
+				if (that.image.length <= 0) {
+					uni.showLoading({
+						title: '上传中...'
+					})
+					
+					that.submit()
+				} else {
+					uni.showLoading({
+						title: '上传中...'
+					})
+					
+					for(let i = 0; i < that.image.length; i++) {
+						uni.uploadFile({
+							url: baseUrl + 'upload',
+							filePath: that.image[i],
+							name: 'image',
+							header: {
+								'X-Requested-With': 'XMLHttpRequest',
+								'Authorization': uni.getStorageSync('token')
+							},
+							formData: {
+								type: '1'
+							},
+							success(res) {
+								if(res.statusCode === 200) {
+									const data = JSON.parse(res.data)
+									that.postImage.push(data.data)
+									// 两个接口存在异步关系所以需要判断这个接口在什么时机执行
+									if (that.postImage.length === that.image.length) {
+										that.submit()
+									}
+								} else {
+									const data = JSON.parse(res.data)
+									uni.showToast({
+										icon: 'none',
+										title: data.message
 									})
 								}
-							} else {
-								const data = JSON.parse(res.data)
+							},
+							fail(error) {
 								uni.showToast({
 									icon: 'none',
-									title: data.message
+									title: error.errMsg
 								})
 							}
-						},
-						fail(error) {
-							uni.showToast({
-								icon: 'none',
-								title: error.errMsg
-							})
-						}
-					})
+						})
+					}
 				}
+			},
+			submit() {
+				const that = this
+				
+				discover_issue({
+					content: that.content,
+					device: 'mini',
+					image: that.postImage
+				}).then(response => {
+					uni.hideLoading()
+					uni.showToast({
+						icon: 'none',
+						title: '发布成功'
+					})
+					setTimeout(() => {
+						uni.navigateBack({
+							delta: 1
+						})
+					}, 1500)
+				})
 			}
 		}
 	}
