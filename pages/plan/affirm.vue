@@ -102,7 +102,7 @@
 
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
-	import { plan_affirm } from '@/common/api/api.js'
+	import { plan_affirm, plan_notice } from '@/common/api/api.js'
 	export default {
 		name: 'Affirm',
 		components: {
@@ -110,18 +110,24 @@
 		},
 		data() {
 			return {
-				nodes: '<ol>' +
-				'<li>报名成人高考需年满17周岁。</li>' +
-				'<li>报读高起专（专科）须具有高中（含中专、中技）或以上学历。</li>' +
-				'<li>报读专升本（本科）需为专科应届毕业生或者已取得大专或以上学历。</li>' +
-				'<li>报读须提供合法有效证件（包括但不限于本人证件照、身份证正反面复印件、毕业证复印件等）。</li>' +
-				'<li>若提供虚假证件、一经查实将取消报考资格</li>' +
-				'<li>教材费缴纳后不予退还</li>' +
-				'<li>学尔升教育严格按照高校要求办学，入学后需认真上课、做作业和考试。</li>' +
-				'</ol>'
+				nodes: ''
 			}
 		},
+		onLoad() {
+			this.toData()
+		},
 		methods: {
+			async toData() {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				
+				const response = await plan_notice()
+				const { content } = response.data.data
+				this.nodes = content
+				
+				uni.hideLoading()
+			},
 			async next() {
 				uni.showLoading({
 					title: '信息提交中...'

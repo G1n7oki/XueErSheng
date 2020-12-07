@@ -52,7 +52,7 @@
 				<input 
 					class="input"
 					type="text"
-					value="2021级筑梦计划2"
+					:value="title"
 					disabled
 				/>
 			</view>
@@ -61,7 +61,7 @@
 				<input 
 					class="input"
 					type="text"
-					value="2021"
+					:value="formData.year"
 					disabled
 				/>
 			</view>
@@ -69,11 +69,12 @@
 				<view class="label">院校</view>
 				<picker
 					class="picker"
-					:value="sex.data[sex.current].name"
-					:range="sex.data"
+					:value="school.data[school.current].name"
+					:range="school.data"
 					range-key="name"
+					@change="seleted($event, 'school')"
 				>
-					<view class="text">{{ sex.data[sex.current].name }}</view>
+					<view class="text">{{ school.data[school.current].name }}</view>
 					<view class="icon">
 						<uni-icons type="arrowright" size="14" />
 					</view>
@@ -83,11 +84,12 @@
 				<view class="label">层次</view>
 				<picker
 					class="picker"
-					:value="sex.data[sex.current].name"
-					:range="sex.data"
+					:value="level.data[level.current].name"
+					:range="level.data"
 					range-key="name"
+					@change="seleted($event, 'level')"
 				>
-					<view class="text">{{ sex.data[sex.current].name }}</view>
+					<view class="text">{{ level.data[level.current].name }}</view>
 					<view class="icon">
 						<uni-icons type="arrowright" size="14" />
 					</view>
@@ -97,11 +99,12 @@
 				<view class="label">专业</view>
 				<picker
 					class="picker"
-					:value="sex.data[sex.current].name"
-					:range="sex.data"
+					:value="profession.data[profession.current].name"
+					:range="profession.data"
 					range-key="name"
+					@change="seleted($event, 'profession')"
 				>
-					<view class="text">{{ sex.data[sex.current].name }}</view>
+					<view class="text">{{ profession.data[profession.current].name }}</view>
 					<view class="icon">
 						<uni-icons type="arrowright" size="14" />
 					</view>
@@ -111,11 +114,12 @@
 				<view class="label">城市</view>
 				<picker
 					class="picker"
-					:value="sex.data[sex.current].name"
-					:range="sex.data"
+					:value="city.data[city.current].name"
+					:range="city.data"
 					range-key="name"
+					@change="seleted($event, 'city')"
 				>
-					<view class="text">{{ sex.data[sex.current].name }}</view>
+					<view class="text">{{ city.data[city.current].name }}</view>
 					<view class="icon">
 						<uni-icons type="arrowright" size="14" />
 					</view>
@@ -125,11 +129,12 @@
 				<view class="label">考试县区</view>
 				<picker
 					class="picker"
-					:value="sex.data[sex.current].name"
-					:range="sex.data"
+					:value="county.data[county.current].name"
+					:range="county.data"
 					range-key="name"
+					@change="seleted($event, 'county')"
 				>
-					<view class="text">{{ sex.data[sex.current].name }}</view>
+					<view class="text">{{ county.data[county.current].name }}</view>
 					<view class="icon">
 						<uni-icons type="arrowright" size="14" />
 					</view>
@@ -146,6 +151,7 @@
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import UniIcons from '@/components/uni-icons/uni-icons.vue'
+	import { plan_school, plan_professional, plan_city, plan_county } from '@/common/api/api.js'
 	export default {
 		name: 'Want',
 		components: {
@@ -154,10 +160,13 @@
 		},
 		data() {
 			return {
+				title: '',
 				formData: {
 					name: '',
 					card: '',
 					sex: 0,
+					year: '',
+					apply_type: ''
 				},
 				sex: {
 					data: [{
@@ -171,11 +180,203 @@
 						name: '女'
 					}],
 					current: 0
+				},
+				// 院校
+				school: {
+					data: [{
+						school_id: 0,
+						name: '请选择'
+					}],
+					current: 0
+				},
+				// 层次
+				level: {},
+				// 层次 - 成考
+				level1: {
+					data: [{
+						id: 0,
+						name: '请选择'
+					}, {
+						id: 1,
+						name: '高升专'
+					}, {
+						id: 2,
+						name: '专升本'
+					}, {
+						id: 3,
+						name: '高升本'
+					}],
+					current: 0
+				},
+				// 层次 - 自考
+				level2: {
+					data: [{
+						id: 0,
+						name: '请选择'
+					}, {
+						id: 1,
+						name: '高升专'
+					}, {
+						id: 2,
+						name: '专升本'
+					}],
+					current: 0
+				},
+				// 城市
+				city: {
+					data: [{
+						id: 9999,
+						name: '请选择'
+					}],
+					current: 0
+				},
+				// 专业
+				profession: {
+					data: [{
+						id: 9999,
+						name: '请选择'
+					}],
+					current: 0
+				},
+				// 县区
+				county: {
+					data: [{
+						id: 9999,
+						name: '请选择'
+					}],
+					current: 0
 				}
 			}
 		},
+		onLoad(options) {
+			this.title = options.title
+			this.formData.year = options.year
+			this.apply_type = options.id
+			
+			+options.id === 1 ? this.level = this.level2 : this.level = this.level1
+			
+			this.toData()
+		},
 		methods: {
-			seleted() {},
+			async toData() {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				const school = await plan_school({
+					type: this.id
+				})
+				this.school.data = [...this.school.data, ...school.data.data]
+				uni.hideLoading()
+			},
+			async seleted(e, str) {
+				this[str].current = e.target.value
+				if (str === 'school') {
+					this.reset()
+					uni.showLoading({
+						title: '加载中...'
+					})
+					// 获取城市
+					const city = await plan_city({
+						school_id: this.school.data[this.school.current].school_id
+					})
+					
+					city.data.data.forEach((item, index) => {
+						this.city.data.push({
+							id: index,
+							name: item.city
+						})
+					})
+					
+					uni.hideLoading()
+				}
+				
+				if (str === 'level') {
+					this.profession = {
+						data: [{
+							id: 9999,
+							name: '请选择'
+						}],
+						current: 0
+					}
+				}
+				
+				if (this.school.current !== 0 && this.level.current !== 0) {
+					uni.showLoading({
+						title: '加载中...'
+					})
+					// 获取专业
+					const profession = await plan_professional({
+						type: this.id,
+						level: this.level.data[this.level.current].id,
+						school_id: this.school.data[this.school.current].school_id
+					})
+					
+					profession.data.data.forEach((item) => {
+						this.profession.data.push({
+							id: item.id,
+							name: item.name
+						})
+					})
+					uni.hideLoading()
+				}
+				
+				if (str === 'city') {
+					this.county = {
+						data: [{
+							id: 9999,
+							name: '请选择'
+						}],
+						current: 0
+					}
+				}
+				
+				if (this.school.current !== 0 && this.city.current !== 0) {
+					uni.showLoading({
+						title: '加载中...'
+					})
+					// 获取县区
+					const county = await plan_county({
+						city: this.city.data[this.city.current].name,
+						school_id: this.school.data[this.school.current].school_id
+					})
+					
+					county.data.data.forEach((item) => {
+						this.county.data.push({
+							id: item.id,
+							name: item.counties
+						})
+					})
+					
+					uni.hideLoading()
+				}
+			},
+			reset() {
+				this.city = {
+					data: [{
+						id: 9999,
+						name: '请选择'
+					}],
+					current: 0
+				}
+				
+				this.level.current = 0
+				
+				this.profession = {
+					data: [{
+						id: 9999,
+						name: '请选择'
+					}],
+					current: 0
+				}
+				
+				this.county = {
+					data: [{
+						id: 9999,
+						name: '请选择'
+					}],
+					current: 0
+				}
+			},
 			next() {
 				uni.navigateTo({
 					url: '/pages/plan/affirm'

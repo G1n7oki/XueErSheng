@@ -722,3 +722,67 @@ export const discover_comment_admire = (data) => {
 			data
 		})
 	}
+	// 考生必看
+	export const plan_must = (data) => {
+		return http.request({
+			url: 'must_see',
+			method: 'GET',
+			data
+		})
+	}
+	// 报考流程
+	export const plan_process = (data) => {
+		return http.request({
+			url: 'process',
+			method: 'GET',
+			data
+		})
+	}
+	// 报考详情
+	export const plan_detail = (data) => {
+		return http.request({
+			url: 'poster',
+			method: 'GET',
+			data
+		})
+	}
+	// 报考须知
+	export const plan_notice = (data) => {
+		return http.request({
+			url: 'must_know',
+			method: 'GET',
+			data
+		})
+	}
+	// 报读学校
+	export const plan_school = (data) => {
+		return http.request({
+			url: 'school',
+			method: 'GET',
+			data
+		})
+	}
+	// 报读专业
+	export const plan_professional = (data) => {
+		return http.request({
+			url: 'profession',
+			method: 'GET',
+			data
+		})
+	}
+	// 报考城市
+	export const plan_city = (data) => {
+		return http.request({
+			url: 'city',
+			method: 'GET',
+			data
+		})
+	}
+	// 报考县区
+	export const plan_county = (data) => {
+		return http.request({
+			url: 'county',
+			method: 'GET',
+			data
+		})
+	}

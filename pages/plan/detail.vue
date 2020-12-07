@@ -1,24 +1,26 @@
 <template>
 	<view class="container">
-		<empty v-if="show" />
-		<view class="image">
-			<image class="item" v-for="n in 5" :key="n" src="http://dummyimage.com/750x500" mode=""></image>
-		</view>
-		<!-- 定位按钮 start -->
-		<view class="fixed-button">
-			<view class="slogan">
-				参与筑梦计划享0元报名
+		<empty v-if="!image" />
+		<view v-else>
+			<view class="image">
+				<image class="item" :src="image" mode=""></image>
 			</view>
-			<view class="consult" @click="call">
-				<view class="line"></view>
-				<uni-icons type="phone-filled" color="#fff" />
-				<view class="text">
-					咨询
+			<!-- 定位按钮 start -->
+			<view class="fixed-button">
+				<view class="slogan">
+					参与筑梦计划享0元报名
 				</view>
+				<view class="consult" @click="call">
+					<view class="line"></view>
+					<uni-icons type="phone-filled" color="#fff" />
+					<view class="text">
+						咨询
+					</view>
+				</view>
+				<navigator class="navigation" hover-class="none" :url="'/pages/plan/want?year=' + year + '&title=' + title + '&id=' + id">立即报名</navigator>
 			</view>
-			<navigator class="navigation" hover-class="none" url="/pages/plan/want">立即报名</navigator>
+			<!-- 定位按钮 end -->
 		</view>
-		<!-- 定位按钮 end -->
 	</view>
 </template>
 
@@ -26,6 +28,7 @@
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import UniIcons from '@/components/uni-icons/uni-icons.vue'
 	import Empty from '@/components/empty/empty.vue'
+	import { plan_detail } from '@/common/api/api.js'
 	export default {
 		name: 'PlanDetail',
 		components: {
@@ -35,13 +38,31 @@
 		},
 		data() {
 			return {
-				show: false
+				show: true,
+				image: '',
+				year: '',
+				title: '',
+				id: ''
 			}
 		},
 		onLoad(options) {
-			
+			this.id = options.id
+			this.toData(options.id)
 		},
 		methods: {
+			async toData(id) {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				const response = await plan_detail({
+					type: id
+				})
+				const { image_url, year, title } = response.data.data
+				this.image = image_url
+				this.year = year
+				this.title = title
+				uni.hideLoading()
+			},
 			call() {
 				uni.makePhoneCall({
 					phoneNumber: '114'
@@ -59,7 +80,6 @@
 		
 		.item {
 			width: 100%;
-			height: 500upx;
 			float: left;
 		}
 	}

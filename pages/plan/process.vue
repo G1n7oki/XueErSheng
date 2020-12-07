@@ -25,12 +25,12 @@
 		>
 			<swiper-item>
 				<scroll-view class="scroll-view" scroll-y="true" >
-					<rich-text :nodes="node"></rich-text>
+					<rich-text :nodes="must"></rich-text>
 				</scroll-view>
 			</swiper-item>
 			<swiper-item>
 				<scroll-view class="scroll-view" scroll-y="true" >
-					<rich-text :nodes="node"></rich-text>
+					<rich-text :nodes="process"></rich-text>
 				</scroll-view>
 			</swiper-item>
 		</swiper>
@@ -41,7 +41,7 @@
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import XesTextTabbar from '@/components/xes-text-tabbar/xes-text-tabbar.vue'
-	import Json from '@/static/data.json'
+	import { plan_must, plan_process } from '@/common/api/api.js'
 	export default {
 		name: 'CourseProcess',
 		components: {
@@ -61,7 +61,8 @@
 					current: 0
 				},
 				height: 0,
-				node: ''
+				must: '',
+				process: ''
 			}
 		},
 		onLoad(options) {
@@ -77,11 +78,24 @@
 				that.height = wHeight - tHeight - statusBarHeight - 42 + 'px'
 			}).exec()
 			
-			this.node = Json.discover.detail.strings
-			
 			this.tabbar.current = +options.id
+			
+			this.toData()
 		},
 		methods: {
+			async toData() {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				
+				const must = await plan_must()
+				this.must = must.data.data.content
+				
+				const process = await plan_process()
+				this.process = process.data.data.content
+				
+				uni.hideLoading()
+			},
 			toId(i) {
 				this.tabbar.current = i
 			},
