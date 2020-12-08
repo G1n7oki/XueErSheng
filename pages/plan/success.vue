@@ -16,6 +16,7 @@
 			hover-class="none"
 			open-type="switchTab"
 			class="skip"
+			@click="handleSkip"
 		>
 			跳过
 		</navigator>
@@ -48,6 +49,9 @@
 				uni.navigateTo({
 					url: '/pages/order/information'
 				})
+			},
+			handleSkip() {
+				uni.removeStorageSync('formData')
 			}
 		}
 	}

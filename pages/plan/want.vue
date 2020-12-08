@@ -36,6 +36,7 @@
 					:value="sex.data[sex.current].name"
 					:range="sex.data"
 					range-key="name"
+					@change="seleted($event, 'sex')"
 				>
 					<view class="text">{{ sex.data[sex.current].name }}</view>
 					<view class="icon">
@@ -52,7 +53,7 @@
 				<input 
 					class="input"
 					type="text"
-					:value="title"
+					:value="formData.title"
 					disabled
 				/>
 			</view>
@@ -151,6 +152,7 @@
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import UniIcons from '@/components/uni-icons/uni-icons.vue'
+	import { isIdentity } from '@/tools/verify/verify.js'
 	import { plan_school, plan_professional, plan_city, plan_county } from '@/common/api/api.js'
 	export default {
 		name: 'Want',
@@ -166,18 +168,26 @@
 					card: '',
 					sex: 0,
 					year: '',
-					apply_type: ''
+					apply_type: '',
+					school: '',
+					schoolName: '',
+					level: '',
+					levelName: '',
+					major: '',
+					majorName: '',
+					city: '',
+					counties: ''
 				},
 				sex: {
 					data: [{
-						id: 0,
+						id: 9999,
 						name: '请选择'
+					}, {
+						id: 0,
+						name: '女'
 					}, {
 						id: 1,
 						name: '男'
-					}, {
-						id: 2,
-						name: '女'
 					}],
 					current: 0
 				},
@@ -245,31 +255,33 @@
 						name: '请选择'
 					}],
 					current: 0
-				}
+				},
+				type: ''
 			}
 		},
 		onLoad(options) {
-			this.title = options.title
+			this.formData.title = options.title
 			this.formData.year = options.year
-			this.apply_type = options.id
+			this.formData.apply_type = options.id
 			
-			+options.id === 1 ? this.level = this.level2 : this.level = this.level1
+			this.level = +options.id === 1 ? this.level2 : this.level1
 			
-			this.toData()
+			this.toData(options.id)
 		},
 		methods: {
-			async toData() {
+			async toData(id) {
 				uni.showLoading({
 					title: '加载中...'
 				})
 				const school = await plan_school({
-					type: this.id
+					type: id
 				})
 				this.school.data = [...this.school.data, ...school.data.data]
 				uni.hideLoading()
 			},
 			async seleted(e, str) {
 				this[str].current = e.target.value
+				
 				if (str === 'school') {
 					this.reset()
 					uni.showLoading({
@@ -306,7 +318,7 @@
 					})
 					// 获取专业
 					const profession = await plan_professional({
-						type: this.id,
+						type: this.formData.apply_type,
 						level: this.level.data[this.level.current].id,
 						school_id: this.school.data[this.school.current].school_id
 					})
@@ -378,6 +390,90 @@
 				}
 			},
 			next() {
+				if (this.formData.name === '') {
+					uni.showToast({
+						icon: 'none',
+						title: '请填写姓名'
+					})
+					
+					return false
+				}
+				
+				if (!isIdentity(this.formData.card)) {
+					uni.showToast({
+						icon: 'none',
+						title: '请填正确的身份证'
+					})
+					
+					return false
+				}
+				
+				if (this.sex.current === 0) {
+					uni.showToast({
+						icon: 'none',
+						title: '请选择性别'
+					})
+					
+					return false
+				}
+				
+				if (this.school.current === 0) {
+					uni.showToast({
+						icon: 'none',
+						title: '请选择学校'
+					})
+					
+					return false
+				}
+				
+				if (this.level.current === 0) {
+					uni.showToast({
+						icon: 'none',
+						title: '请选择层次'
+					})
+					
+					return false
+				}
+				
+				if (this.profession.current === 0) {
+					uni.showToast({
+						icon: 'none',
+						title: '请选择专业'
+					})
+					
+					return false
+				}
+				
+				if (this.city.current === 0) {
+					uni.showToast({
+						icon: 'none',
+						title: '请选择城市'
+					})
+					
+					return false
+				}
+				
+				if (this.county.current === 0) {
+					uni.showToast({
+						icon: 'none',
+						title: '请选择县区'
+					})
+					
+					return false
+				}
+				
+				this.formData.sex = this.sex.data[this.sex.current].id
+				this.formData.school = this.school.data[this.school.current].school_id
+				this.formData.schoolName = this.school.data[this.school.current].name
+				this.formData.level = this.level.data[this.level.current].id
+				this.formData.levelName = this.level.data[this.level.current].name
+				this.formData.major = this.profession.data[this.profession.current].id
+				this.formData.majorName = this.profession.data[this.profession.current].name
+				this.formData.city = this.city.data[this.city.current].name
+				this.formData.counties = this.county.data[this.county.current].name
+				
+				uni.setStorageSync('formData', this.formData)
+				
 				uni.navigateTo({
 					url: '/pages/plan/affirm'
 				})

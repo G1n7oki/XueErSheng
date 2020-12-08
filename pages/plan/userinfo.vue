@@ -19,7 +19,7 @@
 				<input 
 					class="input"
 					type="text"
-					value="361221198905062145"
+					:value="id"
 					disabled
 				/>
 			</view>
@@ -28,7 +28,7 @@
 				<input 
 					class="input"
 					type="text"
-					value="1989-05-06"
+					:value="birthday"
 					disabled
 				/>
 			</view>
@@ -37,7 +37,7 @@
 				<input 
 					class="input"
 					type="text"
-					value="男"
+					:value="sex"
 					disabled
 				/>
 			</view>
@@ -166,6 +166,7 @@
 	import UniIcons from '@/components/uni-icons/uni-icons.vue'
 	import { nation } from '@/common/config/nation.js'
 	import { political, registered, marital } from '@/common/config/form.js'
+	import { birthdayOfId } from '@/tools/util/util.js'
 	export default {
 		name: 'Userinfo',
 		components: {
@@ -174,6 +175,16 @@
 		},
 		data() {
 			return {
+				user: {
+					nation: '',
+					political: '',
+					registered: '',
+					location: '',
+					marital: '',
+					post: '',
+					shipping: '',
+					detail: ''
+				}, // 缓存对象
 				nation: {}, // 民族
 				political: {}, // 政治面貌
 				registered: {}, // 户口类型
@@ -181,10 +192,17 @@
 				marital: {}, // 婚姻状况
 				post: '', // 职业
 				shipping: '江西省 南昌市 青山湖区', // 收货地址
-				detail: '' // 详细地址
+				detail: '', // 详细地址
+				id: '', // 身份证
+				birthday: '', // 生日
+				sex: '' // 性别
 			}
 		},
-		onLoad() {
+		onLoad(options) {
+			this.id = options.id
+			this.birthday = birthdayOfId(options.id)
+			this.sex = options.sex === '0' ? '女' : '男'
+			
 			this.nation = nation
 			this.political = political
 			this.registered = registered
@@ -192,7 +210,6 @@
 		},
 		methods: {
 			selected(e, str) {
-				console.log(e)
 				if (str === 'location' || str === 'shipping') {
 					this[str] = e.detail.value.join(' ')
 				} else {
@@ -200,6 +217,33 @@
 				}
 			},
 			next () {
+				if (this.post === '') {
+					uni.showToast({
+						icon: 'none',
+						title: '请输入职业'
+					})
+					return false
+				}
+				
+				if (this.detail === '') {
+					uni.showToast({
+						icon: 'none',
+						title: '请输入详细地址'
+					})
+					return false
+				}
+				
+				this.user.nation = this.nation.data[this.nation.current].name
+				this.user.political = this.political.data[this.political.current].name
+				this.user.registered = this.registered.data[this.registered.current].name
+				this.user.location = this.location
+				this.user.marital = this.marital.data[this.marital.current].name
+				this.user.post = this.post
+				this.user.shipping = this.shipping
+				this.user.detail = this.detail
+				
+				uni.setStorageSync('user', this.user)
+				
 				uni.navigateTo({
 					url: '/pages/plan/education'
 				})

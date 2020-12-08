@@ -299,6 +299,14 @@ export const me_transcript = (data) => {
 		data
 	})
 }
+// 我的学籍
+export const me_school = (data) => {
+	return http.request({
+		url: 'users/education',
+		method: 'GET',
+		data
+	})
+}
 /**
  * 以下为题库模块接口
  * */

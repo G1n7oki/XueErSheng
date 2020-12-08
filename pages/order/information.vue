@@ -41,8 +41,8 @@
 					<view class="name">
 						优惠券
 					</view>
-					<view class="price">
-						暂无优惠券
+					<view class="price" :class="{'active': coupon.money > 0 }">
+						{{ coupon.money === 0 ? '暂无优惠券' : `-${coupon.money}元` }}
 					</view>
 				</view>
 				<view class="item">
@@ -63,7 +63,7 @@
 					优惠券
 				</view>
 				<view class="detail">
-					<view class="text">
+					<view class="text" @click="handleCoupon">
 						有 {{ card.length }} 张可用
 					</view>
 					<uni-icons type="forward" size="16" color="#C0C4CC" />
@@ -98,9 +98,9 @@
 				</view>
 				<view 
 					class="item"
-					v-for="coupon in coupon.list"
+					v-for="coupon in card"
 					:key="coupon.id"
-					@click="handleCouponItem(coupon.id, coupon.type)"
+					@click="handleCouponItem(coupon)"
 				>
 					<view class="worth">
 						<view class="type">
@@ -138,7 +138,7 @@
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import UniIcons from '@/components/uni-icons/uni-icons.vue'
 	import UniPopup from '@/components/uni-popup/uni-popup.vue'
-	import { order_information, order_create, order_pay, course_coupon } from '@/common/api/api.js'
+	import { order_information, order_create, order_pay } from '@/common/api/api.js'
 	export default {
 		name: 'Information',
 		components: {
@@ -169,8 +169,6 @@
 			this.type = options.type
 			this.id = options.id
 			this.toData(+options.id, options.type)
-			
-			this.$refs.popup.open()
 		},
 		methods: {
 			async toData(id, type) {
@@ -184,19 +182,15 @@
 				})
 				const { info, card, money } = response.data.data
 				info.current_price = parseFloat(info.current_price) - parseFloat(money)
+				info.validity = parseInt(Math.abs(info.validity) / 86400)
 				this.infoData = info
-				this.card = card
-				this.styleMoney(money, info.price)
-				this.discount = info.virtual_price - info.price
-				
-				// 课程优惠券列表
-				const coupon = await course_coupon({ id: 3, type: 1 })
-				const { data } = coupon.data
-				data.map(item => {
+				card.forEach(item => {
 					item.valid_start = item.valid_start.substring(0, 10)
 					item.valid_end = item.valid_end.substring(0, 10)
 				})
-				this.coupon.list = data
+				this.card = card
+				this.styleMoney(money, info.price)
+				this.discount = info.virtual_price - info.price
 				
 				uni.hideLoading()
 			},
@@ -275,6 +269,28 @@
 				} else {
 					this.infoData.current_price = parseFloat(current) + parseFloat(this.money)
 				}
+			},
+			// 选择优惠券
+			handleCoupon() {
+				this.$refs.popup.open()
+			},
+			// 使用优惠券
+			handleCouponItem(raw) {
+				this.infoData.current_price = this.infoData.price
+				
+				if (this.infoData.current_price < raw.need_money) {
+					uni.showToast({
+						icon: 'none',
+						title: '不满足使用条件'
+					})
+					return false
+				}
+				this.coupon.cid = raw.id
+				this.coupon.money = raw.cut_money
+				
+				this.infoData.current_price = this.infoData.current_price - raw.cut_money
+				
+				this.$refs.popup.close()
 			}
 		}
 	}

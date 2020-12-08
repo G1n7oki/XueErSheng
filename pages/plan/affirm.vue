@@ -17,7 +17,7 @@
 					姓名
 				</view>
 				<view class="value">
-					吴彦祖                           
+					{{ formData.name }}                           
 				</view>
 			</view>
 			<view class="item">
@@ -25,7 +25,7 @@
 					性别
 				</view>
 				<view class="value">
-					男
+					{{ formData.sex === 0 ? '女' : '男' }}
 				</view>
 			</view>
 			<view class="item">
@@ -33,7 +33,7 @@
 					身份证号
 				</view>
 				<view class="value">
-					360441199901210011
+					{{ formData.card }}
 				</view>
 			</view>
 			<view class="item">
@@ -41,7 +41,7 @@
 					报读类型
 				</view>
 				<view class="value">
-					2021级筑梦计划2
+					{{ formData.title }}
 				</view>
 			</view>
 			<view class="item">
@@ -49,7 +49,7 @@
 					年级
 				</view>
 				<view class="value">
-					2021
+					{{ formData.year }}
 				</view>
 			</view>
 			<view class="item">
@@ -57,7 +57,7 @@
 					层次
 				</view>
 				<view class="value">
-					1>专科升本科类
+					{{ formData.levelName }}
 				</view>
 			</view>
 			<view class="item">
@@ -65,7 +65,7 @@
 					院校
 				</view>
 				<view class="value">
-					南昌大学
+					{{ formData.schoolName }}
 				</view>
 			</view>
 			<view class="item">
@@ -73,7 +73,7 @@
 					专业
 				</view>
 				<view class="value">
-					计算机科学与技术
+					{{ formData.majorName }}
 				</view>
 			</view>
 			<view class="item">
@@ -81,7 +81,7 @@
 					考试县区
 				</view>
 				<view class="value">
-					青山湖区
+					{{ formData.counties }}
 				</view>
 			</view>
 		</view>
@@ -110,10 +110,28 @@
 		},
 		data() {
 			return {
-				nodes: ''
+				nodes: '',
+				formData: {
+					apply_type: '',
+					card: '',
+					city: '',
+					counties: '',
+					level: '',
+					levelName: '',
+					major: '',
+					majorName: '',
+					name: '',
+					school: '',
+					schoolName: '',
+					sex: '',
+					title: '',
+					year: ''
+				}
 			}
 		},
 		onLoad() {
+			this.formData = uni.getStorageSync('formData')
+			console.log(this.formData)
 			this.toData()
 		},
 		methods: {
@@ -134,17 +152,17 @@
 				})
 				
 				const response = await plan_affirm({
-					name: '胡图图',
-					idno: '110101199003072375',
+					name: this.formData.name,
+					idno: this.formData.card,
 					profession_id: uni.getStorageSync('profession_id'),
-					sex: '1',
-					apply_type: '1',
-					year: '2021',
-					school: '1',
-					level: '1',
-					major: '1',
-					city: '南昌',
-					counties: '青山湖'
+					sex: this.formData.sex,
+					apply_type: this.formData.apply_type,
+					year: this.formData.year,
+					school: this.formData.school,
+					level: this.formData.level,
+					major: this.formData.major,
+					city: this.formData.city,
+					counties: this.formData.counties
 				})
 				
 				uni.hideLoading()

@@ -72,31 +72,31 @@
 			</view>
 			<!-- 我的学习 end -->
 			<!-- 我的学籍 start -->
-			<view class="me-status">
+			<view class="me-status" v-if="!Object.keys(school).length <= 0">
 				<title name="我的学籍" />
 				<view class="box">
-					<image class="amend" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/xiugai%402x.png" mode="" @click="toPage('/pages/plan/userinfo')"></image>
+					<image class="amend" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/xiugai%402x.png" mode="" @click="toPage('/pages/plan/userinfo?id=' + school.idno + '&sex=' + school.sex)"></image>
 					<view class="university">
 						<image class="logo" src="http://dummyimage.com/114x114" mode=""></image>
 						<view class="info">
 							<view class="name">
-								[2021级] 南昌大学
+								[{{ school.year }}级] {{ school.school }}
 							</view>
 							<view class="item">
-								专业：工商企业管理 [本科]                       
+								专业：{{ school.name }}                       
 							</view>
 							<view class="item">
-								状态：意向学员
+								状态：{{ school.status === 0 ? '意向学员' : '正式学员' }}
 							</view>
 							<view class="item">
-								类型：2021级筑梦计划2  
+								类型：{{ school.title }}
 							</view>
 						</view>
 					</view>
 					<view class="button-group">
 						<button class="button-1" @click="toPage('/pages/me/transcript')">成绩单</button>
 						<button class="button-2" @click="toPage('/pages/me/course')">去学习</button>
-						<button class="button-3" @click="toPage('/pages/order/information')">去缴费</button>
+						<button v-if="school.status === 0" class="button-3" @click="toPage('/pages/order/information?id=' + school.gift_id + '&type=4')">去缴费</button>
 					</view>
 				</view>
 			</view>
@@ -174,7 +174,7 @@
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import Title from '@/components/title/Title.vue'
 	import ListItem from '@/components/list-item/list-item.vue'
-	import { userinfo } from '@/common/api/api.js'
+	import { userinfo, me_school } from '@/common/api/api.js'
 	import { showToast } from '@/tools/util/util.js'
 	export default {
 		name: 'Me',
@@ -193,6 +193,7 @@
 					money: 0,
 					coin: 0
 				},
+				school: {},
 				login: false
 			}
 		},
@@ -204,6 +205,7 @@
 					if (res.data) {
 						that.login = true
 						that.toUserinfo()
+						that.toMeSchool()
 					} else {
 						that.login = false
 					}
@@ -222,6 +224,11 @@
 				}).catch(error => {
 					uni.hideLoading()
 				})
+			},
+			// 获取的我的学籍
+			async toMeSchool() {
+				const response = await me_school()
+				this.school = response.data.data
 			},
 			// 点击跳转登录页
 			handleLogin() {
