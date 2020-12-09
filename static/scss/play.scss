@@ -27,9 +27,29 @@
 		left: 0;
 		background-color: rgba(0, 0, 0, .4);
 		
+		.play {
+			width: 96upx;
+			height: 96upx;
+			background: url('https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/common/plays%402x.png') 0 0 no-repeat;
+			background-size: 100% 100%;
+		}
+		
 		.text {
 			font-size: 32upx;
 			font-weight: 500;
+			color: #FFFFFF;
+		}
+		
+		.button {
+			width: 168upx;
+			height: 64upx;
+			background: #1283FF;
+			border-radius: 32upx;
+			line-height: 64upx;
+			box-sizing: border-box;
+			margin: 33upx auto 0;
+			padding: 0;
+			font-size: 28upx;
 			color: #FFFFFF;
 		}
 	}

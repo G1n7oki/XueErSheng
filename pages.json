@@ -37,6 +37,12 @@
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom"
 			}
+		}, { // 协议
+			"path": "pages/login/agrement",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
 		}, { // 切换专业
 			"path": "pages/professional/professional",
 			"style": {

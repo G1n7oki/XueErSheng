@@ -34,6 +34,11 @@
 				密码登录
 			</navigator>
 			<!-- 密码登录 end -->
+			<!-- 注册协议 start -->
+			<view class="agreement">
+				我已阅读并同意<text @click="toAgreement">注册服务与隐私协议</text>
+			</view>
+			<!-- 注册协议 end -->
 			<!-- 三方 start -->
 			<view class="tripartite">
 				<view class="text">
@@ -125,6 +130,11 @@
 						showToast(error.data.message)
 					})
 				}
+			},
+			toAgreement() {
+				uni.navigateTo({
+					url: '/pages/login/agrement'
+				})
 			}
 		}
 	}

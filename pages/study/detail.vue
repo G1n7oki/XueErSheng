@@ -246,7 +246,7 @@
 						</view>
 					</view>
 					<uni-load-more 
-						v-if="evaluate.total > 2"
+						v-if="evaluate.total > 1"
 						:status="evaluate.loading"
 						:iconSize="14"
 					/>

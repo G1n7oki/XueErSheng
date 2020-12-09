@@ -75,7 +75,7 @@
 			<view class="me-status" v-if="!Object.keys(school).length <= 0">
 				<title name="我的学籍" />
 				<view class="box">
-					<image class="amend" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/xiugai%402x.png" mode="" @click="toPage('/pages/plan/userinfo?id=' + school.idno + '&sex=' + school.sex)"></image>
+					<image class="amend" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/xiugai%402x.png" mode="" @click="toPage('/pages/plan/userinfo?id=' + school.idno + '&sex=' + school.sex + '&aid=' + school.id)"></image>
 					<view class="university">
 						<image class="logo" src="http://dummyimage.com/114x114" mode=""></image>
 						<view class="info">

@@ -176,6 +176,7 @@
 		data() {
 			return {
 				user: {
+					id: '',
 					nation: '',
 					political: '',
 					registered: '',
@@ -200,6 +201,7 @@
 		},
 		onLoad(options) {
 			this.id = options.id
+			this.user.id = options.aid
 			this.birthday = birthdayOfId(options.id)
 			this.sex = options.sex === '0' ? '女' : '男'
 			

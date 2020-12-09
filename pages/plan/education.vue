@@ -74,6 +74,9 @@
 			</view>
 		</view>
 		<!-- 表单填写 end -->
+		<view class="inform">
+			* 由于政策原因, 证件材料请登录学尔升App提交
+		</view>
 		<!-- 按钮 start -->
 		<button class="button" hover-class="none" @click="next">提交</button>
 		<!-- 按钮 end -->
@@ -84,6 +87,7 @@
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import UniIcons from '@/components/uni-icons/uni-icons.vue'
 	import { education } from '@/common/config/form.js'
+	import { plan_info } from '@/common/api/api.js'
 	export default {
 		name: 'Education',
 		components: {
@@ -96,7 +100,23 @@
 				school: '', // 原毕业院校
 				date: '请选择', // 原毕业时间
 				major: '', // 原毕业专业
-				number: '' // 原毕业证编号
+				number: '', // 原毕业证编号
+				form: {
+					applies_id: '',
+					nation: '',
+					politics: '',
+					koseki: '',
+					koseki_address: '',
+					marriage: '',
+					job: '',
+					textbook: '',
+					address: '',
+					education: '',
+					school: '',
+					graduate_time: '',
+					profession: '',
+					graduate: ''
+				}
 			}
 		},
 		onLoad() {
@@ -110,10 +130,65 @@
 					this[str].current = e.detail.value
 				}
 			},
-			next() {
-				uni.navigateTo({
-					url: '/pages/plan/affirm'
+			async next() {
+				if (this.school === '') {
+					uni.showToast({
+						icon: 'none',
+						title: '请填写原毕业学校'
+					})
+					return false
+				}
+				
+				if (this.date === '请选择') {
+					uni.showToast({
+						icon: 'none',
+						title: '请选择原毕业时间'
+					})
+					return false
+				}
+				
+				if (this.major === '') {
+					uni.showToast({
+						icon: 'none',
+						title: '请填写原毕业专业'
+					})
+					return false
+				}
+				
+				if (this.number === '') {
+					uni.showToast({
+						icon: 'none',
+						title: '请填写原毕业证编号'
+					})
+					return false
+				}
+				
+				const user = uni.getStorageSync('user')
+				// 个人信息
+				this.form.applies_id = user.id
+				this.form.nation = user.nation
+				this.form.politics = user.political
+				this.form.koseki = user.registered
+				this.form.koseki_address = user.location
+				this.form.marriage = user.marital
+				this.form.job = user.post
+				this.form.textbook = user.shipping
+				this.form.address = user.detail
+				// 学历信息
+				this.form.education = this.education.data[this.education.current].name
+				this.form.school = this.school
+				this.form.graduate_time = this.date
+				this.form.profession = this.major
+				this.form.graduate = this.number
+				
+				const response = await plan_info(this.form)
+				
+				uni.showToast({
+					icon: 'none',
+					title: '提交成功'
 				})
+				
+				uni.removeStorageSync('user')
 			}
 		}
 	}

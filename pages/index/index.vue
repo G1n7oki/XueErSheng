@@ -139,10 +139,10 @@
 								</view>
 							</view>
 							<view class="status">
-								<button v-if="item.is_play === 1" class="button-1" @click="toLivePlay(item.sol_id)">正在播放</button>
+								<button v-if="item.is_play === 1" class="button-1" @click="toLivePlay(item)">正在播放</button>
 								<!-- <button v-else-if="item.is_play === 2" class="button-2">播放回放</button> -->
-								<button v-else-if="item.is_play === 0 && item.subscribe === 0" class="button-3" @click="handleAdvance(item)">立即预约</button>
-								<button v-else class="button-4">已预约</button>
+								<button v-else-if="item.is_play === 0 && item.subscribe === 0" class="button-3" @click="toLivePlay(item)">立即预约</button>
+								<button v-else class="button-4" @click="toLivePlay(item)">已预约</button>
 							</view>
 						</view>
 					</view>
@@ -318,8 +318,7 @@
 		home,
 		courses,
 		banners,
-		filter,
-		advance
+		filter
 	} from '@/common/api/api.js'
 	export default {
 		components: {
@@ -470,9 +469,9 @@
 				this.isPay === 9 ? this.navigate('/pages/plan/select') : this.isPay === 0 ? this.navigate('/pages/order/information') : ''
 			},
 			// 跳转播放播放页
-			toLivePlay(id) {
+			toLivePlay(raw) {
 				uni.navigateTo({
-					url: '/pages/live/live-play?id=' + id
+					url: '/pages/live/live-play?id=' + raw.sol_id + '&live=' + raw.live_id
 				})
 			},
 			// 点击折扣选项
@@ -505,25 +504,6 @@
 				const { list_info } = response.data.data
 				this.courseList = list_info.data
 				this.totalPage = list_info.last_page
-			},
-			// 预约
-			async handleAdvance(item) {
-				uni.showLoading({
-					title: '预约中...'
-				})
-				
-				const response = await advance({
-					id: item.sol_id
-				})
-				
-				uni.hideLoading()
-				
-				uni.showToast({
-					icon: 'none',
-					title: '预约成功'
-				})
-				
-				item.subscribe = 1
 			}
 		},
 		onReachBottom() {

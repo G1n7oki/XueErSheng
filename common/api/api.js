@@ -56,6 +56,14 @@ export const logout = (data) => {
 		data
 	})
 }
+// 注册协议
+export const protocol = (data) => {
+	return http.request({
+		url: 'protocol',
+		method: 'GET',
+		data
+	})
+}
 /**
  * 以下选择专业接口
  * */
@@ -601,6 +609,30 @@ export const discover_comment_admire = (data) => {
 			data
 		})
 	}
+	// 判断直播是否购买
+	export const live_is_buy = (data) => {
+		return http.request({
+			url: 'live/is_buy',
+			method: 'GET',
+			data
+		})
+	}
+	// 直播评价列表
+	export const live_evaluate_list = (data) => {
+		return http.request({
+			url: 'live/evaluate',
+			method: 'GET',
+			data
+		})
+	}
+	// 直播评
+	export const live_evaluate = (data) => {
+		return http.request({
+			url: 'live/myevaluate',
+			method: 'GET',
+			data
+		})
+	}
 	/**
 	* 以下为问答模块接口
 	* */
@@ -791,6 +823,14 @@ export const discover_comment_admire = (data) => {
 		return http.request({
 			url: 'county',
 			method: 'GET',
+			data
+		})
+	}
+	// 完善报读信息
+	export const plan_info = (data) => {
+		return http.request({
+			url: 'users/applies',
+			method: 'POST',
 			data
 		})
 	}

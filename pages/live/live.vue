@@ -37,7 +37,7 @@
 					class="button button-1"
 					hover-class="none"
 					type="default"
-					@click="toLivePlay(item.sol_id)"
+					@click="toLivePlay(item)"
 				>
 					正在直播
 				</button>
@@ -46,7 +46,7 @@
 					class="button button-2"
 					hover-class="none"
 					type="default"
-					@click="handleAdvance(item)"
+					@click="toLivePlay(item)"
 				>
 					立即预约
 				</button>
@@ -55,6 +55,7 @@
 					class="button button-3"
 					hover-class="none"
 					type="default"
+					@click="toLivePlay(item)"
 				>
 					已预约
 				</button>
@@ -73,7 +74,7 @@
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import Empty from '@/components/empty/empty.vue'
 	import UniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
-	import { live_advance, advance } from '@/common/api/api.js'
+	import { live_advance } from '@/common/api/api.js'
 	export default {
 		name: 'Live',
 		components: {
@@ -132,28 +133,10 @@
 				
 				uni.hideLoading()
 			},
-			toLivePlay(id) {
+			toLivePlay(raw) {
 				uni.navigateTo({
-					url: '/pages/live/live-play?id=' + id
+					url: '/pages/live/live-play?id=' + raw.sol_id + '&live=' + raw.live_id
 				})
-			},
-			async handleAdvance(item) {
-				uni.showLoading({
-					title: '预约中...'
-				})
-				
-				const response = await advance({
-					id: item.sol_id
-				})
-				
-				uni.hideLoading()
-				
-				uni.showToast({
-					icon: 'none',
-					title: '预约成功'
-				})
-				
-				item.subscribe = 1
 			}
 		}
 	}

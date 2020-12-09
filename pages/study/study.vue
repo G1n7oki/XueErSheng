@@ -244,7 +244,7 @@
 				}
 			}
 		},
-		onLoad() {
+		onShow() {
 			that = this
 			
 			// 屏幕的高度

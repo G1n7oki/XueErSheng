@@ -15,12 +15,19 @@
 				id="video" 
 				:src="url"
 				controls
-				autoplay
 			>
 			</video>
-			<view class="video-mask" v-if="isPlay !== 1">
-				<view v-if="isPlay === 2" class="text">直播已结束</view>
-				<view v-if="isPlay === 0" class="text">直播暂未开始</view>
+			<view v-if="show" class="video-mask">
+				<view v-if="isPlay === 1" class="play" @click="handlePlay"></view>
+				<view v-if="isPlay === 2" class="text">
+					直播已结束
+				</view>
+				<view v-if="isPlay === 0">
+					<view class="text">
+						直播暂未开始
+					</view>
+					<button class="button" @click="handleButton">{{ subscribe === 1 ? '已预约' : '预约提醒' }}</button>
+				</view>
 			</view>
 		</view>
 		<!-- 播放器 end -->
@@ -136,7 +143,9 @@
 		send_message,
 		userinfo,
 		live_detail,
-		live_handout
+		live_handout,
+		live_is_buy,
+		advance
 	} from '@/common/api/api.js'
 	export default {
 		name: 'LivePlay',
@@ -165,40 +174,54 @@
 				uid: 0, // 用户id
 				last: '', // 最后一条数据
 				num: 0, // 观看人数
-				isPlay: 0, // 直播状态
+				isPlay: 4, // 直播状态
 				start: '', // 开始时间
 				end: '', // 结束时间
-				handout: []
+				handout: [],
+				isBuy: 0, // 是否购买 0 未买 1 已买
+				live: 0, // 课包id
+				show: true, // 是否展示Mask
+				subscribe: '' // 是否预约 0 未预约 1 已预约
 			}
 		},
 		onLoad(options) {
 			this.id = options.id
+			this.live = options.live
 			// 屏幕的高度
 			const wHeight = uni.getSystemInfoSync()['windowHeight']
 			
 			this.calculate(wHeight)
 			
-			this.toData(+options.id)
+			this.toData(+options.id, +options.live)
 		},
 		onUnload() {
 			uni.closeSocket()
 		},
 		methods: {
-			async toData(id) {
+			async toData(id, live) {
 				uni.showLoading({
 					title: '加载中...'
 				})
+				// 判断当前直播是否购买
+				const isBuy = await live_is_buy({
+					id: live
+				})
+				this.isBuy = isBuy.data.data
+				
 				// 获取直播信息
 				const detail = await live_detail({
 					id
 				})
-				const { title, url, is_play, watch_num, start_time, end_time } = detail.data.data
+				const { title, url, is_play, watch_num, start_time, end_time, is_subscribe } = detail.data.data
 				this.title = title
 				this.url = url
 				this.isPlay = is_play
 				this.num = watch_num
 				this.start = start_time
 				this.end = end_time
+				this.subscribe = is_subscribe
+				
+				console.log(this.isPlay)
 				// 获取用户信息
 				const user = await userinfo()
 				this.uid = user.data.data.id
@@ -291,6 +314,67 @@
 				    })
 				  }
 				})
+			},
+			handlePlay() {
+				// 是否购买
+				const that = this
+				if(this.isBuy === 0) {
+					uni.showModal({
+						title: '提示',
+						content: '您还未拥有该课包, 是否购买?',
+						success(res) {
+							if(res.confirm) {
+								uni.navigateTo({
+									url: '/pages/order/information?id=' + that.live + '&type=2'
+								})
+							}
+						}
+					})
+					return false
+				}
+				
+				this.show = false
+				
+				const video = uni.createVideoContext('video')
+				video.play()
+			},
+			async handleButton () {
+				// 是否购买
+				const that = this
+				if(this.isBuy === 0) {
+					uni.showModal({
+						title: '提示',
+						content: '您还未拥有该课包, 是否购买?',
+						success(res) {
+							if(res.confirm) {
+								uni.navigateTo({
+									url: '/pages/order/information?id=' + that.live + '&type=2'
+								})
+							}
+						}
+					})
+					return false
+				}
+				
+				// 是否预约
+				if (this.subscribe === 0) {
+					uni.showLoading({
+						title: '预约中...'
+					})
+					
+					const response = await advance({
+						id: this.id
+					})
+					
+					uni.hideLoading()
+					
+					uni.showToast({
+						icon: 'none',
+						title: '预约成功'
+					})
+					
+					this.subscribe = 1
+				}
 			}
 		}
 	}

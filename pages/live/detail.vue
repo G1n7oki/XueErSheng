@@ -15,7 +15,7 @@
 				<view class="text" v-if="login">
 					立即购买或激活课程，即可解锁观看 若已购买，请 <text @click="toLogin">登录</text>
 				</view>
-				<view class="button">
+				<view class="button" @click="handleStart">
 					开始学习
 				</view>
 			</view>
@@ -118,15 +118,15 @@
 									:size="16"
 									:margin="5"
 									:allowHalf="true"
-									:value="4.6"
+									:value="evaluate.mark"
 								/>
 								<view class="line"></view>
 								<view class="number-unit">
-									<view class="number">4.6</view>
+									<view class="number">{{ evaluate.mark }}</view>
 									<view class="unit">评分</view>
 								</view>
 							</view>
-							<navigator url="/pages/study/evaluation" hover-class="none" class="button">
+							<navigator :url="'/pages/study/evaluation?type=live&id=' + id" hover-class="none" class="button">
 								我要评价
 							</navigator>
 						</view>
@@ -134,23 +134,27 @@
 						<view class="list">
 							<view class="list-title">
 								<title name="所有评价" />
-								<view class="total">共40个评价</view>
+								<view class="total">共{{ evaluate.total }}个评价</view>
 							</view>
-							<view class="list-item">
+							<view
+								class="list-item"
+								v-for="evaluate in evaluate.list"
+								:key="evaluate.id"
+							>
 								<view class="item-top">
 									<view class="avatar-user">
-										<image class="avatar" src="http://dummyimage.com/40x40" mode=""></image>
+										<image class="avatar" :src="evaluate.avatars" mode=""></image>
 										<view class="user">
-											<view class="username">一只大肥羊</view>
-											<view class="hour">学习1个课时评价</view>
+											<view class="username">{{ evaluate.username }}</view>
+											<view class="hour">学习{{ evaluate.period }}个课时评价</view>
 										</view>
 									</view>
 									<view class="date">
-										2020.08.05
+										{{ evaluate.add_time }}
 									</view>
 								</view>
 								<view class="content">
-									老师讲的很详细，本人在这次学习中收获了很多，感谢学尔升课堂提供的平台，希望开发人员能在后续的改版迭代中连续开发出更好的功能，为学员提供更好的服务。
+									{{ evaluate.content }}
 								</view>
 								<view class="list-rate">
 									<uni-rate
@@ -158,36 +162,15 @@
 										:size="16"
 										:margin="5"
 										:allowHalf="true"
-										:value="5"
+										:value="evaluate.mark"
 									/>
 								</view>
 							</view>
-							<view class="list-item">
-								<view class="item-top">
-									<view class="avatar-user">
-										<image class="avatar" src="" mode=""></image>
-										<view class="user">
-											<view class="username">一只大肥羊</view>
-											<view class="hour">学习1个课时评价</view>
-										</view>
-									</view>
-									<view class="date">
-										2020.08.05
-									</view>
-								</view>
-								<view class="content">
-									老师讲的很详细，本人在这次学习中收获了很多，感谢学尔升课堂提供的平台，希望开发人员能在后续的改版迭代中连续开发出更好的功能，为学员提供更好的服务。
-								</view>
-								<view class="list-rate">
-									<uni-rate
-										:readonly="true"
-										:size="16"
-										:margin="5"
-										:allowHalf="true"
-										:value="5"
-									/>
-								</view>
-							</view>
+							<uni-load-more
+								v-if="evaluate.total > 1"
+								:status="evaluate.loading"
+								:iconSize="14"
+							/>
 						</view>
 					</view>
 				</scroll-view>
@@ -229,13 +212,15 @@
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import Title from '@/components/title/Title.vue'
 	import UniRate from '@/components/uni-rate/uni-rate.vue'
-	import { live_package_detail, live_package } from '@/common/api/api.js'
+	import UniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
+	import { live_package_detail, live_package, live_evaluate_list } from '@/common/api/api.js'
 	export default {
 		name: 'LiveDetail',
 		components: {
 			XesNavbar,
 			Title,
-			UniRate
+			UniRate,
+			UniLoadMore
 		},
 		data() {
 			return {
@@ -262,7 +247,19 @@
 					details: '',
 					price: 0
 				},
-				catalog: []
+				catalog: [],
+				evaluate: {
+					list: [],
+					page: 1,
+					totalPage: 1,
+					mark: 0,
+					total: 0,
+					loading: 'more'
+				},
+				first: {
+					id: '',
+					type: ''
+				}
 			}
 		},
 		onLoad(options) {
@@ -328,8 +325,32 @@
 				this.detail = detail.data.data
 				// 获取直播课包目录
 				const catalog = await live_package({ id })
+				this.first.id = catalog.data.data[0].sol_id
+				this.first.type = catalog.data.data[0].is_play
 				this.catalog = catalog.data.data
+				// 获取直播评价列表
+				const evaluate = await live_evaluate_list({ id })
+				const { mark, list_info } = evaluate.data.data
+				this.evaluate.mark = mark
+				this.evaluate.list = list_info.data
+				this.evaluate.total = list_info.total
+				this.evaluate.totalPage = list_info.last_page
 				uni.hideLoading()
+			},
+			// 上拉加载
+			pullUpLoading() {
+				this.evaluate.page++
+				if (this.evaluate.page > this.evaluate.totalPage) {
+					this.evaluate.loading = 'noMore'
+					return false
+				}
+				this.evaluate.loading = 'loading'
+				live_evaluate_list({
+					id: this.id
+				}).then(response => {
+					const res = response.data.data
+					this.evaluate.list = this.evaluate.list.concat(res.list_info.data)
+				})
 			},
 			toOrderInfo() {
 				uni.navigateTo({
@@ -338,13 +359,13 @@
 			},
 			handleCatalogItem(raw, index) {
 				const { is_buy } = this.detail
-				// if (is_buy < 1) {
-				// 	uni.showToast({
-				// 		icon: 'none',
-				// 		title: '您还没有购买该直播课包'
-				// 	})
-				// 	return false
-				// }
+				if (is_buy < 1) {
+					uni.showToast({
+						icon: 'none',
+						title: '您还没有购买该直播课包'
+					})
+					return false
+				}
 				const { is_play, sol_id } = raw
 				if (is_play === 2) {
 					uni.navigateTo({
@@ -353,6 +374,26 @@
 				} else {
 					uni.navigateTo({
 						url: `/pages/live/live-play?id=${sol_id}`
+					})
+				}
+			},
+			handleStart() {
+				const { is_buy } = this.detail
+				if (is_buy < 1) {
+					uni.showToast({
+						icon: 'none',
+						title: '您还没有购买该直播课包'
+					})
+					return false
+				}
+				const { id, type } = this.first
+				if (type === 2) {
+					uni.navigateTo({
+						url: `/pages/live/review-play?id=${this.id}&sol=${id}$index=${0}`
+					})
+				} else {
+					uni.navigateTo({
+						url: `/pages/live/live-play?id=${id}`
 					})
 				}
 			}

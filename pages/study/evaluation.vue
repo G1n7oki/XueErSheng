@@ -49,7 +49,7 @@
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
 	import UniRate from '@/components/uni-rate/uni-rate.vue'
 	import uButton from '@/components/u-button/uButton.vue'
-	import { study_evaluate } from '@/common/api/api.js'
+	import { study_evaluate, live_evaluate } from '@/common/api/api.js'
 	export default {
 		name: 'Evaluation',
 		components: {
@@ -64,11 +64,13 @@
 				id: 0,
 				rate: 0, // 评分
 				text: '未评分', // 评分对应的内容
-				timer: null // 计时器
+				timer: null, // 计时器
+				type: ''
 			}
 		},
 		onLoad(options) {
 			this.id = options.id
+			this.live = options.live
 		},
 		onUnload() {
 			clearTimeout(this.timer)
@@ -103,22 +105,41 @@
 					return false
 				}
 				
-				study_evaluate({
-					id: this.id,
-					mark: this.rate,
-					content: this.value
-				}).then(response => {
-					const res = response.data
-					uni.showToast({
-						icon: 'none',
-						title: res.status
-					})
-					this.timer = setTimeout(() => {
-						uni.navigateBack({
-							delta: 1
+				if (this.type === 'live') {
+					live_evaluate({
+						id: this.id,
+						mark: this.rate,
+						content: this.value
+					}).then(response => {
+						const res = response.data
+						uni.showToast({
+							icon: 'none',
+							title: res.status
 						})
-					}, 1500)
-				})
+						this.timer = setTimeout(() => {
+							uni.navigateBack({
+								delta: 1
+							})
+						}, 1500)
+					})
+				} else {
+					study_evaluate({
+						id: this.id,
+						mark: this.rate,
+						content: this.value
+					}).then(response => {
+						const res = response.data
+						uni.showToast({
+							icon: 'none',
+							title: res.status
+						})
+						this.timer = setTimeout(() => {
+							uni.navigateBack({
+								delta: 1
+							})
+						}, 1500)
+					})
+				}
 			}
 		}
 	}
