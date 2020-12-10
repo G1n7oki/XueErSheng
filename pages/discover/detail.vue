@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<XesNavbar
-			title="发现详情"
+			title="详情"
 			:is-arrow="true"
 			text-align="center"
 		/>
@@ -17,7 +17,7 @@
 					<view class="text">{{ info.created_at.substring(0, 10) }}</view>
 				</view>
 			</view>
-			<rich-text :nodes="info.strings"></rich-text>
+			<rich-text :nodes="info.content"></rich-text>
 			<view class="praise">
 				<image class="icon" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/discover/dadianzan%402x.png" mode=""></image>
 				<view class="number">{{ info.admire }}</view>

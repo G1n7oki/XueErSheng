@@ -88,12 +88,21 @@
 			}
 		}
 		
+		.title {
+			margin-top: 30upx;
+		}
+		
 		.content {
 			overflow: hidden;
 			font-size: 32upx;
 			font-weight: 500;
-			color: #303133;
+			color: #909399;
 			margin-top: 32upx;
+			overflow : hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-line-clamp: 4;
+			-webkit-box-orient: vertical;
 		}
 		
 		.original {

@@ -38,8 +38,11 @@
 							</view>
 						</view>
 					</view>
-					<view class="content">
-						{{  tabbar.index === 1 ? item.content : item.introductory }}
+					<view class="title">
+						{{ tabbar.index !== 1 ? item.title : item.content }}
+					</view>
+					<view class="content" v-if="tabbar.index !== 1">
+						{{ item.introductory }}
 					</view>
 					<view v-if="tabbar.index !== 1" class="original" @click="toDetail(item.id)">
 						查看原文
