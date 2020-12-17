@@ -230,10 +230,11 @@
 				let client_id = ''
 				// 创建Socket链接
 				uni.connectSocket({
-					 url: 'ws://api.mdedu.cn/wss'
+					url: 'ws://api.mdedu.cn/wss'
 				})
 				// 接收服务端发来的消息
 				uni.onSocketMessage(function (res) {
+					console.log(res)
 					const type = JSON.parse(res.data).type
 					if (type === 'init') { // 加入聊天室
 						client_id = JSON.parse(res.data).client_id

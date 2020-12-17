@@ -261,7 +261,7 @@
 				<view class="price-time">
 					<view class="price">
 						<view class="current">
-							{{ info.price }} <text>元</text>
+							{{ info.price === 0 ? '免费' : info.price }} <text v-if="info.price > 0">元</text>
 						</view>
 						<view class="old">
 							<view class="number">
