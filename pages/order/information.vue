@@ -139,6 +139,7 @@
 	import UniIcons from '@/components/uni-icons/uni-icons.vue'
 	import UniPopup from '@/components/uni-popup/uni-popup.vue'
 	import { order_information, order_create, order_pay } from '@/common/api/api.js'
+	import { isDevice } from '@/tools/util/util.js'
 	export default {
 		name: 'Information',
 		components: {
@@ -195,6 +196,14 @@
 				uni.hideLoading()
 			},
 			async handlePay() {
+				const res = uni.getSystemInfoSync()
+				if(res.model.includes('iPhone') || res.model.includes('Mac') || res.model.includes('iPad')) {
+					uni.showToast({
+						icon: 'none',
+						title: '苹果机型暂不支持支付'
+					})
+					return false
+				}
 				uni.showLoading({
 					title: '订单生成中...'
 				})
