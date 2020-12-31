@@ -17,6 +17,7 @@
 				v-for="(item, index) in favorite"
 				:key="item.id"
 				@longpress="handleItem(index, item.id)"
+				@click="toCourse(item.id)"
 			>
 				<image class="image" :src="item.cover" mode=""></image>
 				<view class="info">
@@ -122,6 +123,11 @@
 			// 数组删除
 			removeListItem(index) {
 				this.favorite.splice(index, 1)
+			},
+			toCourse(id) {
+				uni.navigateTo({
+					url: '/pages/study/detail?id=' + id
+				})
 			}
 		}
 	}

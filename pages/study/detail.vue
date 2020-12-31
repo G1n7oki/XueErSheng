@@ -261,14 +261,11 @@
 				<view class="price-time">
 					<view class="price">
 						<view class="current">
-							{{ info.price === 0 ? '免费' : info.price }} <text v-if="info.price > 0">元</text>
+							{{ info.price === 0 || info.price === '0.00' ? '免费' : info.price }} <text v-if="info.price > 0 || info.price !== '0.00'">元</text>
 						</view>
 						<view class="old">
 							<view class="number">
-								{{ info.virtual_price }}
-							</view>
-							<view class="text">
-								元
+								{{ info.virtual_price === 0 || info.virtual_price === '0.00' ? '免费' : info.virtual_price  }}
 							</view>
 						</view>
 					</view>

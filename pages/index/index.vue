@@ -30,7 +30,7 @@
 		<!-- 金刚区start -->
 		<view class="main">
 			<view class="top">
-				<view v-if="!isInfo" class="info-1">
+				<view v-if="!apply" class="info-1">
 					<view class="welcome">
 						欢迎来到学尔升！
 					</view>
@@ -39,18 +39,18 @@
 					</view>
 				</view>
 				<view v-else class="info-2">
-					<image class="icon" src="" mode=""></image>
+					<image class="icon" :src="apply.image" mode=""></image>
 					<view class="school-name">
 						<view class="school">
-							南昌大学
+							{{ apply.sname }}
 						</view>
 						<view class="name">
-							亲爱的黄亮同学
+							亲爱的{{ apply.realname }}同学
 						</view>
 					</view>
 				</view>
-				<button v-if="isButton" type="default" :class="{'active': isPay !== 9}" @click="handleMainBtn">
-					{{ isPay === 0 ? '立即缴费' : isPay === 1 ? '已缴费' : '我要报名' }}
+				<button type="default" :class="{'active': apply.status !== 9}" @click="handleMainBtn">
+					{{ apply.status === 0 ? '立即缴费' : apply.status === 1 ? '已缴费' : '我要报名' }}
 				</button>
 			</view>
 			<view class="bot">
@@ -111,7 +111,7 @@
 			</view>
 			<!-- 上进故事end -->
 			<!-- 播放预告start -->
-			<view class="block">
+			<view class="block" v-if="liveList.length > 0">
 				<view class="top">
 					<title name="播放 · 预告" />
 					<view-more url="/pages/live/live" />
@@ -168,7 +168,7 @@
 								{{ selection.video_num }}课时
 							</view>
 							<view class="price">
-								{{ selection.price }}<text>元</text>
+								{{ selection.price === '0.00' ? '免费' : selection.price }}<text v-if="selection.price !== '0.00'">元</text>
 							</view>
 						</view>
 					</view>
@@ -242,7 +242,7 @@
 									{{ item.video_num }}课时
 								</view>
 								<view class="price">
-									{{ item.price }}<text>元</text>
+									{{ item.price === '0.00' ? '免费' : item.price }}<text v-if="item.price !== '0.00'">元</text>
 								</view>
 							</view>
 						</view>
@@ -329,9 +329,7 @@
 		},
 		data() {
 			return {
-				isInfo: null, // 是否显示用户信息
-				isButton: false, // 是否显示按钮 
-				isPay: 0, // 支付状态
+				apply: {}, // 支付状态
 				treeList: [], // 面包屑
 				story: {}, // 上进故事
 				liveList: [], // 播放预告
@@ -439,7 +437,7 @@
 				this.liveList = homeData.sol
 				this.selection = homeData.handpick
 				this.isButton = homeData.applyButton
-				this.isPay = homeData.applyStaus
+				this.apply = homeData.apply
 				// 获取全部课程
 				const course = await courses({
 					profession_id: uni.getStorageSync('profession_id') || 44,

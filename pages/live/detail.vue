@@ -183,11 +183,10 @@
 			<view class="price-info">
 				<view class="price">
 					<view class="present">
-						{{ detail.price === 0 ? '免费' : detail.price }} <text v-if="detail.price > 0">元</text>
+						{{ detail.price === 0 || detail.price === '0.00' ? '免费' : detail.price }} <text v-if="detail.price > 0 || detail.price !== '0.00'">元</text>
 					</view>
 					<view class="original">
-						<text class="num">{{ detail.virtual_price }}</text>
-						<text class="unit">元</text>
+						<text class="num">{{ detail.virtual_price === 0 || detail.virtual_price === '0.00' ? '免费' : detail.virtual_price }}</text>
 					</view>
 				</view>
 				<view class="number">

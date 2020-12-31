@@ -26,7 +26,7 @@
 						订单原价
 					</view>
 					<view class="price">
-						{{ infoData.virtual_price }} <text>元</text>
+						{{ infoData.virtual_price === '0.00' ? '免费' : infoData.virtual_price }} <text v-if="infoData.virtual_price !== '0.00'">元</text>
 					</view>
 				</view>
 				<view class="item">
@@ -45,14 +45,14 @@
 						{{ coupon.money === 0 ? '暂无优惠券' : `-${coupon.money}元` }}
 					</view>
 				</view>
-				<view class="item">
+				<!-- <view class="item">
 					<view class="name">
 						学币抵扣
 					</view>
 					<view class="price active">
 						0 <text class="active">元</text>
 					</view>
-				</view>
+				</view> -->
 			</view>
 		</view>
 		<!-- 订单信息 end -->
@@ -69,7 +69,7 @@
 					<uni-icons type="forward" size="16" color="#C0C4CC" />
 				</view>
 			</view>
-			<view class="item">
+			<!-- <view class="item">
 				<view class="name">
 					学币抵扣
 				</view>
@@ -79,13 +79,13 @@
 					</view>
 					<checkbox :checked="choose" @click="handleCheckbox"/>
 				</view>
-			</view>
+			</view> -->
 		</view>
 		<!-- 优惠券信息 end -->
 		<!-- 固定定位 start -->
 		<view class="fixed-area">
 			<view class="actual">
-				实际支付 <text class="price">{{ infoData.current_price }}</text> <text class="unit">元</text>
+				实际支付 <text class="price">{{ infoData.current_price === 0 ? '免费' : infoData.current_price }}</text> <text class="unit">元</text>
 			</view>
 			<button type="default" hover-class="none" @click="handlePay">去支付</button>
 		</view>
