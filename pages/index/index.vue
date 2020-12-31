@@ -30,7 +30,7 @@
 		<!-- 金刚区start -->
 		<view class="main">
 			<view class="top">
-				<view v-if="!apply" class="info-1">
+				<view v-if="apply === '' || apply === null" class="info-1">
 					<view class="welcome">
 						欢迎来到学尔升！
 					</view>
@@ -49,7 +49,7 @@
 						</view>
 					</view>
 				</view>
-				<button type="default" :class="{'active': apply.status !== 9}" @click="handleMainBtn">
+				<button type="default" :class="{'active': apply.status === 9}" @click="handleMainBtn">
 					{{ apply.status === 0 ? '立即缴费' : apply.status === 1 ? '已缴费' : '我要报名' }}
 				</button>
 			</view>
@@ -464,7 +464,7 @@
 			},
 			// 点击缴费/支付按钮
 			handleMainBtn() {
-				this.isPay === 9 ? this.navigate('/pages/plan/select') : this.isPay === 0 ? this.navigate('/pages/order/information') : ''
+				this.apply === null ? this.navigate('/pages/plan/select') : this.apply.status === 0 ? this.navigate('/pages/order/information') : ''
 			},
 			// 跳转播放播放页
 			toLivePlay(raw) {

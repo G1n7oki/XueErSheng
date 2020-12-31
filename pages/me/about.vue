@@ -10,7 +10,7 @@
 		<!-- logo/版本 start -->
 		<view class="logo-version">
 			<image class="logo" src="https://mdxes.oss-cn-shanghai.aliyuncs.com/ministatic/me/logo%402x.png" mode=""></image>
-			<view class="version">版本号：V1.0</view>
+			<!-- <view class="version">版本号：V1.0</view> -->
 		</view>
 		<!-- logo/版本 end -->
 		<!-- 导航 start -->
@@ -18,7 +18,7 @@
 			<view class="item">
 				<view class="name">客服电话</view>
 				<view class="other">
-					<view class="text" style="padding-right: 32upx;">0791-2831234</view>
+					<view class="text" style="padding-right: 32upx;">4000-999-305</view>
 				</view>
 			</view>
 			<view class="item">
