@@ -293,7 +293,7 @@
 				<view class="icon">
 					+
 				</view>
-				<navigator :url="'/pages/order/information?id=' + courseId + '&type=' + info.type" hover-class="none" class="text">
+				<navigator :url="'/pages/order/information?id=' + courseId + '&type=1'" hover-class="none" class="text">
 					加入学习
 				</navigator>
 			</view>
@@ -618,7 +618,7 @@
 						success(res) {
 							if (res.confirm) {
 								uni.navigateTo({
-									url: '/pages/order/information?id=' + that.courseId + '&type=' + that.info.type
+									url: '/pages/order/information?id=' + that.courseId + '&type=1'
 								})
 							}
 						}

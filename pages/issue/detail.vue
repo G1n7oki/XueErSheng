@@ -313,7 +313,6 @@
 					content: this.comment2.value,
 					pid: this.comment2.id
 				})
-				console.log(response)
 				this.comment2.list.unshift(response.data.data)
 				this.comment2.value = ''
 				this.top = 0

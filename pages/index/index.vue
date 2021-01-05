@@ -150,7 +150,7 @@
 			</view>
 			<!-- 播放预告end -->
 			<!-- 精选课程start -->
-			<view class="block">
+			<view v-if="selection" class="block">
 				<view class="top">
 					<title name="精选课程" />
 				</view>
@@ -176,7 +176,7 @@
 			</view>
 			<!-- 精选课程end -->
 			<!-- 全部课程start -->
-			<view class="block">
+			<view v-if="courseList.length > 0" class="block">
 				<view class="top">
 					<title name="全部课程" />
 				</view>
@@ -228,7 +228,7 @@
 						v-for="item in courseList" 
 						:key="item.id"
 						hover-class="none"
-						:url="'/pages/study/detail?id=' + item.id"
+						:url="'/pages/study/detail?id=' + item.id + '&type=1'"
 					>
 						<view class="image">
 							<image :src="item.cover" mode=""></image>

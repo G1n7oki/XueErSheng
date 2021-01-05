@@ -244,9 +244,8 @@
 				}
 			}
 		},
-		onShow() {
+		onLoad() {
 			that = this
-			
 			// 屏幕的高度
 			const wHeight = uni.getSystemInfoSync()['windowHeight']
 			// 获取手机状态栏高度
