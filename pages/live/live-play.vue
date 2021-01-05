@@ -230,7 +230,15 @@
 				let client_id = ''
 				// 创建Socket链接
 				uni.connectSocket({
-					url: 'ws://api.mdedu.cn/wss'
+					url: 'wss://api.mdedu.cn/wss'
+				})
+				// Socket创建失败
+				uni.onSocketError(function (res) {
+					uni.showToast({
+						icon: 'none',
+						title: 'WebSocket连接打开失败，请检查！'
+					})
+					console.log(res)
 				})
 				// 接收服务端发来的消息
 				uni.onSocketMessage(function (res) {

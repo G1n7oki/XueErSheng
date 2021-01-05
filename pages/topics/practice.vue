@@ -72,7 +72,7 @@
 					<view class="analysis" v-if="issue.isOpen && pattern !== 'exam'">
 						<view class="tips">
 							<view class="item">
-								正确答案 <text class="success">{{ issue.answer_cn }}</text>
+								正确答案 <text class="success">{{ issue.answer_cn.toLocaleUpperCase() }}</text>
 							</view>
 							 <view class="item" v-if="issue.choose">
 							 	, 您的答案 <text class="result">{{ issue.choose }}</text>
@@ -159,7 +159,7 @@
 				timer2: null,
 				pattern: uni.getStorageSync('pattern') || 'exercise', // exercise 练习 self-study 自学 exam 考试
 				total: 0,
-				current: 1,
+				current: 0,
 				// demo result: [{ id: 1, choose: id, status: 0代表错误 ，1代表正确,2半对 }]
 				result: [], // 答题结果
 				pid: '', // 卷子id
@@ -375,6 +375,16 @@
 			// 查看解析
 			handleIsOpen(raw) {
 				clearInterval(this.timer)
+				raw.option.forEach(item => {
+					item.result = 1
+				})
+				const answer = raw.answer.split(',')
+				answer.forEach(item => {
+					const index = raw.option.findIndex(option => {
+						return item === option.id + ''
+					})
+					raw.option[index].result = 2
+				})
 				raw.count = this.count
 				this.count = 1
 				raw.isOpen = true
@@ -386,7 +396,7 @@
 					return
 				}
 				// 判断是走单选还是多选的逻辑
-				issue.question_type === 1 ? this.single(item, issue) : this.choice(item, issue)
+				issue.question_type === 2 ? this.choice(item, issue) : this.single(item, issue)
 			},
 			// 单选题
 			single(item, issue) {
@@ -495,8 +505,10 @@
 				if (this.pattern !== 'exam') {
 					// 高亮选择后的答案
 					choose.forEach(item => {
-						if (answer.indexOf(item.abcd_order) === -1) {
+						if (answer.indexOf(item.id + '') === -1) {
 							item.result = 3
+						} else {
+							item.result = 2
 						}
 					})
 					// 记录时间
