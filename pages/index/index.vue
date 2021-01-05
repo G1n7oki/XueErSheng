@@ -464,7 +464,7 @@
 			},
 			// 点击缴费/支付按钮
 			handleMainBtn() {
-				this.apply === null ? this.navigate('/pages/plan/select') : this.apply.status === 0 ? this.navigate('/pages/order/information') : ''
+				this.apply === null ? this.navigate('/pages/plan/select') : this.apply.status === 0 ? this.navigate('/pages/order/information?id='+ this.apply.gift_id +'&type=4') : ''
 			},
 			// 跳转播放播放页
 			toLivePlay(raw) {
