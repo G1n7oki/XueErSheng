@@ -221,7 +221,6 @@
 				this.end = end_time
 				this.subscribe = is_subscribe
 				
-				console.log(this.isPlay)
 				// 获取用户信息
 				const user = await userinfo()
 				this.uid = user.data.data.id
@@ -232,7 +231,7 @@
 				uni.connectSocket({
 					url: 'wss://api.mdedu.cn/wss'
 				})
-				// Socket创建失败
+				// 创建Socket失败
 				uni.onSocketError(function (res) {
 					uni.showToast({
 						icon: 'none',

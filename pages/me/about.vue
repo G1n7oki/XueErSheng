@@ -24,7 +24,7 @@
 			<view class="item">
 				<view class="name">网址</view>
 				<view class="other active">
-					<view class="text">www.mdedu.com</view>
+					<view class="text">www.mdedu.cn</view>
 					<uni-icons 
 						type="arrowright"
 						size="20"
