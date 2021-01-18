@@ -124,6 +124,7 @@
 				type: this.tabbar.current + 1,
 				page: this.page
 			})
+			this.listData = [...this.listData, ...response.data.data.data]
 			this.loading = 'more'
 		},
 		methods: {

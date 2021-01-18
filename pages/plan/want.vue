@@ -176,7 +176,8 @@
 					major: '',
 					majorName: '',
 					city: '',
-					counties: ''
+					counties: '',
+					info_id: ''
 				},
 				sex: {
 					data: [{
@@ -263,6 +264,7 @@
 			this.formData.title = options.title
 			this.formData.year = options.year
 			this.formData.apply_type = options.id
+			this.formData.info_id = options.info_id
 			
 			this.level = +options.id === 1 ? this.level2 : this.level1
 			
@@ -471,6 +473,7 @@
 				this.formData.majorName = this.profession.data[this.profession.current].name
 				this.formData.city = this.city.data[this.city.current].name
 				this.formData.counties = this.county.data[this.county.current].name
+				
 				
 				uni.setStorageSync('formData', this.formData)
 				

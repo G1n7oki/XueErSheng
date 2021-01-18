@@ -8,7 +8,7 @@
 		/>
 		<!-- 导航栏 end -->
 		<!-- 图片 start -->
-		<image class="image" src="http://dummyimage.com/686x620" mode=""></image>
+		<image class="image" :src="banner" mode=""></image>
 		<!-- 图片 end -->
 		<!-- 跳过 start -->
 		<navigator 
@@ -39,15 +39,35 @@
 
 <script>
 	import XesNavbar from '@/components/xes-navbar/xes-navbar.vue'
+	import { gift_info } from '@/common/api/api.js'
 	export default {
 		name: 'Success',
 		components: {
 			XesNavbar
 		},
+		data() {
+			return {
+				id: '',
+				banner: ''
+			}
+		},
+		onLoad(options) {
+			this.id = options.id
+			this.toGiftDetail(this.id)
+		},
 		methods: {
+			async toGiftDetail(id) {
+				uni.showLoading({
+					title: '加载中...'
+				})
+				const response = await gift_info({ id })
+				const { banner } = response.data.data
+				this.banner = banner
+				uni.hideLoading()
+			},
 			toInformation() {
 				uni.navigateTo({
-					url: '/pages/order/information'
+					url: `/pages/order/information?id=${this.id}&type=4`
 				})
 			},
 			handleSkip() {

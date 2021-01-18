@@ -834,3 +834,11 @@ export const discover_comment_admire = (data) => {
 			data
 		})
 	}
+	// 礼包详情
+	export const gift_info = (data) => {
+		return http.request({
+			url: 'gift',
+			method: 'GET',
+			data
+		})
+	}

@@ -293,7 +293,7 @@
 			}
 		},
 		watch: {
-			list(oldValue, newValue) {
+			list(newValue) {
 				const finished = []
 				newValue.map(item => {
 					if (item.choose) {

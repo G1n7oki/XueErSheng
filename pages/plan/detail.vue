@@ -17,7 +17,7 @@
 						咨询
 					</view>
 				</view>
-				<navigator class="navigation" hover-class="none" :url="'/pages/plan/want?year=' + year + '&title=' + title + '&id=' + id">立即报名</navigator>
+				<navigator class="navigation" hover-class="none" :url="`/pages/plan/want?year=${year}&title=${title}&id=${id}&info_id=${info_id}`">立即报名</navigator>
 			</view>
 			<!-- 定位按钮 end -->
 		</view>
@@ -42,7 +42,8 @@
 				image: '',
 				year: '',
 				title: '',
-				id: ''
+				id: '',
+				info_id: ''
 			}
 		},
 		onLoad(options) {
@@ -61,6 +62,7 @@
 				this.image = image_url
 				this.year = year
 				this.title = title
+				this.info_id = response.data.data.id
 				uni.hideLoading()
 			},
 			call() {

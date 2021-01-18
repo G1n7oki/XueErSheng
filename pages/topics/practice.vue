@@ -159,7 +159,7 @@
 				timer2: null,
 				pattern: uni.getStorageSync('pattern') || 'exercise', // exercise 练习 self-study 自学 exam 考试
 				total: 0,
-				current: 0,
+				current: 1,
 				// demo result: [{ id: 1, choose: id, status: 0代表错误 ，1代表正确,2半对 }]
 				result: [], // 答题结果
 				pid: '', // 卷子id

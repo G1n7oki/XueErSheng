@@ -131,7 +131,6 @@
 		},
 		onLoad() {
 			this.formData = uni.getStorageSync('formData')
-			console.log(this.formData)
 			this.toData()
 		},
 		methods: {
@@ -162,8 +161,11 @@
 					level: this.formData.level,
 					major: this.formData.major,
 					city: this.formData.city,
-					counties: this.formData.counties
+					counties: this.formData.counties,
+					info_id: this.formData.info_id
 				})
+				
+				const id = response.data.data.id
 				
 				uni.hideLoading()
 				
@@ -174,7 +176,7 @@
 				
 				setTimeout(() => {
 					uni.navigateTo({
-						url: '/pages/plan/success'
+						url: `/pages/plan/success?id=${id}`
 					})
 				}, 1500)
 			}
