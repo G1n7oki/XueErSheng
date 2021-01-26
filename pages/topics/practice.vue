@@ -430,7 +430,6 @@
 								isHave = true
 							}
 						})
-						
 						if (isHave) { // 如果当前题目已经存在则为修改
 							this.result[current] = {
 								id: issue.id,

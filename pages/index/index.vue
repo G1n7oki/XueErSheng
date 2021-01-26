@@ -150,29 +150,40 @@
 			</view>
 			<!-- 播放预告end -->
 			<!-- 精选课程start -->
-			<view v-if="selection" class="block">
+			<view v-if="selection.length > 0" class="block">
 				<view class="top">
 					<title name="精选课程" />
 				</view>
-				<navigator :url="'/pages/study/detail?id=' + selection.id" hover-class="none" class="course" style="margin-top: 32upx;">
-					<view class="tips">
-						{{ selection.category_name }}
-					</view>
-					<image :src="selection.cover" mode=""></image>
-					<view class="info">
-						<view class="name">
-							{{ selection.title }}
-						</view>
-						<view class="time-price">
-							<view class="time">
-								{{ selection.video_num }}课时
+				<swiper 
+					:indicator-dots="true"
+					:autoplay="false"
+					:interval="3000"
+					:duration="1000"
+					indicator-active-color="#fff"
+					style="margin-top: 32upx;height: 248upx;"
+				>
+					<swiper-item v-for="item in selection" :key="item.id">
+						<navigator :url="'/pages/study/detail?id=' + item.id" hover-class="none" class="course">
+							<!-- <view class="tips">
+								{{ selection.category_name }}
+							</view> -->
+							<image :src="item.cover" mode=""></image>
+							<view class="info">
+								<view class="name">
+									{{ item.title }}
+								</view>
+								<view class="time-price">
+									<view class="time">
+										{{ item.video_num }}课时
+									</view>
+									<view class="price">
+										{{ item.price === '0.00' ? '免费' : item.price }}<text v-if="item.price !== '0.00'">元</text>
+									</view>
+								</view>
 							</view>
-							<view class="price">
-								{{ selection.price === '0.00' ? '免费' : selection.price }}<text v-if="selection.price !== '0.00'">元</text>
-							</view>
-						</view>
-					</view>
-				</navigator>
+						</navigator>
+					</swiper-item>
+				</swiper>
 			</view>
 			<!-- 精选课程end -->
 			<!-- 全部课程start -->
