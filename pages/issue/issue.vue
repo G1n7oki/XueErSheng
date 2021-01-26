@@ -204,7 +204,6 @@
 				top: 0, // 选项卡定位值
 				type: {
 					data: [{
-						id: 0,
 						name: '一级类目',
 						pid: 999
 					}],
@@ -212,7 +211,6 @@
 				}, // 类型选择器
 				specialty: {
 					data: [{
-						id: 0,
 						name: '二级类目',
 						pid: 999
 					}],
@@ -220,7 +218,6 @@
 				}, // 专业选择器
 				subject: {
 					data: [{
-						id: 0,
 						name: '三级类目',
 						pid: 999
 					}],
@@ -395,8 +392,6 @@
 					}).catch(error => {
 						uni.hideLoading()
 					})
-				} else {
-					return false
 				}
 				this[str].index = e.target.value
 			},
