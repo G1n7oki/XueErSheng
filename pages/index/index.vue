@@ -160,7 +160,7 @@
 					:interval="3000"
 					:duration="1000"
 					indicator-active-color="#fff"
-					style="margin-top: 32upx;height: 248upx;"
+					style="margin-top: 32upx;height: 420upx;"
 				>
 					<swiper-item v-for="item in selection" :key="item.id">
 						<navigator :url="'/pages/study/detail?id=' + item.id" hover-class="none" class="course">
